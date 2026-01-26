@@ -102,5 +102,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/AuroraHiker/AuroraHiker.github.io.git
+  repository: git@github.com:AuroraHiker/AuroraHiker.github.io.git
   branch: main
