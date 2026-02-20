@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -104,3 +104,10 @@ deploy:
   type: git
   repository: git@github.com:AuroraHiker/AuroraHiker.github.io.git
   branch: main
+
+# 搜索
+search:
+  path: search.xml           # 生成的索引文件路径，可以是 .xml 或 .json
+  field: post                 # 搜索范围：post（文章）、page（页面）、all（全部）
+  content: true               # 是否索引文章内容
+  format: html
