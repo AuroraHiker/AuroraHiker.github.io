@@ -1,44 +1,17 @@
 ---
-title: Hello World # 标题
-date: 2019/3/26 hh:mm:ss # 时间
+title: 欢迎来到 AuroraHiker‘s lab # 标题
+date: 2026/2/21 08:00:00 # 时间
 categories: # 分类
-- Diary
+- 关于
 tags: # 标签
-- PS3
-- Games
+- 欢迎
+- 介绍
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+欢迎来到 **AuroraHiker‘s lab**！
 
-### Create a new post
+这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。
 
-``` bash
-$ hexo new "My New Post"
-```
+博客地址：[AuroraHiker.github.io](https://AuroraHiker.github.io)
 
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱aurorahiker@163.com发送留言讨论！
