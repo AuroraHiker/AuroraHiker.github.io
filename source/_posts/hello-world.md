@@ -1,5 +1,5 @@
 ---
-title: 欢迎来到 AuroraHiker‘s lab # 标题
+title: 欢迎来到 AuroraHiker’s Code Trail # 标题
 date: 2026/2/21 08:00:00 # 时间
 categories: # 分类
 - 关于
@@ -8,7 +8,7 @@ tags: # 标签
 - 介绍
 ---
 
-欢迎来到 **AuroraHiker‘s lab**！
+欢迎来到 **AuroraHiker’s Code Trail**！
 
 这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。
 

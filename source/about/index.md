@@ -2,7 +2,7 @@
 title: about
 date: 2026-02-21 07:07:51
 ---
-欢迎来到 **AuroraHiker‘s lab**！
+欢迎来到 **AuroraHiker’s Code Trail**！
 
 这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。
 
