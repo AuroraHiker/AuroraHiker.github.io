@@ -22,13 +22,13 @@ date: 2026-02-21 09:15:09
 
 此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。
 **操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（初次加载可能需要等待几秒）。**
-![磁盘管理的打开](Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png)
+![磁盘管理的打开](/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png)
 识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。
-![分区图示](Windows_install/abd1f628566a3b622831cfc279fb6897.png)
+![磁盘管理界面](/Windows_install/abd1f628566a3b622831cfc279fb6897.png)
 磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。
-![分区操作](Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png)
+![可以进行的分区操作](/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png)
 
-==磁盘数据丢失的补救：==
+**磁盘数据丢失的补救：**
 - 黄金原则：一旦发生误删文件或误格式化分区，**请立即停止对该磁盘进行任何写入操作**（包括新建文件、下载、安装软件等）。
 - 原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。
 - 恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。
@@ -45,7 +45,7 @@ date: 2026-02-21 09:15:09
   - Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。
 
 2. 制作工具：推荐使用开源工具 Rufus，其兼容性好，制作成功率高。
-Rufus软件： [Rufus-3.17](Windows_install/rufus-3.17.exe)
+Rufus-3.17下载：https://aurorahiker.github.io/Windows_install/rufus-3.17.exe
 
 3. 操作步骤：
 
@@ -61,7 +61,7 @@ Rufus软件： [Rufus-3.17](Windows_install/rufus-3.17.exe)
 
   - 点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。
 
-![Rufus设置](Windows_install/image-20260221083929799.png)
+![Rufus界面设置](/Windows_install/image-20260221083929799.png)
 
 ---
 
@@ -82,27 +82,26 @@ Rufus软件： [Rufus-3.17](Windows_install/rufus-3.17.exe)
 2. 开始安装：
   - 重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。
 
-   ![](https://pic2.zhimg.com/v2-1b78873f72cd3d0f8ed2415ced1b108b_r.jpg)
-
+   ![](/Windows_install/wininstall1.png)
   - 点击【现在安装】。
 
-   ![](https://pic3.zhimg.com/v2-c4f3c5fda706e77d5f3b36e11350391a_1440w.jpg)
+   ![](/Windows_install/wininstall2.png)
 
   - 点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。
 
-   ![](https://pic2.zhimg.com/v2-340ff26d80d627e7ed9108d4e7435227_r.jpg)
+   ![](/Windows_install/wininstall3.png)
 
   - 选择操作系统版本，推荐选择专业版，然后点击【下一步】
 
-   ![](https://pic3.zhimg.com/v2-2a51e39210bf17c86d04ee268cf2b046_1440w.jpg)
+   ![](/Windows_install/wininstall4.png)
 
   -  勾选接受许可条款，点击【下一步】
-
-   ![](https://pica.zhimg.com/v2-77a3e49a638c313b5b6ac88c362e6836_1440w.jpg)
+  
+   ![](/Windows_install/wininstall5.png)
 
   - 选择【自定义：仅安装Windows(高级)】
 
-   ![](https://picx.zhimg.com/v2-16ab1953afa532552f9e9ce522133be7_1440w.jpg)
+    ![](/Windows_install/wininstall6.png)
 
   - 此时会进入硬盘分区列表界面。这里需要极其谨慎：
 
@@ -110,12 +109,12 @@ Rufus软件： [Rufus-3.17](Windows_install/rufus-3.17.exe)
 
   - - 情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。
 
-  - - ⚠️ 风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！ 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。
+  - - ⚠️ **风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！** 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。
 
-    ![](https://pic1.zhimg.com/v2-169573cc5686543d8206acc7ac3ceeec_1440w.jpg)
+     ![](/Windows_install/wininstall7.png)
 
   - 等待安装程序运行
 
-![](https://pic3.zhimg.com/v2-73a3a08458417c8c6bbf9b6f69b93e66_1440w.jpg)
+ ![](/Windows_install/wininstall8.png)
 
   - 安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。
