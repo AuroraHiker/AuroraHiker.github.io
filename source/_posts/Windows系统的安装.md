@@ -48,8 +48,9 @@ date: 2026-02-21 09:15:09
     - 一个 8GB 或以上容量的U盘。
     - Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。
 
-2. 制作工具：推荐使用开源工具 Rufus，其兼容性好，制作成功率高。
-Rufus-3.17：https://aurorahiker.github.io/Windows_install/rufus-3.17.exe
+2. 制作工具：
+    推荐使用开源工具 Rufus，其兼容性好，制作成功率高。
+    Rufus-3.17软件(可以直接使用，不需要安装)：[Rufus-3.17.exe](/Windows_install/rufus-3.17.exe)
 
 3. 操作步骤：
 
