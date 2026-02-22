@@ -1,11 +1,13 @@
 ---
 title: 欢迎来到 AuroraHiker’s Code Trail # 标题
 date: 2026/2/21 08:00:00 # 时间
+author: AuroraHiker
 categories: # 分类
 - 关于
 tags: # 标签
 - 欢迎
 - 介绍
+
 ---
 
 欢迎来到 **AuroraHiker’s Code Trail**！
