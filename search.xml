@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Windows实用办公软件</title>
+    <url>/2026/02/23/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="WOX的安装与配置"><a href="#WOX的安装与配置" class="headerlink" title="WOX的安装与配置"></a>WOX的安装与配置</h2><p>wox是发布于Github的开源软件，可用于快速使用浏览器搜索、计算器、快速翻译、快速输入cmd命令、快速查找文件、快捷键管理等多种功能，可以通过配置插件添加更多常用功能。<br>官网: <a href="http://www.wox.one/">http://www.wox.one/</a><br>GitHub仓库：<a href="https://github.com/Wox-launcher/Wox/releases">https://github.com/Wox-launcher/Wox/releases</a><br>官方说明文档：<a href="https://wox-launcher.github.io/Wox/guide/installation.html">https://wox-launcher.github.io/Wox/guide/installation.html</a><br><a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox-windows-amd64.exe">wox-2.0.0-windows-amd64.exe</a></p>
+<p>使用说明：</p>
+<ul>
+<li>Alt + 空格键唤出wox键入栏，wox键入栏和设置在不作为焦点应用时会隐藏在后台。</li>
+<li>wox自带everything软件，键入f + [文件名]，可以快速查找电脑中匹配[文件名]的所有文件。</li>
+</ul>
+<hr>
+<h2 id="markdown编辑器的安装与配置"><a href="#markdown编辑器的安装与配置" class="headerlink" title="markdown编辑器的安装与配置"></a>markdown编辑器的安装与配置</h2><p>markdown(MD)是一种轻量级的标记语言，能用纯文本的格式，写出带有排版功能的文档，这些文档最终可以轻松转换为美观的 HTML（网页）或 pdf。与word或wps相比操作更简单，MD有实时保存功能，消耗计算机内存更少。是一种非常适合用于实验记录和技术文档编辑的语言。</p>
+<p><strong>Joplin</strong><br>joplin与其他编辑器相比的优势在于对笔记的归纳汇总更直观并且支持云端实时同步。</p>
+<p><strong>注意：</strong> 根据个人的使用体验来说，不要在一个笔记内写太长或插入过多图片，可能会引发卡顿。应该是正在编辑的笔记会被读入内存，导致内存消耗过大的缘故。</p>
+<p>官网：<a href="https://joplinapp.org/">https://joplinapp.org/</a></p>
+<p><strong>Typora</strong></p>
+<p>Typora界面与joplin相比更加简洁美观。<br>Typora安装包：<br><a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/typora-setup-x64-20210407.exe">typora-setup-x64-20210407.exe</a></p>
+<p><em>注意：</em> 以前的Typora是免费的，但是现在版本的需要收费，所以千万不要升级。</p>
+<hr>
+<h2 id="Github加速器的安装"><a href="#Github加速器的安装" class="headerlink" title="Github加速器的安装"></a>Github加速器的安装</h2><p>Github是基于Git的代码托管平台和编程交流社区，这个从Github中可以获取大量开源软件、计算机教程，并且可以利用这个平台进行代码的云端存档和版本管理。然而国内与GitHub的连接并不稳定，通过watt tookit软件，可以实现在国内稳定访问Github。从windows自带的应用商店中可以轻松获取该软件：<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png" alt="从Microsoft store获取Watt tookit"></p>
+]]></content>
+      <categories>
+        <category>Windows使用技巧</category>
+      </categories>
+      <tags>
+        <tag>Windows使用技巧</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>欢迎来到 AuroraHiker’s Code Trail</title>
     <url>/2026/02/21/hello-world/</url>
     <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
 <p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
 <p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#x72;&#97;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#x61;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
 ]]></content>
       <categories>
         <category>关于</category>
@@ -14,111 +41,6 @@
       <tags>
         <tag>欢迎</tag>
         <tag>介绍</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机基础：从零认识计算机硬件</title>
-    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
-<hr>
-<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
-<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
-<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
-<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
-</ul>
-<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
-<hr>
-<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
-<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
-<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
-<li><strong>显存</strong>（下文详述）。</li>
-<li><strong>频率、架构</strong>：影响性能的关键。</li>
-</ul>
-<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
-<hr>
-<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
-<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
-<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
-<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
-</ul>
-<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
-<hr>
-<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
-<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
-<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
-</ul>
-<p><strong>与内存的区别</strong>：</p>
-<ul>
-<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
-<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
-<li>两者独立，不可互换。</li>
-</ul>
-<hr>
-<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
-<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
-<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
-</ul>
-<p><strong>接口与协议</strong>：</p>
-<ul>
-<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
-<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
-</ul>
-<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
-<hr>
-<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
-<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
-<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
-<ul>
-<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
-<li>内存：容量、速度、已使用插槽数。</li>
-<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
-<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
-</ul>
-</li>
-<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
-</li>
-<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
-</li>
-<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
-</li>
-</ol>
-<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
-<ol>
-<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#64;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
-<hr>
-<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
-]]></content>
-      <categories>
-        <category>计算机基础与实验平台搭建</category>
-      </categories>
-      <tags>
-        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -231,7 +153,7 @@
 </ul>
 </li>
 </ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#x6b;&#x65;&#114;&#x40;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#x61;&#104;&#105;&#x6b;&#x65;&#114;&#x40;&#x31;&#x36;&#x33;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -239,6 +161,111 @@
       <tags>
         <tag>计算机基础</tag>
         <tag>实验平台搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机基础：从零认识计算机硬件</title>
+    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
+<hr>
+<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
+<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
+<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
+<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
+</ul>
+<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
+<hr>
+<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
+<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
+<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
+<li><strong>显存</strong>（下文详述）。</li>
+<li><strong>频率、架构</strong>：影响性能的关键。</li>
+</ul>
+<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
+<hr>
+<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
+<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
+<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
+<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
+</ul>
+<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
+<hr>
+<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
+<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
+<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
+</ul>
+<p><strong>与内存的区别</strong>：</p>
+<ul>
+<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
+<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
+<li>两者独立，不可互换。</li>
+</ul>
+<hr>
+<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
+<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
+<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
+</ul>
+<p><strong>接口与协议</strong>：</p>
+<ul>
+<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
+<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
+</ul>
+<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
+<hr>
+<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
+<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
+<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
+<ul>
+<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
+<li>内存：容量、速度、已使用插槽数。</li>
+<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
+<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
+</ul>
+</li>
+<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
+</li>
+<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
+</li>
+<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
+</li>
+</ol>
+<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
+<ol>
+<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#114;&#111;&#114;&#97;&#104;&#x69;&#x6b;&#x65;&#114;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<hr>
+<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -277,40 +304,13 @@
 </tbody></table>
 <h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
 <p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#97;&#x68;&#105;&#x6b;&#101;&#114;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#114;&#x61;&#x68;&#105;&#107;&#101;&#114;&#x40;&#49;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
       </categories>
       <tags>
         <tag>实验平台搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows实用办公软件</title>
-    <url>/2026/02/22/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/</url>
-    <content><![CDATA[<h2 id="WOX的安装与配置"><a href="#WOX的安装与配置" class="headerlink" title="WOX的安装与配置"></a>WOX的安装与配置</h2><p>wox是发布于Github的开源软件，可用于快速使用浏览器搜索、计算器、快速翻译、快速输入cmd命令、快速查找文件、快捷键管理等多种功能，可以通过配置插件添加更多常用功能。<br>官网: <a href="http://www.wox.one/">http://www.wox.one/</a><br>GitHub仓库：<a href="https://github.com/Wox-launcher/Wox/releases">https://github.com/Wox-launcher/Wox/releases</a><br>官方说明文档：<a href="https://wox-launcher.github.io/Wox/guide/installation.html">https://wox-launcher.github.io/Wox/guide/installation.html</a><br><a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox-windows-amd64.exe">wox-2.0.0-windows-amd64.exe</a></p>
-<p>使用说明：</p>
-<ul>
-<li>Alt + 空格键唤出wox键入栏，wox键入栏和设置在不作为焦点应用时会隐藏在后台。</li>
-<li>wox自带everything软件，键入f + [文件名]，可以快速查找电脑中匹配[文件名]的所有文件。</li>
-</ul>
-<hr>
-<h2 id="markdown编辑器的安装与配置"><a href="#markdown编辑器的安装与配置" class="headerlink" title="markdown编辑器的安装与配置"></a>markdown编辑器的安装与配置</h2><p>markdown(MD)是一种轻量级的标记语言，能用纯文本的格式，写出带有排版功能的文档，这些文档最终可以轻松转换为美观的 HTML（网页）或 pdf。与word或wps相比操作更简单，MD有实时保存功能，消耗计算机内存更少。是一种非常适合用于实验记录和技术文档编辑的语言。</p>
-<p><strong>Joplin</strong><br>joplin与其他编辑器相比的优势在于对笔记的归纳汇总更直观并且支持云端实时同步。</p>
-<p><strong>注意：</strong> 根据个人的使用体验来说，不要在一个笔记内写太长或插入过多图片，可能会引发卡顿。应该是正在编辑的笔记会被读入内存，导致内存消耗过大的缘故。</p>
-<p>官网：<a href="https://joplinapp.org/">https://joplinapp.org/</a></p>
-<p><strong>Typora</strong></p>
-<p>Typora界面与joplin相比更加简洁美观。<br>Typora安装包：<br><a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/typora-setup-x64-20210407.exe">typora-setup-x64-20210407.exe</a></p>
-<p><em>注意：</em> 以前的Typora是免费的，但是现在版本的需要收费，所以千万不要升级。</p>
-<hr>
-<h2 id="Github加速器的安装"><a href="#Github加速器的安装" class="headerlink" title="Github加速器的安装"></a>Github加速器的安装</h2><p>Github是基于Git的代码托管平台和编程交流社区，这个从Github中可以获取大量开源软件、计算机教程，并且可以利用这个平台进行代码的云端存档和版本管理。然而国内与GitHub的连接并不稳定，通过watt tookit软件，可以实现在国内稳定访问Github。从windows自带的应用商店中可以轻松获取该软件：<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png" alt="从Microsoft store获取Watt tookit"></p>
-]]></content>
-      <categories>
-        <category>Windows使用技巧</category>
-      </categories>
-      <tags>
-        <tag>Windows使用技巧</tag>
       </tags>
   </entry>
 </search>
