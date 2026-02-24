@@ -27,7 +27,7 @@
 <meta property="og:description" content="分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。 在众多分子动力学模拟软件中，GROMACS(GROning">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-24T14:40:18.000Z">
-<meta property="article:modified_time" content="2026-02-24T19:25:09.224Z">
+<meta property="article:modified_time" content="2026-02-24T19:26:27.881Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="分子动力学模拟">
 <meta property="article:tag" content="实验平台搭建">
@@ -369,7 +369,7 @@
 <h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
 <ul>
 <li><p>第一步：检查当前 CMake 版本</p>
-  <figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">cmake <span class="hljs-comment">--version </span><br></code></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
 <p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
 </li>
 <li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
@@ -377,12 +377,14 @@
 </ul>
 <hr>
 <h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a target="_blank" rel="noopener" href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs &#123;bash&#125;"># 进入存放软件的目录，例如 ~/software<br>cd ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
 
 <p>下载完成后，检查文件是否存在：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs &#123;bash&#125;">ls -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。<br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br><br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br><br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br><br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br><br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure></p>
+<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
+<pre><code class="hljs"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br><br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br><br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br><br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br><br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
+</code></pre>
 <p><strong>编译选项解释：</strong></p>
 <ul>
 <li>-DGMX_BUILD_OWN_FFTW&#x3D;ON：让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
@@ -406,7 +408,7 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#x61;&#104;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 
                 
               </div>
