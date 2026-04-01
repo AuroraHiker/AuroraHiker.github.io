@@ -16,7 +16,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="AuroraHiker">
+  <meta name="author" content="鸟剑飞、AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
     <meta name="description" content="分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。 在众多分子动力学模拟软件中，GROMACS(GROning">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。 在众多分子动力学模拟软件中，GROMACS(GROning">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-24T14:40:18.000Z">
-<meta property="article:modified_time" content="2026-02-24T19:57:23.749Z">
+<meta property="article:modified_time" content="2026-04-01T09:12:31.107Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="分子动力学模拟">
 <meta property="article:tag" content="实验平台搭建">
@@ -211,7 +211,7 @@
     
       <span class="post-meta mr-2">
         <i class="iconfont icon-author" aria-hidden="true"></i>
-        AuroraHiker
+        鸟剑飞、AuroraHiker
       </span>
     
     
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          2.4k 字
         
       </span>
     
@@ -288,8 +288,8 @@
 <p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
 <p>本文参考GROMACS的官方说明文档(版本2026.0)：<a target="_blank" rel="noopener" href="https://manual.gromacs.org/documentation/current/index.html">https://manual.gromacs.org/documentation/current/index.html</a></p>
 <hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a></p>
-<p><strong>GROMACS硬件配置速查表:</strong></p>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>笔者参照GROMACS官方对运行环境的要求，整理了一份硬件配置速查表，并附上了自己的配置，供大家参考。需要说明的是，这份配置目前仅为理论推测，欢迎各位读者结合实际使用情况提供反馈。</p>
+<p><strong>GROMACS的硬件配置速查表:</strong></p>
 <table>
 <thead>
 <tr>
@@ -297,47 +297,47 @@
 <th>最低要求</th>
 <th>推荐配置(入门)</th>
 <th>推荐配置(进阶)</th>
+<th>笔者的配置</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>CPU 架构</td>
-<td>x86_64(Intel&#x2F;AMD)</td>
-<td>同左</td>
-<td>同左</td>
-</tr>
-<tr>
-<td>CPU 核心数</td>
-<td>4 核</td>
-<td>8 核</td>
-<td>16 核或更多</td>
+<td>CPU</td>
+<td>Intel Core i5-3330, AMD Ryzen 3 1200</td>
+<td>Intel Core i5-8400, AMD Ryzen 5 2600</td>
+<td>Intel Core i7-13700K, AMD Ryzen 7</td>
+<td>AMD Ryzen 7 9700X</td>
 </tr>
 <tr>
 <td>内存</td>
-<td>8 GB</td>
-<td>16 GB</td>
-<td>32 GB 或更多</td>
+<td>8 GB RAM</td>
+<td>16 GB RAM</td>
+<td>32 GB RAM</td>
+<td>64 GB RAM</td>
 </tr>
 <tr>
-<td>硬盘</td>
-<td>20 GB 空闲</td>
-<td>SSD + 100 GB</td>
-<td>大容量 SSD&#x2F;NVMe</td>
+<td>硬盘(可用空间，推荐固态硬盘)</td>
+<td>20 GB</td>
+<td>100 GB</td>
+<td>100 GB以上</td>
+<td>20 GB</td>
 </tr>
 <tr>
 <td>GPU(可选)</td>
-<td>无(纯 CPU 跑)</td>
-<td>NVIDIA GTX 1050 或更新(需支持 CUDA，计算能力 ≥5.0)</td>
-<td>NVIDIA RTX 3060 以上或专业卡</td>
+<td>无(纯CPU运行)</td>
+<td>NVIDIA GTX 1050以上(需更新CUDA，计算能力≥5)</td>
+<td>NVIDIA RTX 3060以上或专业卡</td>
+<td>NVIDIA RTX 5060Ti 16 GB</td>
 </tr>
 <tr>
 <td>操作系统</td>
-<td>Linux(推荐)、Windows、macOS</td>
-<td>Linux(Ubuntu)</td>
-<td>同左</td>
+<td>Linux、Windows、macOS</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Windows 10 WSL Ubuntu 20.04</td>
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等你熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
+<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
 </blockquote>
 <p>GROMACS 在编译时会自动检测 CPU 支持哪些指令集(如 SSE4.1、AVX2 等)，这些指令集越新，计算越快。你不需要手动设置，但了解自己的 CPU 世代有助于判断性能。</p>
 <ul>
@@ -405,7 +405,7 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#x72;&#x61;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#54;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#105;&#x6b;&#101;&#x72;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 
                 
               </div>
@@ -460,7 +460,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>AuroraHiker</div>
+          <div>鸟剑飞、AuroraHiker</div>
         </div>
       
       
