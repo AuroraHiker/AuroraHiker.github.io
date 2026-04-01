@@ -35,8 +35,8 @@ date: 2026-02-24 22:40:18
 |------|-----------|--------------|-------------|-------------|
 | CPU | Intel Core i5-3330, AMD Ryzen 3 1200 | Intel Core i5-8400, AMD Ryzen 5 2600 | Intel Core i7-13700K, AMD Ryzen 7 | AMD Ryzen 7 9700X| 
 | 内存 | 8 GB RAM | 16 GB RAM | 32 GB RAM | 64 GB RAM |
-| 硬盘(可用空间，推荐固态硬盘) | 20 GB | 100 GB | 100 GB以上 | 20 GB |
-| GPU(可选) | 无(纯CPU运行) | NVIDIA GTX 1050以上(需更新CUDA，计算能力≥5) | NVIDIA RTX 3060以上或专业卡 | NVIDIA RTX 5060Ti 16 GB |
+| 硬盘(可用空间，推荐固态硬盘) | 20 GB | 100 GB | 100 GB以上 | 固态 > 100 GB、机械 > 1 TB|
+| GPU(可选，需更新CUDA) | 无(纯CPU运行) | NVIDIA GTX 1050以上 | NVIDIA RTX 3060以上或专业卡 | NVIDIA RTX 5060Ti 16 GB |
 | 操作系统 | Linux、Windows、macOS | Linux(Ubuntu 22.04以上版本) | Linux(Ubuntu 22.04以上版本) | Windows 10 WSL Ubuntu 20.04 |
 
 > **对于零基础初学者**：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。
