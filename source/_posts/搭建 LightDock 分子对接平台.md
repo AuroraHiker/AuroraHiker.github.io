@@ -41,7 +41,7 @@ LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置�
 
 LightDock v0.9.4 支持 macOS 与 GNU/Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：lightdocking@gmail.com) 参与 Windows 版的测试与开发。
 
-笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。后续笔者将在博客中发布详细的部署教程。
+笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：{% post_link 从零搭建Windows生信分析平台_WSL的安装配置 %}。
 
 支持的具体系统版本如下：
 
@@ -72,7 +72,7 @@ LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其�
 
 配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。
 
-```{bash}
+```bash
 # 创建并激活虚拟环境
 conda create -n lightdock python=3.8
 conda activate lightdock
@@ -80,7 +80,7 @@ conda activate lightdock
 
 若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：
 
-```{bash}
+```bash
 pip install lightdock
 ```
 
