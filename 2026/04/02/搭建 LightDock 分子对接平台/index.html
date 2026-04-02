@@ -19,36 +19,26 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。  1.Wi">
+    <meta name="description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows系统的安装">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:title" content="LightDock分子对接的实验平台搭建">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/04/02/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。  1.Wi">
+<meta property="og:description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/abd1f628566a3b622831cfc279fb6897.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/image-20260221083929799.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall1.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall2.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall3.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall4.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall5.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall6.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall7.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall8.png">
-<meta property="article:published_time" content="2026-02-21T01:15:09.000Z">
-<meta property="article:modified_time" content="2026-02-24T19:57:31.838Z">
+<meta property="og:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
+<meta property="article:published_time" content="2026-04-02T01:44:01.000Z">
+<meta property="article:modified_time" content="2026-04-02T02:33:06.931Z">
 <meta property="article:author" content="AuroraHiker">
+<meta property="article:tag" content="LightDock">
+<meta property="article:tag" content="分子对接">
 <meta property="article:tag" content="实验平台搭建">
-<meta property="article:tag" content="计算机基础">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aurorahiker.github.io/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png">
+<meta name="twitter:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
   
   
   
-  <title>Windows系统的安装 - AuroraHiker’s Code Trail</title>
+  <title>LightDock分子对接的实验平台搭建 - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Windows系统的安装"></span>
+            <span id="subtitle" data-typed-text="LightDock分子对接的实验平台搭建"></span>
           
         </div>
 
@@ -230,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-02-21 09:15" pubdate>
-          2026年2月21日 上午
+        <time datetime="2026-04-02 09:44" pubdate>
+          2026年4月2日 上午
         </time>
       </span>
     
@@ -242,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.1k 字
         
       </span>
     
@@ -253,7 +243,7 @@
         
         
         
-          16 分钟
+          9 分钟
         
       </span>
     
@@ -290,119 +280,85 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Windows系统的安装</h1>
+            <h1 id="seo-header">LightDock分子对接的实验平台搭建</h1>
             
             
               <div class="markdown-body">
                 
-                <p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+                <p><img src="/./LightDock_install/lightdock_logo.png" srcset="/img/loading.gif" lazyload></p>
+<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a target="_blank" rel="noopener" href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
+<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
+<p>本教程基于 LightDock 官方基础知识文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
 <hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" srcset="/img/loading.gif" lazyload alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" srcset="/img/loading.gif" lazyload alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" srcset="/img/loading.gif" lazyload alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
+<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
+<p>笔者的硬件配置如下：</p>
 <ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+<li>CPU：AMD Ryzen 7 9700X</li>
+<li>内存：64 GB RAM</li>
 </ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
-<ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p><img src="/Windows_install/image-20260221083929799.png" srcset="/img/loading.gif" lazyload alt="Rufus界面设置"></p>
+<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
 <hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
-<ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
-</li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
-</li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
-</li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
-</li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
-</li>
-</ul>
-</li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png" srcset="/img/loading.gif" lazyload></li>
-</ul>
-</li>
-</ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#108;&#x69;&#x67;&#x68;&#x74;&#x64;&#111;&#99;&#107;&#105;&#110;&#103;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。后续笔者将在博客中发布详细的部署教程。</p>
+<p>支持的具体系统版本如下：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>macOS</td>
+<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
+</tr>
+<tr>
+<td>GNU&#x2F;Linux</td>
+<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td><a target="_blank" rel="noopener" href="http://www.numpy.org/">http://www.numpy.org/</a></td>
+</tr>
+<tr>
+<td>Scipy</td>
+<td><a target="_blank" rel="noopener" href="http://www.scipy.org/">http://www.scipy.org/</a></td>
+</tr>
+<tr>
+<td>Cython</td>
+<td><a target="_blank" rel="noopener" href="http://cython.org/">http://cython.org/</a></td>
+</tr>
+<tr>
+<td>ProDy</td>
+<td><a target="_blank" rel="noopener" href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
+</tr>
+<tr>
+<td>Freesasa</td>
+<td><a target="_blank" rel="noopener" href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
+<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs &#123;bash&#125;"># 创建并激活虚拟环境<br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
+
+<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs &#123;bash&#125;">pip install lightdock<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#x61;&#104;&#105;&#107;&#x65;&#x72;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>。</p>
+<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a target="_blank" rel="noopener" href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
 
                 
               </div>
@@ -421,7 +377,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="category-chain-item">计算机基础与实验平台搭建</a>
+  <a href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="category-chain-item">分子对接</a>
   
   
 
@@ -438,7 +394,9 @@
       
         <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="print-no-link">#计算机基础</a>
+        <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="print-no-link">#分子对接</a>
+      
+        <a href="/tags/LightDock/" class="print-no-link">#LightDock</a>
       
     </div>
   
@@ -450,8 +408,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Windows系统的安装</div>
-      <div>https://aurorahiker.github.io/2026/02/21/Windows系统的安装/</div>
+      <div>LightDock分子对接的实验平台搭建</div>
+      <div>https://aurorahiker.github.io/2026/04/02/搭建 LightDock 分子对接平台/</div>
     </div>
     <div class="license-meta">
       
@@ -463,7 +421,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年2月21日</div>
+          <div>2026年4月2日</div>
         </div>
       
       
@@ -495,18 +453,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E9%80%82%E5%90%88%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建适合自己的生信分析平台">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">如何搭建适合自己的生信分析平台</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">
-                        <span class="hidden-mobile">计算机基础：从零认识计算机硬件</span>
+                      <a href="/2026/02/24/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" title="GROMACS分子动力学模拟的实验平台搭建">
+                        <span class="hidden-mobile">GROMACS分子动力学模拟的实验平台搭建</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
