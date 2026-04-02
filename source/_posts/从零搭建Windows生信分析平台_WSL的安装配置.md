@@ -29,6 +29,9 @@ date: 2026-04-02 17:40:19
 
 ### 1.1 WSL2 ubuntu安装
 
+- **系统版本要求**
+本安装教程仅适用于 Windows 10 版本 2004 及更高版本(含 Windows 11)。若您使用的是旧版 Windows 系统，或需要了解本文未提及的安装细节，请参考 WSL 官方教程：https://learn.microsoft.com/zh-cn/windows/wsl/install
+
 - **启用“适用于 Linux 的 Windows 子系统”：**
 以管理员身份运行 Windows PowerShell，执行以下命令：
 ```powershell
