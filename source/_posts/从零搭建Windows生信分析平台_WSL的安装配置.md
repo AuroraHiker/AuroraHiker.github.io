@@ -62,19 +62,20 @@ wsl --shutdown
 
 - 导出需要迁移的Ubuntu子系统
 ```powershell
-wsl --export Ubuntu(版本号) D:\wsl_backup\Ubuntu.tar # 该文件也可作为备份
+wsl --export <发行版名称> D:\wsl_backup\Ubuntu.tar # 该文件也可作为备份
 ```
+> 请将 <发行版名称> 替换为与 `wsl -l -v` 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.
 
 - 确认导出.tar文件后，注销原来的版本
 ```powershell
-wsl --unregister Ubuntu(版本号)
+wsl --unregister <发行版名称>
 # 查看是否注销
 wsl -l -v
 ```
 
 - 在目标盘符(如D盘)创建新目录并导入
 ```powershell
-wsl --import Ubuntu-20.04(此处严格按照wsl -l -v的输出填写) D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar --version 2
+wsl --import <发行版名称> D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar --version 2
 ```
 
 - 设置默认登录用户(可选，否则默认以 root 登录)
