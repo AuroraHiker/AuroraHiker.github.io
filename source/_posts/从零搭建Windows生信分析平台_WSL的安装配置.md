@@ -6,6 +6,7 @@ tags:
 series: 计算机基础与实验平台构建
 categories:
   - 计算机基础与实验平台搭建
+author: Rising Sun、AuroraHiker
 date: 2026-04-02 17:40:19
 ---
 
