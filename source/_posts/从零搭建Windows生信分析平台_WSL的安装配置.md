@@ -74,7 +74,7 @@ wsl -l -v
 
 - 在目标盘符(如D盘)创建新目录并导入
 ```powershell
-wsl --import Ubuntu(版本号) D:\WSL\Ubuntu D:\wsl_backup\ubuntu.tar --version 2
+wsl --import Ubuntu-20.04(此处严格按照wsl -l -v的输出填写) D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar --version 2
 ```
 
 - 设置默认登录用户(可选，否则默认以 root 登录)
@@ -140,7 +140,7 @@ deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe m
 sudo apt update
 sudo apt upgrade
 sudo apt install aptitude #智能安装、升级、降级或卸载依赖的软件包
-sudo aptitude isntall aria2 #多线程下载软件
+sudo aptitude install aria2 #多线程下载软件
 ```
 
 ---
@@ -216,7 +216,8 @@ sudo chsh -s /bin/zsh
 
 ### 4.2 Oh My Zsh 安装
 
-Oh My Zsh 是一个开源的 Zsh 配置管理框架，可简化插件与主题的管理。使用清华镜像源下载安装：
+Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。
+> 注意：执行 git clone 时，若终端出现类似 `remote: Waiting in queue... (Position: 881)` 的提示，说明镜像服务器正在排队处理请求，请耐心等待。
 
 ```zsh
 git clone https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git
