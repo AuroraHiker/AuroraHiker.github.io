@@ -8,7 +8,7 @@ series:
   - 计算机基础与实验平台搭建
 categories:
   - 图神经网络
-author: AuroraHiker
+author: 鸟剑飞、AuroraHiker
 date: 2026-05-05 15:21:29
 ---
 
@@ -27,7 +27,7 @@ date: 2026-05-05 15:21:29
 | 组件 | 版本/说明 |
 |------|----------|
 | GPU | NVIDIA GeForce RTX 5060 Ti |
-| 驱动版本 | 581.57 |
+| 驱动版本 | 581.57 (包含GameReady版和Studio版，后者更稳定)|
 | 环境管理器 | Conda 24.11.0 |
 | Python | 3.10.16 |
 | pip | 26.0.1 |
