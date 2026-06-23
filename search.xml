@@ -217,7 +217,7 @@
 <p>如果在后续使用中需要创建虚拟环境，可使用：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
 
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#x72;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#97;&#104;&#105;&#107;&#101;&#x72;&#64;&#x31;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -229,7 +229,7 @@
   </entry>
   <entry>
     <title>LightDock分子对接的实验平台搭建</title>
-    <url>/2026/04/02/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
+    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
     <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
 <p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
 <p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
@@ -244,7 +244,7 @@
 </ul>
 <p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
 <hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#x69;&#x67;&#104;&#116;&#x64;&#111;&#99;&#107;&#x69;&#110;&#103;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#105;&#103;&#104;&#x74;&#x64;&#111;&#x63;&#x6b;&#x69;&#110;&#103;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
 <p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
 <p>支持的具体系统版本如下：</p>
 <table>
@@ -302,7 +302,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
 
 <hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#117;&#x72;&#111;&#114;&#x61;&#104;&#x69;&#107;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>。</p>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#x61;&#104;&#x69;&#x6b;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>。</p>
 <p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
 ]]></content>
       <categories>
@@ -316,7 +316,7 @@
   </entry>
   <entry>
     <title>GROMACS分子动力学模拟的实验平台搭建</title>
-    <url>/2026/02/24/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
+    <url>/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
 <p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
 <p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
@@ -440,7 +440,7 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#111;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#x72;&#64;&#49;&#54;&#x33;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#x61;&#x68;&#105;&#107;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 ]]></content>
       <categories>
         <category>GROMACS分子动力学模拟</category>
@@ -452,11 +452,11 @@
   </entry>
   <entry>
     <title>欢迎来到 AuroraHiker’s Code Trail</title>
-    <url>/2026/02/21/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
+    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
     <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
 <p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
 <p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#97;&#104;&#x69;&#107;&#101;&#114;&#64;&#49;&#x36;&#51;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#101;&#x72;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
 ]]></content>
       <categories>
         <category>关于</category>
@@ -507,7 +507,7 @@
 <h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
 <p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
 <hr>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#104;&#105;&#107;&#x65;&#114;&#x40;&#49;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#114;&#97;&#104;&#105;&#x6b;&#x65;&#x72;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -626,7 +626,7 @@
 </ul>
 </li>
 </ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#104;&#105;&#107;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -730,7 +730,7 @@
 <li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#97;&#x68;&#x69;&#107;&#101;&#x72;&#64;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#97;&#x68;&#x69;&#x6b;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
 <hr>
 <p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
 ]]></content>
@@ -959,7 +959,7 @@
   </entry>
   <entry>
     <title>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</title>
-    <url>/2026/02/23/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</url>
+    <url>/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<p>在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。</p>
 <hr>
 <h2 id="WOX：极速启动与搜索工具"><a href="#WOX：极速启动与搜索工具" class="headerlink" title="WOX：极速启动与搜索工具"></a>WOX：极速启动与搜索工具</h2><p>Wox 是一款开源免费的生产力工具，类似于 macOS 上的 Alfred。它可以通过快捷键快速唤出输入框，实现搜索文件、运行程序、计算数学表达式、管理剪贴板、执行命令行等多种功能。通过安装插件，还能扩展更多实用能力。</p>
@@ -1010,7 +1010,7 @@
 </li>
 </ul>
 <hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#x72;&#x61;&#x68;&#105;&#107;&#x65;&#114;&#64;&#49;&#x36;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
+<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
 <hr>
 <p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
 ]]></content>
