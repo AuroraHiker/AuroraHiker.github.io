@@ -9,7 +9,6 @@ series:
 categories:
   - 图神经网络
 author: 鸟剑飞、AuroraHiker
-date: 2026-05-05 15:21:29
 ---
 
 最近在使用 RTX 5060 Ti 训练图神经网络模型 (GNN) 时，发现在新硬件上配置环境比预想中要多花一些功夫。这篇博客记录了从零开始搭建 PyTorch Geometric (PyG) 环境的完整过程，适用于 WSL2或原生 Ubuntu 20.04 及以上版本的系统，可作为一份新手友好的 checklist。跟随这篇博客完成配置，你将得到：

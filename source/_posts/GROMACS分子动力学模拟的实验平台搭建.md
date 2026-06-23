@@ -9,7 +9,6 @@ series:
 categories:
   - GROMACS分子动力学模拟
 author: 鸟剑飞、AuroraHiker
-date: 2026-02-24 22:40:18
 ---
 
 

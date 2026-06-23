@@ -7,7 +7,6 @@ series: 计算机基础与实验平台构建
 categories:
   - 计算机基础与实验平台搭建
 author: Rising Sun、AuroraHiker
-date: 2026-04-02 17:40:19
 ---
 
 欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。
