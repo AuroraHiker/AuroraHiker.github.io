@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://aurorahiker.github.io/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/GitHub%E6%B3%A8%E5%86%8C.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/GitHubSSH%E5%AF%86%E9%92%A5%E9%85%8D%E7%BD%AE.png">
 <meta property="article:published_time" content="2026-06-24T11:53:28.000Z">
-<meta property="article:modified_time" content="2026-06-24T12:01:51.268Z">
+<meta property="article:modified_time" content="2026-06-24T12:10:12.069Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="个人博客搭建指南">
 <meta name="twitter:card" content="summary_large_image">
@@ -360,19 +360,23 @@
 <p><strong>交互过程</strong></p>
 <p>按下回车后，终端会依次提示：</p>
 <ol>
-<li><strong>保存路径</strong></li>
+<li><p><strong>保存路径</strong>  </p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Enter file in which to save the key (/home/user/.ssh/id_rsa):<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>直接按 <strong>回车</strong>，则使用默认路径：<code>~/.ssh/id_rsa</code>（私钥）和 <code>~/.ssh/id_rsa.pub</code>（公钥）。  </li>
+<li>若想自定义路径（例如多密钥管理），可输入路径后回车。</li>
+</ul>
+</li>
+<li><p><strong>密码短语</strong>  </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Enter passphrase (empty for no passphrase):<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>可输入密码保护私钥（更安全，但每次使用需输入）。</li>
+<li>直接按 <strong>回车</strong> 则为空密码（便于自动化，但需妥善保管私钥文件）。</li>
+</ul>
+</li>
 </ol>
- <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">Enter <span class="hljs-keyword">file</span> in which to save the key (<span class="hljs-regexp">/home/u</span>ser<span class="hljs-regexp">/.ssh/i</span>d_rsa):<br></code></pre></td></tr></table></figure>
-<pre><code class="hljs"> - 直接按 **回车**，则使用默认路径：`~/.ssh/id_rsa`（私钥）和 `~/.ssh/id_rsa.pub`（公钥）。  
- - 若想自定义路径（例如多密钥管理），可输入路径后回车。
-</code></pre>
-<ol start="2">
-<li><strong>密码短语</strong></li>
-</ol>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Enter</span> passphrase (empty for <span class="hljs-literal">no</span> passphrase):<br></code></pre></td></tr></table></figure>
-<pre><code class="hljs"> - 可输入密码保护私钥（更安全，但每次使用需输入）。
- - 直接按 **回车** 则为空密码（便于自动化，但需妥善保管私钥文件）。
-</code></pre>
 <p><strong>生成的文件说明</strong></p>
 <table>
 <thead>
@@ -512,7 +516,7 @@
 <hr>
 <h1 id="5-写在最后"><a href="#5-写在最后" class="headerlink" title="5. 写在最后"></a>5. 写在最后</h1><p>从注册 GitHub 到在浏览器里看到自己的站点，整个过程看似步骤繁多，但拆解开其实就是“工具安装 → 密钥配对 → 仓库创建 → 本地部署”这条主线。每完成一步，离那个属于自己的小空间就近了一点，这种逐步推进的踏实感，大概是搭建博客独有的乐趣。</p>
 <p>更重要的是，这一套流程并不只是为博客服务——熟悉了 Git 和 Hexo 的工作流，往后任何静态站点的管理都会顺手很多。遇到报错也别急，顺着提示去查文档、改配置，多试几次，那些红字就变成你的经验值了。</p>
-<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
+<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#x61;&#104;&#x69;&#107;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
 <p>至于博客外观和交互细节，笔者打算在下一篇里专门聊 <strong>Fluid 主题的完整配置</strong>——从导航栏定制、评论系统接入，到响应式优化，都会一步步写清楚。感兴趣的话，记得来看。</p>
 <hr>
 <p><strong>参考资源</strong></p>
