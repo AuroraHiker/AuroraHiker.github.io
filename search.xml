@@ -126,7 +126,7 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#x72;&#x61;&#104;&#105;&#107;&#101;&#x72;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#101;&#x72;&#x40;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 ]]></content>
       <categories>
         <category>GROMACS分子动力学模拟</category>
@@ -134,353 +134,6 @@
       <tags>
         <tag>分子动力学模拟</tag>
         <tag>实验平台搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从零搭建Windows生信分析平台——WSL的安装配置</title>
-    <url>/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-WSL2-ubuntu安装和迁移"><a href="#1-WSL2-ubuntu安装和迁移" class="headerlink" title="1. WSL2 ubuntu安装和迁移"></a>1. WSL2 ubuntu安装和迁移</h2><p><strong>注意：</strong></p>
-<ul>
-<li>WSL2 Ubuntu 子系统默认安装在 C 盘，<strong>安装时无法更改路径。</strong></li>
-<li><strong>磁盘空间要求：</strong><ul>
-<li>仅安装基础 Ubuntu 系统约需 5~10 GB。</li>
-<li>若后续安装生信软件(如 Conda、LightDock 等)并存储数据，建议 C 盘剩余空间 ≥ 30 GB。</li>
-<li><strong>当 C 盘剩余空间低于 20 GB 时，强烈建议将子系统迁移到其他非系统盘</strong>，否则可能导致系统运行缓慢、更新失败甚至无法启动。</li>
-</ul>
-</li>
-<li><strong>建议安装或迁移至固态硬盘(SSD)：</strong> SSD 具有更快的读写速度，能显著提升 WSL 子系统的启动速度、软件安装效率及 I&#x2F;O 密集型操作(如编译、数据处理)的运行性能。</li>
-<li><strong>反复装卸的风险：</strong><ul>
-<li>多次卸载并重新安装 Ubuntu 子系统可能产生残留配置文件或注册表项，导致新安装的系统出现异常或安装失败。</li>
-<li>卸载时若误删除 WSL 相关的系统文件，可能影响其他 WSL 发行版的正常运行，甚至导致 Windows 系统文件损坏。</li>
-</ul>
-</li>
-<li><strong>迁移的另一用途：拷贝系统到新电脑。</strong> 通过 <code>wsl --export</code> 导出 tar 文件，将该文件复制到新电脑后，使用 <code>wsl --import</code> 导入，即可在新电脑上获得完全一致的 Ubuntu 环境(包括已安装的软件、配置等)，无需重新配置。非常适合在多台设备间同步生信分析环境。</li>
-</ul>
-<h3 id="1-1-WSL2-ubuntu安装"><a href="#1-1-WSL2-ubuntu安装" class="headerlink" title="1.1 WSL2 ubuntu安装"></a>1.1 WSL2 ubuntu安装</h3><ul>
-<li><p><strong>系统版本要求</strong><br>本安装教程仅适用于 Windows 10 版本 2004 及更高版本(含 Windows 11)。若您使用的是旧版 Windows 系统，或需要了解本文未提及的安装细节，请参考 WSL 官方教程：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
-</li>
-<li><p><strong>启用“适用于 Linux 的 Windows 子系统”：</strong><br>以管理员身份运行 Windows PowerShell，执行以下命令：</p>
-</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows-Subsystem-Linux</span> /all /norestart<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>安装 WSL 并升级至 WSL2：</strong></li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--install</span><br>wsl <span class="hljs-literal">--update</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" alt="在 Microsoft Store 中搜索 Ubuntu"></li>
-</ul>
-<h3 id="1-2-Ubuntu子系统的迁移"><a href="#1-2-Ubuntu子系统的迁移" class="headerlink" title="1.2 Ubuntu子系统的迁移"></a>1.2 Ubuntu子系统的迁移</h3><ul>
-<li>查看wsl状态</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>关掉正在运行的wsl</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>导出需要迁移的Ubuntu子系统</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="hljs-comment"># 该文件也可作为备份</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>请将 &lt;发行版名称&gt; 替换为与 <code>wsl -l -v</code> 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.</p>
-</blockquote>
-<ul>
-<li>确认导出.tar文件后，注销原来的版本</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--unregister</span> &lt;发行版名称&gt;<br><span class="hljs-comment"># 查看是否注销</span><br>wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在目标盘符(如D盘)创建新目录并导入</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="hljs-literal">--version</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>设置默认登录用户(可选，否则默认以 root 登录)</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">ubuntu config <span class="hljs-literal">--default-user</span> 你的用户名<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>验证迁移是否成功</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--list</span> <span class="hljs-literal">--verbose</span><br>wsl<br></code></pre></td></tr></table></figure>
-
-<p>迁移完成后，原 C 盘中的子系统文件已被清理，新系统位于 D 盘(或其他分区)。后续所有操作均在新位置进行，无需重新配置环境。</p>
-<hr>
-<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" alt="设置用户名和密码"></p>
-<h3 id="2-1-更换国内镜像源并更新系统"><a href="#2-1-更换国内镜像源并更新系统" class="headerlink" title="2.1 更换国内镜像源并更新系统"></a>2.1 更换国内镜像源并更新系统</h3><ul>
-<li><strong>备份原始配置文件</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>编辑源文件：</strong><br>使用 vim 打开配置文件：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
-<p>打开后，按 <code>ggdG</code>(依次按 g、g、d、G 键)可快速删除全部内容，然后按 <code>i</code> 进入插入模式，将以下清华镜像源内容粘贴进去(以 Ubuntu 22.04 为例)：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><br>deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse<br><span class="hljs-comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><br><span class="hljs-comment"># 预发布软件源，不建议启用</span><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br></code></pre></td></tr></table></figure>
-
-<p>粘贴完成后，按 <code>Esc</code> 键退出插入模式，输入 <code>:wq</code> 保存并退出 vim。</p>
-<blockquote>
-<p>提示：若编辑过程中误操作想放弃保存，可按 <code>Esc</code> 后输入 <code>:q!</code> 强制退出。</p>
-</blockquote>
-<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt upgrade<br><span class="hljs-built_in">sudo</span> apt install aptitude <span class="hljs-comment">#智能安装、升级、降级或卸载依赖的软件包</span><br><span class="hljs-built_in">sudo</span> aptitude install aria2 <span class="hljs-comment">#多线程下载软件</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-图形界面的安装和配置"><a href="#3-图形界面的安装和配置" class="headerlink" title="3. 图形界面的安装和配置"></a>3. 图形界面的安装和配置</h2><blockquote>
-<p><strong>说明：</strong> 笔者个人感觉 Ubuntu 图形界面运行较慢且体验一般，不如在 Ubuntu 中安装 Jupyter Notebook 进行文件操作更方便。本部分仅供有图形界面需求的读者参考。</p>
-</blockquote>
-<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xorg<br><span class="hljs-built_in">sudo</span> aptitude install xfce4<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-2-安装并配置xrdp"><a href="#3-2-安装并配置xrdp" class="headerlink" title="3.2 安装并配置xrdp"></a>3.2 安装并配置xrdp</h3><p>Xrdp 通过远程桌面的方式来访问另外一台主机</p>
-<ul>
-<li><strong>安装</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xrdp<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>设置使用3390端口</strong></li>
-</ul>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">sudo sed <span class="hljs-punctuation">-</span>i &#x27;s/port=<span class="hljs-number">3389</span>/port=<span class="hljs-number">3390</span>/g&#x27; /etc/xrdp/xrdp.ini<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>向xsession中写入xfce4-session</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">echo</span> xfce4-session &gt;~/.xsession<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>重启xrdp服务</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> service xrdp restart<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-3-Windows-端远程桌面连接"><a href="#3-3-Windows-端远程桌面连接" class="headerlink" title="3.3 Windows 端远程桌面连接"></a>3.3 Windows 端远程桌面连接</h3><p>在 Windows 中打开“远程桌面连接”，输入以下信息：</p>
-<ul>
-<li>计算机：localhost:3390</li>
-<li>用户名：Ubuntu 用户名</li>
-</ul>
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" alt="远程桌面连接配置"></p>
-<p><strong>注意：</strong> 若连接失败，可尝试在 Ubuntu 中重启 xrdp 服务后重试。</p>
-<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" alt="远程桌面连接成功"></p>
-<hr>
-<h2 id="4-Zsh-与-Oh-My-Zsh-的安装与配置"><a href="#4-Zsh-与-Oh-My-Zsh-的安装与配置" class="headerlink" title="4. Zsh 与 Oh My Zsh 的安装与配置"></a>4. Zsh 与 Oh My Zsh 的安装与配置</h2><p><strong>关于 Zsh 的说明：</strong><br>Zsh(Z shell)是一种功能更强大的 Shell，相较于系统默认的 Bash，它提供了更丰富的特性：智能命令补全、语法高亮、主题自定义、强大的插件机制等。结合 Oh My Zsh 框架，可以极大提升终端使用效率。<br><strong>若您不希望配置 Zsh</strong>，也可以直接使用默认的 Bash 完成后续 Conda 等软件的安装与配置，跳过本章节即可。使用 Bash 时，配置文件为 <code>~/.bashrc</code>，后续操作中的 <code>~/.zshrc</code> 请相应替换为 <code>~/.bashrc</code>。</p>
-<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install zsh<br>zsh  <span class="hljs-comment"># 运行一次以完成初始化配置</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>将zsh设为默认终端：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
-<p>执行后需重新登录或重启终端使设置生效。</p>
-<h3 id="4-2-Oh-My-Zsh-安装"><a href="#4-2-Oh-My-Zsh-安装" class="headerlink" title="4.2 Oh My Zsh 安装"></a>4.2 Oh My Zsh 安装</h3><p>Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。</p>
-<blockquote>
-<p>注意：执行 git clone 时，若终端出现类似 <code>remote: Waiting in queue... (Position: 881)</code> 的提示，说明镜像服务器正在排队处理请求，请耐心等待。</p>
-</blockquote>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git<br><span class="hljs-built_in">cd</span> ohmyzsh/tools<br>REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh<br></code></pre></td></tr></table></figure>
-
-<p>安装完成后，Oh My Zsh 的配置文件位于 <code>~/.zshrc</code>，插件目录为 <code>~/.oh-my-zsh/custom/plugins/</code> 。</p>
-<h3 id="4-3-配置常用插件"><a href="#4-3-配置常用插件" class="headerlink" title="4.3 配置常用插件"></a>4.3 配置常用插件</h3><h4 id="4-3-1-autojump-目录快速跳转"><a href="#4-3-1-autojump-目录快速跳转" class="headerlink" title="4.3.1 autojump(目录快速跳转)"></a>4.3.1 autojump(目录快速跳转)</h4><p>autojump 可以根据历史访问记录快速跳转到指定目录。使用国内镜像源下载安装：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://gitee.com/holyvan/autojump.git <br><span class="hljs-built_in">cd</span> autojump<br>./install.py <span class="hljs-comment"># 或 python3 install.py</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>注意：</strong> <code>./install.py</code>脚本依赖 Python，建议在安装 Conda 后再执行此步骤。但 Zsh 需在 Conda 安装前设为默认 Shell，请根据实际情况安排顺序。</p>
-</blockquote>
-<p>安装成功后，脚本会输出类似以下提示，请将中间三行代码添加到 <code>~/.zshrc</code> 中(路径以实际输出为准，通常位于 $HOME&#x2F;.autojump 目录下)：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">Please manually add the following line(s) to ~/.zshrc:<br><br>    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="hljs-built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh<br><br>    <span class="hljs-built_in">autoload</span> -U compinit &amp;&amp; compinit -u<br><br>Please restart terminal(s) before running autojump.<br><br></code></pre></td></tr></table></figure>
-
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" alt="autojump的输出"></p>
-<p>根据提示把中间的三行代码加到<code>.zshrc</code>文件中，<br>添加方法：使用 <code>vim ~/.zshrc</code> 打开配置文件，将上述三行内容粘贴到文件末尾，保存并退出(按 <code>Esc</code>，输入 <code>:wq</code>)。</p>
-<h4 id="4-3-2-自动补全与语法高亮插件"><a href="#4-3-2-自动补全与语法高亮插件" class="headerlink" title="4.3.2 自动补全与语法高亮插件"></a>4.3.2 自动补全与语法高亮插件</h4><p><strong>功能与用法</strong></p>
-<ul>
-<li><p><strong>zsh-syntax-highlighting(命令语法高亮)：</strong> 为输入的命令提供实时颜色高亮。合法命令显示为绿色，非法命令显示为红色，存在的路径显示为下划线。这可以帮助您在按回车前快速发现拼写或路径错误。</p>
-</li>
-<li><p><strong>zsh-autosuggestions(命令自动补全建议)：</strong> 根据历史命令记录，在输入时自动显示灰色提示，建议可能想要输入的完整命令。按 →(右箭头)键即可一键补全，按 End 键仅补全光标之后的部分，继续正常输入则忽略建议。</p>
-</li>
-</ul>
-<p>同时启用这两个插件后，能获得实时语法校验与智能补全提示，大幅提升终端输入效率。</p>
-<p><strong>插件下载：</strong></p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-comment"># 自动补全插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions<br><br><span class="hljs-comment"># 语法高亮插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>说明：</strong> <code>${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</code> 表示优先使用环境变量 <code>ZSH_CUSTOM</code> 定义的目录，若未定义则使用默认的 <code>~/.oh-my-zsh/custom</code>。</p>
-</blockquote>
-<p><strong>检查插件是否下载到正确位置</strong><br>执行以下命令查看插件目录内容：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">ls</span> -l <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/<br></code></pre></td></tr></table></figure>
-
-<p>若插件未出现在该目录中，可手动将其移动至正确位置。例如，若 zsh-syntax-highlighting 下载到了当前目录，可执行：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
-
-<p>若不确定插件下载到了哪里，可使用 <code>find</code> 命令搜索：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">find ~ -<span class="hljs-built_in">type</span> d -name <span class="hljs-string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
-
-<p><strong>启用插件</strong><br>编辑 <code>~/.zshrc</code> 文件，找到 <code>plugins=(...)</code> 行，修改为：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)<br></code></pre></td></tr></table></figure>
-
-<p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">source</span> ~/.zshrc<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-conda的安装与配置"><a href="#5-conda的安装与配置" class="headerlink" title="5. conda的安装与配置"></a>5. conda的安装与配置</h2><h3 id="5-1-conda简介"><a href="#5-1-conda简介" class="headerlink" title="5.1 conda简介"></a>5.1 conda简介</h3><p>conda 是一个开源的 Python 和 R 语言发行版，专注于数据科学、机器学习和科学计算。它内置了包管理器，可以方便地创建隔离的虚拟环境、安装和管理软件包，尤其适合生信分析中不同工具对 Python 版本的依赖管理。<strong>但笔者使用 Conda 管理 R 环境的体验不佳</strong>，不建议用 Conda 安装或管理 R 及相关包。推荐使用 Rstudio 进行 R 环境管理，更稳定、兼容性更好。</p>
-<p><strong>Miniconda 与 Anaconda 的区别</strong></p>
-<ul>
-<li>Anaconda：预装了超过 1500 个常用的数据科学包(如 NumPy、SciPy、Pandas 等)，安装包较大(约 3~5 GB)，适合不想手动安装基础包的用户。</li>
-<li>Miniconda：仅包含 conda 和 Python，安装包很小(约 50~80 MB)，用户需要自行安装所需包。它更轻量、灵活，适合磁盘空间有限或希望按需安装的用户。</li>
-</ul>
-<p>本教程以 Anaconda 为例进行安装，若您偏好 Miniconda，可前往 Miniconda 官网下载对应版本，后续使用方式与 Anaconda 基本一致。</p>
-<h3 id="5-2-下载并安装-Anaconda"><a href="#5-2-下载并安装-Anaconda" class="headerlink" title="5.2 下载并安装 Anaconda"></a>5.2 下载并安装 Anaconda</h3><p>从 Anaconda 官网获取最新 Linux 版本的下载链接(建议使用稳定版)。本文以 <code>Anaconda3-2023.09-0-Linux-x86_64.sh</code> 为例：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh<br>bash Anaconda3-2023.09-0-Linux-x86_64.sh <br></code></pre></td></tr></table></figure>
-
-<p>安装过程中，请仔细阅读许可协议，按提示确认安装位置,默认为 <code>~/anaconda3</code>。在最后选择是否初始化 <code>conda</code>，建议选择<code>yes</code>，这样 <code>conda</code> 会自动将自身添加到 Shell 配置文件中(如 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>)。</p>
-<h3 id="5-2-配置环境变量"><a href="#5-2-配置环境变量" class="headerlink" title="5.2 配置环境变量"></a>5.2 配置环境变量</h3><p>若安装时未自动添加，或需要手动配置，请将以下内容添加到对应的配置文件中：</p>
-<ul>
-<li>使用 Zsh 的用户：编辑 <code>~/.zshrc</code></li>
-<li>使用 Bash 的用户：编辑 <code>~/.bashrc</code></li>
-</ul>
-<p>在文件末尾添加，请将 <code>/path/to/anaconda3</code> 替换为实际安装路径：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;/path/to/anaconda3/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc   <span class="hljs-comment"># 若使用 Zsh</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">source</span> ~/.bashrc  <span class="hljs-comment"># 若使用 Bash</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>验证安装</strong></p>
-<p>重新打开终端，或执行 source 后，运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda --version<br></code></pre></td></tr></table></figure>
-<p>若输出版本号(如 conda 23.10.0)，则表示安装成功。</p>
-<blockquote>
-<p><strong>提示：</strong> 如果您已按照第 4 章配置了语法高亮插件，在终端输入 conda 后，命令会显示为绿色(表示合法命令)；若未配置高亮插件，直接运行上述命令即可。</p>
-</blockquote>
-<p>如果在后续使用中需要创建虚拟环境，可使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
-
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#97;&#x68;&#x69;&#x6b;&#x65;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
-]]></content>
-      <categories>
-        <category>计算机基础与实验平台搭建</category>
-      </categories>
-      <tags>
-        <tag>实验平台搭建</tag>
-        <tag>计算机基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows系统的安装</title>
-    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
-<hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
-<ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
-</ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
-<ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
-<hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
-<ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
-</li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
-</li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
-</li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
-</li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
-</li>
-</ul>
-</li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png"></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png"></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png"></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png"></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png"></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png"></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png"></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
-</ul>
-</li>
-</ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#x72;&#x6f;&#x72;&#x61;&#104;&#105;&#x6b;&#101;&#x72;&#x40;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
-]]></content>
-      <categories>
-        <category>计算机基础与实验平台搭建</category>
-      </categories>
-      <tags>
-        <tag>实验平台搭建</tag>
-        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -710,7 +363,7 @@
 <hr>
 <h1 id="5-写在最后"><a href="#5-写在最后" class="headerlink" title="5. 写在最后"></a>5. 写在最后</h1><p>从注册 GitHub 到在浏览器里看到自己的站点，整个过程看似步骤繁多，但拆解开其实就是“工具安装 → 密钥配对 → 仓库创建 → 本地部署”这条主线。每完成一步，离那个属于自己的小空间就近了一点，这种逐步推进的踏实感，大概是搭建博客独有的乐趣。</p>
 <p>更重要的是，这一套流程并不只是为博客服务——熟悉了 Git 和 Hexo 的工作流，往后任何静态站点的管理都会顺手很多。遇到报错也别急，顺着提示去查文档、改配置，多试几次，那些红字就变成你的经验值了。</p>
-<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#114;&#x61;&#104;&#x69;&#107;&#101;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
+<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
 <p>至于博客外观和交互细节，笔者打算在下一篇里专门聊 <strong>Fluid 主题的完整配置</strong>——从导航栏定制、评论系统接入，到响应式优化，都会一步步写清楚。感兴趣的话，记得来看。</p>
 <hr>
 <p><strong>参考资源</strong></p>
@@ -725,6 +378,233 @@
       </categories>
       <tags>
         <tag>个人博客搭建指南</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零搭建Windows生信分析平台——WSL的安装配置</title>
+    <url>/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+<hr>
+<h2 id="1-WSL2-ubuntu安装和迁移"><a href="#1-WSL2-ubuntu安装和迁移" class="headerlink" title="1. WSL2 ubuntu安装和迁移"></a>1. WSL2 ubuntu安装和迁移</h2><p><strong>注意：</strong></p>
+<ul>
+<li>WSL2 Ubuntu 子系统默认安装在 C 盘，<strong>安装时无法更改路径。</strong></li>
+<li><strong>磁盘空间要求：</strong><ul>
+<li>仅安装基础 Ubuntu 系统约需 5~10 GB。</li>
+<li>若后续安装生信软件(如 Conda、LightDock 等)并存储数据，建议 C 盘剩余空间 ≥ 30 GB。</li>
+<li><strong>当 C 盘剩余空间低于 20 GB 时，强烈建议将子系统迁移到其他非系统盘</strong>，否则可能导致系统运行缓慢、更新失败甚至无法启动。</li>
+</ul>
+</li>
+<li><strong>建议安装或迁移至固态硬盘(SSD)：</strong> SSD 具有更快的读写速度，能显著提升 WSL 子系统的启动速度、软件安装效率及 I&#x2F;O 密集型操作(如编译、数据处理)的运行性能。</li>
+<li><strong>反复装卸的风险：</strong><ul>
+<li>多次卸载并重新安装 Ubuntu 子系统可能产生残留配置文件或注册表项，导致新安装的系统出现异常或安装失败。</li>
+<li>卸载时若误删除 WSL 相关的系统文件，可能影响其他 WSL 发行版的正常运行，甚至导致 Windows 系统文件损坏。</li>
+</ul>
+</li>
+<li><strong>迁移的另一用途：拷贝系统到新电脑。</strong> 通过 <code>wsl --export</code> 导出 tar 文件，将该文件复制到新电脑后，使用 <code>wsl --import</code> 导入，即可在新电脑上获得完全一致的 Ubuntu 环境(包括已安装的软件、配置等)，无需重新配置。非常适合在多台设备间同步生信分析环境。</li>
+</ul>
+<h3 id="1-1-WSL2-ubuntu安装"><a href="#1-1-WSL2-ubuntu安装" class="headerlink" title="1.1 WSL2 ubuntu安装"></a>1.1 WSL2 ubuntu安装</h3><ul>
+<li><p><strong>系统版本要求</strong><br>本安装教程仅适用于 Windows 10 版本 2004 及更高版本(含 Windows 11)。若您使用的是旧版 Windows 系统，或需要了解本文未提及的安装细节，请参考 WSL 官方教程：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
+</li>
+<li><p><strong>启用“适用于 Linux 的 Windows 子系统”：</strong><br>以管理员身份运行 Windows PowerShell，执行以下命令：</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows-Subsystem-Linux</span> /all /norestart<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>安装 WSL 并升级至 WSL2：</strong></li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--install</span><br>wsl <span class="hljs-literal">--update</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" alt="在 Microsoft Store 中搜索 Ubuntu"></li>
+</ul>
+<h3 id="1-2-Ubuntu子系统的迁移"><a href="#1-2-Ubuntu子系统的迁移" class="headerlink" title="1.2 Ubuntu子系统的迁移"></a>1.2 Ubuntu子系统的迁移</h3><ul>
+<li>查看wsl状态</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关掉正在运行的wsl</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>导出需要迁移的Ubuntu子系统</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="hljs-comment"># 该文件也可作为备份</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>请将 &lt;发行版名称&gt; 替换为与 <code>wsl -l -v</code> 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.</p>
+</blockquote>
+<ul>
+<li>确认导出.tar文件后，注销原来的版本</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--unregister</span> &lt;发行版名称&gt;<br><span class="hljs-comment"># 查看是否注销</span><br>wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在目标盘符(如D盘)创建新目录并导入</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="hljs-literal">--version</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置默认登录用户(可选，否则默认以 root 登录)</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">ubuntu config <span class="hljs-literal">--default-user</span> 你的用户名<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>验证迁移是否成功</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--list</span> <span class="hljs-literal">--verbose</span><br>wsl<br></code></pre></td></tr></table></figure>
+
+<p>迁移完成后，原 C 盘中的子系统文件已被清理，新系统位于 D 盘(或其他分区)。后续所有操作均在新位置进行，无需重新配置环境。</p>
+<hr>
+<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" alt="设置用户名和密码"></p>
+<h3 id="2-1-更换国内镜像源并更新系统"><a href="#2-1-更换国内镜像源并更新系统" class="headerlink" title="2.1 更换国内镜像源并更新系统"></a>2.1 更换国内镜像源并更新系统</h3><ul>
+<li><strong>备份原始配置文件</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编辑源文件：</strong><br>使用 vim 打开配置文件：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
+<p>打开后，按 <code>ggdG</code>(依次按 g、g、d、G 键)可快速删除全部内容，然后按 <code>i</code> 进入插入模式，将以下清华镜像源内容粘贴进去(以 Ubuntu 22.04 为例)：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><br>deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse<br><span class="hljs-comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><br><span class="hljs-comment"># 预发布软件源，不建议启用</span><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br></code></pre></td></tr></table></figure>
+
+<p>粘贴完成后，按 <code>Esc</code> 键退出插入模式，输入 <code>:wq</code> 保存并退出 vim。</p>
+<blockquote>
+<p>提示：若编辑过程中误操作想放弃保存，可按 <code>Esc</code> 后输入 <code>:q!</code> 强制退出。</p>
+</blockquote>
+<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt upgrade<br><span class="hljs-built_in">sudo</span> apt install aptitude <span class="hljs-comment">#智能安装、升级、降级或卸载依赖的软件包</span><br><span class="hljs-built_in">sudo</span> aptitude install aria2 <span class="hljs-comment">#多线程下载软件</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-图形界面的安装和配置"><a href="#3-图形界面的安装和配置" class="headerlink" title="3. 图形界面的安装和配置"></a>3. 图形界面的安装和配置</h2><blockquote>
+<p><strong>说明：</strong> 笔者个人感觉 Ubuntu 图形界面运行较慢且体验一般，不如在 Ubuntu 中安装 Jupyter Notebook 进行文件操作更方便。本部分仅供有图形界面需求的读者参考。</p>
+</blockquote>
+<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xorg<br><span class="hljs-built_in">sudo</span> aptitude install xfce4<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-安装并配置xrdp"><a href="#3-2-安装并配置xrdp" class="headerlink" title="3.2 安装并配置xrdp"></a>3.2 安装并配置xrdp</h3><p>Xrdp 通过远程桌面的方式来访问另外一台主机</p>
+<ul>
+<li><strong>安装</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xrdp<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>设置使用3390端口</strong></li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">sudo sed <span class="hljs-punctuation">-</span>i &#x27;s/port=<span class="hljs-number">3389</span>/port=<span class="hljs-number">3390</span>/g&#x27; /etc/xrdp/xrdp.ini<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>向xsession中写入xfce4-session</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">echo</span> xfce4-session &gt;~/.xsession<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>重启xrdp服务</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> service xrdp restart<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-Windows-端远程桌面连接"><a href="#3-3-Windows-端远程桌面连接" class="headerlink" title="3.3 Windows 端远程桌面连接"></a>3.3 Windows 端远程桌面连接</h3><p>在 Windows 中打开“远程桌面连接”，输入以下信息：</p>
+<ul>
+<li>计算机：localhost:3390</li>
+<li>用户名：Ubuntu 用户名</li>
+</ul>
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" alt="远程桌面连接配置"></p>
+<p><strong>注意：</strong> 若连接失败，可尝试在 Ubuntu 中重启 xrdp 服务后重试。</p>
+<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" alt="远程桌面连接成功"></p>
+<hr>
+<h2 id="4-Zsh-与-Oh-My-Zsh-的安装与配置"><a href="#4-Zsh-与-Oh-My-Zsh-的安装与配置" class="headerlink" title="4. Zsh 与 Oh My Zsh 的安装与配置"></a>4. Zsh 与 Oh My Zsh 的安装与配置</h2><p><strong>关于 Zsh 的说明：</strong><br>Zsh(Z shell)是一种功能更强大的 Shell，相较于系统默认的 Bash，它提供了更丰富的特性：智能命令补全、语法高亮、主题自定义、强大的插件机制等。结合 Oh My Zsh 框架，可以极大提升终端使用效率。<br><strong>若您不希望配置 Zsh</strong>，也可以直接使用默认的 Bash 完成后续 Conda 等软件的安装与配置，跳过本章节即可。使用 Bash 时，配置文件为 <code>~/.bashrc</code>，后续操作中的 <code>~/.zshrc</code> 请相应替换为 <code>~/.bashrc</code>。</p>
+<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install zsh<br>zsh  <span class="hljs-comment"># 运行一次以完成初始化配置</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>将zsh设为默认终端：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
+<p>执行后需重新登录或重启终端使设置生效。</p>
+<h3 id="4-2-Oh-My-Zsh-安装"><a href="#4-2-Oh-My-Zsh-安装" class="headerlink" title="4.2 Oh My Zsh 安装"></a>4.2 Oh My Zsh 安装</h3><p>Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。</p>
+<blockquote>
+<p>注意：执行 git clone 时，若终端出现类似 <code>remote: Waiting in queue... (Position: 881)</code> 的提示，说明镜像服务器正在排队处理请求，请耐心等待。</p>
+</blockquote>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git<br><span class="hljs-built_in">cd</span> ohmyzsh/tools<br>REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，Oh My Zsh 的配置文件位于 <code>~/.zshrc</code>，插件目录为 <code>~/.oh-my-zsh/custom/plugins/</code> 。</p>
+<h3 id="4-3-配置常用插件"><a href="#4-3-配置常用插件" class="headerlink" title="4.3 配置常用插件"></a>4.3 配置常用插件</h3><h4 id="4-3-1-autojump-目录快速跳转"><a href="#4-3-1-autojump-目录快速跳转" class="headerlink" title="4.3.1 autojump(目录快速跳转)"></a>4.3.1 autojump(目录快速跳转)</h4><p>autojump 可以根据历史访问记录快速跳转到指定目录。使用国内镜像源下载安装：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://gitee.com/holyvan/autojump.git <br><span class="hljs-built_in">cd</span> autojump<br>./install.py <span class="hljs-comment"># 或 python3 install.py</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> <code>./install.py</code>脚本依赖 Python，建议在安装 Conda 后再执行此步骤。但 Zsh 需在 Conda 安装前设为默认 Shell，请根据实际情况安排顺序。</p>
+</blockquote>
+<p>安装成功后，脚本会输出类似以下提示，请将中间三行代码添加到 <code>~/.zshrc</code> 中(路径以实际输出为准，通常位于 $HOME&#x2F;.autojump 目录下)：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">Please manually add the following line(s) to ~/.zshrc:<br><br>    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="hljs-built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh<br><br>    <span class="hljs-built_in">autoload</span> -U compinit &amp;&amp; compinit -u<br><br>Please restart terminal(s) before running autojump.<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" alt="autojump的输出"></p>
+<p>根据提示把中间的三行代码加到<code>.zshrc</code>文件中，<br>添加方法：使用 <code>vim ~/.zshrc</code> 打开配置文件，将上述三行内容粘贴到文件末尾，保存并退出(按 <code>Esc</code>，输入 <code>:wq</code>)。</p>
+<h4 id="4-3-2-自动补全与语法高亮插件"><a href="#4-3-2-自动补全与语法高亮插件" class="headerlink" title="4.3.2 自动补全与语法高亮插件"></a>4.3.2 自动补全与语法高亮插件</h4><p><strong>功能与用法</strong></p>
+<ul>
+<li><p><strong>zsh-syntax-highlighting(命令语法高亮)：</strong> 为输入的命令提供实时颜色高亮。合法命令显示为绿色，非法命令显示为红色，存在的路径显示为下划线。这可以帮助您在按回车前快速发现拼写或路径错误。</p>
+</li>
+<li><p><strong>zsh-autosuggestions(命令自动补全建议)：</strong> 根据历史命令记录，在输入时自动显示灰色提示，建议可能想要输入的完整命令。按 →(右箭头)键即可一键补全，按 End 键仅补全光标之后的部分，继续正常输入则忽略建议。</p>
+</li>
+</ul>
+<p>同时启用这两个插件后，能获得实时语法校验与智能补全提示，大幅提升终端输入效率。</p>
+<p><strong>插件下载：</strong></p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-comment"># 自动补全插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions<br><br><span class="hljs-comment"># 语法高亮插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>说明：</strong> <code>${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</code> 表示优先使用环境变量 <code>ZSH_CUSTOM</code> 定义的目录，若未定义则使用默认的 <code>~/.oh-my-zsh/custom</code>。</p>
+</blockquote>
+<p><strong>检查插件是否下载到正确位置</strong><br>执行以下命令查看插件目录内容：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">ls</span> -l <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/<br></code></pre></td></tr></table></figure>
+
+<p>若插件未出现在该目录中，可手动将其移动至正确位置。例如，若 zsh-syntax-highlighting 下载到了当前目录，可执行：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+
+<p>若不确定插件下载到了哪里，可使用 <code>find</code> 命令搜索：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">find ~ -<span class="hljs-built_in">type</span> d -name <span class="hljs-string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p><strong>启用插件</strong><br>编辑 <code>~/.zshrc</code> 文件，找到 <code>plugins=(...)</code> 行，修改为：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)<br></code></pre></td></tr></table></figure>
+
+<p>保存后执行以下命令使配置生效：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">source</span> ~/.zshrc<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-conda的安装与配置"><a href="#5-conda的安装与配置" class="headerlink" title="5. conda的安装与配置"></a>5. conda的安装与配置</h2><h3 id="5-1-conda简介"><a href="#5-1-conda简介" class="headerlink" title="5.1 conda简介"></a>5.1 conda简介</h3><p>conda 是一个开源的 Python 和 R 语言发行版，专注于数据科学、机器学习和科学计算。它内置了包管理器，可以方便地创建隔离的虚拟环境、安装和管理软件包，尤其适合生信分析中不同工具对 Python 版本的依赖管理。<strong>但笔者使用 Conda 管理 R 环境的体验不佳</strong>，不建议用 Conda 安装或管理 R 及相关包。推荐使用 Rstudio 进行 R 环境管理，更稳定、兼容性更好。</p>
+<p><strong>Miniconda 与 Anaconda 的区别</strong></p>
+<ul>
+<li>Anaconda：预装了超过 1500 个常用的数据科学包(如 NumPy、SciPy、Pandas 等)，安装包较大(约 3~5 GB)，适合不想手动安装基础包的用户。</li>
+<li>Miniconda：仅包含 conda 和 Python，安装包很小(约 50~80 MB)，用户需要自行安装所需包。它更轻量、灵活，适合磁盘空间有限或希望按需安装的用户。</li>
+</ul>
+<p>本教程以 Anaconda 为例进行安装，若您偏好 Miniconda，可前往 Miniconda 官网下载对应版本，后续使用方式与 Anaconda 基本一致。</p>
+<h3 id="5-2-下载并安装-Anaconda"><a href="#5-2-下载并安装-Anaconda" class="headerlink" title="5.2 下载并安装 Anaconda"></a>5.2 下载并安装 Anaconda</h3><p>从 Anaconda 官网获取最新 Linux 版本的下载链接(建议使用稳定版)。本文以 <code>Anaconda3-2023.09-0-Linux-x86_64.sh</code> 为例：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh<br>bash Anaconda3-2023.09-0-Linux-x86_64.sh <br></code></pre></td></tr></table></figure>
+
+<p>安装过程中，请仔细阅读许可协议，按提示确认安装位置,默认为 <code>~/anaconda3</code>。在最后选择是否初始化 <code>conda</code>，建议选择<code>yes</code>，这样 <code>conda</code> 会自动将自身添加到 Shell 配置文件中(如 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>)。</p>
+<h3 id="5-2-配置环境变量"><a href="#5-2-配置环境变量" class="headerlink" title="5.2 配置环境变量"></a>5.2 配置环境变量</h3><p>若安装时未自动添加，或需要手动配置，请将以下内容添加到对应的配置文件中：</p>
+<ul>
+<li>使用 Zsh 的用户：编辑 <code>~/.zshrc</code></li>
+<li>使用 Bash 的用户：编辑 <code>~/.bashrc</code></li>
+</ul>
+<p>在文件末尾添加，请将 <code>/path/to/anaconda3</code> 替换为实际安装路径：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;/path/to/anaconda3/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>保存后执行以下命令使配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc   <span class="hljs-comment"># 若使用 Zsh</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">source</span> ~/.bashrc  <span class="hljs-comment"># 若使用 Bash</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>验证安装</strong></p>
+<p>重新打开终端，或执行 source 后，运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda --version<br></code></pre></td></tr></table></figure>
+<p>若输出版本号(如 conda 23.10.0)，则表示安装成功。</p>
+<blockquote>
+<p><strong>提示：</strong> 如果您已按照第 4 章配置了语法高亮插件，在终端输入 conda 后，命令会显示为绿色(表示合法命令)；若未配置高亮插件，直接运行上述命令即可。</p>
+</blockquote>
+<p>如果在后续使用中需要创建虚拟环境，可使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
+
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#104;&#105;&#107;&#101;&#114;&#64;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -780,7 +660,7 @@
 </li>
 </ul>
 <hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#97;&#104;&#105;&#107;&#101;&#114;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
+<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#107;&#x65;&#x72;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
 <hr>
 <p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
 ]]></content>
@@ -789,6 +669,213 @@
       </categories>
       <tags>
         <tag>Windows使用技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows系统的安装</title>
+    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+<hr>
+<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
+<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
+</li>
+<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
+</li>
+</ol>
+<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
+<p><strong>磁盘数据丢失的补救：</strong></p>
+<ul>
+<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
+<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
+<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+</ul>
+<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
+<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<ol>
+<li><p>准备材料：</p>
+<ul>
+<li>一个 8GB 或以上容量的U盘。</li>
+<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
+</ul>
+</li>
+<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
+</li>
+<li><p>操作步骤：</p>
+<ul>
+<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
+</li>
+<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
+</li>
+<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
+</li>
+<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
+</li>
+<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
+</li>
+<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<hr>
+<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
+<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<ul>
+<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
+</li>
+<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
+</li>
+<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
+</li>
+<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
+</li>
+<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
+</li>
+</ul>
+</li>
+<li><p>开始安装：</p>
+<ul>
+<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall1.png"></p>
+<ul>
+<li>点击【现在安装】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall2.png"></p>
+<ul>
+<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall3.png"></p>
+<ul>
+<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall4.png"></p>
+<ul>
+<li>勾选接受许可条款，点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall5.png"></p>
+<ul>
+<li>选择【自定义：仅安装Windows(高级)】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall6.png"></p>
+<ul>
+<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
+</li>
+<li><ul>
+<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
+</ul>
+</li>
+<li><ul>
+<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
+</ul>
+</li>
+<li><ul>
+<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
+</ul>
+</li>
+</ul>
+<p> <img src="/Windows_install/wininstall7.png"></p>
+<ul>
+<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
+</ul>
+</li>
+</ol>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#97;&#104;&#x69;&#x6b;&#101;&#x72;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LightDock分子对接的实验平台搭建</title>
+    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
+<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
+<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
+<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+<hr>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
+<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
+<p>笔者的硬件配置如下：</p>
+<ul>
+<li>CPU：AMD Ryzen 7 9700X</li>
+<li>内存：64 GB RAM</li>
+</ul>
+<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
+<hr>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#105;&#103;&#x68;&#116;&#x64;&#111;&#99;&#107;&#x69;&#110;&#x67;&#x40;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
+<p>支持的具体系统版本如下：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>macOS</td>
+<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
+</tr>
+<tr>
+<td>GNU&#x2F;Linux</td>
+<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
+</tr>
+<tr>
+<td>Scipy</td>
+<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
+</tr>
+<tr>
+<td>Cython</td>
+<td><a href="http://cython.org/">http://cython.org/</a></td>
+</tr>
+<tr>
+<td>ProDy</td>
+<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
+</tr>
+<tr>
+<td>Freesasa</td>
+<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
+<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
+
+<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#x75;&#x72;&#111;&#x72;&#x61;&#x68;&#105;&#107;&#x65;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>。</p>
+<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
+]]></content>
+      <categories>
+        <category>分子对接</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>分子对接</tag>
+        <tag>LightDock</tag>
       </tags>
   </entry>
   <entry>
@@ -832,7 +919,7 @@
 <h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
 <p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
 <hr>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#x61;&#104;&#x69;&#x6b;&#101;&#114;&#x40;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#97;&#x68;&#x69;&#107;&#x65;&#114;&#64;&#49;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -842,19 +929,108 @@
       </tags>
   </entry>
   <entry>
-    <title>欢迎来到 AuroraHiker’s Code Trail</title>
-    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
-<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
-<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#97;&#104;&#105;&#107;&#101;&#114;&#x40;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
+    <title>计算机基础：从零认识计算机硬件</title>
+    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
+<hr>
+<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
+<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
+<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
+<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
+</ul>
+<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
+<hr>
+<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
+<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
+<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
+<li><strong>显存</strong>（下文详述）。</li>
+<li><strong>频率、架构</strong>：影响性能的关键。</li>
+</ul>
+<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
+<hr>
+<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
+<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
+<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
+<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
+</ul>
+<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
+<hr>
+<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
+<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
+<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
+</ul>
+<p><strong>与内存的区别</strong>：</p>
+<ul>
+<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
+<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
+<li>两者独立，不可互换。</li>
+</ul>
+<hr>
+<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
+<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
+<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
+</ul>
+<p><strong>接口与协议</strong>：</p>
+<ul>
+<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
+<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
+</ul>
+<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
+<hr>
+<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
+<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
+<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
+<ul>
+<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
+<li>内存：容量、速度、已使用插槽数。</li>
+<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
+<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
+</ul>
+</li>
+<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
+</li>
+<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
+</li>
+<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
+</li>
+</ol>
+<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
+<ol>
+<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#64;&#49;&#x36;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<hr>
+<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
 ]]></content>
       <categories>
-        <category>关于</category>
+        <category>计算机基础与实验平台搭建</category>
       </categories>
       <tags>
-        <tag>欢迎</tag>
-        <tag>介绍</tag>
+        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1056,7 +1232,7 @@
 </tbody></table>
 <hr>
 <h2 id="8-写在最后"><a href="#8-写在最后" class="headerlink" title="8. 写在最后"></a>8. 写在最后</h2><p>环境配置的本质，不过是一次常规磨合。遇到报错，就耐心地顺藤摸瓜定位原因、查阅官方文档、补全缺失的部分，这套思路适用于任何开发环境的装配。</p>
-<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
+<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#x65;&#x72;&#64;&#49;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 <ul>
@@ -1074,195 +1250,19 @@
       </tags>
   </entry>
   <entry>
-    <title>LightDock分子对接的实验平台搭建</title>
-    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
-<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
-<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
-<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
-<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
-<p>笔者的硬件配置如下：</p>
-<ul>
-<li>CPU：AMD Ryzen 7 9700X</li>
-<li>内存：64 GB RAM</li>
-</ul>
-<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
-<hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#108;&#x69;&#x67;&#104;&#x74;&#x64;&#111;&#x63;&#107;&#105;&#x6e;&#x67;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
-<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
-<p>支持的具体系统版本如下：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>macOS</td>
-<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
-</tr>
-<tr>
-<td>GNU&#x2F;Linux</td>
-<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
-<table>
-<thead>
-<tr>
-<th>软件</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
-</tr>
-<tr>
-<td>Scipy</td>
-<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
-</tr>
-<tr>
-<td>Cython</td>
-<td><a href="http://cython.org/">http://cython.org/</a></td>
-</tr>
-<tr>
-<td>ProDy</td>
-<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
-</tr>
-<tr>
-<td>Freesasa</td>
-<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
-<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
-
-<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
-
-<hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#104;&#105;&#107;&#x65;&#x72;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a>。</p>
-<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
+    <title>欢迎来到 AuroraHiker’s Code Trail</title>
+    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
+<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
+<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
 ]]></content>
       <categories>
-        <category>分子对接</category>
+        <category>关于</category>
       </categories>
       <tags>
-        <tag>实验平台搭建</tag>
-        <tag>分子对接</tag>
-        <tag>LightDock</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机基础：从零认识计算机硬件</title>
-    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
-<hr>
-<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
-<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
-<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
-<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
-</ul>
-<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
-<hr>
-<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
-<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
-<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
-<li><strong>显存</strong>（下文详述）。</li>
-<li><strong>频率、架构</strong>：影响性能的关键。</li>
-</ul>
-<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
-<hr>
-<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
-<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
-<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
-<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
-</ul>
-<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
-<hr>
-<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
-<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
-<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
-</ul>
-<p><strong>与内存的区别</strong>：</p>
-<ul>
-<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
-<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
-<li>两者独立，不可互换。</li>
-</ul>
-<hr>
-<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
-<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
-<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
-</ul>
-<p><strong>接口与协议</strong>：</p>
-<ul>
-<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
-<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
-</ul>
-<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
-<hr>
-<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
-<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
-<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
-<ul>
-<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
-<li>内存：容量、速度、已使用插槽数。</li>
-<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
-<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
-</ul>
-</li>
-<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
-</li>
-<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
-</li>
-<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
-</li>
-</ol>
-<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
-<ol>
-<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
-<hr>
-<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
-]]></content>
-      <categories>
-        <category>计算机基础与实验平台搭建</category>
-      </categories>
-      <tags>
-        <tag>计算机基础</tag>
+        <tag>欢迎</tag>
+        <tag>介绍</tag>
       </tags>
   </entry>
 </search>
