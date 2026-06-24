@@ -89,6 +89,7 @@ git config --global user.email "GitHub 邮箱"
 按下回车后，终端会依次提示：
 
 1. **保存路径**  
+
     ```text
     Enter file in which to save the key (/home/user/.ssh/id_rsa):
     ```
@@ -96,11 +97,12 @@ git config --global user.email "GitHub 邮箱"
     - 直接按 **回车**，则使用默认路径：`~/.ssh/id_rsa`（私钥）和 `~/.ssh/id_rsa.pub`（公钥）。  
     - 若想自定义路径（例如多密钥管理），可输入路径后回车。
 
- 2. **密码短语**  
+2. **密码短语**  
+
     ```text
     Enter passphrase (empty for no passphrase):
     ```
-    
+
     - 可输入密码保护私钥（更安全，但每次使用需输入）。
     - 直接按 **回车** 则为空密码（便于自动化，但需妥善保管私钥文件）。
 
