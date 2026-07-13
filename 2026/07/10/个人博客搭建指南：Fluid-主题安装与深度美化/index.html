@@ -1,12 +1,25 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
   
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>个人博客搭建指南：Fluid 主题安装与深度美化 | AuroraHiker’s Code Trail</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="在上一篇个人博客搭建指南：基于 GitHub Pages 的完整流程中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。 Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活">
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="在上一篇个人博客搭建指南：基于 GitHub Pages 的完整流程中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。 Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个人博客搭建指南：Fluid 主题安装与深度美化">
 <meta property="og:url" content="https://aurorahiker.github.io/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/index.html">
@@ -17,105 +30,378 @@
 <meta property="article:modified_time" content="2026-07-13T19:11:11.473Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="个人博客搭建指南">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="AuroraHiker’s Code Trail" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
   
   
   
-<link rel="stylesheet" href="/css/style.css">
+  <title>个人博客搭建指南：Fluid 主题安装与深度美化 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
 
   
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
 <meta name="generator" content="Hexo 8.1.2"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">AuroraHiker’s Code Trail</a>
-      </h1>
-      
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
         
-      </nav>
-      <nav id="sub-nav">
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
         
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://aurorahiker.github.io"></form>
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
       </div>
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-个人博客搭建指南：Fluid-主题安装与深度美化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/" class="article-date">
-  <time class="dt-published" datetime="2026-07-10T03:13:15.197Z" itemprop="datePublished">2026-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">个人博客搭建指南</a>
-  </div>
+  
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="个人博客搭建指南：Fluid 主题安装与深度美化"></span>
+          
+        </div>
+
         
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      个人博客搭建指南：Fluid 主题安装与深度美化
-    </h1>
-  
-
-      </header>
+          
+  <div class="mt-3">
     
-    <div class="e-content article-entry" itemprop="articleBody">
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-07-10 11:13" pubdate>
+          2026年7月10日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-        <p>在上一篇<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">个人博客搭建指南：Fluid 主题安装与深度美化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在上一篇<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
 <p>Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活，内置了暗色模式、访问统计、本地搜索等常用功能。截至本文撰写时，Fluid 最新版本为 1.9.9。</p>
 <blockquote>
 <p><strong>说明</strong>：本文基于上一篇搭建好的 Hexo 博客继续操作，默认您已完成 Hexo 安装、GitHub Pages 配置及本地仓库初始化。若尚未完成，请先参考上一篇指南。</p>
 </blockquote>
 <hr>
 <h1 id="1-安装-Fluid-主题"><a href="#1-安装-Fluid-主题" class="headerlink" title="1. 安装 Fluid 主题"></a>1. 安装 Fluid 主题</h1><h2 id="1-1-环境要求"><a href="#1-1-环境要求" class="headerlink" title="1.1 环境要求"></a>1.1 环境要求</h2><p>Fluid 主题要求 Hexo 版本不低于 5.0.0，Node.js 版本不低于 10.13.0。您可以在终端中执行以下命令确认版本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo -v<br>node -v<br></code></pre></td></tr></table></figure>
 
 <p>若 Hexo 版本低于 5.0.0，可通过以下命令升级：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo@latest --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo@latest --save<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-2-安装主题"><a href="#1-2-安装主题" class="headerlink" title="1.2 安装主题"></a>1.2 安装主题</h2><p>Fluid 提供两种安装方式 (npm 与手动)，推荐使用 npm 方式。</p>
 <p><strong>npm 安装 (推荐)</strong></p>
 <p>进入博客根目录，执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-theme-fluid</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>即使此前在另一个博客中已安装过 Fluid 主题，在新站点根目录下仍需重新执行安装指令。Hexo 基于当前工作目录加载依赖，Node.js 会从当前博客目录下的 node_modules 或 themes 文件夹中查找 hexo-theme-fluid 包，无法跨目录复用。</p>
@@ -123,7 +409,7 @@
 <h2 id="1-3-启用主题"><a href="#1-3-启用主题" class="headerlink" title="1.3 启用主题"></a>1.3 启用主题</h2><ol>
 <li>编辑 Hexo 根目录下的 <code>_config.yml</code>，修改以下配置：</li>
 </ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">fluid</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>在博客目录下创建 <code>_config.fluid.yml</code> 文件，<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">官方配置指南</a>中说明需要将主题默认配置的全部或部分内容复制到该文件中。但笔者在 Hexo 8.1.2 环境下测试发现，无需复制任何内容，主题会自动读取默认配置。由于笔者不清楚哪些版本的组合支持此特性，欢迎读者尝试并反馈。</li>
@@ -144,53 +430,53 @@
 <hr>
 <h1 id="3-关于页配置"><a href="#3-关于页配置" class="headerlink" title="3. 关于页配置"></a>3. 关于页配置</h1><p>关于页是博客中展示作者、博客信息的独立页面，需要单独创建并配置。</p>
 <h2 id="3-1-创建关于页"><a href="#3-1-创建关于页" class="headerlink" title="3.1 创建关于页"></a>3.1 创建关于页</h2><p>Fluid 的关于页需手动创建：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
 <p>然后编辑 <code>/source/about/index.md</code>，添加 <code>layout: about</code> 属性：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line"><span class="section">layout: about</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line">这里写关于页的正文，支持 Markdown 和 HTML。</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">---<br>title: about<br><span class="hljs-section">layout: about</span><br><span class="hljs-section">---</span><br>这里写关于页的正文，支持 Markdown 和 HTML。<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>注意：layout: about 必须存在且不能修改为其他值，否则无法显示头像、简介等主题样式。</p>
 </blockquote>
 <h2 id="3-2-关于页美化"><a href="#3-2-关于页美化" class="headerlink" title="3.2 关于页美化"></a>3.2 关于页美化</h2><p>以下是与关于页相关的所有配置项，在 <code>_config.fluid.yml</code> 中修改：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根目录位于 source 文件夹</span></span><br><span class="line"><span class="attr">about:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span>        <span class="comment"># 关于页的背景图</span></span><br><span class="line">  <span class="attr">banner_img_height:</span> <span class="number">60</span></span><br><span class="line">  <span class="attr">banner_mask_alpha:</span> <span class="number">0.3</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">/img/avatar.png</span>             <span class="comment"># 作者头像</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">&quot;Fluid&quot;</span></span><br><span class="line">  <span class="attr">intro:</span> <span class="string">&quot;An elegant theme for Hexo&quot;</span>  <span class="comment"># 简介</span></span><br><span class="line">  <span class="comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span></span><br><span class="line">  <span class="comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span></span><br><span class="line">  <span class="attr">icons:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">class:</span> <span class="string">&quot;iconfont icon-github-fill&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;https://github.com&quot;</span>, <span class="attr">tip:</span> <span class="string">&quot;GitHub&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">class:</span> <span class="string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;https://douban.com&quot;</span>, <span class="attr">tip:</span> <span class="string">&quot;豆瓣&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">class:</span> <span class="string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="attr">qrcode:</span> <span class="string">&quot;/img/favicon.png&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">about:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span>        <span class="hljs-comment"># 关于页的背景图</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">60</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-attr">avatar:</span> <span class="hljs-string">/img/avatar.png</span>             <span class="hljs-comment"># 作者头像</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Fluid&quot;</span><br>  <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;An elegant theme for Hexo&quot;</span>  <span class="hljs-comment"># 简介</span><br>  <span class="hljs-comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span><br>  <span class="hljs-comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span><br>  <span class="hljs-attr">icons:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-github-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://github.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;GitHub&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://douban.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;豆瓣&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="hljs-attr">qrcode:</span> <span class="hljs-string">&quot;/img/favicon.png&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根目录位于 source 文件夹</span></span><br><span class="line"><span class="comment"># 网站图标 (浏览器标签页)</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/images/logo.png</span></span><br><span class="line"><span class="comment"># 苹果设备图标</span></span><br><span class="line"><span class="attr">apple_touch_icon:</span> <span class="string">/images/logo.png</span></span><br><span class="line"><span class="comment"># 标签页标题分隔符</span></span><br><span class="line"><span class="attr">tab_title_separator:</span> <span class="string">&quot; - &quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-comment"># 网站图标 (浏览器标签页)</span><br><span class="hljs-attr">favicon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 苹果设备图标</span><br><span class="hljs-attr">apple_touch_icon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 标签页标题分隔符</span><br><span class="hljs-attr">tab_title_separator:</span> <span class="hljs-string">&quot; - &quot;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">navbar:</span></span><br><span class="line">  <span class="comment"># 导航栏左侧标题</span></span><br><span class="line">  <span class="attr">blog_title:</span> <span class="string">&quot;你的博客名称&quot;</span></span><br><span class="line">  <span class="comment"># 导航菜单</span></span><br><span class="line">  <span class="attr">menu:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;home&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-home-fill&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;archive&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/archives/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-archive-fill&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;category&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/categories/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-category-fill&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;tag&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/tags/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-tags-fill&quot;</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;about&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/about/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-user-fill&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-comment"># 导航栏左侧标题</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;你的博客名称&quot;</span><br>  <span class="hljs-comment"># 导航菜单</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
 
 <p>其中 <code>key</code> 用于关联多语言配置，<code>icon</code> 对应图标库中的图标类名。Fluid 使用 Iconfont 提供图标支持，可以通过修改 <code>icon</code> 值更换菜单图标。</p>
-<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="comment"># 首页 Banner 图片</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span></span><br><span class="line">  <span class="attr">banner_img_height:</span> <span class="number">100</span></span><br><span class="line">  <span class="comment"># Banner 遮罩透明度</span></span><br><span class="line">  <span class="attr">banner_mask_alpha:</span> <span class="number">0.3</span></span><br><span class="line">  <span class="comment"># 首页副标题</span></span><br><span class="line">  <span class="attr">slogan:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="string">&quot;技术 · 成长 · 分享&quot;</span></span><br><span class="line">  <span class="comment"># 自动截取文章摘要</span></span><br><span class="line">  <span class="attr">auto_excerpt:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 文章元信息显示</span></span><br><span class="line">  <span class="attr">post_meta:</span></span><br><span class="line">    <span class="attr">date:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">category:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tag:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 图片</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-comment"># Banner 遮罩透明度</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-comment"># 首页副标题</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;技术 · 成长 · 分享&quot;</span><br>  <span class="hljs-comment"># 自动截取文章摘要</span><br>  <span class="hljs-attr">auto_excerpt:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># 文章元信息显示</span><br>  <span class="hljs-attr">post_meta:</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">category:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">tag:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>建议 Banner 图片尺寸为 1920×1080。</p>
 </blockquote>
-<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="comment"># 页脚内容（支持 HTML）</span></span><br><span class="line">  <span class="attr">content:</span> <span class="string">&#x27;</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span></span><br><span class="line"><span class="string">  &#x27;</span></span><br><span class="line">  <span class="comment"># 访问统计</span></span><br><span class="line">  <span class="attr">statistics:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">source:</span> <span class="string">&quot;busuanzi&quot;</span>  <span class="comment"># 可选：busuanzi / leancloud</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">footer:</span><br>  <span class="hljs-comment"># 页脚内容（支持 HTML）</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span><br><span class="hljs-string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span><br><span class="hljs-string">  &#x27;</span><br>  <span class="hljs-comment"># 访问统计</span><br>  <span class="hljs-attr">statistics:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">&quot;busuanzi&quot;</span>  <span class="hljs-comment"># 可选：busuanzi / leancloud</span><br></code></pre></td></tr></table></figure>
 
 <p><code>source</code> 可选用不蒜子 (busuanzi) 或 LeanCloud 作为统计来源。</p>
 <hr>
 <h1 id="5-本地搜索配置"><a href="#5-本地搜索配置" class="headerlink" title="5. 本地搜索配置"></a>5. 本地搜索配置</h1><p>Fluid 已集成 <code>hexo-generator-search</code> 插件，默认在根目录生成并使用 <code>local-search.xml</code>。若已安装其他搜索插件，需关闭以避免生成多余的索引文件。</p>
 <p>如未安装，执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-generator-search --save<br></code></pre></td></tr></table></figure>
 
 <p>然后在 <code>_config.fluid.yml</code> 中启用：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">local_search:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="6-高级美化技巧"><a href="#6-高级美化技巧" class="headerlink" title="6. 高级美化技巧"></a>6. 高级美化技巧</h1><h2 id="6-1-Banner-图片与视频背景"><a href="#6-1-Banner-图片与视频背景" class="headerlink" title="6.1 Banner 图片与视频背景"></a>6.1 Banner 图片与视频背景</h2><p>Fluid 支持为不同页面配置独立的 Banner 图片：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根目录位于 source 文件夹</span></span><br><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/index_banner.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="attr">archive:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/archive_banner.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="attr">category:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/category_banner.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="attr">tag:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/tag_banner.jpg</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">index:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/index_banner.jpg</span><br><br><span class="hljs-attr">archive:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/archive_banner.jpg</span><br><br><span class="hljs-attr">category:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/category_banner.jpg</span><br><br><span class="hljs-attr">tag:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/tag_banner.jpg</span><br></code></pre></td></tr></table></figure>
 
 <p>如需更动态的效果，可参考社区方案为首页添加随机视频背景。</p>
 <h2 id="6-2-友链配置"><a href="#6-2-友链配置" class="headerlink" title="6.2 友链配置"></a>6.2 友链配置</h2><p>Fluid 原生支持友链功能。在 <code>_config.fluid.yml</code> 中配置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">links:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 友链分组</span></span><br><span class="line">  <span class="attr">groups:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">group_name:</span> <span class="string">&quot;好友博客&quot;</span></span><br><span class="line">      <span class="attr">items:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">title:</span> <span class="string">&quot;博客名称&quot;</span></span><br><span class="line">          <span class="attr">intro:</span> <span class="string">&quot;博客简介&quot;</span></span><br><span class="line">          <span class="attr">link:</span> <span class="string">&quot;https://example.com&quot;</span></span><br><span class="line">          <span class="attr">avatar:</span> <span class="string">&quot;/img/avatar.jpg&quot;</span> <span class="comment"># 根目录位于 source 文件夹</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 友链分组</span><br>  <span class="hljs-attr">groups:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group_name:</span> <span class="hljs-string">&quot;好友博客&quot;</span><br>      <span class="hljs-attr">items:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;博客名称&quot;</span><br>          <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;博客简介&quot;</span><br>          <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span><br>          <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;/img/avatar.jpg&quot;</span> <span class="hljs-comment"># 根目录位于 source 文件夹</span><br></code></pre></td></tr></table></figure>
 
 <p>然后在导航菜单中添加友链入口：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">navbar:</span></span><br><span class="line">  <span class="attr">menu:</span></span><br><span class="line">    <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">&quot;links&quot;</span>, <span class="attr">link:</span> <span class="string">&quot;/links/&quot;</span>, <span class="attr">icon:</span> <span class="string">&quot;iconfont icon-link-fill&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;links&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/links/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-link-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="7-更新主题"><a href="#7-更新主题" class="headerlink" title="7. 更新主题"></a>7. 更新主题</h1><p>Fluid 主题持续迭代，定期更新可获得新功能和 bug 修复。</p>
 <p><strong>npm 安装方式</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm update --save hexo-theme-fluid</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm update --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
 
 <p><strong>Release 压缩包方式</strong>：</p>
 <p>先将原文件夹重命名为 <code>fluid-bkp</code> 作为备份，然后下载最新 release 解压并重命名为 <code>fluid</code>。</p>
@@ -199,7 +485,7 @@
 </blockquote>
 <hr>
 <p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
-<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#x65;&#x72;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和我交流。</p>
+<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#x61;&#104;&#105;&#107;&#101;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a> 和我交流。</p>
 <p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入图床、优化加载速度、配置 SEO。感兴趣的话，后续我会继续记录，慢慢把这一整套流程补齐。</p>
 <hr>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
@@ -208,148 +494,429 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid GitHub 仓库</a></li>
 </ul>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="category-chain-item">个人博客搭建指南</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" class="print-no-link">#个人博客搭建指南</a>
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://aurorahiker.github.io/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/" data-id="cuideHih4VY_103ikMzjVGe-r" data-title="个人博客搭建指南：Fluid 主题安装与深度美化" class="article-share-link"><span class="fa fa-share">分享</span></a>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>个人博客搭建指南：Fluid 主题安装与深度美化</div>
+      <div>https://aurorahiker.github.io/2026/07/10/个人博客搭建指南：Fluid-主题安装与深度美化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-07-10</div>
+        </div>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" rel="tag">个人博客搭建指南</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">个人博客搭建指南：基于 GitHub Pages 的完整流程</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/">GROMACS分子动力学模拟</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">Windows使用技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">个人博客搭建指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B3%E4%BA%8E/">关于</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/">分子对接</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">图神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">计算机基础与实验平台搭建</a></li></ul>
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
     </div>
+    <div class="license-icon iconfont"></div>
   </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightDock/" rel="tag">LightDock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="tag">Windows使用技巧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" rel="tag">个人博客搭建指南</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%8B%E7%BB%8D/" rel="tag">介绍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" rel="tag">分子动力学模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" rel="tag">分子对接</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">图神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" rel="tag">实验平台搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AC%A2%E8%BF%8E/" rel="tag">欢迎</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="tag">计算机基础</a></li></ul>
-    </div>
-  </div>
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">
+                        <span class="hidden-mobile">个人博客搭建指南：基于 GitHub Pages 的完整流程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/LightDock/" style="font-size: 10px;">LightDock</a> <a href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">Windows使用技巧</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" style="font-size: 13.33px;">个人博客搭建指南</a> <a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 10px;">介绍</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" style="font-size: 10px;">分子动力学模拟</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" style="font-size: 10px;">分子对接</a> <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">图神经网络</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" style="font-size: 20px;">实验平台搭建</a> <a href="/tags/%E6%AC%A2%E8%BF%8E/" style="font-size: 10px;">欢迎</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 16.67px;">计算机基础</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/">个人博客搭建指南：Fluid 主题安装与深度美化</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>
-          </li>
-        
-          <li>
-            <a href="/2026/05/04/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/">在 50 系显卡上部署 PyG 图神经网络环境</a>
-          </li>
-        
-          <li>
-            <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">从零搭建Windows生信分析平台——WSL的安装配置</a>
-          </li>
-        
-          <li>
-            <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/">LightDock分子对接的实验平台搭建</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
+            
+          </article>
+        </div>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2026 AuroraHiker<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
-  </div>
-</footer>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+  </div>
+</div>
+
+
+
+
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
