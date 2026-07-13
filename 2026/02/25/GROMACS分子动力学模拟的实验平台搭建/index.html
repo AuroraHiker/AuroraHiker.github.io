@@ -1,25 +1,12 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
-  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="鸟剑飞、AuroraHiker">
-  <meta name="keywords" content="技术,博客,编程,生信">
-  
-    <meta name="description" content="分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。 在众多分子动力学模拟软件中，GROMACS(GROning">
+  <title>GROMACS分子动力学模拟的实验平台搭建 | AuroraHiker’s Code Trail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。 在众多分子动力学模拟软件中，GROMACS(GROning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GROMACS分子动力学模拟的实验平台搭建">
 <meta property="og:url" content="https://aurorahiker.github.io/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/index.html">
@@ -31,258 +18,90 @@
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="分子动力学模拟">
 <meta property="article:tag" content="实验平台搭建">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="AuroraHiker’s Code Trail" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
   
   
   
-  <title>GROMACS分子动力学模拟的实验平台搭建 - AuroraHiker’s Code Trail</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
-  
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
+<link rel="stylesheet" href="/css/style.css">
 
   
-<meta name="generator" content="Hexo 8.1.1"></head>
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
 
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>AuroraHiker’s Code Trail</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">AuroraHiker’s Code Trail</a>
+      </h1>
+      
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="GROMACS分子动力学模拟的实验平台搭建"></span>
-          
-        </div>
-
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          
-  <div class="mt-3">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-author" aria-hidden="true"></i>
-        鸟剑飞、AuroraHiker
-      </span>
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-02-25 03:18" pubdate>
-          2026年2月25日 凌晨
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
+          <a class="main-nav-link" href="/">Home</a>
         
-          2.4k 字
+          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
+      </nav>
+      <nav id="sub-nav">
         
         
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
         
-          20 分钟
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://aurorahiker.github.io"></form>
       </div>
-
-      
     </div>
   </div>
-</div>
+</header>
 
-</div>
-
-  </header>
-
-  <main>
+      <div class="outer">
+        <section id="main"><article id="post-GROMACS分子动力学模拟的实验平台搭建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time class="dt-published" datetime="2026-02-24T19:18:19.129Z" itemprop="datePublished">2026-02-25</time>
+</a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/">GROMACS分子动力学模拟</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      GROMACS分子动力学模拟的实验平台搭建
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">GROMACS分子动力学模拟的实验平台搭建</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
+        <p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
 <p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
 <p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
 <p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
@@ -357,11 +176,11 @@
 <h3 id="2-2-编译器配置"><a href="#2-2-编译器配置" class="headerlink" title="2.2 编译器配置"></a>2.2 编译器配置</h3><p>GROMACS 的源代码是用 C 和 C++ 编写的，需要编译器将其翻译成机器能执行的指令。<br>最低版本要求：<strong>GCC ≥ 11</strong>（必须支持 C++17 标准）。</p>
 <ul>
 <li><p>第一步：检查当前 GCC 版本</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc -v<br>g++ -v<br></code></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -v</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>
 <p>  如果输出的版本号高于或等于 11，说明已满足要求，可以跳过安装步骤；如果版本低于 11 或提示“命令未找到”，则需要安装 GCC 11。</p>
 </li>
 <li><p>第二步：安装 GCC 11</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span><br><span class="hljs-built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test<br><span class="hljs-built_in">sudo</span> apt update<br><br><span class="hljs-comment"># 安装 GCC 11 和 G++ 11</span><br><span class="hljs-built_in">sudo</span> apt install gcc-11 g++-11<br><br><span class="hljs-comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-11<br><br><span class="hljs-comment"># 如果需要同时保留旧版本，可以添加优先级</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-9<br><br></code></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span></span><br><span class="line"><span class="built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 GCC 11 和 G++ 11</span></span><br><span class="line"><span class="built_in">sudo</span> apt install gcc-11 g++-11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span></span><br><span class="line"><span class="built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \</span><br><span class="line">                        --slave /usr/bin/g++ g++ /usr/bin/g++-11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要同时保留旧版本，可以添加优先级</span></span><br><span class="line"><span class="built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \</span><br><span class="line">                        --slave /usr/bin/g++ g++ /usr/bin/g++-9</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>  安装完成后，再次检查gcc和g++版本是否符合要求。</p>
 </li>
@@ -369,21 +188,21 @@
 <h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
 <ul>
 <li><p>第一步：检查当前 CMake 版本</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --version </span><br></pre></td></tr></table></figure>
 <p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
 </li>
 <li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y wget gnupg<br>wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null<br><br><span class="hljs-comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="hljs-subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/kitware.list<br><br><span class="hljs-comment"># 更新并安装 cmake</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install cmake<br><br><span class="hljs-comment"># 验证安装</span><br>cmake --version<br></code></pre></td></tr></table></figure></li>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y wget gnupg</span><br><span class="line">wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="built_in">sudo</span> <span class="built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/sources.list.d/kitware.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新并安装 cmake</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install cmake</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">cmake --version</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr>
 <h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a target="_blank" rel="noopener" href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入存放软件的目录，例如 ~/software</span></span><br><span class="line"><span class="built_in">cd</span> ~/software</span><br><span class="line">wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz</span><br></pre></td></tr></table></figure>
 
 <p>下载完成后，检查文件是否存在：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l gromacs-2025.4.tar.gz</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br>    <br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br>    <br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>    <br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br>    <br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解压源码包</span></span><br><span class="line">tar xfz gromacs-2025.4.tar.gz</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 进入解压后的目录</span></span><br><span class="line"><span class="built_in">cd</span> gromacs-2025.4</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 创建独立的构建目录（保持源码干净）</span></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 编译安装，并自动下载FFTW库和回归测试集</span></span><br><span class="line">cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行测试</span></span><br><span class="line">make check</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span></span><br><span class="line"><span class="comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">gmx --version</span><br></pre></td></tr></table></figure>
 <p><strong>编译选项解释：</strong></p>
 <ul>
 <li><code>-DGMX_BUILD_OWN_FFTW=ON</code> 让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
@@ -392,7 +211,7 @@
 <h3 id="3-3-常见问题（debug）"><a href="#3-3-常见问题（debug）" class="headerlink" title="3.3 常见问题（debug）"></a>3.3 常见问题（debug）</h3><p><strong>问题1：cmake .. 时报错提示编译器版本过低或找不到编译器</strong></p>
 <ul>
 <li>如果运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>时报错提示编译器版本过低或找不到编译器，优先检查gcc &amp; g++的版本是否大于11，CMake版本是否大于3.28，并升级不符合要求的软件。</li>
-<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回到build的上级目录，即gromacs-2025.4</span><br><span class="hljs-built_in">cd</span> ../<br><br><span class="hljs-comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span><br><span class="hljs-built_in">rm</span> -rf build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure></li>
+<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 回到build的上级目录，即gromacs-2025.4</span></span><br><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span></span><br><span class="line"><span class="built_in">rm</span> -rf build</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p><strong>问题2：安装完成后输入 gmx 提示命令未找到</strong></p>
 <ul>
@@ -405,375 +224,159 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#x61;&#104;&#x69;&#107;&#101;&#x72;&#x40;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#97;&#x68;&#x69;&#x6b;&#x65;&#x72;&#x40;&#49;&#x36;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
       
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://aurorahiker.github.io/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" data-id="cuidPNZCUgrwRVNGr4OGGVWjV" data-title="GROMACS分子动力学模拟的实验平台搭建" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" rel="tag">分子动力学模拟</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" rel="tag">实验平台搭建</a></li></ul>
 
-<span class="category-chains">
-  
+    </footer>
+  </div>
   
     
-      <span class="category-chain">
+<nav id="article-nav">
+  
+    <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
-  <a href="/categories/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" class="category-chain-item">GROMACS分子动力学模拟</a>
+          LightDock分子对接的实验平台搭建
+        
+      </div>
+    </a>
   
   
+    <a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">如何搭建合适的生信分析平台</div>
+    </a>
+  
+</nav>
 
-      </span>
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-  
-</span>
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/">GROMACS分子动力学模拟</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">Windows使用技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">个人博客搭建指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B3%E4%BA%8E/">关于</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/">分子对接</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">图神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">计算机基础与实验平台搭建</a></li></ul>
     </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
-      
-        <a href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" class="print-no-link">#分子动力学模拟</a>
-      
-    </div>
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>GROMACS分子动力学模拟的实验平台搭建</div>
-      <div>https://aurorahiker.github.io/2026/02/25/GROMACS分子动力学模拟的实验平台搭建/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>鸟剑飞、AuroraHiker</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2026-02-25</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
   </div>
 
 
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/" title="LightDock分子对接的实验平台搭建">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LightDock分子对接的实验平台搭建</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">
-                        <span class="hidden-mobile">如何搭建合适的生信分析平台</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightDock/" rel="tag">LightDock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="tag">Windows使用技巧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" rel="tag">个人博客搭建指南</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%8B%E7%BB%8D/" rel="tag">介绍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" rel="tag">分子动力学模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" rel="tag">分子对接</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">图神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" rel="tag">实验平台搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AC%A2%E8%BF%8E/" rel="tag">欢迎</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="tag">计算机基础</a></li></ul>
     </div>
   </div>
-</div>
-
-
-
 
 
   
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
     
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/LightDock/" style="font-size: 10px;">LightDock</a> <a href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">Windows使用技巧</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" style="font-size: 13.33px;">个人博客搭建指南</a> <a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 10px;">介绍</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" style="font-size: 10px;">分子动力学模拟</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" style="font-size: 10px;">分子对接</a> <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">图神经网络</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" style="font-size: 20px;">实验平台搭建</a> <a href="/tags/%E6%AC%A2%E8%BF%8E/" style="font-size: 10px;">欢迎</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 16.67px;">计算机基础</a>
     </div>
   </div>
-</div>
 
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
   
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
     </div>
+  </div>
+
+
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/">个人博客搭建指南：Fluid 主题安装与深度美化</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/04/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/">在 50 系显卡上部署 PyG 图神经网络环境</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">从零搭建Windows生信分析平台——WSL的安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/">LightDock分子对接的实验平台搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
   
+</aside>
+        
+      </div>
+      <footer id="footer">
   
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
+  <div class="outer">
+    <div id="footer-info" class="inner">
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      &copy; 2026 AuroraHiker<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
 
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+<script src="/js/script.js"></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  </div>
 </body>
 </html>
