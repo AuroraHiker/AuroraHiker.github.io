@@ -1,6 +1,6 @@
 ---
 title: about
-date: 2026-02-21 07:07:51
+layout: about
 ---
 欢迎来到 **AuroraHiker’s Code Trail**！
 
