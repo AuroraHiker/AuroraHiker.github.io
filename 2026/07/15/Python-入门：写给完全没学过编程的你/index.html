@@ -1,0 +1,966 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。 无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。  1. 程序设计的基本结构所有任务都可以解构为以下 顺">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 入门：写给完全没学过编程的你">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/index.html">
+<meta property="og:site_name" content="AuroraHiker’s Code Trail">
+<meta property="og:description" content="本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。 无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。  1. 程序设计的基本结构所有任务都可以解构为以下 顺">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-15T06:13:25.383Z">
+<meta property="article:modified_time" content="2026-07-15T06:13:25.383Z">
+<meta property="article:author" content="AuroraHiker">
+<meta property="article:tag" content="Python 入门">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 入门：写给完全没学过编程的你 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 入门：写给完全没学过编程的你"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-07-15 14:13" pubdate>
+          2026年7月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 入门：写给完全没学过编程的你</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。</p>
+<p>无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。</p>
+<hr>
+<h1 id="1-程序设计的基本结构"><a href="#1-程序设计的基本结构" class="headerlink" title="1. 程序设计的基本结构"></a>1. 程序设计的基本结构</h1><p>所有任务都可以解构为以下 <strong>顺序、条件、循环</strong> 三种基本结构。无论多么复杂的程序，归根结底都是由这三种结构组合而成的。下面我们逐一来看 Python 如何实现它们。</p>
+<h3 id="1-1-顺序结构"><a href="#1-1-顺序结构" class="headerlink" title="1.1 顺序结构"></a>1.1 顺序结构</h3><p>就是代码<strong>从上往下逐行执行</strong>，没有跳转。这是最自然的方式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第一步&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第二步&quot;</span>)   <span class="hljs-comment"># 先执行完上一行，才执行这一行</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第三步&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-条件结构（if-elif-else）"><a href="#1-2-条件结构（if-elif-else）" class="headerlink" title="1.2 条件结构（if &#x2F; elif &#x2F; else）"></a>1.2 条件结构（if &#x2F; elif &#x2F; else）</h3><p>根据条件是否成立，决定执行哪段代码。语法上注意 <strong>冒号</strong> 和 <strong>缩进</strong>（缩进后面会专门讲）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">18</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;已成年&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未成年&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>多分支用 <code>elif</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">score = <span class="hljs-number">85</span><br><span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">90</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;优秀&quot;</span>)<br><span class="hljs-keyword">elif</span> score &gt;= <span class="hljs-number">60</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;及格&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不及格&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-循环结构（for-while）"><a href="#1-3-循环结构（for-while）" class="headerlink" title="1.3 循环结构（for &#x2F; while）"></a>1.3 循环结构（for &#x2F; while）</h3><p>重复执行某段代码，直到条件不满足。</p>
+<ul>
+<li><strong><code>for</code> 循环</strong>：常用于遍历序列（如列表、字符串）或固定次数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 遍历列表</span><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;苹果&quot;</span>, <span class="hljs-string">&quot;香蕉&quot;</span>, <span class="hljs-string">&quot;橘子&quot;</span>]:<br>    <span class="hljs-built_in">print</span>(fruit)<br><br><span class="hljs-comment"># 重复 5 次（range(5) 生成 0~4）</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;i&#125;</span> 次循环&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>while</code> 循环</strong>：只要条件为真就继续，适合不知道具体次数的情况。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">count = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> count &lt; <span class="hljs-number">3</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中...&quot;</span>)<br>    count += <span class="hljs-number">1</span>   <span class="hljs-comment"># 一定要修改条件，否则死循环</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>小心死循环！记得在循环体内改变循环变量的值。</p>
+</blockquote>
+<h3 id="1-4-三元操作（条件表达式）"><a href="#1-4-三元操作（条件表达式）" class="headerlink" title="1.4 三元操作（条件表达式）"></a>1.4 三元操作（条件表达式）</h3><p>这是一种 <strong>简写的 if-else</strong>，适合在单行内根据条件赋不同值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br>status = <span class="hljs-string">&quot;成年&quot;</span> <span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;未成年&quot;</span><br><span class="hljs-built_in">print</span>(status)   <span class="hljs-comment"># 输出：成年</span><br></code></pre></td></tr></table></figure>
+
+<p>语法：<code>值1 if 条件 else 值2</code> —— 条件成立取 <code>值1</code>，否则取 <code>值2</code>。</p>
+<hr>
+<h2 id="2-Python-的基础运算"><a href="#2-Python-的基础运算" class="headerlink" title="2. Python 的基础运算"></a>2. Python 的基础运算</h2><p>程序离不开计算，Python 提供两类最常用的运算符。</p>
+<h3 id="2-1-数学运算符"><a href="#2-1-数学运算符" class="headerlink" title="2.1 数学运算符"></a>2.1 数学运算符</h3><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>+</code></td>
+<td>加</td>
+<td><code>3 + 5</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>减</td>
+<td><code>10 - 4</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>乘</td>
+<td><code>2 * 6</code></td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>除（浮点）</td>
+<td><code>10 / 3</code> → 3.333…</td>
+</tr>
+<tr>
+<td><code>//</code></td>
+<td>整除（取整）</td>
+<td><code>10 // 3</code> → 3</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>取余（模）</td>
+<td><code>10 % 3</code> → 1</td>
+</tr>
+<tr>
+<td><code>**</code></td>
+<td>幂运算</td>
+<td><code>2 ** 3</code> → 8</td>
+</tr>
+</tbody></table>
+<p>注意：<code>/</code> 结果永远是浮点数，<code>//</code> 和 <code>%</code> 常用于取整和判断奇偶。</p>
+<h3 id="2-2-逻辑运算符"><a href="#2-2-逻辑运算符" class="headerlink" title="2.2 逻辑运算符"></a>2.2 逻辑运算符</h3><p>用于组合多个布尔条件，返回 <code>True</code> 或 <code>False</code>。</p>
+<ul>
+<li><code>and</code>（与）：两边都为真才为真</li>
+<li><code>or</code>（或）：至少一边为真即为真</li>
+<li><code>not</code>（非）：取反</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> x &lt; <span class="hljs-number">10</span>)   <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">10</span> <span class="hljs-keyword">or</span> x &lt; <span class="hljs-number">3</span>)    <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(<span class="hljs-keyword">not</span> (x == <span class="hljs-number">5</span>))       <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+
+<p>逻辑运算在条件判断中非常常用。</p>
+<hr>
+<h2 id="3-代码打包（函数与类）"><a href="#3-代码打包（函数与类）" class="headerlink" title="3. 代码打包（函数与类）"></a>3. 代码打包（函数与类）</h2><p>当代码越来越多，我们需要<strong>打包</strong>起来复用，避免重复书写。</p>
+<h3 id="3-1-函数（function）"><a href="#3-1-函数（function）" class="headerlink" title="3.1 函数（function）"></a>3.1 函数（function）</h3><p>函数是一段<strong>有名字的代码块</strong>，通过名字调用它，可以传入参数并返回结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br><br><span class="hljs-comment"># 调用函数</span><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p>函数让你把重复逻辑封装起来，提高代码可读性。</p>
+<h3 id="3-2-类（class）"><a href="#3-2-类（class）" class="headerlink" title="3.2 类（class）"></a>3.2 类（class）</h3><p>类是更高级的打包方式，它将<strong>数据</strong>（属性）和<strong>操作</strong>（方法）捆绑在一起。初学者可以先了解概念，后续深入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):   <span class="hljs-comment"># 初始化方法</span><br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br><br>my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>my_dog.bark()   <span class="hljs-comment"># 输出：旺财 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>现阶段你只需知道：<strong>类是用来创建对象的模板</strong>，对象拥有自己的属性和行为。</p>
+</blockquote>
+<hr>
+<h2 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h2><p>程序经常需要读写外部文件（如 txt、csv）。</p>
+<h3 id="4-1-文件的调用（打开、读取、写入）"><a href="#4-1-文件的调用（打开、读取、写入）" class="headerlink" title="4.1 文件的调用（打开、读取、写入）"></a>4.1 文件的调用（打开、读取、写入）</h3><p>使用内置函数 <code>open()</code>，指定文件路径和模式（<code>&#39;r&#39;</code> 读取，<code>&#39;w&#39;</code> 写入，<code>&#39;a&#39;</code> 追加）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>file.write(<span class="hljs-string">&quot;Hello, Python!&quot;</span>)<br>file.close()   <span class="hljs-comment"># 记得关闭</span><br><br><span class="hljs-comment"># 读取文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>content = file.read()<br><span class="hljs-built_in">print</span>(content)   <span class="hljs-comment"># 输出：Hello, Python!</span><br>file.close()<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-Python-的自动关闭特性（with-语句）"><a href="#4-2-Python-的自动关闭特性（with-语句）" class="headerlink" title="4.2 Python 的自动关闭特性（with 语句）"></a>4.2 Python 的自动关闭特性（with 语句）</h3><p>手动 <code>close()</code> 容易忘记，Python 提供了 <strong><code>with</code> 上下文管理器</strong>，在代码块结束后<strong>自动关闭</strong>文件，更安全简洁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入（自动关闭）</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;自动关闭，放心！&quot;</span>)<br><br><span class="hljs-comment"># 读取（自动关闭）</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
+
+<p><strong>强烈建议</strong>：所有文件操作都用 <code>with</code>，省心又可靠。</p>
+<hr>
+<h2 id="5-代码规范性"><a href="#5-代码规范性" class="headerlink" title="5. 代码规范性"></a>5. 代码规范性</h2><p>写出能运行的代码只是第一步，写出<strong>好看、易读</strong>的代码同样重要。</p>
+<h3 id="5-1-缩进（Indentation）"><a href="#5-1-缩进（Indentation）" class="headerlink" title="5.1 缩进（Indentation）"></a>5.1 缩进（Indentation）</h3><p>Python 用<strong>缩进</strong>表示代码块层级，不像其他语言用大括号。缩进必须<strong>一致</strong>（一般用 4 个空格）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确缩进</span><br><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;缩进 4 空格&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;同一层级&quot;</span>)<br><br><span class="hljs-comment"># 错误示范（缩进不一致会报错）</span><br><span class="hljs-comment"># if True:</span><br><span class="hljs-comment">#   print(&quot;用了2空格&quot;)</span><br><span class="hljs-comment">#     print(&quot;又用了4空格&quot;)   # IndentationError</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>大多数代码编辑器会自动将 Tab 转为空格，建议设置 Tab &#x3D; 4 空格。</p>
+</blockquote>
+<h3 id="5-2-注释（Comment）"><a href="#5-2-注释（Comment）" class="headerlink" title="5.2 注释（Comment）"></a>5.2 注释（Comment）</h3><p>注释是给<strong>人</strong>看的解释，Python 解释器会忽略它。</p>
+<ul>
+<li><strong>单行注释</strong>：以 <code>#</code> 开头</li>
+<li><strong>多行注释</strong>：用三个引号 <code>&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;</code>（通常用作文档字符串）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这是单行注释，解释下面代码的作用</span><br>age = <span class="hljs-number">18</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">这是多行注释</span><br><span class="hljs-string">可以写较长的说明</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>好的注释能帮助自己和他人理解代码意图，但<strong>不要注释显而易见的代码</strong>，注释应说明“为什么”而不是“是什么”。</p>
+<hr>
+<h2 id="6-做一个“调包侠”"><a href="#6-做一个“调包侠”" class="headerlink" title="6. 做一个“调包侠”"></a>6. 做一个“调包侠”</h2><p>Python 的一大魅力在于<strong>海量的第三方库</strong>。你不需要自己重新发明轮子，只需安装并导入别人写好的库，就能快速实现复杂功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 安装库（在终端执行）：pip install requests</span><br><br><span class="hljs-comment"># 使用库</span><br><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com&quot;</span>)<br><span class="hljs-built_in">print</span>(response.status_code)   <span class="hljs-comment"># 输出 200</span><br></code></pre></td></tr></table></figure>
+
+<p>常用库举例：</p>
+<ul>
+<li><strong><code>pandas</code></strong>：数据处理</li>
+<li><strong><code>numpy</code></strong>：科学计算</li>
+<li><strong><code>matplotlib</code></strong>：绘图</li>
+<li><strong><code>flask</code></strong> &#x2F; <strong><code>django</code></strong>：Web 开发</li>
+</ul>
+<p>初学时，<strong>先学会阅读库的官方文档</strong>，知道怎么调用函数、传递参数，比背下所有方法更重要。</p>
+<hr>
+<h2 id="7-print-调试法（最简单的调试手段）"><a href="#7-print-调试法（最简单的调试手段）" class="headerlink" title="7. print 调试法（最简单的调试手段）"></a>7. print 调试法（最简单的调试手段）</h2><p>当你写的程序运行结果不符合预期时，最直接的排查方式就是<strong>在关键位置插入 <code>print()</code></strong>，把变量的值打印出来，观察程序执行的轨迹。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">divide</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;a=<span class="hljs-subst">&#123;a&#125;</span>, b=<span class="hljs-subst">&#123;b&#125;</span>&quot;</span>)   <span class="hljs-comment"># 调试：看传入的参数</span><br>    result = a / b<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;result=<span class="hljs-subst">&#123;result&#125;</span>&quot;</span>) <span class="hljs-comment"># 调试：看计算结果</span><br>    <span class="hljs-keyword">return</span> result<br><br>divide(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)   <span class="hljs-comment"># 你会看到 b=0，然后报错 ZeroDivisionError</span><br></code></pre></td></tr></table></figure>
+
+<p>通过打印信息，你可以快速定位哪一步出了问题。虽然还有更高级的调试工具（如 pdb、IDE 断点），但对于入门者，<code>print</code> 足够应对 80% 的场景。</p>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>到这里，你已经浏览了 Python 的核心骨架：结构、运算、打包、文件、规范、调库和调试。这些内容能让你读懂入门代码，也能自己写点小工具。</p>
+<p><strong>接下来做什么？</strong></p>
+<ul>
+<li>打开 Python，把文中示例挨个敲一遍</li>
+<li>不懂就 print() 看看中间结果</li>
+<li>想扩展功能，去 PyPI 找找库</li>
+</ul>
+<p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
+<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#114;&#x61;&#x68;&#x69;&#x6b;&#101;&#x72;&#64;&#49;&#x36;&#51;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python-%E5%85%A5%E9%97%A8/" class="category-chain-item">Python 入门</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python-%E5%85%A5%E9%97%A8/" class="print-no-link">#Python 入门</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 入门：写给完全没学过编程的你</div>
+      <div>https://aurorahiker.github.io/2026/07/15/Python-入门：写给完全没学过编程的你/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-07-15</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/" title="个人博客搭建指南：Fluid 主题安装与深度美化">
+                        <span class="hidden-mobile">个人博客搭建指南：Fluid 主题安装与深度美化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
