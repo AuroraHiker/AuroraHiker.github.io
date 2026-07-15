@@ -27,7 +27,7 @@
 <meta property="og:description" content="本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。 无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。  1. 程序设计的基本结构所有任务都可以解构为以下 顺">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-15T06:13:25.383Z">
-<meta property="article:modified_time" content="2026-07-15T06:13:25.383Z">
+<meta property="article:modified_time" content="2026-07-15T23:18:43.339Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="Python 入门">
 <meta name="twitter:card" content="summary_large_image">
@@ -331,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          10k 字
         
       </span>
     
@@ -342,7 +342,7 @@
         
         
         
-          35 分钟
+          87 分钟
         
       </span>
     
@@ -390,20 +390,23 @@
 <p>无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。</p>
 <hr>
 <h1 id="1-程序设计的基本结构"><a href="#1-程序设计的基本结构" class="headerlink" title="1. 程序设计的基本结构"></a>1. 程序设计的基本结构</h1><p>所有任务都可以解构为以下 <strong>顺序、条件、循环</strong> 三种基本结构。无论多么复杂的程序，归根结底都是由这三种结构组合而成的。下面我们逐一来看 Python 如何实现它们。</p>
-<h3 id="1-1-顺序结构"><a href="#1-1-顺序结构" class="headerlink" title="1.1 顺序结构"></a>1.1 顺序结构</h3><p>就是代码<strong>从上往下逐行执行</strong>，没有跳转。这是最自然的方式。</p>
+<h2 id="1-1-顺序结构"><a href="#1-1-顺序结构" class="headerlink" title="1.1 顺序结构"></a>1.1 顺序结构</h2><p>顺序结构就是代码<strong>从上往下逐行执行</strong>，没有跳转。这是所有程序的默认执行方式，也是另外两种结构 (条件和循环) 的“地基”——即使有分支和循环，代码的整体走向依然是顺序的，只是局部发生了跳转。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第一步&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第二步&quot;</span>)   <span class="hljs-comment"># 先执行完上一行，才执行这一行</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第三步&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<h3 id="1-2-条件结构（if-elif-else）"><a href="#1-2-条件结构（if-elif-else）" class="headerlink" title="1.2 条件结构（if &#x2F; elif &#x2F; else）"></a>1.2 条件结构（if &#x2F; elif &#x2F; else）</h3><p>根据条件是否成立，决定执行哪段代码。语法上注意 <strong>冒号</strong> 和 <strong>缩进</strong>（缩进后面会专门讲）。</p>
+<h2 id="1-2-条件结构-if-elif-else"><a href="#1-2-条件结构-if-elif-else" class="headerlink" title="1.2 条件结构 (if &#x2F; elif &#x2F; else)"></a>1.2 条件结构 (if &#x2F; elif &#x2F; else)</h2><p>根据条件是否成立，决定执行哪段代码。语法上注意 <strong>冒号</strong> 和 <strong>缩进</strong> (缩进后面会专门讲)。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">18</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;已成年&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未成年&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 <p>多分支用 <code>elif</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">score = <span class="hljs-number">85</span><br><span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">90</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;优秀&quot;</span>)<br><span class="hljs-keyword">elif</span> score &gt;= <span class="hljs-number">60</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;及格&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不及格&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<h3 id="1-3-循环结构（for-while）"><a href="#1-3-循环结构（for-while）" class="headerlink" title="1.3 循环结构（for &#x2F; while）"></a>1.3 循环结构（for &#x2F; while）</h3><p>重复执行某段代码，直到条件不满足。</p>
+<blockquote>
+<p>在条件结构中，Python 会从<strong>上到下依次判断</strong>每个条件，一旦某个条件成立，就会执行对应的代码块，并跳过后面所有的 elif 和 else。注意，else 不需要写任何条件，它表示所有条件都不满足时的默认情况。</p>
+</blockquote>
+<h2 id="1-3-循环结构-for-while"><a href="#1-3-循环结构-for-while" class="headerlink" title="1.3 循环结构 (for &#x2F; while)"></a>1.3 循环结构 (for &#x2F; while)</h2><p>重复执行某段代码，直到条件不满足。</p>
 <ul>
-<li><strong><code>for</code> 循环</strong>：常用于遍历序列（如列表、字符串）或固定次数。</li>
+<li><strong><code>for</code> 循环</strong>：常用于遍历序列 (如列表、字符串) 或固定次数。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 遍历列表</span><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;苹果&quot;</span>, <span class="hljs-string">&quot;香蕉&quot;</span>, <span class="hljs-string">&quot;橘子&quot;</span>]:<br>    <span class="hljs-built_in">print</span>(fruit)<br><br><span class="hljs-comment"># 重复 5 次（range(5) 生成 0~4）</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;i&#125;</span> 次循环&quot;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 遍历列表</span><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;苹果&quot;</span>, <span class="hljs-string">&quot;香蕉&quot;</span>, <span class="hljs-string">&quot;橘子&quot;</span>]:<br>    <span class="hljs-built_in">print</span>(fruit)<br><br><span class="hljs-comment"># 重复 5 次 (range(5) 生成 0~4) </span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;i&#125;</span> 次循环&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong><code>while</code> 循环</strong>：只要条件为真就继续，适合不知道具体次数的情况。</li>
@@ -411,15 +414,25 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">count = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> count &lt; <span class="hljs-number">3</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中...&quot;</span>)<br>    count += <span class="hljs-number">1</span>   <span class="hljs-comment"># 一定要修改条件，否则死循环</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
-<p>小心死循环！记得在循环体内改变循环变量的值。</p>
+<p>使用 <code>while</code> 时，务必记得在循环体内改变循环变量的值，否则会陷入死循环。</p>
 </blockquote>
-<h3 id="1-4-三元操作（条件表达式）"><a href="#1-4-三元操作（条件表达式）" class="headerlink" title="1.4 三元操作（条件表达式）"></a>1.4 三元操作（条件表达式）</h3><p>这是一种 <strong>简写的 if-else</strong>，适合在单行内根据条件赋不同值。</p>
+<h2 id="1-4-三元操作与列表推导式-进阶"><a href="#1-4-三元操作与列表推导式-进阶" class="headerlink" title="1.4 三元操作与列表推导式 (进阶)"></a>1.4 三元操作与列表推导式 (进阶)</h2><h3 id="1-4-1-三元操作-if-else-简写"><a href="#1-4-1-三元操作-if-else-简写" class="headerlink" title="1.4.1 三元操作 (if-else 简写)"></a>1.4.1 三元操作 (if-else 简写)</h3><p>三元操作是一种 <strong>简写的 if-else</strong>，适合在单行内根据条件赋不同值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br>status = <span class="hljs-string">&quot;成年&quot;</span> <span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;未成年&quot;</span><br><span class="hljs-built_in">print</span>(status)   <span class="hljs-comment"># 输出：成年</span><br></code></pre></td></tr></table></figure>
 
 <p>语法：<code>值1 if 条件 else 值2</code> —— 条件成立取 <code>值1</code>，否则取 <code>值2</code>。</p>
+<h3 id="列表推导式-循环-条件的组合简写"><a href="#列表推导式-循环-条件的组合简写" class="headerlink" title="列表推导式 (循环 + 条件的组合简写)"></a>列表推导式 (循环 + 条件的组合简写)</h3><p>三元操作不只用于单个值的判断，它还可以和循环结合，在<strong>一行代码内</strong>对列表中的所有元素进行批量处理。这种写法被称为 <strong>列表推导式</strong>。</p>
+<p>举个场景：你有一个数字列表，想把所有偶数保留下来，过滤掉奇数。</p>
+<p>传统的写法需要先用 <code>for</code> 循环遍历，再用 <code>if</code> 判断，最后用 <code>append</code> 添加到新列表，至少需要三四行代码。而用列表推导式可以压缩成一行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 传统写法</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br><br><span class="hljs-comment"># 列表推导式写法 (一行搞定)</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br></code></pre></td></tr></table></figure>
+
+<p>列表推导式还能结合三元操作，在遍历的同时根据条件决定每个元素取什么值。比如把列表中的奇数变成 <code>&quot;奇数&quot;</code>，偶数变成 <code>&quot;偶数&quot;</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]<br>result = [<span class="hljs-string">&quot;偶数&quot;</span> <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;奇数&quot;</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[&#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<p>格式拆解：<code>[对每个元素做的事 for 元素 in 列表 if 筛选条件]</code></p>
+<p>顺序是<strong>先循环、再判断、最后取结果</strong>，读的时候可以从 <code>for</code> 开始往两边读。</p>
+<p><strong>新手须知</strong>：三元操作和列表推导式属于“进阶语法”，它们存在的意义是让代码更简洁、更高效——尤其是在处理大量数据时，列表推导式比手动 <code>for</code> 循环速度更快，因为它在底层经过了优化。但如果你是初学者，暂时不学它们也完全不影响你写程序。先用 <code>if-else</code> 和 <code>for</code> 循环把逻辑理清楚，等你写习惯了，自然会觉得这些简写用起来更顺手。到时候再回来翻这一节也来得及。</p>
 <hr>
-<h2 id="2-Python-的基础运算"><a href="#2-Python-的基础运算" class="headerlink" title="2. Python 的基础运算"></a>2. Python 的基础运算</h2><p>程序离不开计算，Python 提供两类最常用的运算符。</p>
-<h3 id="2-1-数学运算符"><a href="#2-1-数学运算符" class="headerlink" title="2.1 数学运算符"></a>2.1 数学运算符</h3><table>
+<h1 id="2-Python-的基础运算"><a href="#2-Python-的基础运算" class="headerlink" title="2. Python 的基础运算"></a>2. Python 的基础运算</h1><h2 id="2-1-数学运算符"><a href="#2-1-数学运算符" class="headerlink" title="2.1 数学运算符"></a>2.1 数学运算符</h2><table>
 <thead>
 <tr>
 <th>运算符</th>
@@ -444,17 +457,17 @@
 </tr>
 <tr>
 <td><code>/</code></td>
-<td>除（浮点）</td>
+<td>除 (浮点)</td>
 <td><code>10 / 3</code> → 3.333…</td>
 </tr>
 <tr>
 <td><code>//</code></td>
-<td>整除（取整）</td>
+<td>整除 (取整)</td>
 <td><code>10 // 3</code> → 3</td>
 </tr>
 <tr>
 <td><code>%</code></td>
-<td>取余（模）</td>
+<td>取余 (模)</td>
 <td><code>10 % 3</code> → 1</td>
 </tr>
 <tr>
@@ -463,56 +476,152 @@
 <td><code>2 ** 3</code> → 8</td>
 </tr>
 </tbody></table>
-<p>注意：<code>/</code> 结果永远是浮点数，<code>//</code> 和 <code>%</code> 常用于取整和判断奇偶。</p>
-<h3 id="2-2-逻辑运算符"><a href="#2-2-逻辑运算符" class="headerlink" title="2.2 逻辑运算符"></a>2.2 逻辑运算符</h3><p>用于组合多个布尔条件，返回 <code>True</code> 或 <code>False</code>。</p>
+<p><strong>需要注意以下几点：</strong></p>
 <ul>
-<li><code>and</code>（与）：两边都为真才为真</li>
-<li><code>or</code>（或）：至少一边为真即为真</li>
-<li><code>not</code>（非）：取反</li>
+<li><p>加减乘 (+ - *) ：只要参与运算的任意一方是浮点数，结果就是浮点数。比如 3 + 2.0 得 5.0，4 * 1.5 得 6.0。</p>
+</li>
+<li><p>除法 (&#x2F;) ：结果永远是浮点数，即使两个整数相除能整除，结果也会带上小数位（如 4 &#x2F; 2 得 2.0）。</p>
+</li>
+<li><p>整除 (&#x2F;&#x2F;) ：取整数部分，常用于取整操作。</p>
+</li>
+<li><p>取余 (%) ：返回余数，最常见的用途是判断奇偶：num % 2 &#x3D;&#x3D; 0 表示偶数，否则为奇数。</p>
+</li>
+</ul>
+<h2 id="2-2-逻辑运算符"><a href="#2-2-逻辑运算符" class="headerlink" title="2.2 逻辑运算符"></a>2.2 逻辑运算符</h2><p>逻辑运算符用于组合多个条件，返回布尔值 <code>True</code> 或 <code>False</code>。</p>
+<ul>
+<li><code>and</code> (与) ：两边都为真才为真</li>
+<li><code>or</code> (或) ：至少一边为真即为真</li>
+<li><code>not</code> (非) ：取反</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> x &lt; <span class="hljs-number">10</span>)   <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">10</span> <span class="hljs-keyword">or</span> x &lt; <span class="hljs-number">3</span>)    <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(<span class="hljs-keyword">not</span> (x == <span class="hljs-number">5</span>))       <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
 
-<p>逻辑运算在条件判断中非常常用。</p>
+<p>逻辑运算在条件判断中非常常用，比如在 <code>if</code> 或 <code>while</code> 中组合多个判断条件。</p>
+<p><strong>聊聊布尔值本身</strong>。</p>
+<p>在 Python 中，<code>True</code> 和 <code>False</code> 其实是关键字，但它们底层对应的就是整数 <code>1</code> 和 <code>0</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">True</span>))   <span class="hljs-comment"># 输出 1</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">False</span>))  <span class="hljs-comment"># 输出 0</span><br></code></pre></td></tr></table></figure>
+
+<p>这意味着任何需要布尔值的地方，你都可以直接用数字来代替：<strong>非零的数字被视为 <code>True</code>，<code>0</code> 被视为 <code>False</code></strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> <span class="hljs-number">1</span>:               <span class="hljs-comment"># 等价于 if True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;成立&quot;</span>)   <span class="hljs-comment"># 永远会执行</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-number">0</span>:               <span class="hljs-comment"># 等价于 if False</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不成立&quot;</span>) <span class="hljs-comment"># 永远不会执行</span><br></code></pre></td></tr></table></figure>
+
+<p>这也解释了一个在 Python 中看似“奇怪”但非常经典的永动机写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:   <span class="hljs-comment"># 1 永远为真，等价于 while True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中&quot;</span>)   <span class="hljs-comment"># 会无限循环下去</span><br></code></pre></td></tr></table></figure>
+
+<p>这里的 <code>while 1</code> 会一直循环，因为 <code>1</code> 永远被当作 <code>True</code> 处理。这种写法在老代码中很常见，本质上就是 <code>while True</code> 的简写。所以当你看到 <code>while 1</code> 时，只需要知道：<strong>只要数字不是 0，条件就永远为真</strong>。</p>
 <hr>
-<h2 id="3-代码打包（函数与类）"><a href="#3-代码打包（函数与类）" class="headerlink" title="3. 代码打包（函数与类）"></a>3. 代码打包（函数与类）</h2><p>当代码越来越多，我们需要<strong>打包</strong>起来复用，避免重复书写。</p>
-<h3 id="3-1-函数（function）"><a href="#3-1-函数（function）" class="headerlink" title="3.1 函数（function）"></a>3.1 函数（function）</h3><p>函数是一段<strong>有名字的代码块</strong>，通过名字调用它，可以传入参数并返回结果。</p>
+<h1 id="3-代码打包-函数与类"><a href="#3-代码打包-函数与类" class="headerlink" title="3. 代码打包 (函数与类)"></a>3. 代码打包 (函数与类)</h1><p>当代码越来越多，我们需要<strong>打包</strong>起来复用，避免重复书写。</p>
+<h2 id="3-1-函数-function"><a href="#3-1-函数-function" class="headerlink" title="3.1 函数 (function)"></a>3.1 函数 (function)</h2><p>简单来说，函数就是<strong>打包了一套数据处理流程</strong>。你不用关心它内部是怎么一步步处理的，只需要知道“给它什么，它会返回什么”就够了。这种把一段逻辑封装成一个独立单元、按流程执行的方式，通常被称为<strong>面向过程编程</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br><br><span class="hljs-comment"># 调用函数</span><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
 
-<p>函数让你把重复逻辑封装起来，提高代码可读性。</p>
-<h3 id="3-2-类（class）"><a href="#3-2-类（class）" class="headerlink" title="3.2 类（class）"></a>3.2 类（class）</h3><p>类是更高级的打包方式，它将<strong>数据</strong>（属性）和<strong>操作</strong>（方法）捆绑在一起。初学者可以先了解概念，后续深入。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):   <span class="hljs-comment"># 初始化方法</span><br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br><br>my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>my_dog.bark()   <span class="hljs-comment"># 输出：旺财 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
+<p>我们拆开来看这段代码做了什么。</p>
+<p><strong>定义函数</strong>：用 <code>def</code> 关键字告诉 Python“我要定义一个函数”，后面跟函数名（这里叫 <code>greet</code>），括号里写参数（这里叫 <code>name</code>），冒号后面缩进的部分是函数体。函数体里用 <code>return</code> 返回结果。</p>
+<p><strong>调用函数</strong>：写 <code>greet(&quot;小明&quot;)</code> 时，Python 会跳进函数体，把 <code>&quot;小明&quot;</code> 赋给参数 <code>name</code>，执行完 <code>return</code> 后把结果返回给调用处，赋值给 <code>message</code>。</p>
+<p><strong>函数的好处</strong>：如果你需要多次对不同的名字做同样的操作，不用重复写代码，只需要反复调用同一个函数即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小明&quot;</span>))   <span class="hljs-comment"># 你好，小明！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小红&quot;</span>))   <span class="hljs-comment"># 你好，小红！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小刚&quot;</span>))   <span class="hljs-comment"># 你好，小刚！</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
-<p>现阶段你只需知道：<strong>类是用来创建对象的模板</strong>，对象拥有自己的属性和行为。</p>
+<p><strong>关于“面向过程”的简单理解</strong>：</p>
+<p>面向过程的核心理念是：程序就是一系列操作步骤的集合，把数据丢进去，经过一步步处理，最后输出结果。函数就是用来组织这些步骤的基本单元。你写函数 A 处理第一步，函数 B 处理第二步，然后按顺序把它们串起来，整个程序就按照你设计的流程跑完了。初学阶段你大部分时间都在写这种风格的代码，它直观、好理解，非常适合从零开始建立编程思维。</p>
+</blockquote>
+<h2 id="3-2-类-class"><a href="#3-2-类-class" class="headerlink" title="3.2 类 (class)"></a>3.2 类 (class)</h2><p>如果说函数是把一段逻辑打包成一个可调用的名字，那么类就是把<strong>数据</strong>和<strong>操作这些数据的函数</strong>打包在一起。类里面定义的函数不叫函数，叫<strong>方法</strong>；类里面存储的数据不叫变量，叫<strong>属性</strong>。</p>
+<p>由于类将操作对象 (数据) 和操作方法 (操作这些数据的函数) 捆绑在一起，这意味着类的设计是围绕着操作对象而展开的。这种打包方式，被称为<strong>面向对象编程</strong>。</p>
+<p>初学者可以先了解概念，后续再深入。我们先看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):   <span class="hljs-comment"># 初始化方法</span><br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br><br>my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>my_dog.bark()   <span class="hljs-comment"># 输出：旺财 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
+
+<p>我们拆开来看这段代码做了什么。</p>
+<p><strong>第一步：定义类</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br></code></pre></td></tr></table></figure>
+
+<p><code>class</code> 是关键字，表示“我要定义一个类”，<code>Dog</code> 是类名，约定首字母大写。</p>
+<p><strong>第二步：写初始化方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):<br>    <span class="hljs-variable language_">self</span>.name = name<br></code></pre></td></tr></table></figure>
+
+<p><code>__init__</code> 是一个特殊的方法名（前后各两个下划线），它的作用是在你创建对象时<strong>自动执行</strong>。你不需要手动调用它，写 <code>Dog(&quot;旺财&quot;)</code> 的时候，Python 会自动把 <code>&quot;旺财&quot;</code> 传给 <code>name</code> 参数，然后执行 <code>__init__</code> 里的代码。</p>
+<p>这里的 <code>self</code> 代表“<strong>这个对象自己</strong>”，也就是将来创建出来的具体那只狗。<code>self.name = name</code> 的意思是：把传入的 <code>name</code> 存到这个对象的 <code>name</code> 属性里，以后可以通过 <code>self.name</code> 来访问它。</p>
+<p><strong>第三步：写一个普通方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><code>bark</code> 是咱们自定义的方法，它接收 <code>self</code> 作为第一个参数（表示“这个对象自己”），然后用 <code>self.name</code> 拿到了之前存好的名字。</p>
+<p><strong>第四步：用类创建对象（也叫“实例化”）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这句代码做了三件事：</p>
+<ol>
+<li>创建一个新的空对象；</li>
+<li>自动调用 <code>__init__</code> 方法，把 <code>&quot;旺财&quot;</code> 传进去，存到 <code>self.name</code> 里；</li>
+<li>把创建好的对象赋值给变量 <code>my_dog</code>。</li>
+</ol>
+<p>现在 <code>my_dog</code> 就是一只名字叫“旺财”的具体狗了。</p>
+<p><strong>第五步：调用对象的方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">my_dog.bark()<br></code></pre></td></tr></table></figure>
+
+<p>这句代码的含义是：调用 <code>my_dog</code> 这个对象的 <code>bark</code> 方法。执行时，Python 会自动把 <code>my_dog</code> 作为 <code>self</code> 传进去，所以 <code>bark</code> 里的 <code>self.name</code> 拿到的就是 <code>&quot;旺财&quot;</code>，最终输出“旺财 在汪汪叫！”。</p>
+<p><strong>类比理解</strong>：</p>
+<p>类就像是<strong>一张狗的设计图纸</strong>，规定了狗有名字、会叫。而 <code>my_dog = Dog(&quot;旺财&quot;)</code> 就是按照这张图纸造出了一只<strong>真的狗</strong>。你可以用同一张图纸造出很多只狗：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">dog1 = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>dog2 = Dog(<span class="hljs-string">&quot;小黑&quot;</span>)<br>dog1.bark()   <span class="hljs-comment"># 旺财 在汪汪叫！</span><br>dog2.bark()   <span class="hljs-comment"># 小黑 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
+
+<p>每只狗都有自己的名字，互不干扰。</p>
+<blockquote>
+<p><strong>现阶段只需记住</strong>：类是用来创建对象的模板，对象拥有自己的属性和行为。你用同一个类可以创建多个互不干扰的对象，每个对象都有自己的数据。后面的编程中你会越来越习惯这种组织代码的方式。</p>
 </blockquote>
 <hr>
-<h2 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h2><p>程序经常需要读写外部文件（如 txt、csv）。</p>
-<h3 id="4-1-文件的调用（打开、读取、写入）"><a href="#4-1-文件的调用（打开、读取、写入）" class="headerlink" title="4.1 文件的调用（打开、读取、写入）"></a>4.1 文件的调用（打开、读取、写入）</h3><p>使用内置函数 <code>open()</code>，指定文件路径和模式（<code>&#39;r&#39;</code> 读取，<code>&#39;w&#39;</code> 写入，<code>&#39;a&#39;</code> 追加）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>file.write(<span class="hljs-string">&quot;Hello, Python!&quot;</span>)<br>file.close()   <span class="hljs-comment"># 记得关闭</span><br><br><span class="hljs-comment"># 读取文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>content = file.read()<br><span class="hljs-built_in">print</span>(content)   <span class="hljs-comment"># 输出：Hello, Python!</span><br>file.close()<br></code></pre></td></tr></table></figure>
+<h1 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h1><h2 id="4-1-文件的调用-打开、读取、写入"><a href="#4-1-文件的调用-打开、读取、写入" class="headerlink" title="4.1 文件的调用 (打开、读取、写入)"></a>4.1 文件的调用 (打开、读取、写入)</h2><p>使用函数 <code>open()</code> 可以打开一个文件，它的第一个参数是文件路径，第二个参数是打开模式：</p>
+<ul>
+<li><code>&#39;r&#39;</code> (read) ：读取模式，文件必须已经存在，否则报错。</li>
+<li><code>&#39;w&#39;</code> (write) ：写入模式，文件不存在则自动创建，<strong>存在则会清空原有内容</strong>，相当于覆盖重写。</li>
+<li><code>&#39;a&#39;</code> (append) ：追加模式，文件不存在则自动创建，写入的内容会添加到<strong>文件末尾</strong>，原有内容不会被覆盖。</li>
+</ul>
+<p>此外，当文件包含中文时，建议指定 <code>encoding=&quot;utf-8&quot;</code>，否则在不同系统上可能出现乱码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开文件 (不存在则创建)</span><br>file.write(<span class="hljs-string">&quot;Hello, Python!&quot;</span>)                    <span class="hljs-comment"># 写入内容</span><br>file.close()                                    <span class="hljs-comment"># 关闭文件，释放资源</span><br><br><span class="hljs-comment"># 读取文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开已有文件</span><br>content = file.read()                           <span class="hljs-comment"># 读取全部内容</span><br><span class="hljs-built_in">print</span>(content)                                  <span class="hljs-comment"># 输出：Hello, Python!</span><br>file.close()                                    <span class="hljs-comment"># 读取完成后也要关闭</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="4-2-Python-的自动关闭特性（with-语句）"><a href="#4-2-Python-的自动关闭特性（with-语句）" class="headerlink" title="4.2 Python 的自动关闭特性（with 语句）"></a>4.2 Python 的自动关闭特性（with 语句）</h3><p>手动 <code>close()</code> 容易忘记，Python 提供了 <strong><code>with</code> 上下文管理器</strong>，在代码块结束后<strong>自动关闭</strong>文件，更安全简洁。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入（自动关闭）</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;自动关闭，放心！&quot;</span>)<br><br><span class="hljs-comment"># 读取（自动关闭）</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
+<p>需要留意的是，如果以 <code>&#39;w&#39;</code> 模式打开一个已有文件，它里面的旧内容会被<strong>清空</strong>。如果你只是想追加内容而不是覆盖，应该使用 <code>&#39;a&#39;</code> 模式。手动调用 <code>close()</code> 是为了告诉操作系统“这个文件我不用了”，释放它占用的资源。如果忘记调用，程序结束时系统虽然会自动回收，但在程序运行期间，文件可能一直被占用，导致其他程序无法操作它。</p>
+<h2 id="4-2-Python-的自动关闭特性-with-语句"><a href="#4-2-Python-的自动关闭特性-with-语句" class="headerlink" title="4.2 Python 的自动关闭特性 (with 语句)"></a>4.2 Python 的自动关闭特性 (with 语句)</h2><p>手动调用 <code>close()</code> 的隐患不只是“容易忘”。即使你记得调用，如果程序在到达 <code>close()</code> 之前抛出了异常，这一行仍然可能被跳过。此外，笔者曾遇见过打开一个文件并长时间保持打开状态，却在两次写入之间耗时过久时，这个文件“失效”的情况。等程序继续写入时，文件早已“不可用”，只留下一句报错。目前尚不清楚导致这种 bug 的确切原因是什么。</p>
+<p>这正是 Python 社区普遍推荐 <code>with</code> 上下文管理器的原因。它能在代码块结束时<strong>主动、确定地</strong>执行 <code>close()</code>，即使发生异常退出，也能保证文件被关闭。基本用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;自动关闭，放心！&quot;</span>)<br><br><span class="hljs-comment"># 读取 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
 
-<p><strong>强烈建议</strong>：所有文件操作都用 <code>with</code>，省心又可靠。</p>
+<p>但有一点需要澄清：<strong><code>with</code> 不能保证在代码块执行中途文件一定安然无恙。</strong> <code>sleep()</code> 是 <code>time</code> 模块中用于让程序暂停的函数，我们用 <code>sleep()</code> 来模拟打开文件后的长时间耗时操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep <span class="hljs-comment"># 调用 sleep 包</span><br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在上面这种写法中，文件虽然是用 <code>with</code> 打开的，但在 <code>sleep()</code> 期间文件一直处于打开状态。如果这段时间足够长，且恰好触发了某些未知的边界条件 (比如笔者此前遇到过的情形)，文件就可能意外“失效”，最终在写入时抛出错误。</p>
+<p><strong>更稳妥的做法不是把 <code>with</code> 当作一个“大包”，而是利用它来做“小包”：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这个写法的关键区别在于：文件只在写入的那几毫秒内打开，写完立即自动关闭。其他操作耗时再长，文件都没有被打开，自然不存在“文件一直开着”的问题。</p>
+<p>换句话说，<code>with</code> 的真正价值不是“用更大的包把代码罩住”，而是“精确控制文件的打开时间”——需要时打开，用完立即关闭，绝不让文件一直开着。这才是 <code>with</code> 在实战中最稳妥的用法。</p>
 <hr>
-<h2 id="5-代码规范性"><a href="#5-代码规范性" class="headerlink" title="5. 代码规范性"></a>5. 代码规范性</h2><p>写出能运行的代码只是第一步，写出<strong>好看、易读</strong>的代码同样重要。</p>
-<h3 id="5-1-缩进（Indentation）"><a href="#5-1-缩进（Indentation）" class="headerlink" title="5.1 缩进（Indentation）"></a>5.1 缩进（Indentation）</h3><p>Python 用<strong>缩进</strong>表示代码块层级，不像其他语言用大括号。缩进必须<strong>一致</strong>（一般用 4 个空格）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确缩进</span><br><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;缩进 4 空格&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;同一层级&quot;</span>)<br><br><span class="hljs-comment"># 错误示范（缩进不一致会报错）</span><br><span class="hljs-comment"># if True:</span><br><span class="hljs-comment">#   print(&quot;用了2空格&quot;)</span><br><span class="hljs-comment">#     print(&quot;又用了4空格&quot;)   # IndentationError</span><br></code></pre></td></tr></table></figure>
+<h1 id="5-代码规范性"><a href="#5-代码规范性" class="headerlink" title="5. 代码规范性"></a>5. 代码规范性</h1><p>写出能运行的代码只是第一步，写出<strong>好看、易读</strong>的代码同样重要。</p>
+<h2 id="5-1-缩进-Indentation"><a href="#5-1-缩进-Indentation" class="headerlink" title="5.1 缩进 (Indentation)"></a>5.1 缩进 (Indentation)</h2><p>Python 用<strong>缩进</strong>表示代码块层级，不像其他语言用大括号。缩进必须<strong>一致</strong> (一般用 4 个空格)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确缩进</span><br><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;缩进 4 空格&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;同一层级&quot;</span>)<br><br><span class="hljs-comment"># 错误示范 (缩进不一致会报错) </span><br><span class="hljs-comment"># if True:</span><br><span class="hljs-comment">#   print(&quot;用了2空格&quot;)</span><br><span class="hljs-comment">#     print(&quot;又用了4空格&quot;)   # IndentationError</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>大多数代码编辑器会自动将 Tab 转为空格，建议设置 Tab &#x3D; 4 空格。</p>
 </blockquote>
-<h3 id="5-2-注释（Comment）"><a href="#5-2-注释（Comment）" class="headerlink" title="5.2 注释（Comment）"></a>5.2 注释（Comment）</h3><p>注释是给<strong>人</strong>看的解释，Python 解释器会忽略它。</p>
+<h2 id="5-2-注释-Comment"><a href="#5-2-注释-Comment" class="headerlink" title="5.2 注释 (Comment)"></a>5.2 注释 (Comment)</h2><p>注释是给<strong>人</strong>看的解释，Python 解释器会完全忽略它，不会影响程序的运行。</p>
 <ul>
-<li><strong>单行注释</strong>：以 <code>#</code> 开头</li>
-<li><strong>多行注释</strong>：用三个引号 <code>&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;</code>（通常用作文档字符串）</li>
+<li><strong>单行注释</strong>：以 <code>#</code> 开头，用于解释单行代码或做简短说明。</li>
+<li><strong>多行注释</strong>：用三个引号 <code>&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;</code> 包裹，通常放在文件开头、函数或类的开头，用于写较长的说明。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这是单行注释，解释下面代码的作用</span><br>age = <span class="hljs-number">18</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">这是多行注释</span><br><span class="hljs-string">可以写较长的说明</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这是单行注释，解释下面这行代码的作用</span><br>age = <span class="hljs-number">18</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">这是多行注释</span><br><span class="hljs-string">可以写较长的说明文字</span><br><span class="hljs-string">比如说明整个模块的用途</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 
-<p>好的注释能帮助自己和他人理解代码意图，但<strong>不要注释显而易见的代码</strong>，注释应说明“为什么”而不是“是什么”。</p>
+<p><strong>注释应该写什么？</strong></p>
+<p>很多新手容易犯的毛病是注释“代码在做什么”，比如 <code>i += 1  # i 加 1</code>，这种注释毫无意义——代码本身已经说清楚了。好的注释应该解释<strong>为什么这么做</strong>，也就是代码背后的意图和思路。</p>
+<p>一个简单而有效的注释习惯是：<strong>记录你的输入、输出和原理</strong>。换句话说，在你写一段逻辑之前，先用注释回答三个问题：</p>
+<ul>
+<li>这段代码的输入是什么？ (数据从哪里来、是什么格式)</li>
+<li>这段代码的输出是什么？ (期望得到什么结果)</li>
+<li>这段代码的核心思路是什么？ (实现逻辑)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 输入：一个包含多个数字的列表</span><br><span class="hljs-comment"># 输出：列表中所有偶数的平方组成的新列表</span><br><span class="hljs-comment"># 原理：遍历列表，筛选偶数后计算平方，收集到新列表中</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n ** <span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[4, 16, 36]</span><br></code></pre></td></tr></table></figure>
+
+<p>这样做有几个好处：首先，写注释的过程会让你先把思路理清楚，而不是直接上手写代码然后在过程中把自己绕晕。其次，当代码量增多时，你能快速回想起当初的设计意图，而不需要从头读一遍每一行代码。在调用时也能快速上手。</p>
+<p><strong>函数的注释 (文档字符串)</strong>：</p>
+<p>在定义函数时，可以在函数内部开头用三个引号写一段说明，这叫<strong>文档字符串 (docstring)</strong>。它和普通注释的区别在于，文档字符串可以通过 <code>help()</code> 函数被查看，方便其他使用者了解函数的用途。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_average</span>(<span class="hljs-params">numbers</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算一个数字列表的平均值。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    输入：一个包含数字的列表</span><br><span class="hljs-string">    输出：平均值 (浮点数)</span><br><span class="hljs-string">    原理：先求和，再除以列表长度</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    total = <span class="hljs-built_in">sum</span>(numbers)<br>    <span class="hljs-keyword">return</span> total / <span class="hljs-built_in">len</span>(numbers)<br><br><span class="hljs-comment"># 通过 help 查看函数说明</span><br><span class="hljs-built_in">help</span>(calculate_average)<br></code></pre></td></tr></table></figure>
+
+<p>在函数中写文档字符串是一个非常好的习惯，它让代码自带“说明书”，别人 (包括未来的你自己) 看这个函数时不需要去猜它是干嘛的。</p>
+<p><strong>最后一点</strong>：不必过度注释。好的代码本身应该是清晰、易读的，变量名取得好、逻辑分得清，很多地方根本不需要注释。把注释留给那些<strong>确实需要解释的复杂逻辑</strong>，它才能真正发挥价值。</p>
 <hr>
-<h2 id="6-做一个“调包侠”"><a href="#6-做一个“调包侠”" class="headerlink" title="6. 做一个“调包侠”"></a>6. 做一个“调包侠”</h2><p>Python 的一大魅力在于<strong>海量的第三方库</strong>。你不需要自己重新发明轮子，只需安装并导入别人写好的库，就能快速实现复杂功能。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 安装库（在终端执行）：pip install requests</span><br><br><span class="hljs-comment"># 使用库</span><br><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com&quot;</span>)<br><span class="hljs-built_in">print</span>(response.status_code)   <span class="hljs-comment"># 输出 200</span><br></code></pre></td></tr></table></figure>
+<h1 id="6-做一个“调包侠”"><a href="#6-做一个“调包侠”" class="headerlink" title="6. 做一个“调包侠”"></a>6. 做一个“调包侠”</h1><h2 id="6-1-使用第三方库"><a href="#6-1-使用第三方库" class="headerlink" title="6.1 使用第三方库"></a>6.1 使用第三方库</h2><p>Python 的一大魅力在于<strong>海量的第三方库</strong>。你不需要自己重新发明轮子，只需安装并导入别人写好的库，就能快速实现复杂功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 安装库 (在终端执行)：pip install requests</span><br><br><span class="hljs-comment"># 使用库</span><br><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com&quot;</span>)<br><span class="hljs-built_in">print</span>(response.status_code)   <span class="hljs-comment"># 输出 200</span><br></code></pre></td></tr></table></figure>
 
 <p>常用库举例：</p>
 <ul>
@@ -522,13 +631,34 @@
 <li><strong><code>flask</code></strong> &#x2F; <strong><code>django</code></strong>：Web 开发</li>
 </ul>
 <p>初学时，<strong>先学会阅读库的官方文档</strong>，知道怎么调用函数、传递参数，比背下所有方法更重要。</p>
+<h2 id="6-2-调用你自己写的代码"><a href="#6-2-调用你自己写的代码" class="headerlink" title="6.2 调用你自己写的代码"></a>6.2 调用你自己写的代码</h2><p>除了调用别人写的库，你还需要学会调用<strong>自己写的代码</strong>——比如你在一个文件里写好了几个常用函数，想在另一个文件里直接使用，而不需要复制粘贴。</p>
+<p>假设你写了一个 <code>my_tools.py</code> 文件，里面放了一个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># my_tools.py</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>现在你在另一个文件 (比如 <code>main.py</code>) 里想用这个函数，只需要用 <code>import</code> 导入它：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">import</span> my_tools<br><br>message = my_tools.greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p>如果不想每次写 <code>my_tools.</code> 前缀，也可以用 <code>from ... import ...</code> 直接把函数“拎”出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">from</span> my_tools <span class="hljs-keyword">import</span> greet<br><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)   <span class="hljs-comment"># 直接调用，不需要前缀</span><br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意几点</strong>：</p>
+<ul>
+<li>两个文件需要在<strong>同一个文件夹</strong>下，否则 Python 找不到。</li>
+<li>导入时<strong>不需要加 <code>.py</code> 后缀</strong>，写 <code>import my_tools</code> 而不是 <code>import my_tools.py</code>。</li>
+<li>文件名建议用纯英文，不要以数字开头（比如 <code>1_tools.py</code> 就不行）。</li>
+</ul>
+<p>把自己写的代码拆成多个文件，是组织大型项目的常用方式。好处很明显：通用功能放一起，主逻辑放另一个文件，各司其职，方便维护和复用。</p>
 <hr>
-<h2 id="7-print-调试法（最简单的调试手段）"><a href="#7-print-调试法（最简单的调试手段）" class="headerlink" title="7. print 调试法（最简单的调试手段）"></a>7. print 调试法（最简单的调试手段）</h2><p>当你写的程序运行结果不符合预期时，最直接的排查方式就是<strong>在关键位置插入 <code>print()</code></strong>，把变量的值打印出来，观察程序执行的轨迹。</p>
+<h1 id="7-print-调试法-最简单的调试手段"><a href="#7-print-调试法-最简单的调试手段" class="headerlink" title="7. print 调试法 (最简单的调试手段)"></a>7. print 调试法 (最简单的调试手段)</h1><p>当程序运行结果与预期不符时，最直接的排查手段是在<strong>关键位置插入 print()</strong> 语句，包括：</p>
+<ul>
+<li>打印出关键变量的值，以便对照实际执行结果与预期是否一致。</li>
+<li>在程序分支的关键节点 (如条件判断处、循环进入&#x2F;退出处) 插入 print()，用以跟踪程序的执行轨迹。</li>
+</ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">divide</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;a=<span class="hljs-subst">&#123;a&#125;</span>, b=<span class="hljs-subst">&#123;b&#125;</span>&quot;</span>)   <span class="hljs-comment"># 调试：看传入的参数</span><br>    result = a / b<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;result=<span class="hljs-subst">&#123;result&#125;</span>&quot;</span>) <span class="hljs-comment"># 调试：看计算结果</span><br>    <span class="hljs-keyword">return</span> result<br><br>divide(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)   <span class="hljs-comment"># 你会看到 b=0，然后报错 ZeroDivisionError</span><br></code></pre></td></tr></table></figure>
 
-<p>通过打印信息，你可以快速定位哪一步出了问题。虽然还有更高级的调试工具（如 pdb、IDE 断点），但对于入门者，<code>print</code> 足够应对 80% 的场景。</p>
+<p>通过打印信息，你可以快速定位哪一步出了问题。虽然还有更高级的调试工具 (如 pdb、IDE 断点)，但对于入门者，<code>print</code> 足够应对 80% 的场景。</p>
 <hr>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>到这里，你已经浏览了 Python 的核心骨架：结构、运算、打包、文件、规范、调库和调试。这些内容能让你读懂入门代码，也能自己写点小工具。</p>
+<p>到这里，你已经浏览了 Python 的核心骨架：结构、运算、打包、文件、规范、调库和调试。这些内容能让你读懂入门代码，也能自己写点小工具。</p>
 <p><strong>接下来做什么？</strong></p>
 <ul>
 <li>打开 Python，把文中示例挨个敲一遍</li>
@@ -536,7 +666,7 @@
 <li>想扩展功能，去 PyPI 找找库</li>
 </ul>
 <p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
-<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#105;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
+<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#104;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
 
                 
               </div>
