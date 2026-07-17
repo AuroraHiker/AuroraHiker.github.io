@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Windows系统的安装</title>
+    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+<hr>
+<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
+<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
+</li>
+<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
+</li>
+</ol>
+<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
+<p><strong>磁盘数据丢失的补救：</strong></p>
+<ul>
+<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
+<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
+<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+</ul>
+<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
+<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<ol>
+<li><p>准备材料：</p>
+<ul>
+<li>一个 8GB 或以上容量的U盘。</li>
+<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
+</ul>
+</li>
+<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
+</li>
+<li><p>操作步骤：</p>
+<ul>
+<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
+</li>
+<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
+</li>
+<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
+</li>
+<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
+</li>
+<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
+</li>
+<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<hr>
+<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
+<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<ul>
+<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
+</li>
+<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
+</li>
+<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
+</li>
+<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
+</li>
+<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
+</li>
+</ul>
+</li>
+<li><p>开始安装：</p>
+<ul>
+<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall1.png"></p>
+<ul>
+<li>点击【现在安装】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall2.png"></p>
+<ul>
+<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall3.png"></p>
+<ul>
+<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall4.png"></p>
+<ul>
+<li>勾选接受许可条款，点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall5.png"></p>
+<ul>
+<li>选择【自定义：仅安装Windows(高级)】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall6.png"></p>
+<ul>
+<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
+</li>
+<li><ul>
+<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
+</ul>
+</li>
+<li><ul>
+<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
+</ul>
+</li>
+<li><ul>
+<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
+</ul>
+</li>
+</ul>
+<p> <img src="/Windows_install/wininstall7.png"></p>
+<ul>
+<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
+</ul>
+</li>
+</ol>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#104;&#x69;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>计算机基础</tag>
+        <tag>实验平台搭建</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</title>
     <url>/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<p>在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。</p>
@@ -53,7 +173,7 @@
 </li>
 </ul>
 <hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#97;&#104;&#x69;&#x6b;&#101;&#114;&#x40;&#49;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
+<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#97;&#104;&#x69;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#51;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
 <hr>
 <p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
 ]]></content>
@@ -63,6 +183,245 @@
       <tags>
         <tag>Windows使用技巧</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Pandas 简明教程</title>
+    <url>/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="Pandas-简明教程"><a href="#Pandas-简明教程" class="headerlink" title="Pandas 简明教程"></a>Pandas 简明教程</h1><p>Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，<strong>DataFrame (数据框)</strong> 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。</p>
+<hr>
+<h2 id="0-准备工作：数据导入与查看"><a href="#0-准备工作：数据导入与查看" class="headerlink" title="0. 准备工作：数据导入与查看"></a>0. 准备工作：数据导入与查看</h2><p>拿到数据的第一步，不是急着处理，而是先 “看一眼”。我们使用 Seaborn 库内置的 Iris 数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-comment"># 加载数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br><br><span class="hljs-comment"># ---- 查看数据概览 ----</span><br><span class="hljs-built_in">print</span>(iris.head(x))      <span class="hljs-comment"># 查看前 X 行，如括号内为空，则默认查看前五行，了解数据长什么样</span><br><span class="hljs-built_in">print</span>(iris.info())      <span class="hljs-comment"># 查看列名、非空数量及数据类型</span><br><span class="hljs-built_in">print</span>(iris.describe())  <span class="hljs-comment"># 查看数值列的统计摘要 (均值、标准差、分位数)</span><br><span class="hljs-built_in">print</span>(iris.shape)       <span class="hljs-comment"># 数据形状 (几行几列)</span><br><span class="hljs-built_in">print</span>(iris.columns)     <span class="hljs-comment"># 查看列名</span><br><span class="hljs-built_in">print</span>(iris.index)       <span class="hljs-comment"># 查看索引范围</span><br><span class="hljs-built_in">print</span>(iris.count())     <span class="hljs-comment"># 快速统计非空值个数 (与 info 互补)</span><br></code></pre></td></tr></table></figure>
+
+<p>为了便于后续演示从文件读取，我们先利用导出功能将数据保存为本地文件 (导出功能的详细用法将在最后一节介绍)。这里先执行保存操作：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">iris.to_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)          <span class="hljs-comment"># 带表头的标准 CSV</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, index=<span class="hljs-literal">False</span>, header=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 不带表头的版本 (用于演示 header=None)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br>iris.to_excel(<span class="hljs-string">&#x27;iris.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 excel</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>)  <span class="hljs-comment"># 有行索引的版本 (用于演示 指定行索引)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-读取-创建-DataFrame"><a href="#1-读取-创建-DataFrame" class="headerlink" title="1. 读取 &#x2F; 创建 DataFrame"></a>1. 读取 &#x2F; 创建 DataFrame</h2><h3 id="1-1-读取文件"><a href="#1-1-读取文件" class="headerlink" title="1.1 读取文件"></a>1.1 读取文件</h3><p>Pandas 对常见表格格式的支持非常友好，只需一行代码就能导入。但现实中拿到的文件往往不规整，学会灵活配置参数，才是真正“会用”的开始。</p>
+<p>先看三种基本读法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># CSV (逗号分隔，最常用) —— 读取带表头的 iris.csv</span><br>df_csv = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>)<br><br><span class="hljs-comment"># TSV (制表符分隔，指定 sep 参数)</span><br>tsv = pd.read_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>)<br><br><span class="hljs-comment"># Excel (需安装 openpyxl) </span><br>df_excel = pd.read_excel(<span class="hljs-string">&#x27;iris.xlsx&#x27;</span>, sheet_name=<span class="hljs-string">&#x27;Sheet1&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>其中 read_csv 是使用率最高的函数，下面介绍的是常用参数。read_excel 的用法也大致相同，区别主要在于多了 sheet_name 参数 (用于指定读取哪个工作表，可以传工作表名称、位置序号或 None 读取所有表)。掌握这些参数后, 就能轻松完成 CSV 和 Excel 文件的导入。更详细的参数说明，可查阅官方文档。</p>
+<p><strong>列名处理</strong></p>
+<ol>
+<li><strong>文件自带表头</strong>。当首行就是列名时，保持默认即可 (<code>header=0</code>)，Pandas 会自动将第一行识别为列名。当第 x 行是列名，则 <code>header=x-1</code> (注意python是从0开始计数的)。</li>
+<li><strong>文件没有表头 (数据从第一行就开始)</strong>。务必加上 <code>header=None</code>，否则第一行数据会被“错认”成列名，导致数据少一行。<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, header=<span class="hljs-literal">None</span>)  <span class="hljs-comment"># 列名变为默认值 0, 1, 2, 3, 4</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>自定义列名 (覆盖原表头或为无表头文件命名)</strong>。用 <code>names</code> 参数传入一个列表，它会强行指定数据框的列名。若文件有表头，需与 <code>header=0</code> 搭配, 它会直接覆盖原来的列名。 <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 为无表头文件指定列名</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, header=<span class="hljs-literal">None</span>,<br>             names=[<span class="hljs-string">&#x27;sepal_len&#x27;</span>, <span class="hljs-string">&#x27;sepal_wid&#x27;</span>, <span class="hljs-string">&#x27;petal_len&#x27;</span>, <span class="hljs-string">&#x27;petal_wid&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br><span class="hljs-comment"># 覆盖有表头文件的列名 (如改为中文，方便阅读)</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, names=[<span class="hljs-string">&#x27;花萼长度&#x27;</span>, <span class="hljs-string">&#x27;花萼宽度&#x27;</span>, <span class="hljs-string">&#x27;花瓣长度&#x27;</span>, <span class="hljs-string">&#x27;花瓣宽度&#x27;</span>, <span class="hljs-string">&#x27;品种&#x27;</span>], header=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>其他实用参数</strong></p>
+<ul>
+<li><strong><code>index_col</code> (指定行索引)</strong>：若文件中第 x 列可作为行的唯一标识 (如 <code>id</code> 列)，设置 <code>index_col=x-1</code> 即可将其设为行索引，后续按行取值会更方便。默认情况下，Pandas 会使用从 0 开始的数字序号作为行索引。<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>, index_col=<span class="hljs-number">0</span>)  <span class="hljs-comment"># 将第一列 (id) 设为行索引，id 是唯一值，适合做索引</span><br></code></pre></td></tr></table></figure></li>
+<li><strong><code>usecols</code> (只读取部分列)</strong>：当文件有几十列而你只需要 3 列时，用该参数能大幅减少内存占用。比如 <code>usecols=[&#39;sepal_length&#39;,&#39;species&#39;]</code> (按列名) 或 <code>usecols=[0, 4]</code> (按位置)。  <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只读取花萼长度和品种两列 (按列名)</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br><span class="hljs-comment"># 或按位置</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">4</span>])<br></code></pre></td></tr></table></figure></li>
+<li><strong><code>dtype</code> (预指定数据类型)</strong>：防止 Pandas 自作聪明地把 “001” 读成数值 1，或把身份证号读成浮点数。传入字典即可，如 <code>dtype={&#39;id&#39;: str, &#39;score&#39;: float}</code>。<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, dtype=&#123;<span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;species&#x27;</span>: <span class="hljs-built_in">str</span>&#125;)<br></code></pre></td></tr></table></figure></li>
+<li><strong><code>encoding</code> (编码格式)</strong>：读取中文文件时容易遇到乱码，优先试 <code>encoding=&#39;utf-8&#39;</code>，若报错或乱码依旧，换 <code>encoding=&#39;gbk&#39;</code> 或 <code>encoding=&#39;utf-8-sig&#39;</code> (后者对 Excel 导出的 CSV 更友好)。</li>
+<li><strong><code>skiprows</code> (跳过开头若干行)</strong>：如果文件前N行是注释或说明，用 <code>skiprows=N</code> 直接跳过。</li>
+</ul>
+<p>下面是一个综合示例，把上面几个参数串起来，展示如何用 Iris 文件做一些定制化读取:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 综合实战：读取 iris.csv，自定义列名，将第一列设为行索引，</span><br><span class="hljs-comment"># 只读取花萼长度和品种两列，并强制指定数据类型</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris_index.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 筛选出第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    header=<span class="hljs-number">0</span>,                  <span class="hljs-comment"># 指定表头行 (默认值为 0)</span><br>    names=[<span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
+<p>学会这些参数，无论面对的是干净的标准数据集，还是从各处收集来的格式未统一的文件，你都能顺利导入 Pandas 中，为后续分析铺平道路。</p>
+<h3 id="1-2-从头构建"><a href="#1-2-从头构建" class="headerlink" title="1.2 从头构建"></a>1.2 从头构建</h3><p>当手头有少量测试数据时，可以直接在代码里创建：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方式一：字典 (键为列名，值为列表)</span><br>data_dict = &#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: [<span class="hljs-number">5.1</span>, <span class="hljs-number">4.9</span>, <span class="hljs-number">4.7</span>],<br>    <span class="hljs-string">&#x27;sepal_width&#x27;</span>: [<span class="hljs-number">3.5</span>, <span class="hljs-number">3.0</span>, <span class="hljs-number">3.2</span>],<br>    <span class="hljs-string">&#x27;species&#x27;</span>: [<span class="hljs-string">&#x27;setosa&#x27;</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>]<br>&#125;<br><br>df1 = pd.DataFrame(data_dict)<br><br><span class="hljs-comment"># 方式二：列表嵌套 (每行作为一个列表)</span><br>data_list = [[<span class="hljs-number">5.1</span>, <span class="hljs-number">3.5</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>], [<span class="hljs-number">4.9</span>, <span class="hljs-number">3.0</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>]]<br>df2 = pd.DataFrame(data_list, columns=[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;sepal_width&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-选择与筛选数据"><a href="#2-选择与筛选数据" class="headerlink" title="2. 选择与筛选数据"></a>2. 选择与筛选数据</h2><p>这是数据分析中最频繁的动作，请务必熟练掌握。</p>
+<h3 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h3><ul>
+<li><p>按列索引调用</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 单列 → 返回 Series (带索引的一维数组)</span><br>sepal = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]  <br><span class="hljs-comment"># 快捷方式 (列名无空格时)</span><br>sepal = iris.sepal_length  <br><br><span class="hljs-comment"># 多列 → 返回 DataFrame (注意双中括号)</span><br>sub_df = iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>]]<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>思考:为什么提取多列需要用双中括号?最里层中括号代表什么意思?</p>
+</blockquote>
+</li>
+<li><p>按列位置调用</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">col_0 = iris.iloc[:, <span class="hljs-number">0</span>]          <span class="hljs-comment"># 冒号表示所有行，0 表示第一列</span><br><br><span class="hljs-comment"># 选择前 3 列,类似于列表切片 (位置 0, 1, 2) → sepal_length, sepal_width, petal_length</span><br>first_3_cols = iris.iloc[:, <span class="hljs-number">0</span>:<span class="hljs-number">3</span>]<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-选择行-loc-按标签-iloc-按位置"><a href="#2-2-选择行-loc-按标签-iloc-按位置" class="headerlink" title="2.2 选择行 (loc 按标签 &#x2F; iloc 按位置)"></a>2.2 选择行 (loc 按标签 &#x2F; iloc 按位置)</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按位置 (前 3 行)</span><br>row_first3 = iris.iloc[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]  <br><br><span class="hljs-comment"># 按索引名 (假设索引是 0,1,2...，此处同 iloc)</span><br>row_5 = iris.loc[<span class="hljs-number">4</span>]  <br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-条件筛选-布尔索引"><a href="#2-3-条件筛选-布尔索引" class="headerlink" title="2.3 条件筛选 (布尔索引)"></a>2.3 条件筛选 (布尔索引)</h3><p>通过逻辑判断快速过滤出符合条件的子集：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 筛选出所有 &quot;setosa&quot; 品种</span><br>setosa_df = iris[iris[<span class="hljs-string">&#x27;species&#x27;</span>] == <span class="hljs-string">&#x27;setosa&#x27;</span>]<br><br><span class="hljs-comment"># 筛选出 &quot;sepal_length &gt; 6.0&quot; 且品种为 &quot;virginica&quot; 的数据</span><br><span class="hljs-comment"># 注意：多个条件用 &amp; (且) 或 | (或)，每个条件必须加括号</span><br>virginica_large = iris[(iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] &gt; <span class="hljs-number">6.0</span>) &amp; (iris[<span class="hljs-string">&#x27;species&#x27;</span>] == <span class="hljs-string">&#x27;virginica&#x27;</span>)]<br><br><span class="hljs-comment"># 筛选出花瓣长度在 [3.0, 5.0] 区间内的数据</span><br>between_df = iris[iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].between(<span class="hljs-number">3.0</span>, <span class="hljs-number">5.0</span>)]<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-排序-sort-values"><a href="#2-4-排序-sort-values" class="headerlink" title="2.4 排序 (sort_values)"></a>2.4 排序 (sort_values)</h3><p>查看最大值、最小值或排名时，排序是极为常用的操作。</p>
+<p><code>sort_values</code> 的核心参数是 <code>ascending：ascending=True</code> (默认) 表示升序 (从小到大)，<code>ascending=False</code> 表示降序 (从大到小)。当按多列排序时，<code>ascending</code> 可以传入一个与列名顺序对应的布尔列表，分别控制每列的升降序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按花萼长度升序排列</span><br>sorted_asc = iris.sort_values(<span class="hljs-string">&#x27;sepal_length&#x27;</span>)<br><br><span class="hljs-comment"># 按花萼长度降序，若相同则按花瓣宽度升序</span><br>sorted_mix = iris.sort_values([<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_width&#x27;</span>], ascending=[<span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>])<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-数据清洗"><a href="#3-数据清洗" class="headerlink" title="3. 数据清洗"></a>3. 数据清洗</h2><p>现实数据往往有异常值，或数据本身缺失、类型错误，清洗是绕不开的步骤。</p>
+<h3 id="3-1-缺失值检测与处理"><a href="#3-1-缺失值检测与处理" class="headerlink" title="3.1 缺失值检测与处理"></a>3.1 缺失值检测与处理</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 检测缺失值 (Iris 数据很干净，此处仅为演示方法)</span><br><span class="hljs-built_in">print</span>(iris.isnull().<span class="hljs-built_in">sum</span>())  <span class="hljs-comment"># 统计每列缺失个数</span><br><br><span class="hljs-comment"># 方法一：粗暴删除含 NA 的行 (慎用)</span><br>df_dropped = iris.dropna()<br><br><span class="hljs-comment"># 方法二：填充缺失值 (更推荐)</span><br><span class="hljs-comment"># 用该列均值填充 (数值列)</span><br><span class="hljs-comment"># iris[&#x27;sepal_length&#x27;].fillna(iris[&#x27;sepal_length&#x27;].mean(), inplace=True)</span><br><span class="hljs-comment"># 或用特定值填充 (字符串列)</span><br><span class="hljs-comment"># iris[&#x27;species&#x27;].fillna(&#x27;unknown&#x27;, inplace=True)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-类型转换-astype"><a href="#3-2-类型转换-astype" class="headerlink" title="3.2 类型转换 (astype)"></a>3.2 类型转换 (astype)</h3><p>确保数据类型符合预期，避免计算时报错：</p>
+<ul>
+<li>将物种列转为 category 类型：就是将 species 列从普通的字符串列 (object 类型)，转换为分类类型。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;species&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].astype(<span class="hljs-string">&#x27;category&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>如果查看 <code>iris[&#39;species&#39;].cat.categories</code>，会看到底层存储的三个类别值：<code>[&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]</code>。</p>
+</blockquote>
+<ul>
+<li>将浮点型转为整型 (注意精度丢失)：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].astype(<span class="hljs-string">&#x27;int&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-列名重命名-rename"><a href="#3-3-列名重命名-rename" class="headerlink" title="3.3 列名重命名 (rename)"></a>3.3 列名重命名 (rename)</h3><p>列名过长、含空格或大小写不规范时，需要修改：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将列名改为更简洁的英文 (或中文)</span><br>iris.rename(columns=&#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-string">&#x27;Sepal_Len&#x27;</span>,<br>    <span class="hljs-string">&#x27;sepal_width&#x27;</span>: <span class="hljs-string">&#x27;Sepal_Wid&#x27;</span><br>&#125;, inplace=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># inplace=True 表示直接修改原数据框</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-常用计算与变换"><a href="#4-常用计算与变换" class="headerlink" title="4. 常用计算与变换"></a>4. 常用计算与变换</h2><h3 id="4-1-行列求和、均值、计数"><a href="#4-1-行列求和、均值、计数" class="headerlink" title="4.1 行列求和、均值、计数"></a>4.1 行列求和、均值、计数</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 对列求均值 (axis=0，默认)</span><br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;Sepal_Len&#x27;</span>, <span class="hljs-string">&#x27;Sepal_Wid&#x27;</span>]].mean())<br><br><span class="hljs-comment"># 对行求均值 (axis=1)</span><br>iris[<span class="hljs-string">&#x27;avg_feature&#x27;</span>] = iris.iloc[:, :<span class="hljs-number">4</span>].mean(axis=<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 计数 (非空值数量)</span><br><span class="hljs-built_in">print</span>(iris.count())<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-对列进行算术运算"><a href="#4-2-对列进行算术运算" class="headerlink" title="4.2 对列进行算术运算"></a>4.2 对列进行算术运算</h3><p>Pandas 支持将列视为变量进行直接的算术运算，包括列与列之间的运算，以及列与常数之间的运算。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建新列：花萼长宽比</span><br>iris[<span class="hljs-string">&#x27;sepal_ratio&#x27;</span>] = iris[<span class="hljs-string">&#x27;Sepal_Len&#x27;</span>] / iris[<span class="hljs-string">&#x27;Sepal_Wid&#x27;</span>]<br><br><span class="hljs-comment"># 所有花瓣长度 + 2</span><br>iris[<span class="hljs-string">&#x27;petal_length_plus&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>] + <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-应用函数-apply-与字符串处理"><a href="#4-3-应用函数-apply-与字符串处理" class="headerlink" title="4.3 应用函数 (apply) 与字符串处理"></a>4.3 应用函数 (apply) 与字符串处理</h3><p>Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际分析中总会遇到一些个性化需求——比如按某个条件给数据打标签、把两列数据按某种规则组合成一个新值，或者对字符串做拆分提取。这时候 <code>apply</code> 函数就派上了用场。</p>
+<ul>
+<li><p><strong>apply 是什么？</strong></p>
+<p>  <code>apply</code> 是 Pandas 中最灵活的变换工具。它的作用简单说就是：<strong>把函数 (包括你的自定义函数) 应用到 DataFrame 的每一行或每一列上</strong>，然后返回一个新的 Series 或 DataFrame。</p>
+<p>  通俗地理解，<code>apply</code> 就像一条“数据加工流水线”，你只需要告诉它“加工规则 (函数)”和“加工方向 (按行还是按列)”，它就会自动帮你处理完所有数据。</p>
+</li>
+<li><p><strong>axis 参数：控制加工方向</strong></p>
+<p>  <code>axis</code> 是 <code>apply</code> 最核心的参数，决定了函数是逐列执行还是逐行执行：</p>
+<table>
+<thead>
+<tr>
+<th>axis 取值</th>
+<th>含义</th>
+<th>函数接收的参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>axis=0</code>（默认）</td>
+<td>按列遍历，对每一列执行函数</td>
+<td>函数接收一列数据 (Series)</td>
+</tr>
+<tr>
+<td><code>axis=1</code></td>
+<td>按行遍历，对每一行执行函数</td>
+<td>函数接收一行数据 (Series)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>示例</strong></p>
+<ol>
+<li><p>对单列应用函数</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：判断花萼长度是否大于 5</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mark_length</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Long&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Short&#x27;</span><br><br><span class="hljs-comment"># apply 会把 mark_length 应用到 sepal_length 列的每一个值上</span><br>iris[<span class="hljs-string">&#x27;len_tag&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].apply(mark_length)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;len_tag&#x27;</span>]].head())<br><br><span class="hljs-comment"># 也可以直接用 lambda 匿名函数，更简洁</span><br>iris[<span class="hljs-string">&#x27;len_tag&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;Long&#x27;</span> <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;Short&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>lambda 是 Python 中的匿名函数，即“没有名字的临时函数”，专为一次性使用而设计。它的语法非常简洁：<code>lambda 参数: 表达式</code></p>
+<ul>
+<li>左侧 (lambda 参数:)：定义传入的参数</li>
+<li>右侧 (表达式)：对参数执行操作，并自动返回结果</li>
+</ul>
+<p>对比普通函数 (def)，lambda 不用写 return，也不需要起函数名，特别适合作为参数传递给 apply 这类“用完即弃”的场景。</p>
+<p><strong>练习:</strong> 判断sepal_width列度是否大于 3。</p>
+</blockquote>
+</li>
+<li><p>对整行应用函数</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：接收一行数据，返回花瓣长度 / 花萼长度</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calc_ratio</span>(<span class="hljs-params">row</span>):<br>    <span class="hljs-comment"># row 是一行数据（Series），可以通过列名取到每个字段的值</span><br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] != <span class="hljs-number">0</span>:   <span class="hljs-comment"># 防止除以零</span><br>        <span class="hljs-keyword">return</span> row[<span class="hljs-string">&#x27;petal_length&#x27;</span>] / row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br><span class="hljs-comment"># axis=1 表示按行遍历，每一行都会传入 calc_ratio 函数</span><br>iris[<span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>] = iris.apply(calc_ratio, axis=<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>结合条件判断，实现复杂的逻辑映射</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据花瓣长度给出等级（多分支逻辑）</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">grade_petal</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;S&#x27;</span><br>    <span class="hljs-keyword">elif</span> x &lt; <span class="hljs-number">4.0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;M&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;L&#x27;</span><br><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(grade_petal)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_grade&#x27;</span>]].head())<br><span class="hljs-comment"># lambda 版本（嵌套三元运算符）</span><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;S&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span> <span class="hljs-keyword">else</span> (<span class="hljs-string">&#x27;M&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">4.0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;L&#x27;</span>)<br>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h3 id="4-4-字符串处理"><a href="#4-4-字符串处理" class="headerlink" title="4.4 字符串处理"></a>4.4 字符串处理</h3><p>Pandas 为字符串类型的列提供了专门的 <code>.str</code> 接口，方便进行拆分、提取、替换等操作，无需手动写循环。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设我们有列 &#x27;species_info&#x27; 格式为 &#x27;setosa_1&#x27;（品种_编号）</span><br><span class="hljs-comment"># 先创建一个示例列</span><br>iris[<span class="hljs-string">&#x27;species_info&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>] + <span class="hljs-string">&#x27;_&#x27;</span> + iris.index.astype(<span class="hljs-built_in">str</span>)<br><br><span class="hljs-comment"># 使用 .str.split() 拆分为两列</span><br>iris[[<span class="hljs-string">&#x27;species_clean&#x27;</span>, <span class="hljs-string">&#x27;id_num&#x27;</span>]] = iris[<span class="hljs-string">&#x27;species_info&#x27;</span>].<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&#x27;_&#x27;</span>, expand=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;species_info&#x27;</span>, <span class="hljs-string">&#x27;species_clean&#x27;</span>, <span class="hljs-string">&#x27;id_num&#x27;</span>]].head())<br><br><span class="hljs-comment"># 其他常用的 str 方法</span><br>iris[<span class="hljs-string">&#x27;species_upper&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.upper()          <span class="hljs-comment"># 转大写</span><br>iris[<span class="hljs-string">&#x27;contains_setosa&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.contains(<span class="hljs-string">&#x27;setosa&#x27;</span>)  <span class="hljs-comment"># 判断是否包含</span><br>iris[<span class="hljs-string">&#x27;species_len&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.<span class="hljs-built_in">len</span>()              <span class="hljs-comment"># 计算字符串长度</span><br></code></pre></td></tr></table></figure>
+
+<p>当内置函数无法满足需求时，<code>apply</code> 能帮你快速实现个性化的数据处理逻辑。配合 <code>axis</code> 参数的灵活切换，无论是逐列还是逐行操作都能轻松应对。而 <code>.str</code> 方法则专门用于处理文本数据，与 <code>apply</code> 互为补充。掌握这两种方法，你就掌握了数据清晰的诀窍。</p>
+<hr>
+<h2 id="5-分组聚合"><a href="#5-分组聚合" class="headerlink" title="5. 分组聚合"></a>5. 分组聚合</h2><p>功能与 Excel 数据透视表相似，其基本逻辑如下。</p>
+<ol>
+<li>按照某一列 (或多列) 将数据划分为若干组。</li>
+<li>对每组数据独立执行某种运算 (如求和、均值、计数，或自定义函数)。</li>
+<li>将各组运算结果合并为一个新的数据结构。</li>
+</ol>
+<p>调用模式为:<code>df.groupby(&#39;分组列&#39;)[&#39;待计算列&#39;].聚合方法()</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按 species 分组，计算各数值列的均值 (默认)</span><br>grouped_mean = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>]].mean()<br><span class="hljs-built_in">print</span>(grouped_mean)<br></code></pre></td></tr></table></figure>
+
+<p>当需要<strong>对不同列执行不同的聚合运算</strong>时，agg() 方法提供了更大的灵活性。调用模式为：<br><code>df.groupby(&#39;分组列&#39;).agg({&#39;列名1&#39;: [&#39;统计量1&#39;, &#39;统计量2&#39;], &#39;列名2&#39;: &#39;统计量3&#39;})</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">grouped_agg = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>).agg(&#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: [<span class="hljs-string">&#x27;mean&#x27;</span>, <span class="hljs-string">&#x27;std&#x27;</span>, <span class="hljs-string">&#x27;min&#x27;</span>],<br>    <span class="hljs-string">&#x27;petal_length&#x27;</span>: [<span class="hljs-string">&#x27;max&#x27;</span>, <span class="hljs-string">&#x27;count&#x27;</span>]<br>&#125;)<br><span class="hljs-built_in">print</span>(grouped_agg)<br><br></code></pre></td></tr></table></figure>
+
+<p>如果需要计算每个品种内部的花萼长度标准化值 (z-score),即：(每个值 - 该品种均值) &#x2F; 该品种标准差,则需要 <code>.transform()</code>。这种方法会将计算结果广播回原始数据的每一行，保持行数不变。这在需要为每一行添加分组统计特征时非常有用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;sepal_length_z&#x27;</span>] = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].transform(<br>    <span class="hljs-keyword">lambda</span> x: (x - x.mean()) / x.std()<br>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;sepal_length_z&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-合并与拼接-DataFrame-间的运算"><a href="#6-合并与拼接-DataFrame-间的运算" class="headerlink" title="6. 合并与拼接 (DataFrame 间的运算)"></a>6. 合并与拼接 (DataFrame 间的运算)</h2><h3 id="6-1-左右合并"><a href="#6-1-左右合并" class="headerlink" title="6.1 左右合并"></a>6.1 左右合并</h3><p>您的观察非常准确。之前 <strong>7.1 左右合并</strong> 只放了一个完整代码示例，确实没有像其他小节那样先给出 <strong>核心调用模式</strong> 和 <strong>参数拆解</strong>。我现在补充一段系统性介绍，放在现有示例之前，让这一节也具备“先讲模式，再给示例”的清晰结构。修改后的完整 <strong>7.1 节</strong> 如下：</p>
+<hr>
+<h3 id="7-1-左右合并-merge，类似-Excel-的-VLOOKUP"><a href="#7-1-左右合并-merge，类似-Excel-的-VLOOKUP" class="headerlink" title="7.1 左右合并 (merge，类似 Excel 的 VLOOKUP)"></a>7.1 左右合并 (merge，类似 Excel 的 VLOOKUP)</h3><p><code>merge</code> 是 Pandas 中最常用的表连接方法，其核心逻辑为: <strong>根据一个或多个共同的列，将两张表横向拼接到一起</strong>。</p>
+<p><strong>核心调用模式：</strong> <code>pd.merge(left, right, on=&#39;键列&#39;, how=&#39;连接方式&#39;)</code>,或等价于：<code>left.merge(right, on=&#39;键列&#39;, how=&#39;连接方式&#39;)</code></p>
+<p><strong>参数解析</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>常用取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>left</code></td>
+<td>左侧 DataFrame</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>right</code></td>
+<td>右侧 DataFrame</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>on</code></td>
+<td>用于连接的列名（左右表必须同名）</td>
+<td>列名字符串，或多个列名组成的列表</td>
+</tr>
+<tr>
+<td><code>left_on</code> &#x2F; <code>right_on</code></td>
+<td>左右表连接列名不同时分别指定</td>
+<td><code>left_on=&#39;左表列名&#39;, right_on=&#39;右表列名&#39;</code></td>
+</tr>
+<tr>
+<td><code>how</code></td>
+<td>连接方式，决定哪些行保留</td>
+<td><code>&#39;inner&#39;</code>（默认）、<code>&#39;left&#39;</code>、<code>&#39;right&#39;</code>、<code>&#39;outer&#39;</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：如果左右表的键列<strong>列名不同</strong>，需要分别指定 <code>left_on</code> 和 <code>right_on</code>。例如左表叫 <code>species</code>，右表叫 <code>species_name</code>，则写法为：<code>left.merge(right, left_on=&#39;species&#39;, right_on=&#39;species_name&#39;, how=&#39;left&#39;)</code>。</p>
+</blockquote>
+<p><strong>连接方式</strong></p>
+<table>
+<thead>
+<tr>
+<th>how 取值</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&#39;inner&#39;</code>（默认）</td>
+<td>只保留两张表<strong>键列都匹配</strong>的行（交集）</td>
+</tr>
+<tr>
+<td><code>&#39;left&#39;</code></td>
+<td>保留<strong>左表所有行</strong>，右表无匹配则填充 <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>&#39;right&#39;</code></td>
+<td>保留<strong>右表所有行</strong>，左表无匹配则填充 <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>&#39;outer&#39;</code></td>
+<td>保留<strong>两张表所有行</strong>，无匹配则填充 <code>NaN</code>（并集）</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 构建一个汇总表：每个品种的平均花萼长度</span><br>avg_by_species = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].mean().reset_index()<br>avg_by_species.columns = [<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]<br><br><span class="hljs-comment"># 左连接，将平均长度匹配回原表的每一行</span><br>iris_merged = iris.merge(avg_by_species, on=<span class="hljs-string">&#x27;species&#x27;</span>, how=<span class="hljs-string">&#x27;left&#x27;</span>)<br><span class="hljs-built_in">print</span>(iris_merged[[<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-上下拼接"><a href="#6-2-上下拼接" class="headerlink" title="6.2 上下拼接"></a>6.2 上下拼接</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 拆分两个子集再拼回去 (模拟追加数据)</span><br>part1 = iris.iloc[:<span class="hljs-number">50</span>]<br>part2 = iris.iloc[<span class="hljs-number">50</span>:<span class="hljs-number">100</span>]<br>concat_df = pd.concat([part1, part2], axis=<span class="hljs-number">0</span>)  <span class="hljs-comment"># axis=0 纵向堆叠</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-逐行读取-for-循环与-iterrows"><a href="#6-3-逐行读取-for-循环与-iterrows" class="headerlink" title="6.3 逐行读取 (for 循环与 iterrows)"></a>6.3 逐行读取 (for 循环与 iterrows)</h3><p>虽然强烈建议优先使用向量化操作，但某些特殊逻辑下循环仍有价值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 逐行遍历 (注意：大数据集下速度较慢，慎用)</span><br><span class="hljs-keyword">for</span> idx, row <span class="hljs-keyword">in</span> iris.iterrows():<br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] &gt; <span class="hljs-number">7.0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;idx&#125;</span> 行是大型鸢尾花，品种: <span class="hljs-subst">&#123;row[<span class="hljs-string">&#x27;species&#x27;</span>]&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 提示 (若非必要，请用 apply 或向量化替代循环，速度更快)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-数据导出-保存成果"><a href="#7-数据导出-保存成果" class="headerlink" title="7. 数据导出 (保存成果)"></a>7. 数据导出 (保存成果)</h2><h3 id="7-1-导出为列表格式-Python-原生"><a href="#7-1-导出为列表格式-Python-原生" class="headerlink" title="7.1 导出为列表格式 (Python 原生)"></a>7.1 导出为列表格式 (Python 原生)</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将某列转为 Python 列表 (便于与其他库交互)</span><br>sepal_list = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].tolist()<br><span class="hljs-built_in">print</span>(sepal_list[:<span class="hljs-number">5</span>])  <span class="hljs-comment"># 输出前 5 个</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-2-导出到文件-csv、tsv、excel"><a href="#7-2-导出到文件-csv、tsv、excel" class="headerlink" title="7.2 导出到文件 (csv、tsv、excel)"></a>7.2 导出到文件 (csv、tsv、excel)</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导出为 CSV (最通用，index=False 避免多出索引列)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_final.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)<br><br><span class="hljs-comment"># 导出为 TSV (通过sep指定分隔符)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_final.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)<br><br><span class="hljs-comment"># 导出为 Excel (需 openpyxl 库)</span><br><span class="hljs-comment"># iris.to_excel(&#x27;iris_final.xlsx&#x27;, index=False)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 (print(help(pd.DataFrame))) 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#104;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+]]></content>
   </entry>
   <entry>
     <title>GROMACS分子动力学模拟的实验平台搭建</title>
@@ -190,14 +549,132 @@
 <li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
 <li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#x68;&#105;&#107;&#101;&#114;&#64;&#x31;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#x61;&#104;&#x69;&#107;&#101;&#114;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 ]]></content>
       <categories>
         <category>GROMACS分子动力学模拟</category>
       </categories>
       <tags>
-        <tag>分子动力学模拟</tag>
         <tag>实验平台搭建</tag>
+        <tag>分子动力学模拟</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人博客搭建指南：Fluid 主题安装与深度美化</title>
+    <url>/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/</url>
+    <content><![CDATA[<p>在<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
+<p>Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活，内置了暗色模式、访问统计、本地搜索等常用功能。截至本文撰写时，Fluid 最新版本为 1.9.9。</p>
+<blockquote>
+<p><strong>说明</strong>：本文基于上一篇搭建好的 Hexo 博客继续操作，默认您已完成 Hexo 安装、GitHub Pages 配置及本地仓库初始化。若尚未完成，请先参考上一篇指南。</p>
+</blockquote>
+<hr>
+<h1 id="1-安装-Fluid-主题"><a href="#1-安装-Fluid-主题" class="headerlink" title="1. 安装 Fluid 主题"></a>1. 安装 Fluid 主题</h1><h2 id="1-1-环境要求"><a href="#1-1-环境要求" class="headerlink" title="1.1 环境要求"></a>1.1 环境要求</h2><p>Fluid 主题要求 Hexo 版本不低于 5.0.0，Node.js 版本不低于 10.13.0。您可以在终端中执行以下命令确认版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo -v<br>node -v<br></code></pre></td></tr></table></figure>
+
+<p>若 Hexo 版本低于 5.0.0，可通过以下命令升级：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo@latest --save<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-安装主题"><a href="#1-2-安装主题" class="headerlink" title="1.2 安装主题"></a>1.2 安装主题</h2><p>Fluid 提供两种安装方式 (npm 与手动)，推荐使用 npm 方式。</p>
+<p><strong>npm 安装 (推荐)</strong></p>
+<p>进入博客根目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即使此前在另一个博客中已安装过 Fluid 主题，在新站点根目录下仍需重新执行安装指令。Hexo 基于当前工作目录加载依赖，Node.js 会从当前博客目录下的 node_modules 或 themes 文件夹中查找 hexo-theme-fluid 包，无法跨目录复用。</p>
+</blockquote>
+<h2 id="1-3-启用主题"><a href="#1-3-启用主题" class="headerlink" title="1.3 启用主题"></a>1.3 启用主题</h2><ol>
+<li>编辑 Hexo 根目录下的 <code>_config.yml</code>，修改以下配置：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在博客目录下创建 <code>_config.fluid.yml</code> 文件，<a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">官方配置指南</a>中说明需要将主题默认配置的全部或部分内容复制到该文件中。但笔者在 Hexo 8.1.2 环境下测试发现，无需复制任何内容，主题会自动读取默认配置。由于笔者不清楚哪些版本的组合支持此特性，欢迎读者尝试并反馈。</li>
+</ol>
+<p>至此，Fluid 主题已完成安装与启用。接下来开始进行各项配置与美化。</p>
+<hr>
+<h1 id="2-配置文件说明"><a href="#2-配置文件说明" class="headerlink" title="2 配置文件说明"></a>2 配置文件说明</h1><p>理解 Fluid 的配置机制是后续所有操作的基础。</p>
+<ul>
+<li><strong>主题默认配置</strong>：<code>themes/fluid/_config.yml</code> —— 存放主题默认设置，<strong>不建议直接修改</strong>。</li>
+<li><strong>用户自定义配置</strong>：<code>_config.fluid.yml</code> —— 位于博客根目录，优先级更高，更新主题时不会被覆盖。仅当该项在自定义配置中未定义时，才回退使用默认值。</li>
+</ul>
+<p><strong>所有后续修改均在 <code>_config.fluid.yml</code> 中进行</strong>。</p>
+<blockquote>
+<p><strong>提示</strong>：</p>
+<p>1.只要配置存在于 <code>_config.fluid.yml</code> 中，就具有高优先级，修改原 <code>_config.yml</code> 是无效的。每次更新主题后，需留意更新说明，可能需要对 <code>_config.fluid.yml</code> 同步修改。</p>
+<p>2.所有配置中引用的图片或文件，其根目录均为 source 文件夹。</p>
+</blockquote>
+<hr>
+<h1 id="3-关于页配置"><a href="#3-关于页配置" class="headerlink" title="3. 关于页配置"></a>3. 关于页配置</h1><p>关于页是博客中展示作者、博客信息的独立页面，需要单独创建并配置。</p>
+<h2 id="3-1-创建关于页"><a href="#3-1-创建关于页" class="headerlink" title="3.1 创建关于页"></a>3.1 创建关于页</h2><p>Fluid 的关于页需手动创建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
+<p>然后编辑 <code>/source/about/index.md</code>，添加 <code>layout: about</code> 属性：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown">---<br>title: about<br><span class="hljs-section">layout: about</span><br><span class="hljs-section">---</span><br>这里写关于页的正文，支持 Markdown 和 HTML。<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：layout: about 必须存在且不能修改为其他值，否则无法显示头像、简介等主题样式。</p>
+</blockquote>
+<h2 id="3-2-关于页美化"><a href="#3-2-关于页美化" class="headerlink" title="3.2 关于页美化"></a>3.2 关于页美化</h2><p>以下是与关于页相关的所有配置项，在 <code>_config.fluid.yml</code> 中修改：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">about:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span>        <span class="hljs-comment"># 关于页的背景图</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">60</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-attr">avatar:</span> <span class="hljs-string">/img/avatar.png</span>             <span class="hljs-comment"># 作者头像</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Fluid&quot;</span><br>  <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;An elegant theme for Hexo&quot;</span>  <span class="hljs-comment"># 简介</span><br>  <span class="hljs-comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span><br>  <span class="hljs-comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span><br>  <span class="hljs-attr">icons:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-github-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://github.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;GitHub&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://douban.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;豆瓣&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="hljs-attr">qrcode:</span> <span class="hljs-string">&quot;/img/favicon.png&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-comment"># 网站图标 (浏览器标签页)</span><br><span class="hljs-attr">favicon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 苹果设备图标</span><br><span class="hljs-attr">apple_touch_icon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 标签页标题分隔符</span><br><span class="hljs-attr">tab_title_separator:</span> <span class="hljs-string">&quot; - &quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-comment"># 导航栏左侧标题</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;你的博客名称&quot;</span><br>  <span class="hljs-comment"># 导航菜单</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中 <code>key</code> 用于关联多语言配置，<code>icon</code> 对应图标库中的图标类名。Fluid 使用 Iconfont 提供图标支持，可以通过修改 <code>icon</code> 值更换菜单图标。</p>
+<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 图片</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-comment"># Banner 遮罩透明度</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-comment"># 首页副标题</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;副标题文本&quot;</span> <span class="hljs-comment"># 为空则使用默认值 (原配置文件的副标题文本)</span><br>  <span class="hljs-comment"># 自动截取文章摘要</span><br>  <span class="hljs-attr">auto_excerpt:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># 文章元信息显示</span><br>  <span class="hljs-attr">post_meta:</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">category:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">tag:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建议 Banner 图片尺寸为 1920×1080。</p>
+</blockquote>
+<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">footer:</span><br>  <span class="hljs-comment"># 页脚内容（支持 HTML）</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span><br><span class="hljs-string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span><br><span class="hljs-string">  &#x27;</span><br>  <span class="hljs-comment"># 访问统计</span><br>  <span class="hljs-attr">statistics:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">&quot;busuanzi&quot;</span>  <span class="hljs-comment"># 可选：busuanzi / leancloud</span><br></code></pre></td></tr></table></figure>
+
+<p><code>source</code> 可选用不蒜子 (busuanzi，不需要额外配置) 或 LeanCloud (需额外配置) 作为统计来源。</p>
+<hr>
+<h1 id="5-本地搜索配置"><a href="#5-本地搜索配置" class="headerlink" title="5. 本地搜索配置"></a>5. 本地搜索配置</h1><p>Fluid 已集成 <code>hexo-generator-search</code> 插件，默认在根目录生成并使用 <code>local-search.xml</code>。若已安装其他搜索插件，需关闭以避免生成多余的索引文件。</p>
+<p>如未安装，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo-generator-search --save<br></code></pre></td></tr></table></figure>
+
+<p>然后在 <code>_config.fluid.yml</code> 中启用：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">local_search:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="6-高级美化技巧"><a href="#6-高级美化技巧" class="headerlink" title="6. 高级美化技巧"></a>6. 高级美化技巧</h1><h2 id="6-1-Banner-图片与视频背景"><a href="#6-1-Banner-图片与视频背景" class="headerlink" title="6.1 Banner 图片与视频背景"></a>6.1 Banner 图片与视频背景</h2><p>Fluid 支持为不同页面配置独立的 Banner 图片：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">index:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/index_banner.jpg</span><br><br><span class="hljs-attr">archive:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/archive_banner.jpg</span><br><br><span class="hljs-attr">category:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/category_banner.jpg</span><br><br><span class="hljs-attr">tag:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/tag_banner.jpg</span><br></code></pre></td></tr></table></figure>
+
+<p>如需更动态的效果，可参考社区方案为首页添加随机视频背景。</p>
+<h2 id="6-2-友链配置"><a href="#6-2-友链配置" class="headerlink" title="6.2 友链配置"></a>6.2 友链配置</h2><p>Fluid 原生支持友链功能。在 <code>_config.fluid.yml</code> 中配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 友链分组</span><br>  <span class="hljs-attr">groups:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group_name:</span> <span class="hljs-string">&quot;好友博客&quot;</span><br>      <span class="hljs-attr">items:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;博客名称&quot;</span><br>          <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;博客简介&quot;</span><br>          <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span><br>          <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;/img/avatar.jpg&quot;</span> <span class="hljs-comment"># 根目录位于 source 文件夹</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在导航菜单中添加友链入口：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;links&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/links/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-link-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-更新主题"><a href="#7-更新主题" class="headerlink" title="7. 更新主题"></a>7. 更新主题</h1><p>Fluid 主题持续迭代，定期更新可获得新功能和 bug 修复。</p>
+<p><strong>npm 安装方式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm update --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
+
+<p><strong>Release 压缩包方式</strong>：</p>
+<p>先将原文件夹重命名为 <code>fluid-bkp</code> 作为备份，然后下载最新 release 解压并重命名为 <code>fluid</code>。</p>
+<blockquote>
+<p><strong>注意</strong>：每次更新后，需留意 release 说明中的配置变更，手动同步修改 <code>_config.fluid.yml</code>。</p>
+</blockquote>
+<hr>
+<p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
+<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#x68;&#105;&#107;&#x65;&#x72;&#x40;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和我交流。</p>
+<p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入评论、图床、优化加载速度、配置 SEO等 ，后续我会继续研究并记录，慢慢把这一整套流程补齐。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://fluid-dev.github.io/hexo-fluid-docs">Fluid 官方文档</a></li>
+<li><a href="https://hexo.fluid-dev.com/docs/guide/">Fluid 配置指南</a></li>
+<li><a href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid GitHub 仓库</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>个人博客搭建指南</category>
+      </categories>
+      <tags>
+        <tag>个人博客搭建指南</tag>
       </tags>
   </entry>
   <entry>
@@ -483,7 +960,7 @@
 <li>想扩展功能，去 PyPI 找找库</li>
 </ul>
 <p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
-<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#x61;&#x75;&#114;&#x6f;&#114;&#x61;&#x68;&#x69;&#x6b;&#x65;&#x72;&#x40;&#x31;&#x36;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
+<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#97;&#x68;&#105;&#107;&#101;&#x72;&#64;&#49;&#x36;&#51;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
 ]]></content>
       <categories>
         <category>Python 入门</category>
@@ -493,468 +970,53 @@
       </tags>
   </entry>
   <entry>
-    <title>Windows系统的安装</title>
-    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+    <title>如何搭建合适的生信分析平台</title>
+    <url>/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<p>对于初涉生物信息学的朋友来说，搭建一个合适的分析环境往往是入坑的第一道门槛。一方面，生信分析的核心工具几乎都扎根于Linux系统，掌握命令行操作是绕不开的必修课；另一方面，日常办公又离不开Windows或Mac的生态。如何在强大的分析能力与便捷的办公体验之间找到最佳平衡点，直接影响了我们的学习效率和后续的使用体验。</p>
+<p>这篇博文将对目前主流的三种生信平台搭建方案（双系统、纯Linux、Windows + WSL）进行横向对比，分析各自的优缺点与适用人群。如果你正纠结于如何开启自己的生信之路，这份指南或许能帮你找到最适合自己的方向。</p>
 <hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
-<ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
-</ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
-<ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<h3 id="1-生信分析需要什么样的平台？"><a href="#1-生信分析需要什么样的平台？" class="headerlink" title="1. 生信分析需要什么样的平台？"></a>1. 生信分析需要什么样的平台？</h3><p>生物信息学分析通常依赖 Linux 环境，因为许多核心软件（如 <code>bedtools</code>、<code>samtools</code>）仅提供 Linux 版本。此外，Linux 自带的命令行工具（<code>sort</code>、<code>awk</code>、<code>grep</code> 等）能高效处理文本数据，虽然 Python 或 R 也能实现类似功能，但往往需要编写更多代码才能完成同样的任务。</p>
+<p>然而，Linux 的日常使用对新手并不友好：办公软件（如 Word、微信、QQ）要么无法原生运行，要么体验远不如 Windows。即使有替代品，重新学习也会增加时间成本，以及与同组成员的合作成本。因此，搭建生信分析平台的关键是在<strong>分析便利性</strong>和<strong>日常办公完整性</strong>之间找到平衡。</p>
+<p>目前主流的搭建方式有三种，各有优劣，适合不同需求的用户：</p>
+<table>
+<thead>
+<tr>
+<th>系统类型</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Windows + Linux 双系统</strong></td>
+<td>两个系统完全独立，均可调用全部硬件资源，且都能拥有图形界面。</td>
+<td>一次只能使用一个系统，切换需要重启，非常不便。</td>
+<td>极少需要切换系统，或对两个系统都有完整图形界面需求的用户。</td>
+</tr>
+<tr>
+<td><strong>纯 Linux 系统</strong></td>
+<td>系统轻量，性能最大化，能获得原生的 Linux 分析体验。</td>
+<td>办公软件支持不足，协作时可能遇到兼容性问题；对新手操作门槛高。</td>
+<td>熟练使用 Linux 且日常办公可完全在 Linux 下完成的用户。</td>
+</tr>
+<tr>
+<td><strong>Windows + WSL (适用于 Linux 的 Windows 子系统)</strong></td>
+<td><strong>可同时使用两个系统</strong>，无需重启；文件可以互相访问；既能用 Windows 办公，又能用 Linux 做分析。</td>
+<td>WSL 无法调用全部硬件资源（如 GPU 加速有限制），且 Linux 侧通常只有命令行界面。</td>
+<td><strong>大多数初学者和日常用户</strong>——可在熟悉的 Windows 环境中逐步学习 Linux 命令。</td>
+</tr>
+</tbody></table>
 <hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
-<ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
-</li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
-</li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
-</li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
-</li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
-</li>
-</ul>
-</li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png"></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png"></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png"></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png"></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png"></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png"></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png"></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
-</ul>
-</li>
-</ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
+<p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
+<hr>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#114;&#x61;&#104;&#x69;&#107;&#101;&#x72;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
       </categories>
       <tags>
         <tag>实验平台搭建</tag>
-        <tag>计算机基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人博客搭建指南：Fluid 主题安装与深度美化</title>
-    <url>/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/</url>
-    <content><![CDATA[<p>在<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
-<p>Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活，内置了暗色模式、访问统计、本地搜索等常用功能。截至本文撰写时，Fluid 最新版本为 1.9.9。</p>
-<blockquote>
-<p><strong>说明</strong>：本文基于上一篇搭建好的 Hexo 博客继续操作，默认您已完成 Hexo 安装、GitHub Pages 配置及本地仓库初始化。若尚未完成，请先参考上一篇指南。</p>
-</blockquote>
-<hr>
-<h1 id="1-安装-Fluid-主题"><a href="#1-安装-Fluid-主题" class="headerlink" title="1. 安装 Fluid 主题"></a>1. 安装 Fluid 主题</h1><h2 id="1-1-环境要求"><a href="#1-1-环境要求" class="headerlink" title="1.1 环境要求"></a>1.1 环境要求</h2><p>Fluid 主题要求 Hexo 版本不低于 5.0.0，Node.js 版本不低于 10.13.0。您可以在终端中执行以下命令确认版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo -v<br>node -v<br></code></pre></td></tr></table></figure>
-
-<p>若 Hexo 版本低于 5.0.0，可通过以下命令升级：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo@latest --save<br></code></pre></td></tr></table></figure>
-
-<h2 id="1-2-安装主题"><a href="#1-2-安装主题" class="headerlink" title="1.2 安装主题"></a>1.2 安装主题</h2><p>Fluid 提供两种安装方式 (npm 与手动)，推荐使用 npm 方式。</p>
-<p><strong>npm 安装 (推荐)</strong></p>
-<p>进入博客根目录，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>即使此前在另一个博客中已安装过 Fluid 主题，在新站点根目录下仍需重新执行安装指令。Hexo 基于当前工作目录加载依赖，Node.js 会从当前博客目录下的 node_modules 或 themes 文件夹中查找 hexo-theme-fluid 包，无法跨目录复用。</p>
-</blockquote>
-<h2 id="1-3-启用主题"><a href="#1-3-启用主题" class="headerlink" title="1.3 启用主题"></a>1.3 启用主题</h2><ol>
-<li>编辑 Hexo 根目录下的 <code>_config.yml</code>，修改以下配置：</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在博客目录下创建 <code>_config.fluid.yml</code> 文件，<a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">官方配置指南</a>中说明需要将主题默认配置的全部或部分内容复制到该文件中。但笔者在 Hexo 8.1.2 环境下测试发现，无需复制任何内容，主题会自动读取默认配置。由于笔者不清楚哪些版本的组合支持此特性，欢迎读者尝试并反馈。</li>
-</ol>
-<p>至此，Fluid 主题已完成安装与启用。接下来开始进行各项配置与美化。</p>
-<hr>
-<h1 id="2-配置文件说明"><a href="#2-配置文件说明" class="headerlink" title="2 配置文件说明"></a>2 配置文件说明</h1><p>理解 Fluid 的配置机制是后续所有操作的基础。</p>
-<ul>
-<li><strong>主题默认配置</strong>：<code>themes/fluid/_config.yml</code> —— 存放主题默认设置，<strong>不建议直接修改</strong>。</li>
-<li><strong>用户自定义配置</strong>：<code>_config.fluid.yml</code> —— 位于博客根目录，优先级更高，更新主题时不会被覆盖。仅当该项在自定义配置中未定义时，才回退使用默认值。</li>
-</ul>
-<p><strong>所有后续修改均在 <code>_config.fluid.yml</code> 中进行</strong>。</p>
-<blockquote>
-<p><strong>提示</strong>：</p>
-<p>1.只要配置存在于 <code>_config.fluid.yml</code> 中，就具有高优先级，修改原 <code>_config.yml</code> 是无效的。每次更新主题后，需留意更新说明，可能需要对 <code>_config.fluid.yml</code> 同步修改。</p>
-<p>2.所有配置中引用的图片或文件，其根目录均为 source 文件夹。</p>
-</blockquote>
-<hr>
-<h1 id="3-关于页配置"><a href="#3-关于页配置" class="headerlink" title="3. 关于页配置"></a>3. 关于页配置</h1><p>关于页是博客中展示作者、博客信息的独立页面，需要单独创建并配置。</p>
-<h2 id="3-1-创建关于页"><a href="#3-1-创建关于页" class="headerlink" title="3.1 创建关于页"></a>3.1 创建关于页</h2><p>Fluid 的关于页需手动创建：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
-<p>然后编辑 <code>/source/about/index.md</code>，添加 <code>layout: about</code> 属性：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown">---<br>title: about<br><span class="hljs-section">layout: about</span><br><span class="hljs-section">---</span><br>这里写关于页的正文，支持 Markdown 和 HTML。<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：layout: about 必须存在且不能修改为其他值，否则无法显示头像、简介等主题样式。</p>
-</blockquote>
-<h2 id="3-2-关于页美化"><a href="#3-2-关于页美化" class="headerlink" title="3.2 关于页美化"></a>3.2 关于页美化</h2><p>以下是与关于页相关的所有配置项，在 <code>_config.fluid.yml</code> 中修改：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">about:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span>        <span class="hljs-comment"># 关于页的背景图</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">60</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-attr">avatar:</span> <span class="hljs-string">/img/avatar.png</span>             <span class="hljs-comment"># 作者头像</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Fluid&quot;</span><br>  <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;An elegant theme for Hexo&quot;</span>  <span class="hljs-comment"># 简介</span><br>  <span class="hljs-comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span><br>  <span class="hljs-comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span><br>  <span class="hljs-attr">icons:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-github-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://github.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;GitHub&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://douban.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;豆瓣&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="hljs-attr">qrcode:</span> <span class="hljs-string">&quot;/img/favicon.png&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-comment"># 网站图标 (浏览器标签页)</span><br><span class="hljs-attr">favicon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 苹果设备图标</span><br><span class="hljs-attr">apple_touch_icon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 标签页标题分隔符</span><br><span class="hljs-attr">tab_title_separator:</span> <span class="hljs-string">&quot; - &quot;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-comment"># 导航栏左侧标题</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;你的博客名称&quot;</span><br>  <span class="hljs-comment"># 导航菜单</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>其中 <code>key</code> 用于关联多语言配置，<code>icon</code> 对应图标库中的图标类名。Fluid 使用 Iconfont 提供图标支持，可以通过修改 <code>icon</code> 值更换菜单图标。</p>
-<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 图片</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-comment"># Banner 遮罩透明度</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-comment"># 首页副标题</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;副标题文本&quot;</span> <span class="hljs-comment"># 为空则使用默认值 (原配置文件的副标题文本)</span><br>  <span class="hljs-comment"># 自动截取文章摘要</span><br>  <span class="hljs-attr">auto_excerpt:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># 文章元信息显示</span><br>  <span class="hljs-attr">post_meta:</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">category:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">tag:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>建议 Banner 图片尺寸为 1920×1080。</p>
-</blockquote>
-<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">footer:</span><br>  <span class="hljs-comment"># 页脚内容（支持 HTML）</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span><br><span class="hljs-string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span><br><span class="hljs-string">  &#x27;</span><br>  <span class="hljs-comment"># 访问统计</span><br>  <span class="hljs-attr">statistics:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">&quot;busuanzi&quot;</span>  <span class="hljs-comment"># 可选：busuanzi / leancloud</span><br></code></pre></td></tr></table></figure>
-
-<p><code>source</code> 可选用不蒜子 (busuanzi，不需要额外配置) 或 LeanCloud (需额外配置) 作为统计来源。</p>
-<hr>
-<h1 id="5-本地搜索配置"><a href="#5-本地搜索配置" class="headerlink" title="5. 本地搜索配置"></a>5. 本地搜索配置</h1><p>Fluid 已集成 <code>hexo-generator-search</code> 插件，默认在根目录生成并使用 <code>local-search.xml</code>。若已安装其他搜索插件，需关闭以避免生成多余的索引文件。</p>
-<p>如未安装，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo-generator-search --save<br></code></pre></td></tr></table></figure>
-
-<p>然后在 <code>_config.fluid.yml</code> 中启用：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">local_search:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="6-高级美化技巧"><a href="#6-高级美化技巧" class="headerlink" title="6. 高级美化技巧"></a>6. 高级美化技巧</h1><h2 id="6-1-Banner-图片与视频背景"><a href="#6-1-Banner-图片与视频背景" class="headerlink" title="6.1 Banner 图片与视频背景"></a>6.1 Banner 图片与视频背景</h2><p>Fluid 支持为不同页面配置独立的 Banner 图片：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">index:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/index_banner.jpg</span><br><br><span class="hljs-attr">archive:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/archive_banner.jpg</span><br><br><span class="hljs-attr">category:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/category_banner.jpg</span><br><br><span class="hljs-attr">tag:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/tag_banner.jpg</span><br></code></pre></td></tr></table></figure>
-
-<p>如需更动态的效果，可参考社区方案为首页添加随机视频背景。</p>
-<h2 id="6-2-友链配置"><a href="#6-2-友链配置" class="headerlink" title="6.2 友链配置"></a>6.2 友链配置</h2><p>Fluid 原生支持友链功能。在 <code>_config.fluid.yml</code> 中配置：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 友链分组</span><br>  <span class="hljs-attr">groups:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group_name:</span> <span class="hljs-string">&quot;好友博客&quot;</span><br>      <span class="hljs-attr">items:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;博客名称&quot;</span><br>          <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;博客简介&quot;</span><br>          <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span><br>          <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;/img/avatar.jpg&quot;</span> <span class="hljs-comment"># 根目录位于 source 文件夹</span><br></code></pre></td></tr></table></figure>
-
-<p>然后在导航菜单中添加友链入口：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;links&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/links/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-link-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="7-更新主题"><a href="#7-更新主题" class="headerlink" title="7. 更新主题"></a>7. 更新主题</h1><p>Fluid 主题持续迭代，定期更新可获得新功能和 bug 修复。</p>
-<p><strong>npm 安装方式</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm update --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
-
-<p><strong>Release 压缩包方式</strong>：</p>
-<p>先将原文件夹重命名为 <code>fluid-bkp</code> 作为备份，然后下载最新 release 解压并重命名为 <code>fluid</code>。</p>
-<blockquote>
-<p><strong>注意</strong>：每次更新后，需留意 release 说明中的配置变更，手动同步修改 <code>_config.fluid.yml</code>。</p>
-</blockquote>
-<hr>
-<p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
-<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#x61;&#x68;&#105;&#x6b;&#x65;&#114;&#x40;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 和我交流。</p>
-<p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入评论、图床、优化加载速度、配置 SEO等 ，后续我会继续研究并记录，慢慢把这一整套流程补齐。</p>
-<hr>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://fluid-dev.github.io/hexo-fluid-docs">Fluid 官方文档</a></li>
-<li><a href="https://hexo.fluid-dev.com/docs/guide/">Fluid 配置指南</a></li>
-<li><a href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid GitHub 仓库</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>个人博客搭建指南</category>
-      </categories>
-      <tags>
-        <tag>个人博客搭建指南</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从零搭建Windows生信分析平台——WSL的安装配置</title>
-    <url>/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-WSL2-ubuntu安装和迁移"><a href="#1-WSL2-ubuntu安装和迁移" class="headerlink" title="1. WSL2 ubuntu安装和迁移"></a>1. WSL2 ubuntu安装和迁移</h2><p><strong>注意：</strong></p>
-<ul>
-<li>WSL2 Ubuntu 子系统默认安装在 C 盘，<strong>安装时无法更改路径。</strong></li>
-<li><strong>磁盘空间要求：</strong><ul>
-<li>仅安装基础 Ubuntu 系统约需 5~10 GB。</li>
-<li>若后续安装生信软件(如 Conda、LightDock 等)并存储数据，建议 C 盘剩余空间 ≥ 30 GB。</li>
-<li><strong>当 C 盘剩余空间低于 20 GB 时，强烈建议将子系统迁移到其他非系统盘</strong>，否则可能导致系统运行缓慢、更新失败甚至无法启动。</li>
-</ul>
-</li>
-<li><strong>建议安装或迁移至固态硬盘(SSD)：</strong> SSD 具有更快的读写速度，能显著提升 WSL 子系统的启动速度、软件安装效率及 I&#x2F;O 密集型操作(如编译、数据处理)的运行性能。</li>
-<li><strong>反复装卸的风险：</strong><ul>
-<li>多次卸载并重新安装 Ubuntu 子系统可能产生残留配置文件或注册表项，导致新安装的系统出现异常或安装失败。</li>
-<li>卸载时若误删除 WSL 相关的系统文件，可能影响其他 WSL 发行版的正常运行，甚至导致 Windows 系统文件损坏。</li>
-</ul>
-</li>
-<li><strong>迁移的另一用途：拷贝系统到新电脑。</strong> 通过 <code>wsl --export</code> 导出 tar 文件，将该文件复制到新电脑后，使用 <code>wsl --import</code> 导入，即可在新电脑上获得完全一致的 Ubuntu 环境(包括已安装的软件、配置等)，无需重新配置。非常适合在多台设备间同步生信分析环境。</li>
-</ul>
-<h3 id="1-1-WSL2-ubuntu安装"><a href="#1-1-WSL2-ubuntu安装" class="headerlink" title="1.1 WSL2 ubuntu安装"></a>1.1 WSL2 ubuntu安装</h3><ul>
-<li><p><strong>系统版本要求</strong><br>本安装教程仅适用于 Windows 10 版本 2004 及更高版本(含 Windows 11)。若您使用的是旧版 Windows 系统，或需要了解本文未提及的安装细节，请参考 WSL 官方教程：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
-</li>
-<li><p><strong>启用“适用于 Linux 的 Windows 子系统”：</strong><br>以管理员身份运行 Windows PowerShell，执行以下命令：</p>
-</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows-Subsystem-Linux</span> /all /norestart<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>安装 WSL 并升级至 WSL2：</strong></li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--install</span><br>wsl <span class="hljs-literal">--update</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" alt="在 Microsoft Store 中搜索 Ubuntu"></li>
-</ul>
-<h3 id="1-2-Ubuntu子系统的迁移"><a href="#1-2-Ubuntu子系统的迁移" class="headerlink" title="1.2 Ubuntu子系统的迁移"></a>1.2 Ubuntu子系统的迁移</h3><ul>
-<li>查看wsl状态</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>关掉正在运行的wsl</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>导出需要迁移的Ubuntu子系统</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="hljs-comment"># 该文件也可作为备份</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>请将 &lt;发行版名称&gt; 替换为与 <code>wsl -l -v</code> 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.</p>
-</blockquote>
-<ul>
-<li>确认导出.tar文件后，注销原来的版本</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--unregister</span> &lt;发行版名称&gt;<br><span class="hljs-comment"># 查看是否注销</span><br>wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>在目标盘符(如D盘)创建新目录并导入</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="hljs-literal">--version</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>设置默认登录用户(可选，否则默认以 root 登录)</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">ubuntu config <span class="hljs-literal">--default-user</span> 你的用户名<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>验证迁移是否成功</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--list</span> <span class="hljs-literal">--verbose</span><br>wsl<br></code></pre></td></tr></table></figure>
-
-<p>迁移完成后，原 C 盘中的子系统文件已被清理，新系统位于 D 盘(或其他分区)。后续所有操作均在新位置进行，无需重新配置环境。</p>
-<hr>
-<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" alt="设置用户名和密码"></p>
-<h3 id="2-1-更换国内镜像源并更新系统"><a href="#2-1-更换国内镜像源并更新系统" class="headerlink" title="2.1 更换国内镜像源并更新系统"></a>2.1 更换国内镜像源并更新系统</h3><ul>
-<li><strong>备份原始配置文件</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>编辑源文件：</strong><br>使用 vim 打开配置文件：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
-<p>打开后，按 <code>ggdG</code>(依次按 g、g、d、G 键)可快速删除全部内容，然后按 <code>i</code> 进入插入模式，将以下清华镜像源内容粘贴进去(以 Ubuntu 22.04 为例)：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><br>deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse<br><span class="hljs-comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><br><span class="hljs-comment"># 预发布软件源，不建议启用</span><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br></code></pre></td></tr></table></figure>
-
-<p>粘贴完成后，按 <code>Esc</code> 键退出插入模式，输入 <code>:wq</code> 保存并退出 vim。</p>
-<blockquote>
-<p>提示：若编辑过程中误操作想放弃保存，可按 <code>Esc</code> 后输入 <code>:q!</code> 强制退出。</p>
-</blockquote>
-<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt upgrade<br><span class="hljs-built_in">sudo</span> apt install aptitude <span class="hljs-comment">#智能安装、升级、降级或卸载依赖的软件包</span><br><span class="hljs-built_in">sudo</span> aptitude install aria2 <span class="hljs-comment">#多线程下载软件</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3-图形界面的安装和配置"><a href="#3-图形界面的安装和配置" class="headerlink" title="3. 图形界面的安装和配置"></a>3. 图形界面的安装和配置</h2><blockquote>
-<p><strong>说明：</strong> 笔者个人感觉 Ubuntu 图形界面运行较慢且体验一般，不如在 Ubuntu 中安装 Jupyter Notebook 进行文件操作更方便。本部分仅供有图形界面需求的读者参考。</p>
-</blockquote>
-<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xorg<br><span class="hljs-built_in">sudo</span> aptitude install xfce4<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-2-安装并配置xrdp"><a href="#3-2-安装并配置xrdp" class="headerlink" title="3.2 安装并配置xrdp"></a>3.2 安装并配置xrdp</h3><p>Xrdp 通过远程桌面的方式来访问另外一台主机</p>
-<ul>
-<li><strong>安装</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xrdp<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>设置使用3390端口</strong></li>
-</ul>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">sudo sed <span class="hljs-punctuation">-</span>i &#x27;s/port=<span class="hljs-number">3389</span>/port=<span class="hljs-number">3390</span>/g&#x27; /etc/xrdp/xrdp.ini<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>向xsession中写入xfce4-session</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">echo</span> xfce4-session &gt;~/.xsession<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>重启xrdp服务</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> service xrdp restart<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-3-Windows-端远程桌面连接"><a href="#3-3-Windows-端远程桌面连接" class="headerlink" title="3.3 Windows 端远程桌面连接"></a>3.3 Windows 端远程桌面连接</h3><p>在 Windows 中打开“远程桌面连接”，输入以下信息：</p>
-<ul>
-<li>计算机：localhost:3390</li>
-<li>用户名：Ubuntu 用户名</li>
-</ul>
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" alt="远程桌面连接配置"></p>
-<p><strong>注意：</strong> 若连接失败，可尝试在 Ubuntu 中重启 xrdp 服务后重试。</p>
-<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" alt="远程桌面连接成功"></p>
-<hr>
-<h2 id="4-Zsh-与-Oh-My-Zsh-的安装与配置"><a href="#4-Zsh-与-Oh-My-Zsh-的安装与配置" class="headerlink" title="4. Zsh 与 Oh My Zsh 的安装与配置"></a>4. Zsh 与 Oh My Zsh 的安装与配置</h2><p><strong>关于 Zsh 的说明：</strong><br>Zsh(Z shell)是一种功能更强大的 Shell，相较于系统默认的 Bash，它提供了更丰富的特性：智能命令补全、语法高亮、主题自定义、强大的插件机制等。结合 Oh My Zsh 框架，可以极大提升终端使用效率。<br><strong>若您不希望配置 Zsh</strong>，也可以直接使用默认的 Bash 完成后续 Conda 等软件的安装与配置，跳过本章节即可。使用 Bash 时，配置文件为 <code>~/.bashrc</code>，后续操作中的 <code>~/.zshrc</code> 请相应替换为 <code>~/.bashrc</code>。</p>
-<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install zsh<br>zsh  <span class="hljs-comment"># 运行一次以完成初始化配置</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>将zsh设为默认终端：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
-<p>执行后需重新登录或重启终端使设置生效。</p>
-<h3 id="4-2-Oh-My-Zsh-安装"><a href="#4-2-Oh-My-Zsh-安装" class="headerlink" title="4.2 Oh My Zsh 安装"></a>4.2 Oh My Zsh 安装</h3><p>Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。</p>
-<blockquote>
-<p>注意：执行 git clone 时，若终端出现类似 <code>remote: Waiting in queue... (Position: 881)</code> 的提示，说明镜像服务器正在排队处理请求，请耐心等待。</p>
-</blockquote>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git<br><span class="hljs-built_in">cd</span> ohmyzsh/tools<br>REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh<br></code></pre></td></tr></table></figure>
-
-<p>安装完成后，Oh My Zsh 的配置文件位于 <code>~/.zshrc</code>，插件目录为 <code>~/.oh-my-zsh/custom/plugins/</code> 。</p>
-<h3 id="4-3-配置常用插件"><a href="#4-3-配置常用插件" class="headerlink" title="4.3 配置常用插件"></a>4.3 配置常用插件</h3><h4 id="4-3-1-autojump-目录快速跳转"><a href="#4-3-1-autojump-目录快速跳转" class="headerlink" title="4.3.1 autojump(目录快速跳转)"></a>4.3.1 autojump(目录快速跳转)</h4><p>autojump 可以根据历史访问记录快速跳转到指定目录。使用国内镜像源下载安装：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://gitee.com/holyvan/autojump.git <br><span class="hljs-built_in">cd</span> autojump<br>./install.py <span class="hljs-comment"># 或 python3 install.py</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>注意：</strong> <code>./install.py</code>脚本依赖 Python，建议在安装 Conda 后再执行此步骤。但 Zsh 需在 Conda 安装前设为默认 Shell，请根据实际情况安排顺序。</p>
-</blockquote>
-<p>安装成功后，脚本会输出类似以下提示，请将中间三行代码添加到 <code>~/.zshrc</code> 中(路径以实际输出为准，通常位于 $HOME&#x2F;.autojump 目录下)：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">Please manually add the following line(s) to ~/.zshrc:<br><br>    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="hljs-built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh<br><br>    <span class="hljs-built_in">autoload</span> -U compinit &amp;&amp; compinit -u<br><br>Please restart terminal(s) before running autojump.<br><br></code></pre></td></tr></table></figure>
-
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" alt="autojump的输出"></p>
-<p>根据提示把中间的三行代码加到<code>.zshrc</code>文件中，<br>添加方法：使用 <code>vim ~/.zshrc</code> 打开配置文件，将上述三行内容粘贴到文件末尾，保存并退出(按 <code>Esc</code>，输入 <code>:wq</code>)。</p>
-<h4 id="4-3-2-自动补全与语法高亮插件"><a href="#4-3-2-自动补全与语法高亮插件" class="headerlink" title="4.3.2 自动补全与语法高亮插件"></a>4.3.2 自动补全与语法高亮插件</h4><p><strong>功能与用法</strong></p>
-<ul>
-<li><p><strong>zsh-syntax-highlighting(命令语法高亮)：</strong> 为输入的命令提供实时颜色高亮。合法命令显示为绿色，非法命令显示为红色，存在的路径显示为下划线。这可以帮助您在按回车前快速发现拼写或路径错误。</p>
-</li>
-<li><p><strong>zsh-autosuggestions(命令自动补全建议)：</strong> 根据历史命令记录，在输入时自动显示灰色提示，建议可能想要输入的完整命令。按 →(右箭头)键即可一键补全，按 End 键仅补全光标之后的部分，继续正常输入则忽略建议。</p>
-</li>
-</ul>
-<p>同时启用这两个插件后，能获得实时语法校验与智能补全提示，大幅提升终端输入效率。</p>
-<p><strong>插件下载：</strong></p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-comment"># 自动补全插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions<br><br><span class="hljs-comment"># 语法高亮插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>说明：</strong> <code>${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</code> 表示优先使用环境变量 <code>ZSH_CUSTOM</code> 定义的目录，若未定义则使用默认的 <code>~/.oh-my-zsh/custom</code>。</p>
-</blockquote>
-<p><strong>检查插件是否下载到正确位置</strong><br>执行以下命令查看插件目录内容：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">ls</span> -l <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/<br></code></pre></td></tr></table></figure>
-
-<p>若插件未出现在该目录中，可手动将其移动至正确位置。例如，若 zsh-syntax-highlighting 下载到了当前目录，可执行：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
-
-<p>若不确定插件下载到了哪里，可使用 <code>find</code> 命令搜索：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">find ~ -<span class="hljs-built_in">type</span> d -name <span class="hljs-string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
-
-<p><strong>启用插件</strong><br>编辑 <code>~/.zshrc</code> 文件，找到 <code>plugins=(...)</code> 行，修改为：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)<br></code></pre></td></tr></table></figure>
-
-<p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">source</span> ~/.zshrc<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-conda的安装与配置"><a href="#5-conda的安装与配置" class="headerlink" title="5. conda的安装与配置"></a>5. conda的安装与配置</h2><h3 id="5-1-conda简介"><a href="#5-1-conda简介" class="headerlink" title="5.1 conda简介"></a>5.1 conda简介</h3><p>conda 是一个开源的 Python 和 R 语言发行版，专注于数据科学、机器学习和科学计算。它内置了包管理器，可以方便地创建隔离的虚拟环境、安装和管理软件包，尤其适合生信分析中不同工具对 Python 版本的依赖管理。<strong>但笔者使用 Conda 管理 R 环境的体验不佳</strong>，不建议用 Conda 安装或管理 R 及相关包。推荐使用 Rstudio 进行 R 环境管理，更稳定、兼容性更好。</p>
-<p><strong>Miniconda 与 Anaconda 的区别</strong></p>
-<ul>
-<li>Anaconda：预装了超过 1500 个常用的数据科学包(如 NumPy、SciPy、Pandas 等)，安装包较大(约 3~5 GB)，适合不想手动安装基础包的用户。</li>
-<li>Miniconda：仅包含 conda 和 Python，安装包很小(约 50~80 MB)，用户需要自行安装所需包。它更轻量、灵活，适合磁盘空间有限或希望按需安装的用户。</li>
-</ul>
-<p>本教程以 Anaconda 为例进行安装，若您偏好 Miniconda，可前往 Miniconda 官网下载对应版本，后续使用方式与 Anaconda 基本一致。</p>
-<h3 id="5-2-下载并安装-Anaconda"><a href="#5-2-下载并安装-Anaconda" class="headerlink" title="5.2 下载并安装 Anaconda"></a>5.2 下载并安装 Anaconda</h3><p>从 Anaconda 官网获取最新 Linux 版本的下载链接(建议使用稳定版)。本文以 <code>Anaconda3-2023.09-0-Linux-x86_64.sh</code> 为例：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh<br>bash Anaconda3-2023.09-0-Linux-x86_64.sh <br></code></pre></td></tr></table></figure>
-
-<p>安装过程中，请仔细阅读许可协议，按提示确认安装位置,默认为 <code>~/anaconda3</code>。在最后选择是否初始化 <code>conda</code>，建议选择<code>yes</code>，这样 <code>conda</code> 会自动将自身添加到 Shell 配置文件中(如 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>)。</p>
-<h3 id="5-2-配置环境变量"><a href="#5-2-配置环境变量" class="headerlink" title="5.2 配置环境变量"></a>5.2 配置环境变量</h3><p>若安装时未自动添加，或需要手动配置，请将以下内容添加到对应的配置文件中：</p>
-<ul>
-<li>使用 Zsh 的用户：编辑 <code>~/.zshrc</code></li>
-<li>使用 Bash 的用户：编辑 <code>~/.bashrc</code></li>
-</ul>
-<p>在文件末尾添加，请将 <code>/path/to/anaconda3</code> 替换为实际安装路径：</p>
-<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;/path/to/anaconda3/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc   <span class="hljs-comment"># 若使用 Zsh</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">source</span> ~/.bashrc  <span class="hljs-comment"># 若使用 Bash</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>验证安装</strong></p>
-<p>重新打开终端，或执行 source 后，运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda --version<br></code></pre></td></tr></table></figure>
-<p>若输出版本号(如 conda 23.10.0)，则表示安装成功。</p>
-<blockquote>
-<p><strong>提示：</strong> 如果您已按照第 4 章配置了语法高亮插件，在终端输入 conda 后，命令会显示为绿色(表示合法命令)；若未配置高亮插件，直接运行上述命令即可。</p>
-</blockquote>
-<p>如果在后续使用中需要创建虚拟环境，可使用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
-
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#x61;&#x68;&#x69;&#x6b;&#x65;&#x72;&#x40;&#49;&#x36;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
-]]></content>
-      <categories>
-        <category>计算机基础与实验平台搭建</category>
-      </categories>
-      <tags>
-        <tag>实验平台搭建</tag>
-        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1188,7 +1250,7 @@
 <hr>
 <h1 id="5-写在最后"><a href="#5-写在最后" class="headerlink" title="5. 写在最后"></a>5. 写在最后</h1><p>从注册 GitHub 到在浏览器里看到自己的站点，整个过程看似步骤繁多，但拆解开其实就是“工具安装 → 密钥配对 → 仓库创建 → 本地部署”这条主线。每完成一步，离那个属于自己的小空间就近了一点，这种逐步推进的踏实感，大概是搭建博客独有的乐趣。</p>
 <p>更重要的是，这一套流程并不只是为博客服务——熟悉了 Git 和 Hexo 的工作流，往后任何静态站点的管理都会顺手很多。遇到报错也别急，顺着提示去查文档、改配置，多试几次，那些红字就变成你的经验值了。</p>
-<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#x72;&#x61;&#x68;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#51;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
+<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#x6b;&#101;&#x72;&#x40;&#x31;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
 <p>至于博客外观和交互细节，笔者打算持续更新 <strong>Fluid 主题的完整配置</strong>——从外观美化、评论系统接入，到响应式优化，都会一步步写清楚。感兴趣的话，记得来看。</p>
 <hr>
 <p><strong>参考资源</strong></p>
@@ -1206,52 +1268,229 @@
       </tags>
   </entry>
   <entry>
-    <title>如何搭建合适的生信分析平台</title>
-    <url>/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<p>对于初涉生物信息学的朋友来说，搭建一个合适的分析环境往往是入坑的第一道门槛。一方面，生信分析的核心工具几乎都扎根于Linux系统，掌握命令行操作是绕不开的必修课；另一方面，日常办公又离不开Windows或Mac的生态。如何在强大的分析能力与便捷的办公体验之间找到最佳平衡点，直接影响了我们的学习效率和后续的使用体验。</p>
-<p>这篇博文将对目前主流的三种生信平台搭建方案（双系统、纯Linux、Windows + WSL）进行横向对比，分析各自的优缺点与适用人群。如果你正纠结于如何开启自己的生信之路，这份指南或许能帮你找到最适合自己的方向。</p>
+    <title>从零搭建Windows生信分析平台——WSL的安装配置</title>
+    <url>/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
 <hr>
-<h3 id="1-生信分析需要什么样的平台？"><a href="#1-生信分析需要什么样的平台？" class="headerlink" title="1. 生信分析需要什么样的平台？"></a>1. 生信分析需要什么样的平台？</h3><p>生物信息学分析通常依赖 Linux 环境，因为许多核心软件（如 <code>bedtools</code>、<code>samtools</code>）仅提供 Linux 版本。此外，Linux 自带的命令行工具（<code>sort</code>、<code>awk</code>、<code>grep</code> 等）能高效处理文本数据，虽然 Python 或 R 也能实现类似功能，但往往需要编写更多代码才能完成同样的任务。</p>
-<p>然而，Linux 的日常使用对新手并不友好：办公软件（如 Word、微信、QQ）要么无法原生运行，要么体验远不如 Windows。即使有替代品，重新学习也会增加时间成本，以及与同组成员的合作成本。因此，搭建生信分析平台的关键是在<strong>分析便利性</strong>和<strong>日常办公完整性</strong>之间找到平衡。</p>
-<p>目前主流的搭建方式有三种，各有优劣，适合不同需求的用户：</p>
-<table>
-<thead>
-<tr>
-<th>系统类型</th>
-<th>优点</th>
-<th>缺点</th>
-<th>适用人群</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Windows + Linux 双系统</strong></td>
-<td>两个系统完全独立，均可调用全部硬件资源，且都能拥有图形界面。</td>
-<td>一次只能使用一个系统，切换需要重启，非常不便。</td>
-<td>极少需要切换系统，或对两个系统都有完整图形界面需求的用户。</td>
-</tr>
-<tr>
-<td><strong>纯 Linux 系统</strong></td>
-<td>系统轻量，性能最大化，能获得原生的 Linux 分析体验。</td>
-<td>办公软件支持不足，协作时可能遇到兼容性问题；对新手操作门槛高。</td>
-<td>熟练使用 Linux 且日常办公可完全在 Linux 下完成的用户。</td>
-</tr>
-<tr>
-<td><strong>Windows + WSL (适用于 Linux 的 Windows 子系统)</strong></td>
-<td><strong>可同时使用两个系统</strong>，无需重启；文件可以互相访问；既能用 Windows 办公，又能用 Linux 做分析。</td>
-<td>WSL 无法调用全部硬件资源（如 GPU 加速有限制），且 Linux 侧通常只有命令行界面。</td>
-<td><strong>大多数初学者和日常用户</strong>——可在熟悉的 Windows 环境中逐步学习 Linux 命令。</td>
-</tr>
-</tbody></table>
+<h2 id="1-WSL2-ubuntu安装和迁移"><a href="#1-WSL2-ubuntu安装和迁移" class="headerlink" title="1. WSL2 ubuntu安装和迁移"></a>1. WSL2 ubuntu安装和迁移</h2><p><strong>注意：</strong></p>
+<ul>
+<li>WSL2 Ubuntu 子系统默认安装在 C 盘，<strong>安装时无法更改路径。</strong></li>
+<li><strong>磁盘空间要求：</strong><ul>
+<li>仅安装基础 Ubuntu 系统约需 5~10 GB。</li>
+<li>若后续安装生信软件(如 Conda、LightDock 等)并存储数据，建议 C 盘剩余空间 ≥ 30 GB。</li>
+<li><strong>当 C 盘剩余空间低于 20 GB 时，强烈建议将子系统迁移到其他非系统盘</strong>，否则可能导致系统运行缓慢、更新失败甚至无法启动。</li>
+</ul>
+</li>
+<li><strong>建议安装或迁移至固态硬盘(SSD)：</strong> SSD 具有更快的读写速度，能显著提升 WSL 子系统的启动速度、软件安装效率及 I&#x2F;O 密集型操作(如编译、数据处理)的运行性能。</li>
+<li><strong>反复装卸的风险：</strong><ul>
+<li>多次卸载并重新安装 Ubuntu 子系统可能产生残留配置文件或注册表项，导致新安装的系统出现异常或安装失败。</li>
+<li>卸载时若误删除 WSL 相关的系统文件，可能影响其他 WSL 发行版的正常运行，甚至导致 Windows 系统文件损坏。</li>
+</ul>
+</li>
+<li><strong>迁移的另一用途：拷贝系统到新电脑。</strong> 通过 <code>wsl --export</code> 导出 tar 文件，将该文件复制到新电脑后，使用 <code>wsl --import</code> 导入，即可在新电脑上获得完全一致的 Ubuntu 环境(包括已安装的软件、配置等)，无需重新配置。非常适合在多台设备间同步生信分析环境。</li>
+</ul>
+<h3 id="1-1-WSL2-ubuntu安装"><a href="#1-1-WSL2-ubuntu安装" class="headerlink" title="1.1 WSL2 ubuntu安装"></a>1.1 WSL2 ubuntu安装</h3><ul>
+<li><p><strong>系统版本要求</strong><br>本安装教程仅适用于 Windows 10 版本 2004 及更高版本(含 Windows 11)。若您使用的是旧版 Windows 系统，或需要了解本文未提及的安装细节，请参考 WSL 官方教程：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">https://learn.microsoft.com/zh-cn/windows/wsl/install</a></p>
+</li>
+<li><p><strong>启用“适用于 Linux 的 Windows 子系统”：</strong><br>以管理员身份运行 Windows PowerShell，执行以下命令：</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows-Subsystem-Linux</span> /all /norestart<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>安装 WSL 并升级至 WSL2：</strong></li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--install</span><br>wsl <span class="hljs-literal">--update</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" alt="在 Microsoft Store 中搜索 Ubuntu"></li>
+</ul>
+<h3 id="1-2-Ubuntu子系统的迁移"><a href="#1-2-Ubuntu子系统的迁移" class="headerlink" title="1.2 Ubuntu子系统的迁移"></a>1.2 Ubuntu子系统的迁移</h3><ul>
+<li>查看wsl状态</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关掉正在运行的wsl</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>导出需要迁移的Ubuntu子系统</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="hljs-comment"># 该文件也可作为备份</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>请将 &lt;发行版名称&gt; 替换为与 <code>wsl -l -v</code> 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.</p>
+</blockquote>
+<ul>
+<li>确认导出.tar文件后，注销原来的版本</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--unregister</span> &lt;发行版名称&gt;<br><span class="hljs-comment"># 查看是否注销</span><br>wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在目标盘符(如D盘)创建新目录并导入</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="hljs-literal">--version</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置默认登录用户(可选，否则默认以 root 登录)</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">ubuntu config <span class="hljs-literal">--default-user</span> 你的用户名<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>验证迁移是否成功</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--list</span> <span class="hljs-literal">--verbose</span><br>wsl<br></code></pre></td></tr></table></figure>
+
+<p>迁移完成后，原 C 盘中的子系统文件已被清理，新系统位于 D 盘(或其他分区)。后续所有操作均在新位置进行，无需重新配置环境。</p>
 <hr>
-<h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
-<p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
+<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" alt="设置用户名和密码"></p>
+<h3 id="2-1-更换国内镜像源并更新系统"><a href="#2-1-更换国内镜像源并更新系统" class="headerlink" title="2.1 更换国内镜像源并更新系统"></a>2.1 更换国内镜像源并更新系统</h3><ul>
+<li><strong>备份原始配置文件</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>编辑源文件：</strong><br>使用 vim 打开配置文件：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
+<p>打开后，按 <code>ggdG</code>(依次按 g、g、d、G 键)可快速删除全部内容，然后按 <code>i</code> 进入插入模式，将以下清华镜像源内容粘贴进去(以 Ubuntu 22.04 为例)：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><br>deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse<br><span class="hljs-comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><br><span class="hljs-comment"># 预发布软件源，不建议启用</span><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br></code></pre></td></tr></table></figure>
+
+<p>粘贴完成后，按 <code>Esc</code> 键退出插入模式，输入 <code>:wq</code> 保存并退出 vim。</p>
+<blockquote>
+<p>提示：若编辑过程中误操作想放弃保存，可按 <code>Esc</code> 后输入 <code>:q!</code> 强制退出。</p>
+</blockquote>
+<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt upgrade<br><span class="hljs-built_in">sudo</span> apt install aptitude <span class="hljs-comment">#智能安装、升级、降级或卸载依赖的软件包</span><br><span class="hljs-built_in">sudo</span> aptitude install aria2 <span class="hljs-comment">#多线程下载软件</span><br></code></pre></td></tr></table></figure>
+
 <hr>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#x72;&#97;&#104;&#x69;&#x6b;&#x65;&#114;&#x40;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<h2 id="3-图形界面的安装和配置"><a href="#3-图形界面的安装和配置" class="headerlink" title="3. 图形界面的安装和配置"></a>3. 图形界面的安装和配置</h2><blockquote>
+<p><strong>说明：</strong> 笔者个人感觉 Ubuntu 图形界面运行较慢且体验一般，不如在 Ubuntu 中安装 Jupyter Notebook 进行文件操作更方便。本部分仅供有图形界面需求的读者参考。</p>
+</blockquote>
+<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xorg<br><span class="hljs-built_in">sudo</span> aptitude install xfce4<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-安装并配置xrdp"><a href="#3-2-安装并配置xrdp" class="headerlink" title="3.2 安装并配置xrdp"></a>3.2 安装并配置xrdp</h3><p>Xrdp 通过远程桌面的方式来访问另外一台主机</p>
+<ul>
+<li><strong>安装</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xrdp<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>设置使用3390端口</strong></li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">sudo sed <span class="hljs-punctuation">-</span>i &#x27;s/port=<span class="hljs-number">3389</span>/port=<span class="hljs-number">3390</span>/g&#x27; /etc/xrdp/xrdp.ini<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>向xsession中写入xfce4-session</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">echo</span> xfce4-session &gt;~/.xsession<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>重启xrdp服务</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> service xrdp restart<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-Windows-端远程桌面连接"><a href="#3-3-Windows-端远程桌面连接" class="headerlink" title="3.3 Windows 端远程桌面连接"></a>3.3 Windows 端远程桌面连接</h3><p>在 Windows 中打开“远程桌面连接”，输入以下信息：</p>
+<ul>
+<li>计算机：localhost:3390</li>
+<li>用户名：Ubuntu 用户名</li>
+</ul>
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" alt="远程桌面连接配置"></p>
+<p><strong>注意：</strong> 若连接失败，可尝试在 Ubuntu 中重启 xrdp 服务后重试。</p>
+<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" alt="远程桌面连接成功"></p>
+<hr>
+<h2 id="4-Zsh-与-Oh-My-Zsh-的安装与配置"><a href="#4-Zsh-与-Oh-My-Zsh-的安装与配置" class="headerlink" title="4. Zsh 与 Oh My Zsh 的安装与配置"></a>4. Zsh 与 Oh My Zsh 的安装与配置</h2><p><strong>关于 Zsh 的说明：</strong><br>Zsh(Z shell)是一种功能更强大的 Shell，相较于系统默认的 Bash，它提供了更丰富的特性：智能命令补全、语法高亮、主题自定义、强大的插件机制等。结合 Oh My Zsh 框架，可以极大提升终端使用效率。<br><strong>若您不希望配置 Zsh</strong>，也可以直接使用默认的 Bash 完成后续 Conda 等软件的安装与配置，跳过本章节即可。使用 Bash 时，配置文件为 <code>~/.bashrc</code>，后续操作中的 <code>~/.zshrc</code> 请相应替换为 <code>~/.bashrc</code>。</p>
+<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install zsh<br>zsh  <span class="hljs-comment"># 运行一次以完成初始化配置</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>将zsh设为默认终端：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
+<p>执行后需重新登录或重启终端使设置生效。</p>
+<h3 id="4-2-Oh-My-Zsh-安装"><a href="#4-2-Oh-My-Zsh-安装" class="headerlink" title="4.2 Oh My Zsh 安装"></a>4.2 Oh My Zsh 安装</h3><p>Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。</p>
+<blockquote>
+<p>注意：执行 git clone 时，若终端出现类似 <code>remote: Waiting in queue... (Position: 881)</code> 的提示，说明镜像服务器正在排队处理请求，请耐心等待。</p>
+</blockquote>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git<br><span class="hljs-built_in">cd</span> ohmyzsh/tools<br>REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，Oh My Zsh 的配置文件位于 <code>~/.zshrc</code>，插件目录为 <code>~/.oh-my-zsh/custom/plugins/</code> 。</p>
+<h3 id="4-3-配置常用插件"><a href="#4-3-配置常用插件" class="headerlink" title="4.3 配置常用插件"></a>4.3 配置常用插件</h3><h4 id="4-3-1-autojump-目录快速跳转"><a href="#4-3-1-autojump-目录快速跳转" class="headerlink" title="4.3.1 autojump(目录快速跳转)"></a>4.3.1 autojump(目录快速跳转)</h4><p>autojump 可以根据历史访问记录快速跳转到指定目录。使用国内镜像源下载安装：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://gitee.com/holyvan/autojump.git <br><span class="hljs-built_in">cd</span> autojump<br>./install.py <span class="hljs-comment"># 或 python3 install.py</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> <code>./install.py</code>脚本依赖 Python，建议在安装 Conda 后再执行此步骤。但 Zsh 需在 Conda 安装前设为默认 Shell，请根据实际情况安排顺序。</p>
+</blockquote>
+<p>安装成功后，脚本会输出类似以下提示，请将中间三行代码添加到 <code>~/.zshrc</code> 中(路径以实际输出为准，通常位于 $HOME&#x2F;.autojump 目录下)：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">Please manually add the following line(s) to ~/.zshrc:<br><br>    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="hljs-built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh<br><br>    <span class="hljs-built_in">autoload</span> -U compinit &amp;&amp; compinit -u<br><br>Please restart terminal(s) before running autojump.<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" alt="autojump的输出"></p>
+<p>根据提示把中间的三行代码加到<code>.zshrc</code>文件中，<br>添加方法：使用 <code>vim ~/.zshrc</code> 打开配置文件，将上述三行内容粘贴到文件末尾，保存并退出(按 <code>Esc</code>，输入 <code>:wq</code>)。</p>
+<h4 id="4-3-2-自动补全与语法高亮插件"><a href="#4-3-2-自动补全与语法高亮插件" class="headerlink" title="4.3.2 自动补全与语法高亮插件"></a>4.3.2 自动补全与语法高亮插件</h4><p><strong>功能与用法</strong></p>
+<ul>
+<li><p><strong>zsh-syntax-highlighting(命令语法高亮)：</strong> 为输入的命令提供实时颜色高亮。合法命令显示为绿色，非法命令显示为红色，存在的路径显示为下划线。这可以帮助您在按回车前快速发现拼写或路径错误。</p>
+</li>
+<li><p><strong>zsh-autosuggestions(命令自动补全建议)：</strong> 根据历史命令记录，在输入时自动显示灰色提示，建议可能想要输入的完整命令。按 →(右箭头)键即可一键补全，按 End 键仅补全光标之后的部分，继续正常输入则忽略建议。</p>
+</li>
+</ul>
+<p>同时启用这两个插件后，能获得实时语法校验与智能补全提示，大幅提升终端输入效率。</p>
+<p><strong>插件下载：</strong></p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-comment"># 自动补全插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions<br><br><span class="hljs-comment"># 语法高亮插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>说明：</strong> <code>${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</code> 表示优先使用环境变量 <code>ZSH_CUSTOM</code> 定义的目录，若未定义则使用默认的 <code>~/.oh-my-zsh/custom</code>。</p>
+</blockquote>
+<p><strong>检查插件是否下载到正确位置</strong><br>执行以下命令查看插件目录内容：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">ls</span> -l <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/<br></code></pre></td></tr></table></figure>
+
+<p>若插件未出现在该目录中，可手动将其移动至正确位置。例如，若 zsh-syntax-highlighting 下载到了当前目录，可执行：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+
+<p>若不确定插件下载到了哪里，可使用 <code>find</code> 命令搜索：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">find ~ -<span class="hljs-built_in">type</span> d -name <span class="hljs-string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p><strong>启用插件</strong><br>编辑 <code>~/.zshrc</code> 文件，找到 <code>plugins=(...)</code> 行，修改为：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)<br></code></pre></td></tr></table></figure>
+
+<p>保存后执行以下命令使配置生效：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">source</span> ~/.zshrc<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-conda的安装与配置"><a href="#5-conda的安装与配置" class="headerlink" title="5. conda的安装与配置"></a>5. conda的安装与配置</h2><h3 id="5-1-conda简介"><a href="#5-1-conda简介" class="headerlink" title="5.1 conda简介"></a>5.1 conda简介</h3><p>conda 是一个开源的 Python 和 R 语言发行版，专注于数据科学、机器学习和科学计算。它内置了包管理器，可以方便地创建隔离的虚拟环境、安装和管理软件包，尤其适合生信分析中不同工具对 Python 版本的依赖管理。<strong>但笔者使用 Conda 管理 R 环境的体验不佳</strong>，不建议用 Conda 安装或管理 R 及相关包。推荐使用 Rstudio 进行 R 环境管理，更稳定、兼容性更好。</p>
+<p><strong>Miniconda 与 Anaconda 的区别</strong></p>
+<ul>
+<li>Anaconda：预装了超过 1500 个常用的数据科学包(如 NumPy、SciPy、Pandas 等)，安装包较大(约 3~5 GB)，适合不想手动安装基础包的用户。</li>
+<li>Miniconda：仅包含 conda 和 Python，安装包很小(约 50~80 MB)，用户需要自行安装所需包。它更轻量、灵活，适合磁盘空间有限或希望按需安装的用户。</li>
+</ul>
+<p>本教程以 Anaconda 为例进行安装，若您偏好 Miniconda，可前往 Miniconda 官网下载对应版本，后续使用方式与 Anaconda 基本一致。</p>
+<h3 id="5-2-下载并安装-Anaconda"><a href="#5-2-下载并安装-Anaconda" class="headerlink" title="5.2 下载并安装 Anaconda"></a>5.2 下载并安装 Anaconda</h3><p>从 Anaconda 官网获取最新 Linux 版本的下载链接(建议使用稳定版)。本文以 <code>Anaconda3-2023.09-0-Linux-x86_64.sh</code> 为例：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh<br>bash Anaconda3-2023.09-0-Linux-x86_64.sh <br></code></pre></td></tr></table></figure>
+
+<p>安装过程中，请仔细阅读许可协议，按提示确认安装位置,默认为 <code>~/anaconda3</code>。在最后选择是否初始化 <code>conda</code>，建议选择<code>yes</code>，这样 <code>conda</code> 会自动将自身添加到 Shell 配置文件中(如 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>)。</p>
+<h3 id="5-2-配置环境变量"><a href="#5-2-配置环境变量" class="headerlink" title="5.2 配置环境变量"></a>5.2 配置环境变量</h3><p>若安装时未自动添加，或需要手动配置，请将以下内容添加到对应的配置文件中：</p>
+<ul>
+<li>使用 Zsh 的用户：编辑 <code>~/.zshrc</code></li>
+<li>使用 Bash 的用户：编辑 <code>~/.bashrc</code></li>
+</ul>
+<p>在文件末尾添加，请将 <code>/path/to/anaconda3</code> 替换为实际安装路径：</p>
+<figure class="highlight zsh"><table><tr><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;/path/to/anaconda3/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>保存后执行以下命令使配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc   <span class="hljs-comment"># 若使用 Zsh</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">source</span> ~/.bashrc  <span class="hljs-comment"># 若使用 Bash</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>验证安装</strong></p>
+<p>重新打开终端，或执行 source 后，运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda --version<br></code></pre></td></tr></table></figure>
+<p>若输出版本号(如 conda 23.10.0)，则表示安装成功。</p>
+<blockquote>
+<p><strong>提示：</strong> 如果您已按照第 4 章配置了语法高亮插件，在终端输入 conda 后，命令会显示为绿色(表示合法命令)；若未配置高亮插件，直接运行上述命令即可。</p>
+</blockquote>
+<p>如果在后续使用中需要创建虚拟环境，可使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
+
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#x61;&#104;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
       </categories>
       <tags>
+        <tag>计算机基础</tag>
         <tag>实验平台搭建</tag>
       </tags>
   </entry>
@@ -1272,7 +1511,7 @@
 </ul>
 <p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
 <hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#105;&#x67;&#104;&#x74;&#100;&#111;&#x63;&#107;&#105;&#x6e;&#x67;&#x40;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#x69;&#x67;&#x68;&#116;&#100;&#x6f;&#99;&#x6b;&#105;&#110;&#x67;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#x6f;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
 <p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
 <p>支持的具体系统版本如下：</p>
 <table>
@@ -1330,7 +1569,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
 
 <hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#x72;&#x61;&#104;&#x69;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>。</p>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#x61;&#x68;&#105;&#107;&#101;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>。</p>
 <p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
 ]]></content>
       <categories>
@@ -1348,7 +1587,7 @@
     <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
 <p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
 <p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#104;&#x69;&#107;&#101;&#114;&#64;&#49;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#x72;&#111;&#114;&#x61;&#104;&#105;&#x6b;&#101;&#114;&#64;&#49;&#x36;&#51;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
 ]]></content>
       <categories>
         <category>关于</category>
@@ -1452,7 +1691,7 @@
 <li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#97;&#104;&#105;&#107;&#101;&#x72;&#64;&#49;&#x36;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#x61;&#x68;&#x69;&#x6b;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 <hr>
 <p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
 ]]></content>
@@ -1662,7 +1901,7 @@
 </tbody></table>
 <hr>
 <h2 id="8-写在最后"><a href="#8-写在最后" class="headerlink" title="8. 写在最后"></a>8. 写在最后</h2><p>环境配置的本质，不过是一次常规磨合。遇到报错，就耐心地顺藤摸瓜定位原因、查阅官方文档、补全缺失的部分，这套思路适用于任何开发环境的装配。</p>
-<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
+<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#114;&#x61;&#104;&#x69;&#107;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 <ul>
