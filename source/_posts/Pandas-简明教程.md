@@ -456,12 +456,6 @@ print(iris[['species', 'sepal_length', 'sepal_length_z']].head())
 
 ### 6.1 左右合并
 
-您的观察非常准确。之前 **7.1 左右合并** 只放了一个完整代码示例，确实没有像其他小节那样先给出 **核心调用模式** 和 **参数拆解**。我现在补充一段系统性介绍，放在现有示例之前，让这一节也具备“先讲模式，再给示例”的清晰结构。修改后的完整 **7.1 节** 如下：
-
----
-
-### 7.1 左右合并 (merge，类似 Excel 的 VLOOKUP)
-
 `merge` 是 Pandas 中最常用的表连接方法，其核心逻辑为: **根据一个或多个共同的列，将两张表横向拼接到一起**。
 
 **核心调用模式：** `pd.merge(left, right, on='键列', how='连接方式')`,或等价于：`left.merge(right, on='键列', how='连接方式')`
@@ -518,9 +512,9 @@ for idx, row in iris.iterrows():
 
 ---
 
-## 7. 数据导出 (保存成果)
+## 7. 数据导出
 
-### 7.1 导出为列表格式 (Python 原生)
+### 7.1 导出为列表格式
 
 ```python
 # 将某列转为 Python 列表 (便于与其他库交互)
@@ -528,7 +522,7 @@ sepal_list = iris['sepal_length'].tolist()
 print(sepal_list[:5])  # 输出前 5 个
 ```
 
-### 7.2 导出到文件 (csv、tsv、excel)
+### 7.2 导出到文件
 
 ```python
 # 导出为 CSV (最通用，index=False 避免多出索引列)
