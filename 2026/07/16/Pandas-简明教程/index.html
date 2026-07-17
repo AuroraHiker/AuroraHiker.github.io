@@ -27,7 +27,7 @@
 <meta property="og:description" content="Pandas 简明教程Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，DataFrame (数据框) 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-15T23:31:59.961Z">
-<meta property="article:modified_time" content="2026-07-17T04:41:24.638Z">
+<meta property="article:modified_time" content="2026-07-17T04:44:59.814Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="技术,博客,编程,生信">
 <meta name="twitter:card" content="summary_large_image">
@@ -428,7 +428,7 @@
 <details>
   <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong>（点击展开参考答案）</summary>
 
-<h3 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h3><p><strong>1. 外层中括号（<code>df[...]</code>）</strong> 是 Pandas 的<strong>列索引运算符</strong>，它的功能是“从 DataFrame 中取出指定的列”。</p>
+<p><strong>1. 外层中括号（<code>df[...]</code>）</strong> 是 Pandas 的<strong>列索引运算符</strong>，它的功能是“从 DataFrame 中取出指定的列”。</p>
 <p><strong>2. 最里层的中括号 <code>[ ]</code></strong> 代表 <strong>Python 原生的列表（List）</strong>。</p>
 <ul>
 <li><p><strong>为什么必须用双层？</strong><br>因为 Pandas 的 <code>df[ ]</code> 语法规定：<strong>括号内只能传入一个参数</strong>。</p>
@@ -630,7 +630,7 @@
 
 <hr>
 <p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
-<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#97;&#117;&#x72;&#x6f;&#x72;&#97;&#104;&#105;&#107;&#x65;&#114;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#97;&#117;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#107;&#101;&#114;&#64;&#49;&#54;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
 
                 
               </div>
