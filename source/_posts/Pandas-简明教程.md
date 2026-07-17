@@ -153,7 +153,34 @@ df2 = pd.DataFrame(data_list, columns=['sepal_length', 'sepal_width', 'species']
     # 多列 → 返回 DataFrame (注意双中括号)
     sub_df = iris[['sepal_length', 'species']]
     ```
->思考:为什么提取多列需要用双中括号?最里层中括号代表什么意思?
+<details>
+  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong>（点击展开参考答案）</summary>
+
+**1. 外层中括号（`df[...]`）** 是 Pandas 的**列索引运算符**，它的功能是“从 DataFrame 中取出指定的列”。
+
+**2. 最里层的中括号 `[ ]`** 代表 **Python 原生的列表（List）**。
+
+- **为什么必须用双层？**
+  因为 Pandas 的 `df[ ]` 语法规定：**括号内只能传入一个参数**。
+  - 如果你想取**单列**，传入一个**字符串**（`df['列名']`），返回 `Series`。
+  - 如果你想取**多列**，你必须把多个列名**打包成一个整体**传入。而 Python 中最直接的“打包容器”就是**列表**。
+  - 所以 `df[ ['列1', '列2'] ]` 的逻辑是：**外层的索引器**接收到了**一个列表对象**，Pandas 识别出这个列表里装了多个字符串，于是解析并返回多列组成的 `DataFrame`。
+
+- **如果少写一层会怎样？**
+  如果你写成 `df['列1', '列2']`，Python 解释器会把 `'列1', '列2'` 解释为一个**元组（Tuple）**。此时 Pandas 会去 DataFrame 中查找名为 `('列1', '列2')` 的**单一列名**（这在多层索引 MultiIndex 中才用得到），绝大多数情况下会直接报错 `KeyError`。
+
+### 代码验证（你可以在 Jupyter 中试一下）
+```python
+import pandas as pd
+df = pd.DataFrame({'A': [1,2], 'B': [3,4], 'C': [5,6]})
+
+# 正确：传入一个列表（双括号）
+print(df[['A', 'B']])  
+
+# 错误：传入一个元组（单括号内加逗号），会报错 KeyError
+# print(df['A', 'B'])  
+```
+</details> 
 
 - 按列位置调用
     ```python
@@ -230,14 +257,14 @@ df_dropped = iris.dropna()
 确保数据类型符合预期，避免计算时报错：
 
 - 将物种列转为 category 类型：就是将 species 列从普通的字符串列 (object 类型)，转换为分类类型。
-```python 
-iris['species'] = iris['species'].astype('category')
-```
-> 如果查看 `iris['species'].cat.categories`，会看到底层存储的三个类别值：`['setosa', 'versicolor', 'virginica']`。
+    ```python 
+    iris['species'] = iris['species'].astype('category')
+    ```
+    > 如果查看 `iris['species'].cat.categories`，会看到底层存储的三个类别值：`['setosa', 'versicolor', 'virginica']`。
 - 将浮点型转为整型 (注意精度丢失)：
-```python
-iris['sepal_length'] = iris['sepal_length'].astype('int')
-```
+    ```python
+    iris['sepal_length'] = iris['sepal_length'].astype('int')
+    ```
 
 ### 3.3 列名重命名 (rename)
 
@@ -249,6 +276,9 @@ iris.rename(columns={
     'sepal_length': 'Sepal_Len',
     'sepal_width': 'Sepal_Wid'
 }, inplace=True)  # inplace=True 表示直接修改原数据框
+
+# 试验完记得再调整回来
+# iris = sns.load_dataset('iris')
 ```
 
 ---
@@ -259,7 +289,7 @@ iris.rename(columns={
 
 ```python
 # 对列求均值 (axis=0，默认)
-print(iris[['Sepal_Len', 'Sepal_Wid']].mean())
+print(iris[['sepal_length', 'sepal_width']].mean())
 
 # 对行求均值 (axis=1)
 iris['avg_feature'] = iris.iloc[:, :4].mean(axis=1)
@@ -274,7 +304,7 @@ Pandas 支持将列视为变量进行直接的算术运算，包括列与列之�
 
 ```python
 # 创建新列：花萼长宽比
-iris['sepal_ratio'] = iris['Sepal_Len'] / iris['Sepal_Wid']
+iris['sepal_ratio'] = iris['Sepal_length'] / iris['sepal_width']
 
 # 所有花瓣长度 + 2
 iris['petal_length_plus'] = iris['petal_length'] + 2
@@ -366,7 +396,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
 Pandas 为字符串类型的列提供了专门的 `.str` 接口，方便进行拆分、提取、替换等操作，无需手动写循环。
 
 ```python
-# 假设我们有列 'species_info' 格式为 'setosa_1'（品种_编号）
+# 假设我们有列 'species_info' 格式为 'setosa_1' (品种_编号)
 # 先创建一个示例列
 iris['species_info'] = iris['species'] + '_' + iris.index.astype(str)
 
@@ -513,6 +543,6 @@ iris.to_csv('iris_final.tsv', sep='\t', index=False)
 
 ---
 
-以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 (print(help(pd.DataFrame))) 或利用搜索引擎拆解错误信息，是成长最快的方式。
+以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 `print(help(pd.DataFrame))` 或利用搜索引擎拆解错误信息，是成长最快的方式。
 
 本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 **aurorahiker@163.com** 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ 
