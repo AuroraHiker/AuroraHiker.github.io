@@ -19,15 +19,15 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="随机森林分类任务：以鸢尾花数据集为例本教程面向编程和数学基础薄弱的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从安装包开始，一步步解释数据、模型参数、调参方法和结果评估。你只需跟着代码运行，就能学会随机森林的核心操作流程。 如果你完全没有代码基础，建议先完成 Python 入门：写给完全没学过编程的你 和 Pandas 简明教程 的学习再回到本教程。">
+    <meta name="description" content="本教程面向编程和数学基础薄弱的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从安装包开始，一步步解释数据、模型参数、调参方法和结果评估。你只需跟着代码运行，就能学会随机森林的核心操作流程。 如果你完全没有代码基础，建议先完成 Python 入门：写给完全没学过编程的你 和 Pandas 简明教程 的学习再回到本教程。本文接续这两篇博客的内容展开讲解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习入门：随机森林分类任务">
 <meta property="og:url" content="https://aurorahiker.github.io/2026/07/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="随机森林分类任务：以鸢尾花数据集为例本教程面向编程和数学基础薄弱的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从安装包开始，一步步解释数据、模型参数、调参方法和结果评估。你只需跟着代码运行，就能学会随机森林的核心操作流程。 如果你完全没有代码基础，建议先完成 Python 入门：写给完全没学过编程的你 和 Pandas 简明教程 的学习再回到本教程。">
+<meta property="og:description" content="本教程面向编程和数学基础薄弱的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从安装包开始，一步步解释数据、模型参数、调参方法和结果评估。你只需跟着代码运行，就能学会随机森林的核心操作流程。 如果你完全没有代码基础，建议先完成 Python 入门：写给完全没学过编程的你 和 Pandas 简明教程 的学习再回到本教程。本文接续这两篇博客的内容展开讲解。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-20T21:55:18.426Z">
-<meta property="article:modified_time" content="2026-07-20T23:22:36.320Z">
+<meta property="article:modified_time" content="2026-07-20T23:33:31.078Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="Python 入门">
 <meta property="article:tag" content="机器学习入门">
@@ -332,7 +332,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.6k 字
+          9.5k 字
         
       </span>
     
@@ -387,10 +387,10 @@
             
               <div class="markdown-body">
                 
-                <h1 id="随机森林分类任务：以鸢尾花数据集为例"><a href="#随机森林分类任务：以鸢尾花数据集为例" class="headerlink" title="随机森林分类任务：以鸢尾花数据集为例"></a>随机森林分类任务：以鸢尾花数据集为例</h1><p>本教程面向<strong>编程和数学基础薄弱</strong>的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从<strong>安装包</strong>开始，一步步解释<strong>数据、模型参数、调参方法和结果评估</strong>。你只需跟着代码运行，就能学会随机森林的核心操作流程。</p>
+                <p>本教程面向<strong>编程和数学基础薄弱</strong>的读者，手把手教你使用随机森林 (Random Forest) 对鸢尾花数据集进行分类。我们会从<strong>安装包</strong>开始，一步步解释<strong>数据、模型参数、调参方法和结果评估</strong>。你只需跟着代码运行，就能学会随机森林的核心操作流程。</p>
 <p>如果你完全没有代码基础，建议先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 和 <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" title="Pandas 简明教程">Pandas 简明教程</a> 的学习再回到本教程。本文接续这两篇博客的内容展开讲解。</p>
 <hr>
-<h2 id="1-包的安装"><a href="#1-包的安装" class="headerlink" title="1.包的安装"></a>1.包的安装</h2><p>在运行代码前，需要先安装必要的 Python 库。如果你使用 Jupyter Notebook，可以在单元格中运行 <code>!pip install</code> 命令；如果在命令行，直接执行 <code>pip install</code>。</p>
+<h1 id="1-包的安装"><a href="#1-包的安装" class="headerlink" title="1. 包的安装"></a>1. 包的安装</h1><p>在运行代码前，需要先安装必要的 Python 库。如果你使用 Jupyter Notebook，可以在单元格中运行 <code>!pip install</code> 命令；如果在命令行，直接执行 <code>pip install</code>。</p>
 <p><strong>安装命令</strong> (终端运行) </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install scikit-learn<br>pip install matplotlib<br>pip install pandas<br>pip install numpy<br>pip install scipy<br></code></pre></td></tr></table></figure>
 
@@ -424,7 +424,7 @@
 </tbody></table>
 <p>在本教程中，我们主要使用 <code>sklearn</code> 和 <code>matplotlib</code>。</p>
 <hr>
-<h2 id="2-数据集的加载与划分"><a href="#2-数据集的加载与划分" class="headerlink" title="2. 数据集的加载与划分"></a>2. 数据集的加载与划分</h2><h3 id="2-1-加载特征变量和目标变量"><a href="#2-1-加载特征变量和目标变量" class="headerlink" title="2.1 加载特征变量和目标变量"></a>2.1 加载特征变量和目标变量</h3><p>鸢尾花数据集是 sklearn 内置的经典分类数据集，包含 150 个样本，每个样本有 4 个特征 (即<em>X</em>，包括花萼长度、花萼宽度、花瓣长度、花瓣宽度四列变量) ，目标变量是 3 种鸢尾花的品种 (即<em>y</em>) 。</p>
+<h1 id="2-数据集的加载与划分"><a href="#2-数据集的加载与划分" class="headerlink" title="2. 数据集的加载与划分"></a>2. 数据集的加载与划分</h1><h2 id="2-1-加载特征变量和目标变量"><a href="#2-1-加载特征变量和目标变量" class="headerlink" title="2.1 加载特征变量和目标变量"></a>2.1 加载特征变量和目标变量</h2><p>鸢尾花数据集是 sklearn 内置的经典分类数据集，包含 150 个样本，每个样本有 4 个特征 (即<em>X</em>，包括花萼长度、花萼宽度、花瓣长度、花瓣宽度四列变量) ，目标变量是 3 种鸢尾花的品种 (即<em>y</em>) 。</p>
 <ul>
 <li>**X (特征) **：用于预测的输入变量，这里是花萼和花瓣的测量值。</li>
 <li>**y (目标) **：我们要预测的输出变量，这里是花的类别 (0, 1, 2 分别对应三种花) 。</li>
@@ -437,7 +437,7 @@
 <p>由于是分类问题，我们可以查看不同特征下各类别的分布。例如，绘制花瓣长度和宽度的散点图，按类别着色。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建 DataFrame 方便绘图</span><br>df = pd.DataFrame(X, columns=feature_names)<br>df[<span class="hljs-string">&#x27;species&#x27;</span>] = y<br><br><span class="hljs-comment"># 绘制花瓣长度 vs 花瓣宽度</span><br>plt.figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))<br><span class="hljs-keyword">for</span> species <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    subset = df[df[<span class="hljs-string">&#x27;species&#x27;</span>] == species]<br>    plt.scatter(subset[<span class="hljs-string">&#x27;petal length (cm)&#x27;</span>], subset[<span class="hljs-string">&#x27;petal width (cm)&#x27;</span>], <br>                label=target_names[species])<br>plt.xlabel(<span class="hljs-string">&#x27;花瓣长度 (cm)&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;花瓣宽度 (cm)&#x27;</span>)<br>plt.legend()<br>plt.title(<span class="hljs-string">&#x27;鸢尾花数据集 - 花瓣特征分布&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-2-划分训练集、验证集和测试集"><a href="#2-2-划分训练集、验证集和测试集" class="headerlink" title="2.2 划分训练集、验证集和测试集"></a>2.2 划分训练集、验证集和测试集</h3><p>我们需要将数据分成<strong>训练集</strong>和<strong>测试集</strong>。训练集用于训练模型，测试集用于评估模型在新数据上的表现。</p>
+<h2 id="2-2-划分训练集、验证集和测试集"><a href="#2-2-划分训练集、验证集和测试集" class="headerlink" title="2.2 划分训练集、验证集和测试集"></a>2.2 划分训练集、验证集和测试集</h2><p>我们需要将数据分成<strong>训练集</strong>和<strong>测试集</strong>。训练集用于训练模型，测试集用于评估模型在新数据上的表现。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><br><span class="hljs-comment"># test_size=0.2 表示 20% 的数据作为测试集</span><br><span class="hljs-comment"># random_state=42 保证每次运行划分一致 (固定随机种子) </span><br>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;训练集大小：<span class="hljs-subst">&#123;X_train.shape[<span class="hljs-number">0</span>]&#125;</span> 个样本&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;测试集大小：<span class="hljs-subst">&#123;X_test.shape[<span class="hljs-number">0</span>]&#125;</span> 个样本&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 <p><strong>关于验证集</strong></p>
@@ -447,9 +447,9 @@
 </ul>
 <p>本例中，我们将使用 <code>GridSearchCV</code> 进行交叉验证，它自动将训练集划分为多个子集进行验证，因此我们<strong>不需要手动再划分验证集</strong>。</p>
 <hr>
-<h2 id="3-随机森林的关键参数及调参方法"><a href="#3-随机森林的关键参数及调参方法" class="headerlink" title="3.随机森林的关键参数及调参方法"></a>3.随机森林的关键参数及调参方法</h2><p>随机森林 (RandomForestClassifier，RF) 有很多参数，下面介绍几个最重要的。</p>
-<h3 id="3-1-基础概念讲解"><a href="#3-1-基础概念讲解" class="headerlink" title="3.1 基础概念讲解"></a>3.1 基础概念讲解</h3><p>在理解随机森林的参数前，必须先掌握几个核心机器学习概念。</p>
-<h4 id="3-1-1-过拟合-Overfitting-与欠拟合-Underfitting"><a href="#3-1-1-过拟合-Overfitting-与欠拟合-Underfitting" class="headerlink" title="3.1.1 过拟合 (Overfitting) 与欠拟合 (Underfitting)"></a>3.1.1 过拟合 (Overfitting) 与欠拟合 (Underfitting)</h4><ul>
+<h1 id="3-随机森林的关键参数及调参方法"><a href="#3-随机森林的关键参数及调参方法" class="headerlink" title="3. 随机森林的关键参数及调参方法"></a>3. 随机森林的关键参数及调参方法</h1><p>随机森林 (RandomForestClassifier，RF) 有很多参数，下面介绍几个最重要的。</p>
+<h2 id="3-1-基础概念讲解"><a href="#3-1-基础概念讲解" class="headerlink" title="3.1 基础概念讲解"></a>3.1 基础概念讲解</h2><p>在理解随机森林的参数前，必须先掌握几个核心机器学习概念。</p>
+<h2 id="3-1-1-过拟合-Overfitting-与欠拟合-Underfitting"><a href="#3-1-1-过拟合-Overfitting-与欠拟合-Underfitting" class="headerlink" title="3.1.1 过拟合 (Overfitting) 与欠拟合 (Underfitting)"></a>3.1.1 过拟合 (Overfitting) 与欠拟合 (Underfitting)</h2><ul>
 <li><strong>欠拟合</strong>：模型太简单，连训练数据都学不好，在训练集和测试集上表现都差。好比学生只背了公式却不理解，考试时题目稍有变化就做不出来。</li>
 <li><strong>过拟合</strong>：模型太复杂，死记硬背了训练数据中的每个细节 (包括噪声)，在训练集上得分极高，但在新数据 (测试集) 上表现大幅下降。好比学生把课本例题答案全背下来，但遇到新题就懵了。</li>
 </ul>
@@ -486,7 +486,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">误差<br>  ^<br>  |  测试误差  \    /   (过拟合区域：测试误差开始回升)<br>  |             \  /<br>  |  训练误差    \/   (训练误差持续下降)<br>  |  <br>  +--------------------------------&gt; 模型复杂度<br>    欠拟合区域    最佳区域    过拟合区域<br><br></code></pre></td></tr></table></figure>
 
 <p>随机森林通过集成多棵决策树，能有效减轻过拟合，但参数设置不当仍会出现上述问题。</p>
-<h4 id="3-1-2-决策树-Decision-Tree-原理概述"><a href="#3-1-2-决策树-Decision-Tree-原理概述" class="headerlink" title="3.1.2 决策树 (Decision Tree) 原理概述"></a>3.1.2 决策树 (Decision Tree) 原理概述</h4><p>决策树本质上就是一个 <strong>“是&#x2F;否”的问答流程图</strong>。从树根开始问，根据答案走向不同分支，直到走到树叶 (最终结论)。</p>
+<h2 id="3-1-2-决策树-Decision-Tree-原理概述"><a href="#3-1-2-决策树-Decision-Tree-原理概述" class="headerlink" title="3.1.2 决策树 (Decision Tree) 原理概述"></a>3.1.2 决策树 (Decision Tree) 原理概述</h2><p>决策树本质上就是一个 <strong>“是&#x2F;否”的问答流程图</strong>。从树根开始问，根据答案走向不同分支，直到走到树叶 (最终结论)。</p>
 <p>以鸢尾花数据集为例，一棵简化决策树的示意图：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">         [开始：全部150朵花]<br>                |<br>     [花瓣长度 &lt; 2.45 cm?]<br>        /              \<br>      是                否<br>      |                  |<br>[山鸢尾]    [花瓣宽度 &lt; 1.75 cm?]<br>  (50朵)       /              \<br>             是                否<br>             |                  |<br>        [杂色鸢尾]         [维吉尼亚鸢尾]<br>          (50朵)             (50朵)<br></code></pre></td></tr></table></figure>
 
@@ -520,7 +520,7 @@
 <p>决策树的构建过程，就是递归地遍历所有可能的特征和分裂点，计算分裂后的基尼系数下降值，<strong>选择下降幅度最大的那个特征和分裂点</strong>，作为当前节点的最优划分方案。</p>
 </details>
 
-<h4 id="3-1-3-随机森林原理概述"><a href="#3-1-3-随机森林原理概述" class="headerlink" title="3.1.3 随机森林原理概述"></a>3.1.3 随机森林原理概述</h4><p>随机森林就是<strong>种了很多棵决策树</strong>。既然一棵树容易“死记硬背” (过拟合)，那我们种几百棵不同的树，让它们<strong>一起投票，少数服从多数</strong>。</p>
+<h2 id="3-1-3-随机森林原理概述"><a href="#3-1-3-随机森林原理概述" class="headerlink" title="3.1.3 随机森林原理概述"></a>3.1.3 随机森林原理概述</h2><p>随机森林就是<strong>种了很多棵决策树</strong>。既然一棵树容易“死记硬背” (过拟合)，那我们种几百棵不同的树，让它们<strong>一起投票，少数服从多数</strong>。</p>
 <p><strong>随机森林示意图 (以3棵树为例)：</strong></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs text">             [输入：一朵新的鸢尾花]<br>                    |<br>     +--------------+--------------+<br>     |              |              |<br>  [树 1]         [树 2]         [树 3]<br>(只看花瓣)    (只看花萼)    (综合看四个特征)<br>     |              |              |<br>  预测为：        预测为：        预测为：<br> [山鸢尾]       [杂色鸢尾]       [山鸢尾]<br>     |              |              |<br>     +--------------+--------------+<br>                    |<br>             [最终投票统计]<br>            山鸢尾：2票  (胜出)<br>            杂色鸢尾：1票<br>            维吉尼亚鸢尾：0票<br>                    |<br>             最终预测结果：[山鸢尾]<br></code></pre></td></tr></table></figure>
 
@@ -534,7 +534,7 @@
 </code></pre>
 <p>最终预测时，分类任务采用<strong>多数投票</strong>，回归任务采用<strong>平均值</strong>。当几百棵“片面”的树一起投票时，它们的错误会被相互抵消，最终得到一个既稳定又不容易过拟合的模型。</p>
 <p>明白了上面这些逻辑，你就已经懂了随机森林的核心思想。接下来我们看有哪些参数可以调节这些树的“生长方式”。</p>
-<h3 id="3-1关键参数及其含义"><a href="#3-1关键参数及其含义" class="headerlink" title="3.1关键参数及其含义"></a>3.1关键参数及其含义</h3><table>
+<h2 id="3-2-关键参数及其含义"><a href="#3-2-关键参数及其含义" class="headerlink" title="3.2 关键参数及其含义"></a>3.2 关键参数及其含义</h2><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -564,7 +564,7 @@
 </tr>
 </tbody></table>
 <p>还有其他参数如 <code>min_samples_split</code> 等，但以上几个最常用。</p>
-<h3 id="3-3-网格搜索-GridSearchCV"><a href="#3-3-网格搜索-GridSearchCV" class="headerlink" title="3.3 网格搜索 (GridSearchCV)"></a>3.3 网格搜索 (GridSearchCV)</h3><p>网格搜索是一种暴力搜索方法，我们给定每个参数的一组候选值，然后对所有组合进行交叉验证，选出得分最高的组合。</p>
+<h2 id="3-3-网格搜索-GridSearchCV"><a href="#3-3-网格搜索-GridSearchCV" class="headerlink" title="3.3 网格搜索 (GridSearchCV)"></a>3.3 网格搜索 (GridSearchCV)</h2><p>网格搜索是一种暴力搜索方法，我们给定每个参数的一组候选值，然后对所有组合进行交叉验证，选出得分最高的组合。</p>
 <p>交叉验证 (Cross-Validation) 将训练集分成 k 份 (比如 5 折) ，每次用 k-1 份训练，1 份验证，轮换 k 次，最后取平均得分。这样可以更稳健地评估参数性能，避免偶然性。</p>
 <p><strong>K 折交叉验证示意图 (以 5 折为例)</strong>：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">训练集整体<br>+----+----+----+----+----+<br>| 1  | 2  | 3  | 4  | 5  |<br>+----+----+----+----+----+<br>第1次：验证集=1，训练=2,3,4,5<br>第2次：验证集=2，训练=1,3,4,5<br>...<br>第5次：验证集=5，训练=1,2,3,4<br>最终得分为 5 次验证得分的平均值。<br></code></pre></td></tr></table></figure>
@@ -580,11 +580,11 @@
 </ul>
 </blockquote>
 <hr>
-<h2 id="4-模型结果解读"><a href="#4-模型结果解读" class="headerlink" title="4.模型结果解读"></a>4.模型结果解读</h2><p>我们用最佳参数重新训练模型，并在测试集上评估。</p>
-<h3 id="4-1-训练最终模型"><a href="#4-1-训练最终模型" class="headerlink" title="4.1 训练最终模型"></a>4.1 训练最终模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 使用最佳参数构建模型</span><br>best_rfc = RandomForestClassifier(**grid_search.best_params_, random_state=<span class="hljs-number">42</span>)<br>best_rfc.fit(X_train, y_train)<br><br><span class="hljs-comment"># 在测试集上预测</span><br>y_pred = best_rfc.predict(X_test)<br></code></pre></td></tr></table></figure>
+<h1 id="4-模型结果解读"><a href="#4-模型结果解读" class="headerlink" title="4. 模型结果解读"></a>4. 模型结果解读</h1><p>我们用最佳参数重新训练模型，并在测试集上评估。</p>
+<h2 id="4-1-训练最终模型"><a href="#4-1-训练最终模型" class="headerlink" title="4.1 训练最终模型"></a>4.1 训练最终模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 使用最佳参数构建模型</span><br>best_rfc = RandomForestClassifier(**grid_search.best_params_, random_state=<span class="hljs-number">42</span>)<br>best_rfc.fit(X_train, y_train)<br><br><span class="hljs-comment"># 在测试集上预测</span><br>y_pred = best_rfc.predict(X_test)<br></code></pre></td></tr></table></figure>
 
-<h3 id="4-2-分类评价指标"><a href="#4-2-分类评价指标" class="headerlink" title="4.2 分类评价指标"></a>4.2 分类评价指标</h3><p>对于分类问题，我们不能用回归的 <em>R²</em> 或相关系数，而需要使用分类专用指标。我们以<strong>多分类</strong>为例 (鸢尾花有 3 类) 。</p>
-<h4 id="4-2-1-混淆矩阵-Confusion-Matrix"><a href="#4-2-1-混淆矩阵-Confusion-Matrix" class="headerlink" title="4.2.1 混淆矩阵 (Confusion Matrix)"></a>4.2.1 混淆矩阵 (Confusion Matrix)</h4><p>一个表格，展示真实类别与预测类别的交叉计数。对角线是正确分类的样本，非对角线是错误分类。</p>
+<h2 id="4-2-分类评价指标"><a href="#4-2-分类评价指标" class="headerlink" title="4.2 分类评价指标"></a>4.2 分类评价指标</h2><p>对于分类问题，我们不能用回归的 <em>R²</em> 或相关系数，而需要使用分类专用指标。我们以<strong>多分类</strong>为例 (鸢尾花有 3 类) 。</p>
+<h2 id="4-2-1-混淆矩阵-Confusion-Matrix"><a href="#4-2-1-混淆矩阵-Confusion-Matrix" class="headerlink" title="4.2.1 混淆矩阵 (Confusion Matrix)"></a>4.2.1 混淆矩阵 (Confusion Matrix)</h2><p>一个表格，展示真实类别与预测类别的交叉计数。对角线是正确分类的样本，非对角线是错误分类。</p>
 <p><strong>混淆矩阵示意表 (以二分类为例)</strong>：</p>
 <table>
 <thead>
@@ -646,7 +646,7 @@
 - FP (假正例) ：实际负，预测正 (I 类错误) 
 - FN (假负例) ：实际正，预测负 (II 类错误) 
 </code></pre>
-<h4 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h4><ol>
+<h2 id="4-2-2-评价指标"><a href="#4-2-2-评价指标" class="headerlink" title="4.2.2 评价指标"></a>4.2.2 评价指标</h2><ol>
 <li><p>**准确率 (Accuracy) **</p>
 <ul>
 <li><strong>含义</strong>：预测正确的样本数占总样本数的比例。</li>
@@ -669,9 +669,9 @@
 </li>
 </ol>
 <p>精确率和召回率分别关注 FP 和 FN，F1 是两者的平衡。在多分类中，我们可以将每个类别视为“正”，其他为“负”，然后计算平均。</p>
-<h3 id="4-3-在鸢尾花数据集上计算这些指标"><a href="#4-3-在鸢尾花数据集上计算这些指标" class="headerlink" title="4.3 在鸢尾花数据集上计算这些指标"></a>4.3 在鸢尾花数据集上计算这些指标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report<br><br><span class="hljs-comment"># 计算准确率</span><br>acc = accuracy_score(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准确率 (Accuracy): <span class="hljs-subst">&#123;acc:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 计算宏平均精确率、召回率、F1</span><br>prec = precision_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br>rec = recall_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br>f1 = f1_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均精确率 (Macro Precision): <span class="hljs-subst">&#123;prec:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均召回率 (Macro Recall): <span class="hljs-subst">&#123;rec:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均 F1-score: <span class="hljs-subst">&#123;f1:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 打印更详细的分类报告</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n详细分类报告：&quot;</span>)<br><span class="hljs-built_in">print</span>(classification_report(y_test, y_pred, target_names=target_names))<br><br><span class="hljs-comment"># 混淆矩阵</span><br>cm = confusion_matrix(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n混淆矩阵：&quot;</span>)<br><span class="hljs-built_in">print</span>(cm)<br><br><span class="hljs-comment"># 可视化混淆矩阵</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns  <span class="hljs-comment"># 若没有安装，可先安装：!pip install seaborn</span><br>plt.figure(figsize=(<span class="hljs-number">6</span>, <span class="hljs-number">5</span>))<br>sns.heatmap(cm, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;d&#x27;</span>, cmap=<span class="hljs-string">&#x27;Blues&#x27;</span>, xticklabels=target_names, yticklabels=target_names)<br>plt.xlabel(<span class="hljs-string">&#x27;预测类别&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;真实类别&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;混淆矩阵&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+<h2 id="4-3-在鸢尾花数据集上计算这些指标"><a href="#4-3-在鸢尾花数据集上计算这些指标" class="headerlink" title="4.3 在鸢尾花数据集上计算这些指标"></a>4.3 在鸢尾花数据集上计算这些指标</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report<br><br><span class="hljs-comment"># 计算准确率</span><br>acc = accuracy_score(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准确率 (Accuracy): <span class="hljs-subst">&#123;acc:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 计算宏平均精确率、召回率、F1</span><br>prec = precision_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br>rec = recall_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br>f1 = f1_score(y_test, y_pred, average=<span class="hljs-string">&#x27;macro&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均精确率 (Macro Precision): <span class="hljs-subst">&#123;prec:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均召回率 (Macro Recall): <span class="hljs-subst">&#123;rec:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;宏平均 F1-score: <span class="hljs-subst">&#123;f1:<span class="hljs-number">.3</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 打印更详细的分类报告</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n详细分类报告：&quot;</span>)<br><span class="hljs-built_in">print</span>(classification_report(y_test, y_pred, target_names=target_names))<br><br><span class="hljs-comment"># 混淆矩阵</span><br>cm = confusion_matrix(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n混淆矩阵：&quot;</span>)<br><span class="hljs-built_in">print</span>(cm)<br><br><span class="hljs-comment"># 可视化混淆矩阵</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns  <span class="hljs-comment"># 若没有安装，可先安装：!pip install seaborn</span><br>plt.figure(figsize=(<span class="hljs-number">6</span>, <span class="hljs-number">5</span>))<br>sns.heatmap(cm, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;d&#x27;</span>, cmap=<span class="hljs-string">&#x27;Blues&#x27;</span>, xticklabels=target_names, yticklabels=target_names)<br>plt.xlabel(<span class="hljs-string">&#x27;预测类别&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;真实类别&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;混淆矩阵&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-<h3 id="4-4-结果解读"><a href="#4-4-结果解读" class="headerlink" title="4.4 结果解读"></a>4.4 结果解读</h3><ul>
+<h2 id="4-4-结果解读"><a href="#4-4-结果解读" class="headerlink" title="4.4 结果解读"></a>4.4 结果解读</h2><ul>
 <li><strong>准确率</strong>：假如我们得到 0.967，说明测试集上 96.7% 的样本被正确分类。</li>
 <li><strong>精确率&#x2F;召回率&#x2F;F1</strong>：对于每个类别，报告这些值。如果某个类别的 F1 较低，说明模型在该类别上表现不佳。</li>
 <li><strong>混淆矩阵</strong>：可以看到哪些类别容易被误分类。例如，如果 Virginica 被误判为 Versicolour 较多，说明这两个类别特征接近。</li>
@@ -685,7 +685,7 @@
 <li><strong>混淆矩阵</strong>提供最详细的错误分布，帮助我们诊断模型弱点。</li>
 </ul>
 </blockquote>
-<h3 id="4-5-特征重要性"><a href="#4-5-特征重要性" class="headerlink" title="4.5 特征重要性"></a>4.5 特征重要性</h3><p>随机森林可以输出每个特征的重要性分数，帮助我们理解哪些特征对分类贡献最大。</p>
+<h2 id="4-5-特征重要性"><a href="#4-5-特征重要性" class="headerlink" title="4.5 特征重要性"></a>4.5 特征重要性</h2><p>随机森林可以输出每个特征的重要性分数，帮助我们理解哪些特征对分类贡献最大。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># %%</span><br>importances = best_rfc.feature_importances_<br>indices = np.argsort(importances)[::-<span class="hljs-number">1</span>]<br><br>plt.figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">5</span>))<br>plt.barh(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(importances)), importances[indices], tick_label=np.array(feature_names)[indices])<br>plt.xlabel(<span class="hljs-string">&#x27;特征重要性&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;随机森林特征重要性&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
 <p>特征重要性越高，说明该特征在决策树分裂中越常被使用，对分类越关键。这对特征选择和数据理解很有帮助。</p>
@@ -699,7 +699,7 @@
 <li>可视化特征重要性。</li>
 </ol>
 <p>现在，你可以将这套流程应用到自己的分类任务中。<strong>数据划分 → 调参 → 训练 → 评估</strong> 是机器学习项目的经典流水线，多加练习，你会越来越熟练！</p>
-<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#x65;&#x72;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
+<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#97;&#x68;&#105;&#107;&#x65;&#114;&#64;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
 
                 
               </div>
