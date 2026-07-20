@@ -27,9 +27,9 @@
 <meta property="og:description" content="Pandas 简明教程Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，DataFrame (数据框) 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-15T23:31:59.961Z">
-<meta property="article:modified_time" content="2026-07-17T06:40:45.149Z">
+<meta property="article:modified_time" content="2026-07-20T01:49:50.544Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="技术,博客,编程,生信">
+<meta property="article:tag" content="Python 入门">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -342,7 +342,7 @@
         
         
         
-          114 分钟
+          115 分钟
         
       </span>
     
@@ -387,6 +387,7 @@
               <div class="markdown-body">
                 
                 <h1 id="Pandas-简明教程"><a href="#Pandas-简明教程" class="headerlink" title="Pandas 简明教程"></a>Pandas 简明教程</h1><p>Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，<strong>DataFrame (数据框)</strong> 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。</p>
+<p><strong>建议尚未接触过 Python 语法的读者先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 的学习，再回到这里。</strong></p>
 <hr>
 <h2 id="0-准备工作：数据导入与查看"><a href="#0-准备工作：数据导入与查看" class="headerlink" title="0. 准备工作：数据导入与查看"></a>0. 准备工作：数据导入与查看</h2><p>拿到数据的第一步，不是急着处理，而是先 “看一眼”。我们使用 Seaborn 库内置的 Iris 数据。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-comment"># 加载数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br><br><span class="hljs-comment"># ---- 查看数据概览 ----</span><br><span class="hljs-built_in">print</span>(iris.head(x))      <span class="hljs-comment"># 查看前 X 行，如括号内为空，则默认查看前五行，了解数据长什么样</span><br><span class="hljs-built_in">print</span>(iris.info())      <span class="hljs-comment"># 查看列名、非空数量及数据类型</span><br><span class="hljs-built_in">print</span>(iris.describe())  <span class="hljs-comment"># 查看数值列的统计摘要 (均值、标准差、分位数)</span><br><span class="hljs-built_in">print</span>(iris.shape)       <span class="hljs-comment"># 数据形状 (几行几列)</span><br><span class="hljs-built_in">print</span>(iris.columns)     <span class="hljs-comment"># 查看列名</span><br><span class="hljs-built_in">print</span>(iris.index)       <span class="hljs-comment"># 查看索引范围</span><br><span class="hljs-built_in">print</span>(iris.count())     <span class="hljs-comment"># 快速统计非空值个数 (与 info 互补)</span><br></code></pre></td></tr></table></figure>
@@ -410,7 +411,7 @@
 <ul>
 <li><strong><code>index_col</code> (指定行索引)</strong>：若文件中第 x 列可作为行的唯一标识 (如 <code>id</code> 列)，设置 <code>index_col=x-1</code> 即可将其设为行索引，后续按行取值会更方便。默认情况下，Pandas 会使用从 0 开始的数字序号作为行索引。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>, index_col=<span class="hljs-number">0</span>)  <span class="hljs-comment"># 将第一列 (id) 设为行索引，id 是唯一值，适合做索引</span><br></code></pre></td></tr></table></figure></li>
 <li><strong><code>usecols</code> (只读取部分列)</strong>：当文件有几十列而你只需要 3 列时，用该参数能大幅减少内存占用。比如 <code>usecols=[&#39;sepal_length&#39;,&#39;species&#39;]</code> (按列名) 或 <code>usecols=[0, 4]</code> (按位置)。  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只读取花萼长度和品种两列 (按列名)</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br><span class="hljs-comment"># 或按位置</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">4</span>])<br></code></pre></td></tr></table></figure></li>
-<li><strong><code>dtype</code> (预指定数据类型)</strong>：防止 Pandas 自作聪明地把 “001” 读成数值 1，或把身份证号读成浮点数。传入字典即可，如 <code>dtype={&#39;id&#39;: str, &#39;score&#39;: float}</code>。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, dtype=&#123;<span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;species&#x27;</span>: <span class="hljs-built_in">str</span>&#125;)<br></code></pre></td></tr></table></figure></li>
+<li><strong><code>dtype</code> (预指定数据类型)</strong>：防止 Pandas 自作聪明地把 “001” 读成数值 1，或把身份证号读成浮点数。传入字典即可，如 <code>dtype=&#123;&#39;id&#39;: str, &#39;score&#39;: float&#125;</code>。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, dtype=&#123;<span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;species&#x27;</span>: <span class="hljs-built_in">str</span>&#125;)<br></code></pre></td></tr></table></figure></li>
 <li><strong><code>encoding</code> (编码格式)</strong>：读取中文文件时容易遇到乱码，优先试 <code>encoding=&#39;utf-8&#39;</code>，若报错或乱码依旧，换 <code>encoding=&#39;gbk&#39;</code> 或 <code>encoding=&#39;utf-8-sig&#39;</code> (后者对 Excel 导出的 CSV 更友好)。</li>
 <li><strong><code>skiprows</code> (跳过开头若干行)</strong>：如果文件前N行是注释或说明，用 <code>skiprows=N</code> 直接跳过。</li>
 </ul>
@@ -542,7 +543,7 @@
 <p>调用模式为:<code>df.groupby(&#39;分组列&#39;)[&#39;待计算列&#39;].聚合方法()</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按 species 分组，计算各数值列的均值 (默认)</span><br>grouped_mean = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>]].mean()<br><span class="hljs-built_in">print</span>(grouped_mean)<br></code></pre></td></tr></table></figure>
 
-<p>当需要<strong>对不同列执行不同的聚合运算</strong>时，agg() 方法提供了更大的灵活性。调用模式为：<br><code>df.groupby(&#39;分组列&#39;).agg({&#39;列名1&#39;: [&#39;统计量1&#39;, &#39;统计量2&#39;], &#39;列名2&#39;: &#39;统计量3&#39;})</code></p>
+<p>当需要<strong>对不同列执行不同的聚合运算</strong>时，agg() 方法提供了更大的灵活性。调用模式为：<br><code>df.groupby(&#39;分组列&#39;).agg(&#123;&#39;列名1&#39;: [&#39;统计量1&#39;, &#39;统计量2&#39;], &#39;列名2&#39;: &#39;统计量3&#39;&#125;)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">grouped_agg = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>).agg(&#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: [<span class="hljs-string">&#x27;mean&#x27;</span>, <span class="hljs-string">&#x27;std&#x27;</span>, <span class="hljs-string">&#x27;min&#x27;</span>],<br>    <span class="hljs-string">&#x27;petal_length&#x27;</span>: [<span class="hljs-string">&#x27;max&#x27;</span>, <span class="hljs-string">&#x27;count&#x27;</span>]<br>&#125;)<br><span class="hljs-built_in">print</span>(grouped_agg)<br><br></code></pre></td></tr></table></figure>
 
 <p>如果需要计算每个品种内部的花萼长度标准化值 (z-score),即：(每个值 - 该品种均值) &#x2F; 该品种标准差,则需要 <code>.transform()</code>。这种方法会将计算结果广播回原始数据的每一行，保持行数不变。这在需要为每一行添加分组统计特征时非常有用。</p>
@@ -628,7 +629,7 @@
 
 <hr>
 <p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
-<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#104;&#105;&#107;&#101;&#114;&#64;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
 
                 
               </div>
@@ -637,6 +638,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python-%E5%85%A5%E9%97%A8/" class="category-chain-item">Python 入门</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python-%E5%85%A5%E9%97%A8/" class="print-no-link">#Python 入门</a>
+      
+    </div>
   
 </div>
 
@@ -690,6 +719,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/" title="Pandas 思考题：从 API 使用者到开发者">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandas 思考题：从 API 使用者到开发者</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
