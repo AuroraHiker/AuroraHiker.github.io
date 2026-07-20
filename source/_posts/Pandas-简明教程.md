@@ -9,15 +9,13 @@ categories:
 author: AuroraHiker
 ---
 
-# Pandas 简明教程
-
 Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，**DataFrame (数据框)** 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。
 
 **建议尚未接触过 Python 语法的读者先完成 {% post_link Python-入门：写给完全没学过编程的你 %} 的学习，再回到这里。**
 
 ---
 
-## 0. 准备工作：数据导入与查看
+# 0. 准备工作：数据导入与查看
 
 拿到数据的第一步，不是急着处理，而是先 "看一眼"。我们使用 Seaborn 库内置的 Iris 数据。
 
@@ -50,9 +48,9 @@ iris.to_csv('iris_index.csv')  # 有行索引的版本 (用于演示 指定行�
 
 ---
 
-## 1. 读取 / 创建 DataFrame
+# 1. 读取 / 创建 DataFrame
 
-### 1.1 读取文件
+## 1.1 读取文件
 
 Pandas 对常见表格格式的支持非常友好，只需一行代码就能导入。但现实中拿到的文件往往不规整，学会灵活配置参数，才是真正“会用”的开始。
 
@@ -125,7 +123,7 @@ print(df_custom.head())
 
 学会这些参数，无论面对的是干净的标准数据集，还是从各处收集来的格式未统一的文件，你都能顺利导入 Pandas 中，为后续分析铺平道路。
 
-### 1.2 从头构建
+## 1.2 从头构建
 
 当手头有少量测试数据时，可以直接在代码里创建：
 
@@ -145,11 +143,11 @@ df2 = pd.DataFrame(data_list, columns=['sepal_length', 'sepal_width', 'species']
 ```
 ---
 
-## 2. 选择与筛选数据
+# 2. 选择与筛选数据
 
 这是数据分析中最频繁的动作，请务必熟练掌握。
 
-### 2.1 选择列
+## 2.1 选择列
 
 - 按列索引调用
     ```python
@@ -177,7 +175,7 @@ df2 = pd.DataFrame(data_list, columns=['sepal_length', 'sepal_width', 'species']
 - **如果少写一层会怎样？**
   如果你写成 `df['列1', '列2']`，Python 解释器会把 `'列1', '列2'` 解释为一个**元组（Tuple）**。此时 Pandas 会去 DataFrame 中查找名为 `('列1', '列2')` 的**单一列名**（这在多层索引 MultiIndex 中才用得到），绝大多数情况下会直接报错 `KeyError`。
 
-### 代码验证（你可以在 Jupyter 中试一下）
+## 代码验证（你可以在 Jupyter 中试一下）
 ```python
 import pandas as pd
 df = pd.DataFrame({'A': [1,2], 'B': [3,4], 'C': [5,6]})
@@ -198,7 +196,7 @@ print(df[['A', 'B']])
     first_3_cols = iris.iloc[:, 0:3]
     ```
 
-### 2.2 选择行 (loc 按标签 / iloc 按位置)
+## 2.2 选择行 (loc 按标签 / iloc 按位置)
 
 ```python
 # 按位置 (前 3 行)
@@ -208,7 +206,7 @@ row_first3 = iris.iloc[0:3]
 row_5 = iris.loc[4]  
 ```
 
-### 2.3 条件筛选 (布尔索引)
+## 2.3 条件筛选 (布尔索引)
 
 通过逻辑判断快速过滤出符合条件的子集：
 
@@ -224,7 +222,7 @@ virginica_large = iris[(iris['sepal_length'] > 6.0) & (iris['species'] == 'virgi
 between_df = iris[iris['petal_length'].between(3.0, 5.0)]
 ```
 
-### 2.4 排序 (sort_values)
+## 2.4 排序 (sort_values)
 
 查看最大值、最小值或排名时，排序是极为常用的操作。
 
@@ -240,11 +238,11 @@ sorted_mix = iris.sort_values(['sepal_length', 'petal_width'], ascending=[False,
 
 ---
 
-## 3. 数据清洗
+# 3. 数据清洗
 
 现实数据往往有异常值，或数据本身缺失、类型错误，清洗是绕不开的步骤。
 
-### 3.1 缺失值检测与处理
+## 3.1 缺失值检测与处理
 
 ```python
 # 检测缺失值 (Iris 数据很干净，此处仅为演示方法)
@@ -260,7 +258,7 @@ df_dropped = iris.dropna()
 # iris['species'].fillna('unknown', inplace=True)
 ```
 
-### 3.2 类型转换 (astype)
+## 3.2 类型转换 (astype)
 
 确保数据类型符合预期，避免计算时报错：
 
@@ -274,7 +272,7 @@ df_dropped = iris.dropna()
     iris['sepal_length'] = iris['sepal_length'].astype('int')
     ```
 
-### 3.3 列名重命名 (rename)
+## 3.3 列名重命名 (rename)
 
 列名过长、含空格或大小写不规范时，需要修改：
 
@@ -291,9 +289,9 @@ iris.rename(columns={
 
 ---
 
-## 4. 常用计算与变换
+# 4. 常用计算与变换
 
-### 4.1 行列求和、均值、计数
+## 4.1 行列求和、均值、计数
 
 ```python
 # 对列求均值 (axis=0，默认)
@@ -306,7 +304,7 @@ iris['avg_feature'] = iris.iloc[:, :4].mean(axis=1)
 print(iris.count())
 ```
 
-### 4.2 对列进行算术运算
+## 4.2 对列进行算术运算
 
 Pandas 支持将列视为变量进行直接的算术运算，包括列与列之间的运算，以及列与常数之间的运算。
 
@@ -318,7 +316,7 @@ iris['sepal_ratio'] = iris['Sepal_length'] / iris['sepal_width']
 iris['petal_length_plus'] = iris['petal_length'] + 2
 ```
 
-### 4.3 应用函数 (apply) 与字符串处理
+## 4.3 应用函数 (apply) 与字符串处理
 
 Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际分析中总会遇到一些个性化需求——比如按某个条件给数据打标签、把两列数据按某种规则组合成一个新值，或者对字符串做拆分提取。这时候 `apply` 函数就派上了用场。
 
@@ -399,7 +397,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
         )
         ```
 
-### 4.4 字符串处理
+## 4.4 字符串处理
 
 Pandas 为字符串类型的列提供了专门的 `.str` 接口，方便进行拆分、提取、替换等操作，无需手动写循环。
 
@@ -422,7 +420,7 @@ iris['species_len'] = iris['species'].str.len()              # 计算字符串�
 
 ---
 
-## 5. 分组聚合
+# 5. 分组聚合
 
 功能与 Excel 数据透视表相似，其基本逻辑如下。
 1. 按照某一列 (或多列) 将数据划分为若干组。
@@ -460,9 +458,9 @@ print(iris[['species', 'sepal_length', 'sepal_length_z']].head())
 
 ---
 
-## 6. 合并与拼接 (DataFrame 间的运算)
+# 6. 合并与拼接 (DataFrame 间的运算)
 
-### 6.1 左右合并
+## 6.1 左右合并
 
 `merge` 是 Pandas 中最常用的表连接方法，其核心逻辑为: **根据一个或多个共同的列，将两张表横向拼接到一起**。
 
@@ -496,7 +494,7 @@ iris_merged = iris.merge(avg_by_species, on='species', how='left')
 print(iris_merged[['species', 'sepal_length', 'avg_sepal_len']].head())
 ```
 
-### 6.2 上下拼接 
+## 6.2 上下拼接 
 
 ```python
 # 拆分两个子集再拼回去 (模拟追加数据)
@@ -505,7 +503,7 @@ part2 = iris.iloc[50:100]
 concat_df = pd.concat([part1, part2], axis=0)  # axis=0 纵向堆叠
 ```
 
-### 6.3 逐行读取 (for 循环与 iterrows)
+## 6.3 逐行读取 (for 循环与 iterrows)
 
 虽然强烈建议优先使用向量化操作，但某些特殊逻辑下循环仍有价值：
 
@@ -520,9 +518,9 @@ for idx, row in iris.iterrows():
 
 ---
 
-## 7. 数据导出
+# 7. 数据导出
 
-### 7.1 导出为列表格式
+## 7.1 导出为列表格式
 
 ```python
 # 将某列转为 Python 列表 (便于与其他库交互)
@@ -530,7 +528,7 @@ sepal_list = iris['sepal_length'].tolist()
 print(sepal_list[:5])  # 输出前 5 个
 ```
 
-### 7.2 导出到文件
+## 7.2 导出到文件
 
 ```python
 # 导出为 CSV (最通用，index=False 避免多出索引列)
