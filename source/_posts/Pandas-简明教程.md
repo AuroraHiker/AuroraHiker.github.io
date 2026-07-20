@@ -1,11 +1,19 @@
 ---
 title: Pandas 简明教程
 tags:
+  - Python 入门
+series:
+  - Python 入门
+categories:
+  - Python 入门
+author: AuroraHiker
 ---
 
 # Pandas 简明教程
 
 Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，**DataFrame (数据框)** 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。
+
+**建议尚未接触过 Python 语法的读者先完成 {% post_link Python-入门：写给完全没学过编程的你 %} 的学习，再回到这里。**
 
 ---
 
