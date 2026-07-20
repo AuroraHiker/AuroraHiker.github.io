@@ -33,7 +33,7 @@ date: 2026-07-20 01:00:00
 > **要求**：请找出下列代码中的错误代码，并指明报错的具体原因。
 
 ```python
-# 数据来源与保存 (学生无需修改此段)
+# 数据来源与保存 (读者无需修改此段)
 import pandas as pd
 import seaborn as sns
 iris = sns.load_dataset('iris')
