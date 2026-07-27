@@ -19,23 +19,22 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="欢迎来到 AuroraHiker’s Code Trail！ 这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。 博客地址：AuroraHiker.github.io 希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱aurorahiker@163.com发送留言讨论！">
+    <meta name="description" content="以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。 然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相">
 <meta property="og:type" content="article">
-<meta property="og:title" content="欢迎来到 AuroraHiker’s Code Trail">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/index.html">
+<meta property="og:title" content="Python 入门：变量类型专题">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="欢迎来到 AuroraHiker’s Code Trail！ 这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。 博客地址：AuroraHiker.github.io 希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱aurorahiker@163.com发送留言讨论！">
+<meta property="og:description" content="以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。 然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-01-26T11:18:54.255Z">
-<meta property="article:modified_time" content="2026-06-23T11:21:29.836Z">
+<meta property="article:published_time" content="2026-07-27T03:37:16.249Z">
+<meta property="article:modified_time" content="2026-07-27T04:00:24.215Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="介绍">
-<meta property="article:tag" content="欢迎">
+<meta property="article:tag" content="Python 入门">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>欢迎来到 AuroraHiker’s Code Trail - AuroraHiker’s Code Trail</title>
+  <title>Python 入门：变量类型专题 - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -304,7 +303,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="欢迎来到 AuroraHiker’s Code Trail"></span>
+            <span id="subtitle" data-typed-text="Python 入门：变量类型专题"></span>
           
         </div>
 
@@ -320,8 +319,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-26 19:18" pubdate>
-          2026年1月26日 晚上
+        <time datetime="2026-07-27 11:37" pubdate>
+          2026年7月27日 中午
         </time>
       </span>
     
@@ -332,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          160 字
+          4.8k 字
         
       </span>
     
@@ -343,7 +342,7 @@
         
         
         
-          2 分钟
+          40 分钟
         
       </span>
     
@@ -382,15 +381,108 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">欢迎来到 AuroraHiker’s Code Trail</h1>
+            <h1 id="seo-header">Python 入门：变量类型专题</h1>
             
             
               <div class="markdown-body">
                 
-                <p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
-<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
-<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
+                <p>以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。</p>
+<p>然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相加、列表与字符串方法张冠李戴、字典键值类型不符……几乎每个新手都在这些坑里摔过跤。本文将以实战视角，从Python内置类型出发，逐步深入到数据分析必备的Pandas库，帮你理清类型转换的逻辑，并总结一套可复用的Debug套路，让类型错误不再是拦路虎。</p>
+<hr>
+<h2 id="1-Python-自带的变量类型"><a href="#1-Python-自带的变量类型" class="headerlink" title="1. Python 自带的变量类型"></a>1. Python 自带的变量类型</h2><h3 id="1-1-给变量赋值时自动设定的变量类型"><a href="#1-1-给变量赋值时自动设定的变量类型" class="headerlink" title="1.1 给变量赋值时自动设定的变量类型"></a>1.1 给变量赋值时自动设定的变量类型</h3><p>Python 是动态强类型语言，变量的类型在赋值的那一刻由解释器自动推断并固定下来。为了让你直观感受到不同字面量写法的差异，我们统一用数字 <code>1</code> 来举例，观察其细微却关键的区别：</p>
+<ul>
+<li><strong>整型 (int)</strong>：<code>a = 1</code>。不带小数点的整数。</li>
+<li><strong>浮点数 (float)</strong>：<code>a = 1.0</code>。带小数点的数值。</li>
+<li><strong>字符串 (str)</strong>：<code>a = &#39;1&#39;</code> 或 <code>a = &quot;1&quot;</code>。被引号包裹的内容，此时 <code>1</code> 仅仅是文本字符。</li>
+<li><strong>列表 (list)</strong>：<code>a = [1]</code>。用方括号包裹，有序且可变。</li>
+<li><strong>字典 (dict)</strong>：<code>a = {&#39;key&#39;: 1}</code>。用花括号包裹的键值对。</li>
+</ul>
+<details>
+<summary><b>思考题：设置单引号和双引号等价的意义是什么？</b> (点击展开)</summary>
+<p>主要是为了方便在字符串内容中直接包含另一种引号，从而减少使用繁琐的转义符 <code>\</code>。例如，表示 <code>It's OK</code> 时可以直接用双引号包裹 <code>"It's OK"</code>；表示 <code>He said "Hi"</code> 时可以直接用单引号包裹 <code>'He said "Hi"'</code>，代码更干净、可读性更强。</p>
+</details>
+
+<details>
+<summary><b>思考题：字典的键 (key) 和值 (value) 各自可以是什么变量类型？</b> (点击展开)</summary>
+<p><b>键 (Key)</b>：必须是 <b>不可变 (immutable)</b> 类型，如字符串、整数、浮点数、布尔值或元组。因为字典底层依赖哈希表存储，键必须可哈希。<br>
+<b>值 (Value)</b>：可以是 <b>任意</b> 类型，包括列表、字典等可变对象，甚至可以嵌套另一个字典。<br>
+<em>常见新手错误</em>：尝试用列表 <code>['a']</code> 作为键，会直接报错 <code>TypeError: unhashable type: 'list'</code>。</p>
+</details>
+
+<h3 id="1-2-隐式转换"><a href="#1-2-隐式转换" class="headerlink" title="1.2 隐式转换"></a>1.2 隐式转换</h3><p>Python 在运算中会进行隐式类型转换 (Implicit Type Conversion)，但并非万能。理解以下规则，能让你避免大多数低级错误：</p>
+<ul>
+<li><strong>整型 → 浮点型</strong>：<code>1 / 2</code> 的结果是 <code>0.5</code> (浮点数) 。即使 <code>2 / 1</code>，结果也是 <code>2.0</code> (浮点数) 。在 Python 3 中，<code>/</code> 永远返回浮点数；<code>7 // 2</code> 结果是 <code>3</code> (整数向下取整) ；<code>7.0 // 2</code> 或 <code>7 // 2.0</code> 结果是 <code>3.0</code> (浮点数向下取整) 。<code>% + - *</code> 等基础运算同理，当算式中有浮点数时，结果为浮点数，否则结果为整型。</li>
+<li><strong>字符串 → 列表 (Split)</strong>：<code>&quot;1,2&quot;.split(&quot;,&quot;)</code> 结果是 <code>[&#39;1&#39;, &#39;2&#39;]</code>。</li>
+<li><strong>列表 → 字符串 (Join)</strong>：<code>&quot;,&quot;.join([&#39;1&#39;, &#39;2&#39;])</code> 结果是 <code>&quot;1,2&quot;</code>。<strong>注意</strong>：<code>join</code> 是字符串的方法，写法是 <code>分隔符.join(可迭代对象)</code>，新手极容易写成 <code>列表.join(&#39;,&#39;)</code> 导致报错。</li>
+<li><strong>判断产生布尔值 (Boolean)</strong>：比较运算 <code>1 == 1.0</code> 结果为 <code>True</code> (数值相等) ；<code>1 == &#39;1&#39;</code> 结果为 <code>False</code> (类型不同，直接不相等) 。</li>
+</ul>
+<h3 id="1-3-显式转换"><a href="#1-3-显式转换" class="headerlink" title="1.3 显式转换"></a>1.3 显式转换</h3><p>既然隐式转换存在局限 (例如无法自动将 ‘1’ 转为 1) ，我们就必须借助内置函数进行显式转换。同样以数字 1 为例：</p>
+<ul>
+<li><p>int(“1”)：将字符串 ‘1’ 转为整数 1，之后即可进行数学运算 (如 int(“1”) + 2 得到 3) ，需要注意的是，这个运算会向零的方向截断取整。</p>
+</li>
+<li><p>float(“1”) 或 float(1)：得到浮点数 1.0，统一精度。</p>
+</li>
+<li><p>str(1)：将整数 1 转为字符串 ‘1’，之后即可进行拼接操作 (如 str(1) + “ is a number” 得到 “1 is a number”) 。</p>
+</li>
+<li><p>list(“123”)：将字符串拆解为单字符列表 [‘1’, ‘2’, ‘3’]。</p>
+</li>
+</ul>
+<p>提高代码容错率的方法：从外部 (如 input()、文件读取、API 响应) 获得数据后，第一时间根据需要进行显式转换。不要等到运算报错时才回头补救。</p>
+<h3 id="1-4-最常见的变量类型错误成因"><a href="#1-4-最常见的变量类型错误成因" class="headerlink" title="1.4 最常见的变量类型错误成因"></a>1.4 最常见的变量类型错误成因</h3><p>结合 <code>1</code> 的不同写法，我们来看三个最容易踩中的雷区：</p>
+<ol>
+<li><strong>数字被引号包裹变成了字符串</strong>：<code>a = &#39;1&#39;</code>，然后执行 <code>a + 2</code>。报错 <code>TypeError: can only concatenate str (not &quot;int&quot;) to str</code>。因为此时 <code>+</code> 被解释为字符串拼接，而非数学加法。<strong>解决方案</strong>：显式转换 <code>int(a) + 2</code>。</li>
+<li><strong>字符串方法与列表方法张冠李戴</strong>：对字符串 <code>&#39;1,2&#39;</code> 调用 <code>.append(&#39;3&#39;)</code>，或对列表 <code>[1]</code> 调用 <code>.split()</code>。记住：<strong>方法随类型走</strong>，可变序列 (列表) 和不可变序列 (字符串) 的 API 交集很少。</li>
+<li><strong>字符串与列表强行相加</strong>：<code>&#39;1&#39; + [2]</code> 报错，因为 <code>+</code> 号两侧类型必须一致才能进行序列拼接。若想合并，需先 <code>list(&#39;1&#39;)</code> 转为 <code>[&#39;1&#39;]</code>，再与 <code>[2]</code> 相加得到 <code>[&#39;1&#39;, 2]</code>。</li>
+</ol>
+<hr>
+<h2 id="2-Pandas-的变量类型-dtype"><a href="#2-Pandas-的变量类型-dtype" class="headerlink" title="2. Pandas 的变量类型 (dtype)"></a>2. Pandas 的变量类型 (dtype)</h2><p>进入数据分析领域，Pandas 基于 NumPy 构建了更为丰富且严格的数据类型体系。DataFrame 中的每一列 (Series) 都有其特定的 <code>dtype</code>，理解它是进行高效数据清洗的前提。</p>
+<h3 id="2-1-Pandas-中的常用-dtype"><a href="#2-1-Pandas-中的常用-dtype" class="headerlink" title="2.1 Pandas 中的常用 dtype"></a>2.1 Pandas 中的常用 dtype</h3><p>延续上面的数字 <code>1</code>，在 Pandas 中它会以不同的变量类型出现：</p>
+<ul>
+<li><strong>int64 &#x2F; float64</strong>：最常用的数值类型。例如 <code>pd.Series([1, 2])</code> 是 <code>int64</code>；<code>pd.Series([1.0, 2])</code> 因输入的列表中含有小数，全部自动转为 <code>float64</code>。</li>
+<li><strong>object</strong>：Pandas 中的“万金油”类型，通常用于存储字符串或混合类型。<code>pd.Series([&#39;1&#39;, &#39;2&#39;])</code> 的 dtype 是 <code>object</code> (即 Python 原生的 str 对象) 。<strong>性能较低</strong>，应尽量避免在大型数据中大量使用。</li>
+<li><strong>category</strong>：类别型，适用于取值有限的分类变量 (如性别、等级)。<code>pd.Series([1, 1, 2])</code> 转为 category 后，会将 <code>1</code> 和 <code>2</code> 视为两个类别，极大节省内存。</li>
+<li><strong>datetime64[ns]</strong>：时间日期类型，支持向量化日期运算。<code>pd.to_datetime(pd.Series([&#39;2026-01-01&#39;]))</code> 得到该类型。</li>
+<li><strong>bool</strong>：布尔型，<code>pd.Series([True, False])</code>。</li>
+</ul>
+<p><strong>注意</strong>：当整数列中出现缺失值时，Pandas 会为了容纳 <code>NaN</code> (浮点型空值) 而<strong>自动将整型 <code>int64</code> 提升为浮点型 <code>float64</code></strong>。若必须为整数，请使用 Pandas 的 <code>Int64</code> (大写 I，可空整型)。</p>
+<h3 id="2-2-类型转换方法"><a href="#2-2-类型转换方法" class="headerlink" title="2.2 类型转换方法"></a>2.2 类型转换方法</h3><ul>
+<li><strong><code>astype(new_dtype)</code></strong>：最通用的显式转换。例如 <code>df[&#39;col&#39;].astype(&#39;float64&#39;)</code>。但若列中存在无法转换的值 (如字母 <code>&#39;a&#39;</code>)，会直接报错。</li>
+<li><strong><code>pd.to_numeric()</code></strong>：转为数值类型的“安全利器”。参数 <code>errors=&#39;coerce&#39;</code> 可将非法值强制转为 <code>NaN</code>，避免程序崩溃。例如 <code>pd.to_numeric(pd.Series([&#39;1&#39;, &#39;a&#39;, &#39;2&#39;]), errors=&#39;coerce&#39;)</code> 得到 <code>[1.0, NaN, 2.0]</code>。</li>
+<li><strong><code>pd.to_datetime()</code></strong>：专门转为日期类型，同样支持 <code>errors=&#39;coerce&#39;</code> 优雅处理异常格式。</li>
+<li><strong><code>astype(&#39;category&#39;)</code></strong> 或 <code>pd.Categorical()</code>：将离散列转为类别类型。</li>
+</ul>
+<h3 id="2-3-常见的-Pandas-类型错误"><a href="#2-3-常见的-Pandas-类型错误" class="headerlink" title="2.3 常见的 Pandas 类型错误"></a>2.3 常见的 Pandas 类型错误</h3><ul>
+<li><strong>数值列被识别为 object 无法计算</strong>：读取 CSV 时，由于混入了空格、千位分隔符 (如 <code>1,000</code>) 或特殊符号，数字列被读成字符串。直接调用 <code>.mean()</code> 会报错。解决：先用 <code>pd.to_numeric(df[&#39;col&#39;], errors=&#39;coerce&#39;)</code> 清洗。</li>
+</ul>
+<hr>
+<h2 id="3-与数据类型相关的-Debug-常用套路"><a href="#3-与数据类型相关的-Debug-常用套路" class="headerlink" title="3. 与数据类型相关的 Debug 常用套路"></a>3. 与数据类型相关的 Debug 常用套路</h2><p>遇到 <code>TypeError</code> 或 <code>ValueError</code> 时不要慌，按以下流程顺藤摸瓜，90% 的问题都能在 5 分钟内解决：</p>
+<ol>
+<li><p><strong>打印类型</strong><br>在报错行之前插入 <code>print(type(变量名))</code>。如果是 DataFrame，直接 <code>print(df.dtypes)</code> 查看所有列类型。眼见为实，胜过脑中推演。</p>
+</li>
+<li><p><strong>细读报错信息</strong><br>Python 的报错信息非常精准。重点看最后几行的 <code>unsupported operand type(s) for ...</code>，它会直接告诉你参与运算的两种类型分别是什么 (例如 <code>int</code> 和 <code>str</code>)。</p>
+</li>
+<li><p><strong>显式转换</strong><br>永远不要依赖隐式转换。从外部 (文件、数据库、input) 读入数据后，立即用 <code>int()</code>、<code>float()</code>、<code>pd.to_numeric()</code> 等进行强制类型转换。既掌控类型安全，也让自己理清每一步的数据形态。</p>
+</li>
+<li><p><strong>合理利用 <code>errors=&#39;coerce&#39;</code></strong><br>当你无法保证数据 100% 干净时，在 <code>pd.to_numeric</code> 或 <code>pd.to_datetime</code> 中开启 <code>errors=&#39;coerce&#39;</code>。这样程序不会直接崩溃，而是将脏数据标记为 <code>NaN</code>，后续再用 <code>dropna()</code> 或 <code>fillna()</code> 集中处理。</p>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>卡bug说明有错，但不卡bug不代表没错。报错和程序中断本质上是一种提醒，当处于数据探索阶段和代码尝试阶段时，建议不要使用这个方法，尝试普通显式转换并输出结果手动检查。</p>
+<p>具体操作上，可以先用 df.head(20) 截取数据样本，在样本上执行严格的显式转换 (如不加 errors 参数) 。一旦报错，报错会精准地说明：是哪一行、哪一个值引发了冲突。这种“主动触雷”能让你最快摸清手中数据的“脏乱程度”，这是数据清洗中最宝贵的第一手信息。</p>
+<p>如果强行忽略错误，一旦出现行或列错位的情况，会将错就错地继续运算，以至于拿到结果时根本发现不了中间算错了。</p>
+</blockquote>
+</li>
+<li><p><strong>拆解复杂表达式</strong>  </p>
+<p>先不写冗长的链式操作，如 <code>df[&#39;a&#39;] + df[&#39;b&#39;].apply(func) * 2</code>。拆成中间变量：<code>temp = df[&#39;b&#39;].apply(func)</code>，再检查 <code>temp</code> 的类型，最后执行加法。分步执行能快速锁定出错的环节。等熟练后再写精简的代码。</p>
+</li>
+<li><p><strong>小规模数据测试</strong><br>对全量数据操作前，先用 <code>df.head(10)</code> 截取一小部分，运行你的转换逻辑。验证通过后再应用到全表，极大节省试错时间。</p>
+</li>
+<li><p><strong>善用 Jupyter 的 <code>?</code> 或 <code>help()</code></strong><br>不确定某个函数参数的含义？在 Jupyter 中执行 <code>pd.to_numeric?</code>，直接查看官方文档签名，明确该函数期望什么输入，返回什么输出，避免“盲猜”。</p>
+</li>
+</ol>
+<hr>
+<p><strong>润色后：</strong></p>
+<p>数据类型是编程世界的底层基石，贯穿于每一行代码之中。动态类型赋予的“灵活”从来不是“随意”的代名词——唯有养成清晰的类型意识与良好的调试习惯，才能将入门阶段常见的报错消弭于无形。希望这份指南能帮助你吃透变量类型的底层逻辑，从而写出既健壮又优雅的代码。</p>
+<p>感谢你的阅读！若有任何疑问或建议，欢迎发送邮件至 <strong><a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a></strong>。每一条反馈我都会认真阅读、尽力回复，你的参与会让这份指南走得更远、变得更好。</p>
 
                 
               </div>
@@ -409,7 +501,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%85%B3%E4%BA%8E/" class="category-chain-item">关于</a>
+  <a href="/categories/Python-%E5%85%A5%E9%97%A8/" class="category-chain-item">Python 入门</a>
   
   
 
@@ -424,9 +516,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%AC%A2%E8%BF%8E/" class="print-no-link">#欢迎</a>
-      
-        <a href="/tags/%E4%BB%8B%E7%BB%8D/" class="print-no-link">#介绍</a>
+        <a href="/tags/Python-%E5%85%A5%E9%97%A8/" class="print-no-link">#Python 入门</a>
       
     </div>
   
@@ -438,8 +528,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>欢迎来到 AuroraHiker’s Code Trail</div>
-      <div>https://aurorahiker.github.io/2026/01/26/欢迎来到 AuroraHiker’s Code Trail/</div>
+      <div>Python 入门：变量类型专题</div>
+      <div>https://aurorahiker.github.io/2026/07/27/Python-入门：变量类型专题/</div>
     </div>
     <div class="license-meta">
       
@@ -451,7 +541,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026-01-26</div>
+          <div>2026-07-27</div>
         </div>
       
       
@@ -483,15 +573,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">计算机基础：从零认识计算机硬件</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2026/07/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/" title="机器学习入门：随机森林分类任务">
+                        <span class="hidden-mobile">机器学习入门：随机森林分类任务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

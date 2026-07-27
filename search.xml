@@ -1,6 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Windows系统的安装</title>
+    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+<hr>
+<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
+<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
+</li>
+<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
+</li>
+</ol>
+<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
+<p><strong>磁盘数据丢失的补救：</strong></p>
+<ul>
+<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
+<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
+<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+</ul>
+<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
+<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<ol>
+<li><p>准备材料：</p>
+<ul>
+<li>一个 8GB 或以上容量的U盘。</li>
+<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
+</ul>
+</li>
+<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
+</li>
+<li><p>操作步骤：</p>
+<ul>
+<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
+</li>
+<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
+</li>
+<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
+</li>
+<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
+</li>
+<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
+</li>
+<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<hr>
+<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
+<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<ul>
+<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
+</li>
+<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
+</li>
+<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
+</li>
+<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
+</li>
+<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
+</li>
+</ul>
+</li>
+<li><p>开始安装：</p>
+<ul>
+<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall1.png"></p>
+<ul>
+<li>点击【现在安装】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall2.png"></p>
+<ul>
+<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall3.png"></p>
+<ul>
+<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall4.png"></p>
+<ul>
+<li>勾选接受许可条款，点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall5.png"></p>
+<ul>
+<li>选择【自定义：仅安装Windows(高级)】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall6.png"></p>
+<ul>
+<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
+</li>
+<li><ul>
+<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
+</ul>
+</li>
+<li><ul>
+<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
+</ul>
+</li>
+<li><ul>
+<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
+</ul>
+</li>
+</ul>
+<p> <img src="/Windows_install/wininstall7.png"></p>
+<ul>
+<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
+</ul>
+</li>
+</ol>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#x6f;&#114;&#x61;&#104;&#x69;&#x6b;&#x65;&#x72;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>计算机基础</tag>
+        <tag>实验平台搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GROMACS分子动力学模拟的实验平台搭建</title>
+    <url>/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
+<p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
+<p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
+<p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
+<p>本文参考GROMACS的官方说明文档(版本2026.0)：<a href="https://manual.gromacs.org/documentation/current/index.html">https://manual.gromacs.org/documentation/current/index.html</a></p>
+<hr>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>笔者参照GROMACS官方对运行环境的要求，整理了一份硬件配置速查表，并附上了自己的配置，供大家参考。需要说明的是，这份配置目前仅为理论推测，欢迎各位读者结合实际使用情况提供反馈。</p>
+<p><strong>GROMACS的硬件配置速查表:</strong></p>
+<table>
+<thead>
+<tr>
+<th>部件</th>
+<th>最低要求</th>
+<th>推荐配置(入门)</th>
+<th>推荐配置(进阶)</th>
+<th>笔者的配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU</td>
+<td>Intel Core i5-3330, AMD Ryzen 3 1200</td>
+<td>Intel Core i5-8400, AMD Ryzen 5 2600</td>
+<td>Intel Core i7-13700K, AMD Ryzen 7</td>
+<td>AMD Ryzen 7 9700X</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>8 GB RAM</td>
+<td>16 GB RAM</td>
+<td>32 GB RAM</td>
+<td>64 GB RAM</td>
+</tr>
+<tr>
+<td>硬盘(可用空间，推荐固态硬盘)</td>
+<td>20 GB</td>
+<td>100 GB</td>
+<td>100 GB以上</td>
+<td>固态 &gt; 100 GB、机械 &gt; 1 TB</td>
+</tr>
+<tr>
+<td>GPU(可选，需更新CUDA)</td>
+<td>无(纯CPU运行)</td>
+<td>NVIDIA GTX 1050以上</td>
+<td>NVIDIA RTX 3060以上或专业卡</td>
+<td>NVIDIA RTX 5060Ti 16 GB</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>Linux、Windows、macOS</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Windows 10 WSL Ubuntu 20.04</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
+</blockquote>
+<p>GROMACS 在编译时会自动检测 CPU 支持哪些指令集(如 SSE4.1、AVX2 等)，这些指令集越新，计算越快。你不需要手动设置，但了解自己的 CPU 世代有助于判断性能。</p>
+<ul>
+<li><strong>2011 年以前的 CPU</strong>：可能只支持 SSE2，可以运行但较慢。  </li>
+<li><strong>2011–2017 年主流 CPU</strong>：支持 AVX&#x2F;AVX2，速度不错。  </li>
+<li><strong>2017 年以后的新 CPU</strong>：支持 AVX-512 或更新的指令集(Intel 第 8 代以后，AMD Zen 4 以后)，速度最快。</li>
+</ul>
+<p>希望这些解释能帮你了解自己的硬件基础。接下来我们就可以开始安装软件环境了！</p>
+<hr>
+<h2 id="2-依赖软件及其安装"><a href="#2-依赖软件及其安装" class="headerlink" title="2. 依赖软件及其安装"></a>2. 依赖软件及其安装</h2><h3 id="2-1-系统环境配置"><a href="#2-1-系统环境配置" class="headerlink" title="2.1 系统环境配置"></a>2.1 系统环境配置</h3><p>GROMACS 可以在三种主流操作系统上运行，但对初学者最推荐的是 Linux(特别是 Ubuntu)。因为：</p>
+<ul>
+<li>Linux 对科学计算支持最好，安装和配置最直接。</li>
+<li>绝大多数高性能计算机（包括超算）都运行 Linux。</li>
+<li>如果你用的是 Windows，也可以通过“适用于 Linux 的 Windows 子系统（WSL）”来安装 Ubuntu，这样既能保留 Windows 习惯，又能享受 Linux 环境。</li>
+</ul>
+<p>关于系统环境的选择，在这篇博客中进行了对比和详细介绍：<a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">如何搭建合适的生信分析平台</a></p>
+<h3 id="2-2-编译器配置"><a href="#2-2-编译器配置" class="headerlink" title="2.2 编译器配置"></a>2.2 编译器配置</h3><p>GROMACS 的源代码是用 C 和 C++ 编写的，需要编译器将其翻译成机器能执行的指令。<br>最低版本要求：<strong>GCC ≥ 11</strong>（必须支持 C++17 标准）。</p>
+<ul>
+<li><p>第一步：检查当前 GCC 版本</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gcc -v<br>g++ -v<br></code></pre></td></tr></table></figure>
+<p>  如果输出的版本号高于或等于 11，说明已满足要求，可以跳过安装步骤；如果版本低于 11 或提示“命令未找到”，则需要安装 GCC 11。</p>
+</li>
+<li><p>第二步：安装 GCC 11</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span><br><span class="hljs-built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test<br><span class="hljs-built_in">sudo</span> apt update<br><br><span class="hljs-comment"># 安装 GCC 11 和 G++ 11</span><br><span class="hljs-built_in">sudo</span> apt install gcc-11 g++-11<br><br><span class="hljs-comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-11<br><br><span class="hljs-comment"># 如果需要同时保留旧版本，可以添加优先级</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-9<br><br></code></pre></td></tr></table></figure>
+
+<p>  安装完成后，再次检查gcc和g++版本是否符合要求。</p>
+</li>
+</ul>
+<h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
+<ul>
+<li><p>第一步：检查当前 CMake 版本</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
+<p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
+</li>
+<li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y wget gnupg<br>wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null<br><br><span class="hljs-comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="hljs-subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/kitware.list<br><br><span class="hljs-comment"># 更新并安装 cmake</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install cmake<br><br><span class="hljs-comment"># 验证安装</span><br>cmake --version<br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+
+<p>下载完成后，检查文件是否存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br>    <br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br>    <br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>    <br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br>    <br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
+<p><strong>编译选项解释：</strong></p>
+<ul>
+<li><code>-DGMX_BUILD_OWN_FFTW=ON</code> 让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
+<li><code>-DREGRESSIONTEST_DOWNLOAD=ON</code> 下载回归测试集，之后可以通过 <code>make check</code> 验证编译是否正确。如果不需要测试，可以去掉此选项以节省时间。</li>
+</ul>
+<h3 id="3-3-常见问题（debug）"><a href="#3-3-常见问题（debug）" class="headerlink" title="3.3 常见问题（debug）"></a>3.3 常见问题（debug）</h3><p><strong>问题1：cmake .. 时报错提示编译器版本过低或找不到编译器</strong></p>
+<ul>
+<li>如果运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>时报错提示编译器版本过低或找不到编译器，优先检查gcc &amp; g++的版本是否大于11，CMake版本是否大于3.28，并升级不符合要求的软件。</li>
+<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回到build的上级目录，即gromacs-2025.4</span><br><span class="hljs-built_in">cd</span> ../<br><br><span class="hljs-comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span><br><span class="hljs-built_in">rm</span> -rf build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>问题2：安装完成后输入 gmx 提示命令未找到</strong></p>
+<ul>
+<li>检查是否正确执行了 <code>source /usr/local/gromacs/bin/GMXRC</code>。可以运行 <code>echo $GMXRC</code> 查看是否已设置。若未设置，重新执行 source 命令，或检查是否已将 source 命令加入 <code>~/.bashrc</code> 并重新加载。</li>
+</ul>
+<hr>
+<p>至此，你已经成功搭建了一个基础的 GROMACS 模拟平台！从硬件认知到软件安装，每一步都经过了实践检验。接下来，你可以：</p>
+<ul>
+<li>学习 GROMACS 的输入文件准备（拓扑、坐标、参数）。</li>
+<li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
+<li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
+</ul>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#x72;&#x61;&#x68;&#105;&#107;&#x65;&#114;&#x40;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+]]></content>
+      <categories>
+        <category>GROMACS分子动力学模拟</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>分子动力学模拟</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pandas 简明教程</title>
     <url>/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<p>Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，<strong>DataFrame (数据框)</strong> 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。</p>
@@ -246,7 +502,7 @@
 
 <hr>
 <p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
-<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#97;&#104;&#105;&#107;&#101;&#114;&#64;&#49;&#54;&#51;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#97;&#117;&#x72;&#111;&#x72;&#97;&#x68;&#x69;&#x6b;&#101;&#x72;&#64;&#49;&#x36;&#51;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
 ]]></content>
       <categories>
         <category>Python 入门</category>
@@ -256,172 +512,111 @@
       </tags>
   </entry>
   <entry>
-    <title>Pandas 思考题：从 API 使用者到开发者</title>
-    <url>/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/</url>
-    <content><![CDATA[<p>很多初学者看完教程后会产生一种错觉 (包括曾经的我) ：教程里的代码我都跑通了，参数我也都认识了，我应该算“会 Pandas”了吧？</p>
-<p>然后一遇到报错就懵了。</p>
-<p>原因很简单：<strong>教程教的是“在正确路径上怎么走”，但真实世界里的代码，从来不会一路绿灯。</strong></p>
-<p>这篇博客不是教程，是教程的“镜像世界”。在这里，我会刻意制造一些教程里不会出现的场景——参数冲突、列数对不齐、现成函数被禁用。你需要用已有的知识，在一条不那么平坦的路上把代码跑通。</p>
-<p><strong>建议先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 和 <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" title="Pandas 简明教程">Pandas 简明教程</a> 教程的学习后再做本套题。此外，直接看答案将极大削弱训练效果。</strong></p>
-<blockquote>
-<p><strong>说明</strong>：本套题共 6 道，难度由浅入深。前两题侧重“排错”与“基础操作”，中间两题侧重“替代方案”与“原理辨析”，最后两题侧重“从零实现”。建议每道题都先自己写一遍，哪怕写得很“笨”也没关系。</p>
-</blockquote>
+    <title>Python 入门：变量类型专题</title>
+    <url>/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/</url>
+    <content><![CDATA[<p>以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。</p>
+<p>然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相加、列表与字符串方法张冠李戴、字典键值类型不符……几乎每个新手都在这些坑里摔过跤。本文将以实战视角，从Python内置类型出发，逐步深入到数据分析必备的Pandas库，帮你理清类型转换的逻辑，并总结一套可复用的Debug套路，让类型错误不再是拦路虎。</p>
 <hr>
-<h2 id="第-1-题-基础排查与异常定位"><a href="#第-1-题-基础排查与异常定位" class="headerlink" title="第 1 题 (基础排查与异常定位)"></a>第 1 题 (基础排查与异常定位)</h2><p>已知 <code>iris</code> 数据集实际只包含 <strong>5 列</strong>数据 (萼片长、萼片宽、花瓣长、花瓣宽、品种) 。如下方代码所示，该数据已被保存为 <strong>制表符分隔 (.tsv)</strong> 的文件。</p>
-<blockquote>
-<p><strong>要求</strong>：请找出下列代码中的错误代码，并指明报错的具体原因。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据来源与保存 (读者无需修改此段)</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 A</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SW&#x27;</span>, <span class="hljs-string">&#x27;PL&#x27;</span>, <span class="hljs-string">&#x27;PW&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],  <span class="hljs-comment"># 为全部 6 列命名</span><br>    usecols=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],                  <span class="hljs-comment"># 按新列名筛选 (此时 usecols 传入列表)</span><br>    index_col=<span class="hljs-string">&#x27;id&#x27;</span>,                               <span class="hljs-comment"># 将 &#x27;id&#x27; 列设为行索引 (可直接传列名)</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;<br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 B</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 先筛选出第 1 列 (id)、第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的三列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="第-2-题-字符串向量化操作"><a href="#第-2-题-字符串向量化操作" class="headerlink" title="第 2 题 (字符串向量化操作)"></a>第 2 题 (字符串向量化操作)</h2><p>将鸢尾花数据集 (<code>iris</code>) 中 <code>species</code> 列的每个字符串元素内的<strong>所有字母 <code>&#39;s&#39;</code></strong> (区分大小写) 替换为下划线 <code>&#39;_&#39;</code>。请写出实现代码，并注意保持原数据结构不变 (或返回新副本) 。</p>
-<hr>
-<h2 id="第-3-题-非算术方式的列广播"><a href="#第-3-题-非算术方式的列广播" class="headerlink" title="第 3 题 (非算术方式的列广播)"></a>第 3 题 (非算术方式的列广播)</h2><p>现有一个包含多列数值型数据的 DataFrame。请编写一段代码，为该 DataFrame 的<strong>所有数值列</strong>同时加上一个固定常数 (如 <code>c = 3.14</code>) 。</p>
-<blockquote>
-<p><strong>限制条件</strong>：严禁使用 <code>df + c</code>、<code>df.add(c)</code>、<code>df.applymap(lambda x: x+c)</code> 等直接算术运算。</p>
-</blockquote>
-<hr>
-<h2 id="第-4-题-函数位置参数顺序的影响辨析"><a href="#第-4-题-函数位置参数顺序的影响辨析" class="headerlink" title="第 4 题 (函数位置参数顺序的影响辨析)"></a>第 4 题 (函数位置参数顺序的影响辨析)</h2><p>在调用 pandas 函数时，位置参数的传入顺序<strong>是否一定会</strong>影响最终的运算结果？请以 <code>pd.read_csv</code> 中 <code>usecols</code> (传入整数索引列表 vs 传入列名字符串列表) 与 <code>names</code> 参数的配合使用为例，或自选其他合适的函数 (如 <code>pd.DataFrame.drop</code> 中的 <code>labels</code> 与 <code>axis</code>) ，给出您的结论并详细阐述理由。</p>
-<hr>
-<h2 id="第-5-题-模拟纵向合并-–-堆叠行"><a href="#第-5-题-模拟纵向合并-–-堆叠行" class="headerlink" title="第 5 题 (模拟纵向合并 – 堆叠行)"></a>第 5 题 (模拟纵向合并 – 堆叠行)</h2><p>在不使用 <code>pd.concat()</code> 函数的前提下，实现两个 DataFrame 的<strong>纵向 (按行) 合并</strong>功能。请写出核心实现代码，并简要说明您是如何达成行堆叠效果的。</p>
-<hr>
-<h2 id="第-6-题-模拟横向合并-–-连接列"><a href="#第-6-题-模拟横向合并-–-连接列" class="headerlink" title="第 6 题 (模拟横向合并 – 连接列)"></a>第 6 题 (模拟横向合并 – 连接列)</h2><p>在不使用 <code>pd.merge()</code> 函数的前提下，实现两个 DataFrame 的<strong>横向 (按列) 合并</strong>功能。要求根据两个 DataFrame 的<strong>行索引</strong>进行对齐连接。请写出实现代码，并详细解释您的底层实现逻辑 (例如如何处理索引对齐、如何处理重复列名等) 。</p>
-<hr>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这 6 道题如果做得很顺利，说明你对 Pandas 的理解已经超越了“记住 API”的层面，开始进入“理解设计逻辑”的阶段。</p>
-<p>如果做得不顺利 (尤其是第 5、6 题) ，这恰恰是好事。<strong>真正的成长往往发生在“感觉手里工具不够用”的时刻。</strong> 那些教程没教你的报错场景、那些被禁用的现成函数、那些需要你自己造轮子的瞬间——这些才是把一个“会用工具的人”变成“能创造工具的人”的关键台阶。</p>
-<p>做完之后，欢迎对照参考答案复盘 (后续发布，敬请期待) 。但请记住：参考答案展示的只是一种可行的路径，你自己的解法只要逻辑正确、能跑通，就是好解法。哪怕写得再“笨”，那也是你独立走通的路。</p>
-<p>祝你写代码的时候，能感受到一点点“解谜”的乐趣。</p>
-<p>— Aurora Hiker</p>
-]]></content>
-      <categories>
-        <category>Python 入门</category>
-      </categories>
-      <tags>
-        <tag>Python 入门</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows系统的安装</title>
-    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
-<hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
+<h2 id="1-Python-自带的变量类型"><a href="#1-Python-自带的变量类型" class="headerlink" title="1. Python 自带的变量类型"></a>1. Python 自带的变量类型</h2><h3 id="1-1-给变量赋值时自动设定的变量类型"><a href="#1-1-给变量赋值时自动设定的变量类型" class="headerlink" title="1.1 给变量赋值时自动设定的变量类型"></a>1.1 给变量赋值时自动设定的变量类型</h3><p>Python 是动态强类型语言，变量的类型在赋值的那一刻由解释器自动推断并固定下来。为了让你直观感受到不同字面量写法的差异，我们统一用数字 <code>1</code> 来举例，观察其细微却关键的区别：</p>
 <ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+<li><strong>整型 (int)</strong>：<code>a = 1</code>。不带小数点的整数。</li>
+<li><strong>浮点数 (float)</strong>：<code>a = 1.0</code>。带小数点的数值。</li>
+<li><strong>字符串 (str)</strong>：<code>a = &#39;1&#39;</code> 或 <code>a = &quot;1&quot;</code>。被引号包裹的内容，此时 <code>1</code> 仅仅是文本字符。</li>
+<li><strong>列表 (list)</strong>：<code>a = [1]</code>。用方括号包裹，有序且可变。</li>
+<li><strong>字典 (dict)</strong>：<code>a = {&#39;key&#39;: 1}</code>。用花括号包裹的键值对。</li>
 </ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<details>
+<summary><b>思考题：设置单引号和双引号等价的意义是什么？</b> (点击展开)</summary>
+<p>主要是为了方便在字符串内容中直接包含另一种引号，从而减少使用繁琐的转义符 <code>\</code>。例如，表示 <code>It's OK</code> 时可以直接用双引号包裹 <code>"It's OK"</code>；表示 <code>He said "Hi"</code> 时可以直接用单引号包裹 <code>'He said "Hi"'</code>，代码更干净、可读性更强。</p>
+</details>
+
+<details>
+<summary><b>思考题：字典的键 (key) 和值 (value) 各自可以是什么变量类型？</b> (点击展开)</summary>
+<p><b>键 (Key)</b>：必须是 <b>不可变 (immutable)</b> 类型，如字符串、整数、浮点数、布尔值或元组。因为字典底层依赖哈希表存储，键必须可哈希。<br>
+<b>值 (Value)</b>：可以是 <b>任意</b> 类型，包括列表、字典等可变对象，甚至可以嵌套另一个字典。<br>
+<em>常见新手错误</em>：尝试用列表 <code>['a']</code> 作为键，会直接报错 <code>TypeError: unhashable type: 'list'</code>。</p>
+</details>
+
+<h3 id="1-2-隐式转换"><a href="#1-2-隐式转换" class="headerlink" title="1.2 隐式转换"></a>1.2 隐式转换</h3><p>Python 在运算中会进行隐式类型转换 (Implicit Type Conversion)，但并非万能。理解以下规则，能让你避免大多数低级错误：</p>
+<ul>
+<li><strong>整型 → 浮点型</strong>：<code>1 / 2</code> 的结果是 <code>0.5</code> (浮点数) 。即使 <code>2 / 1</code>，结果也是 <code>2.0</code> (浮点数) 。在 Python 3 中，<code>/</code> 永远返回浮点数；<code>7 // 2</code> 结果是 <code>3</code> (整数向下取整) ；<code>7.0 // 2</code> 或 <code>7 // 2.0</code> 结果是 <code>3.0</code> (浮点数向下取整) 。<code>% + - *</code> 等基础运算同理，当算式中有浮点数时，结果为浮点数，否则结果为整型。</li>
+<li><strong>字符串 → 列表 (Split)</strong>：<code>&quot;1,2&quot;.split(&quot;,&quot;)</code> 结果是 <code>[&#39;1&#39;, &#39;2&#39;]</code>。</li>
+<li><strong>列表 → 字符串 (Join)</strong>：<code>&quot;,&quot;.join([&#39;1&#39;, &#39;2&#39;])</code> 结果是 <code>&quot;1,2&quot;</code>。<strong>注意</strong>：<code>join</code> 是字符串的方法，写法是 <code>分隔符.join(可迭代对象)</code>，新手极容易写成 <code>列表.join(&#39;,&#39;)</code> 导致报错。</li>
+<li><strong>判断产生布尔值 (Boolean)</strong>：比较运算 <code>1 == 1.0</code> 结果为 <code>True</code> (数值相等) ；<code>1 == &#39;1&#39;</code> 结果为 <code>False</code> (类型不同，直接不相等) 。</li>
+</ul>
+<h3 id="1-3-显式转换"><a href="#1-3-显式转换" class="headerlink" title="1.3 显式转换"></a>1.3 显式转换</h3><p>既然隐式转换存在局限 (例如无法自动将 ‘1’ 转为 1) ，我们就必须借助内置函数进行显式转换。同样以数字 1 为例：</p>
+<ul>
+<li><p>int(“1”)：将字符串 ‘1’ 转为整数 1，之后即可进行数学运算 (如 int(“1”) + 2 得到 3) ，需要注意的是，这个运算会向零的方向截断取整。</p>
+</li>
+<li><p>float(“1”) 或 float(1)：得到浮点数 1.0，统一精度。</p>
+</li>
+<li><p>str(1)：将整数 1 转为字符串 ‘1’，之后即可进行拼接操作 (如 str(1) + “ is a number” 得到 “1 is a number”) 。</p>
+</li>
+<li><p>list(“123”)：将字符串拆解为单字符列表 [‘1’, ‘2’, ‘3’]。</p>
+</li>
+</ul>
+<p>提高代码容错率的方法：从外部 (如 input()、文件读取、API 响应) 获得数据后，第一时间根据需要进行显式转换。不要等到运算报错时才回头补救。</p>
+<h3 id="1-4-最常见的变量类型错误成因"><a href="#1-4-最常见的变量类型错误成因" class="headerlink" title="1.4 最常见的变量类型错误成因"></a>1.4 最常见的变量类型错误成因</h3><p>结合 <code>1</code> 的不同写法，我们来看三个最容易踩中的雷区：</p>
 <ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
+<li><strong>数字被引号包裹变成了字符串</strong>：<code>a = &#39;1&#39;</code>，然后执行 <code>a + 2</code>。报错 <code>TypeError: can only concatenate str (not &quot;int&quot;) to str</code>。因为此时 <code>+</code> 被解释为字符串拼接，而非数学加法。<strong>解决方案</strong>：显式转换 <code>int(a) + 2</code>。</li>
+<li><strong>字符串方法与列表方法张冠李戴</strong>：对字符串 <code>&#39;1,2&#39;</code> 调用 <code>.append(&#39;3&#39;)</code>，或对列表 <code>[1]</code> 调用 <code>.split()</code>。记住：<strong>方法随类型走</strong>，可变序列 (列表) 和不可变序列 (字符串) 的 API 交集很少。</li>
+<li><strong>字符串与列表强行相加</strong>：<code>&#39;1&#39; + [2]</code> 报错，因为 <code>+</code> 号两侧类型必须一致才能进行序列拼接。若想合并，需先 <code>list(&#39;1&#39;)</code> 转为 <code>[&#39;1&#39;]</code>，再与 <code>[2]</code> 相加得到 <code>[&#39;1&#39;, 2]</code>。</li>
 </ol>
-<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
 <hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<h2 id="2-Pandas-的变量类型-dtype"><a href="#2-Pandas-的变量类型-dtype" class="headerlink" title="2. Pandas 的变量类型 (dtype)"></a>2. Pandas 的变量类型 (dtype)</h2><p>进入数据分析领域，Pandas 基于 NumPy 构建了更为丰富且严格的数据类型体系。DataFrame 中的每一列 (Series) 都有其特定的 <code>dtype</code>，理解它是进行高效数据清洗的前提。</p>
+<h3 id="2-1-Pandas-中的常用-dtype"><a href="#2-1-Pandas-中的常用-dtype" class="headerlink" title="2.1 Pandas 中的常用 dtype"></a>2.1 Pandas 中的常用 dtype</h3><p>延续上面的数字 <code>1</code>，在 Pandas 中它会以不同的变量类型出现：</p>
 <ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
+<li><strong>int64 &#x2F; float64</strong>：最常用的数值类型。例如 <code>pd.Series([1, 2])</code> 是 <code>int64</code>；<code>pd.Series([1.0, 2])</code> 因输入的列表中含有小数，全部自动转为 <code>float64</code>。</li>
+<li><strong>object</strong>：Pandas 中的“万金油”类型，通常用于存储字符串或混合类型。<code>pd.Series([&#39;1&#39;, &#39;2&#39;])</code> 的 dtype 是 <code>object</code> (即 Python 原生的 str 对象) 。<strong>性能较低</strong>，应尽量避免在大型数据中大量使用。</li>
+<li><strong>category</strong>：类别型，适用于取值有限的分类变量 (如性别、等级)。<code>pd.Series([1, 1, 2])</code> 转为 category 后，会将 <code>1</code> 和 <code>2</code> 视为两个类别，极大节省内存。</li>
+<li><strong>datetime64[ns]</strong>：时间日期类型，支持向量化日期运算。<code>pd.to_datetime(pd.Series([&#39;2026-01-01&#39;]))</code> 得到该类型。</li>
+<li><strong>bool</strong>：布尔型，<code>pd.Series([True, False])</code>。</li>
+</ul>
+<p><strong>注意</strong>：当整数列中出现缺失值时，Pandas 会为了容纳 <code>NaN</code> (浮点型空值) 而<strong>自动将整型 <code>int64</code> 提升为浮点型 <code>float64</code></strong>。若必须为整数，请使用 Pandas 的 <code>Int64</code> (大写 I，可空整型)。</p>
+<h3 id="2-2-类型转换方法"><a href="#2-2-类型转换方法" class="headerlink" title="2.2 类型转换方法"></a>2.2 类型转换方法</h3><ul>
+<li><strong><code>astype(new_dtype)</code></strong>：最通用的显式转换。例如 <code>df[&#39;col&#39;].astype(&#39;float64&#39;)</code>。但若列中存在无法转换的值 (如字母 <code>&#39;a&#39;</code>)，会直接报错。</li>
+<li><strong><code>pd.to_numeric()</code></strong>：转为数值类型的“安全利器”。参数 <code>errors=&#39;coerce&#39;</code> 可将非法值强制转为 <code>NaN</code>，避免程序崩溃。例如 <code>pd.to_numeric(pd.Series([&#39;1&#39;, &#39;a&#39;, &#39;2&#39;]), errors=&#39;coerce&#39;)</code> 得到 <code>[1.0, NaN, 2.0]</code>。</li>
+<li><strong><code>pd.to_datetime()</code></strong>：专门转为日期类型，同样支持 <code>errors=&#39;coerce&#39;</code> 优雅处理异常格式。</li>
+<li><strong><code>astype(&#39;category&#39;)</code></strong> 或 <code>pd.Categorical()</code>：将离散列转为类别类型。</li>
+</ul>
+<h3 id="2-3-常见的-Pandas-类型错误"><a href="#2-3-常见的-Pandas-类型错误" class="headerlink" title="2.3 常见的 Pandas 类型错误"></a>2.3 常见的 Pandas 类型错误</h3><ul>
+<li><strong>数值列被识别为 object 无法计算</strong>：读取 CSV 时，由于混入了空格、千位分隔符 (如 <code>1,000</code>) 或特殊符号，数字列被读成字符串。直接调用 <code>.mean()</code> 会报错。解决：先用 <code>pd.to_numeric(df[&#39;col&#39;], errors=&#39;coerce&#39;)</code> 清洗。</li>
+</ul>
+<hr>
+<h2 id="3-与数据类型相关的-Debug-常用套路"><a href="#3-与数据类型相关的-Debug-常用套路" class="headerlink" title="3. 与数据类型相关的 Debug 常用套路"></a>3. 与数据类型相关的 Debug 常用套路</h2><p>遇到 <code>TypeError</code> 或 <code>ValueError</code> 时不要慌，按以下流程顺藤摸瓜，90% 的问题都能在 5 分钟内解决：</p>
+<ol>
+<li><p><strong>打印类型</strong><br>在报错行之前插入 <code>print(type(变量名))</code>。如果是 DataFrame，直接 <code>print(df.dtypes)</code> 查看所有列类型。眼见为实，胜过脑中推演。</p>
 </li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
+<li><p><strong>细读报错信息</strong><br>Python 的报错信息非常精准。重点看最后几行的 <code>unsupported operand type(s) for ...</code>，它会直接告诉你参与运算的两种类型分别是什么 (例如 <code>int</code> 和 <code>str</code>)。</p>
 </li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
+<li><p><strong>显式转换</strong><br>永远不要依赖隐式转换。从外部 (文件、数据库、input) 读入数据后，立即用 <code>int()</code>、<code>float()</code>、<code>pd.to_numeric()</code> 等进行强制类型转换。既掌控类型安全，也让自己理清每一步的数据形态。</p>
 </li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
+<li><p><strong>合理利用 <code>errors=&#39;coerce&#39;</code></strong><br>当你无法保证数据 100% 干净时，在 <code>pd.to_numeric</code> 或 <code>pd.to_datetime</code> 中开启 <code>errors=&#39;coerce&#39;</code>。这样程序不会直接崩溃，而是将脏数据标记为 <code>NaN</code>，后续再用 <code>dropna()</code> 或 <code>fillna()</code> 集中处理。</p>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>卡bug说明有错，但不卡bug不代表没错。报错和程序中断本质上是一种提醒，当处于数据探索阶段和代码尝试阶段时，建议不要使用这个方法，尝试普通显式转换并输出结果手动检查。</p>
+<p>具体操作上，可以先用 df.head(20) 截取数据样本，在样本上执行严格的显式转换 (如不加 errors 参数) 。一旦报错，报错会精准地说明：是哪一行、哪一个值引发了冲突。这种“主动触雷”能让你最快摸清手中数据的“脏乱程度”，这是数据清洗中最宝贵的第一手信息。</p>
+<p>如果强行忽略错误，一旦出现行或列错位的情况，会将错就错地继续运算，以至于拿到结果时根本发现不了中间算错了。</p>
+</blockquote>
 </li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
+<li><p><strong>拆解复杂表达式</strong>  </p>
+<p>先不写冗长的链式操作，如 <code>df[&#39;a&#39;] + df[&#39;b&#39;].apply(func) * 2</code>。拆成中间变量：<code>temp = df[&#39;b&#39;].apply(func)</code>，再检查 <code>temp</code> 的类型，最后执行加法。分步执行能快速锁定出错的环节。等熟练后再写精简的代码。</p>
 </li>
-</ul>
+<li><p><strong>小规模数据测试</strong><br>对全量数据操作前，先用 <code>df.head(10)</code> 截取一小部分，运行你的转换逻辑。验证通过后再应用到全表，极大节省试错时间。</p>
 </li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png"></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png"></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png"></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png"></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png"></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png"></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png"></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
-</ul>
+<li><p><strong>善用 Jupyter 的 <code>?</code> 或 <code>help()</code></strong><br>不确定某个函数参数的含义？在 Jupyter 中执行 <code>pd.to_numeric?</code>，直接查看官方文档签名，明确该函数期望什么输入，返回什么输出，避免“盲猜”。</p>
 </li>
 </ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#x72;&#97;&#104;&#105;&#x6b;&#x65;&#x72;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<hr>
+<p><strong>润色后：</strong></p>
+<p>数据类型是编程世界的底层基石，贯穿于每一行代码之中。动态类型赋予的“灵活”从来不是“随意”的代名词——唯有养成清晰的类型意识与良好的调试习惯，才能将入门阶段常见的报错消弭于无形。希望这份指南能帮助你吃透变量类型的底层逻辑，从而写出既健壮又优雅的代码。</p>
+<p>感谢你的阅读！若有任何疑问或建议，欢迎发送邮件至 <strong><a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a></strong>。每一条反馈我都会认真阅读、尽力回复，你的参与会让这份指南走得更远、变得更好。</p>
 ]]></content>
       <categories>
-        <category>计算机基础与实验平台搭建</category>
+        <category>Python 入门</category>
       </categories>
       <tags>
-        <tag>计算机基础</tag>
-        <tag>实验平台搭建</tag>
+        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
@@ -526,7 +721,7 @@
 </blockquote>
 <hr>
 <p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
-<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#111;&#114;&#x61;&#104;&#105;&#x6b;&#101;&#x72;&#x40;&#49;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 和我交流。</p>
+<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#x72;&#x61;&#x68;&#x69;&#107;&#101;&#114;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 和我交流。</p>
 <p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入评论、图床、优化加载速度、配置 SEO等 ，后续我会继续研究并记录，慢慢把这一整套流程补齐。</p>
 <hr>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
@@ -595,7 +790,7 @@
 </li>
 </ul>
 <hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#114;&#x61;&#104;&#x69;&#x6b;&#101;&#x72;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
+<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#104;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
 <hr>
 <p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
 ]]></content>
@@ -604,6 +799,55 @@
       </categories>
       <tags>
         <tag>Windows使用技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pandas 思考题：从 API 使用者到开发者</title>
+    <url>/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/</url>
+    <content><![CDATA[<p>很多初学者看完教程后会产生一种错觉 (包括曾经的我) ：教程里的代码我都跑通了，参数我也都认识了，我应该算“会 Pandas”了吧？</p>
+<p>然后一遇到报错就懵了。</p>
+<p>原因很简单：<strong>教程教的是“在正确路径上怎么走”，但真实世界里的代码，从来不会一路绿灯。</strong></p>
+<p>这篇博客不是教程，是教程的“镜像世界”。在这里，我会刻意制造一些教程里不会出现的场景——参数冲突、列数对不齐、现成函数被禁用。你需要用已有的知识，在一条不那么平坦的路上把代码跑通。</p>
+<p><strong>建议先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 和 <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" title="Pandas 简明教程">Pandas 简明教程</a> 教程的学习后再做本套题。此外，直接看答案将极大削弱训练效果。</strong></p>
+<blockquote>
+<p><strong>说明</strong>：本套题共 6 道，难度由浅入深。前两题侧重“排错”与“基础操作”，中间两题侧重“替代方案”与“原理辨析”，最后两题侧重“从零实现”。建议每道题都先自己写一遍，哪怕写得很“笨”也没关系。</p>
+</blockquote>
+<hr>
+<h2 id="第-1-题-基础排查与异常定位"><a href="#第-1-题-基础排查与异常定位" class="headerlink" title="第 1 题 (基础排查与异常定位)"></a>第 1 题 (基础排查与异常定位)</h2><p>已知 <code>iris</code> 数据集实际只包含 <strong>5 列</strong>数据 (萼片长、萼片宽、花瓣长、花瓣宽、品种) 。如下方代码所示，该数据已被保存为 <strong>制表符分隔 (.tsv)</strong> 的文件。</p>
+<blockquote>
+<p><strong>要求</strong>：请找出下列代码中的错误代码，并指明报错的具体原因。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据来源与保存 (读者无需修改此段)</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 A</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SW&#x27;</span>, <span class="hljs-string">&#x27;PL&#x27;</span>, <span class="hljs-string">&#x27;PW&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],  <span class="hljs-comment"># 为全部 6 列命名</span><br>    usecols=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],                  <span class="hljs-comment"># 按新列名筛选 (此时 usecols 传入列表)</span><br>    index_col=<span class="hljs-string">&#x27;id&#x27;</span>,                               <span class="hljs-comment"># 将 &#x27;id&#x27; 列设为行索引 (可直接传列名)</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;<br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 B</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 先筛选出第 1 列 (id)、第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的三列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第-2-题-字符串向量化操作"><a href="#第-2-题-字符串向量化操作" class="headerlink" title="第 2 题 (字符串向量化操作)"></a>第 2 题 (字符串向量化操作)</h2><p>将鸢尾花数据集 (<code>iris</code>) 中 <code>species</code> 列的每个字符串元素内的<strong>所有字母 <code>&#39;s&#39;</code></strong> (区分大小写) 替换为下划线 <code>&#39;_&#39;</code>。请写出实现代码，并注意保持原数据结构不变 (或返回新副本) 。</p>
+<hr>
+<h2 id="第-3-题-非算术方式的列广播"><a href="#第-3-题-非算术方式的列广播" class="headerlink" title="第 3 题 (非算术方式的列广播)"></a>第 3 题 (非算术方式的列广播)</h2><p>现有一个包含多列数值型数据的 DataFrame。请编写一段代码，为该 DataFrame 的<strong>所有数值列</strong>同时加上一个固定常数 (如 <code>c = 3.14</code>) 。</p>
+<blockquote>
+<p><strong>限制条件</strong>：严禁使用 <code>df + c</code>、<code>df.add(c)</code>、<code>df.applymap(lambda x: x+c)</code> 等直接算术运算。</p>
+</blockquote>
+<hr>
+<h2 id="第-4-题-函数位置参数顺序的影响辨析"><a href="#第-4-题-函数位置参数顺序的影响辨析" class="headerlink" title="第 4 题 (函数位置参数顺序的影响辨析)"></a>第 4 题 (函数位置参数顺序的影响辨析)</h2><p>在调用 pandas 函数时，位置参数的传入顺序<strong>是否一定会</strong>影响最终的运算结果？请以 <code>pd.read_csv</code> 中 <code>usecols</code> (传入整数索引列表 vs 传入列名字符串列表) 与 <code>names</code> 参数的配合使用为例，或自选其他合适的函数 (如 <code>pd.DataFrame.drop</code> 中的 <code>labels</code> 与 <code>axis</code>) ，给出您的结论并详细阐述理由。</p>
+<hr>
+<h2 id="第-5-题-模拟纵向合并-–-堆叠行"><a href="#第-5-题-模拟纵向合并-–-堆叠行" class="headerlink" title="第 5 题 (模拟纵向合并 – 堆叠行)"></a>第 5 题 (模拟纵向合并 – 堆叠行)</h2><p>在不使用 <code>pd.concat()</code> 函数的前提下，实现两个 DataFrame 的<strong>纵向 (按行) 合并</strong>功能。请写出核心实现代码，并简要说明您是如何达成行堆叠效果的。</p>
+<hr>
+<h2 id="第-6-题-模拟横向合并-–-连接列"><a href="#第-6-题-模拟横向合并-–-连接列" class="headerlink" title="第 6 题 (模拟横向合并 – 连接列)"></a>第 6 题 (模拟横向合并 – 连接列)</h2><p>在不使用 <code>pd.merge()</code> 函数的前提下，实现两个 DataFrame 的<strong>横向 (按列) 合并</strong>功能。要求根据两个 DataFrame 的<strong>行索引</strong>进行对齐连接。请写出实现代码，并详细解释您的底层实现逻辑 (例如如何处理索引对齐、如何处理重复列名等) 。</p>
+<hr>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这 6 道题如果做得很顺利，说明你对 Pandas 的理解已经超越了“记住 API”的层面，开始进入“理解设计逻辑”的阶段。</p>
+<p>如果做得不顺利 (尤其是第 5、6 题) ，这恰恰是好事。<strong>真正的成长往往发生在“感觉手里工具不够用”的时刻。</strong> 那些教程没教你的报错场景、那些被禁用的现成函数、那些需要你自己造轮子的瞬间——这些才是把一个“会用工具的人”变成“能创造工具的人”的关键台阶。</p>
+<p>做完之后，欢迎对照参考答案复盘 (后续发布，敬请期待) 。但请记住：参考答案展示的只是一种可行的路径，你自己的解法只要逻辑正确、能跑通，就是好解法。哪怕写得再“笨”，那也是你独立走通的路。</p>
+<p>祝你写代码的时候，能感受到一点点“解谜”的乐趣。</p>
+<p>— Aurora Hiker</p>
+]]></content>
+      <categories>
+        <category>Python 入门</category>
+      </categories>
+      <tags>
+        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
@@ -837,7 +1081,7 @@
 <hr>
 <h1 id="5-写在最后"><a href="#5-写在最后" class="headerlink" title="5. 写在最后"></a>5. 写在最后</h1><p>从注册 GitHub 到在浏览器里看到自己的站点，整个过程看似步骤繁多，但拆解开其实就是“工具安装 → 密钥配对 → 仓库创建 → 本地部署”这条主线。每完成一步，离那个属于自己的小空间就近了一点，这种逐步推进的踏实感，大概是搭建博客独有的乐趣。</p>
 <p>更重要的是，这一套流程并不只是为博客服务——熟悉了 Git 和 Hexo 的工作流，往后任何静态站点的管理都会顺手很多。遇到报错也别急，顺着提示去查文档、改配置，多试几次，那些红字就变成你的经验值了。</p>
-<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#105;&#x6b;&#x65;&#x72;&#x40;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
+<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#x6f;&#114;&#x61;&#x68;&#x69;&#107;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
 <p>至于博客外观和交互细节，笔者打算持续更新 <strong>Fluid 主题的完整配置</strong>——从外观美化、评论系统接入，到响应式优化，都会一步步写清楚。感兴趣的话，记得来看。</p>
 <hr>
 <p><strong>参考资源</strong></p>
@@ -855,139 +1099,295 @@
       </tags>
   </entry>
   <entry>
-    <title>GROMACS分子动力学模拟的实验平台搭建</title>
-    <url>/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
-<p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
-<p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
-<p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
-<p>本文参考GROMACS的官方说明文档(版本2026.0)：<a href="https://manual.gromacs.org/documentation/current/index.html">https://manual.gromacs.org/documentation/current/index.html</a></p>
+    <title>Python 入门：写给完全没学过编程的你</title>
+    <url>/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/</url>
+    <content><![CDATA[<p>本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。</p>
+<p>无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。</p>
 <hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>笔者参照GROMACS官方对运行环境的要求，整理了一份硬件配置速查表，并附上了自己的配置，供大家参考。需要说明的是，这份配置目前仅为理论推测，欢迎各位读者结合实际使用情况提供反馈。</p>
-<p><strong>GROMACS的硬件配置速查表:</strong></p>
-<table>
+<h1 id="1-程序设计的基本结构"><a href="#1-程序设计的基本结构" class="headerlink" title="1. 程序设计的基本结构"></a>1. 程序设计的基本结构</h1><p>所有任务都可以解构为以下 <strong>顺序、条件、循环</strong> 三种基本结构。无论多么复杂的程序，归根结底都是由这三种结构组合而成的。下面我们逐一来看 Python 如何实现它们。</p>
+<h2 id="1-1-顺序结构"><a href="#1-1-顺序结构" class="headerlink" title="1.1 顺序结构"></a>1.1 顺序结构</h2><p>顺序结构就是代码<strong>从上往下逐行执行</strong>，没有跳转。这是所有程序的默认执行方式，也是另外两种结构 (条件和循环) 的“地基”——即使有分支和循环，代码的整体走向依然是顺序的，只是局部发生了跳转。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第一步&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第二步&quot;</span>)   <span class="hljs-comment"># 先执行完上一行，才执行这一行</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第三步&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-条件结构-if-elif-else"><a href="#1-2-条件结构-if-elif-else" class="headerlink" title="1.2 条件结构 (if &#x2F; elif &#x2F; else)"></a>1.2 条件结构 (if &#x2F; elif &#x2F; else)</h2><p>根据条件是否成立，决定执行哪段代码。语法上注意 <strong>冒号</strong> 和 <strong>缩进</strong> (缩进后面会专门讲)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">18</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;已成年&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未成年&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>多分支用 <code>elif</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">score = <span class="hljs-number">85</span><br><span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">90</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;优秀&quot;</span>)<br><span class="hljs-keyword">elif</span> score &gt;= <span class="hljs-number">60</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;及格&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不及格&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在条件结构中，Python 会从<strong>上到下依次判断</strong>每个条件，一旦某个条件成立，就会执行对应的代码块，并跳过后面所有的 elif 和 else。注意，else 不需要写任何条件，它表示所有条件都不满足时的默认情况。</p>
+</blockquote>
+<h2 id="1-3-循环结构-for-while"><a href="#1-3-循环结构-for-while" class="headerlink" title="1.3 循环结构 (for &#x2F; while)"></a>1.3 循环结构 (for &#x2F; while)</h2><p>重复执行某段代码，直到条件不满足。</p>
+<ul>
+<li><strong><code>for</code> 循环</strong>：常用于遍历序列 (如列表、字符串) 或固定次数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 遍历列表</span><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;苹果&quot;</span>, <span class="hljs-string">&quot;香蕉&quot;</span>, <span class="hljs-string">&quot;橘子&quot;</span>]:<br>    <span class="hljs-built_in">print</span>(fruit)<br><br><span class="hljs-comment"># 重复 5 次 (range(5) 生成 0~4) </span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;i&#125;</span> 次循环&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>while</code> 循环</strong>：只要条件为真就继续，适合不知道具体次数的情况。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">count = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> count &lt; <span class="hljs-number">3</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中...&quot;</span>)<br>    count += <span class="hljs-number">1</span>   <span class="hljs-comment"># 一定要修改条件，否则死循环</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用 <code>while</code> 时，务必记得在循环体内改变循环变量的值，否则会陷入死循环。</p>
+</blockquote>
+<h2 id="1-4-三元操作与列表推导式-进阶"><a href="#1-4-三元操作与列表推导式-进阶" class="headerlink" title="1.4 三元操作与列表推导式 (进阶)"></a>1.4 三元操作与列表推导式 (进阶)</h2><h3 id="1-4-1-三元操作-if-else-简写"><a href="#1-4-1-三元操作-if-else-简写" class="headerlink" title="1.4.1 三元操作 (if-else 简写)"></a>1.4.1 三元操作 (if-else 简写)</h3><p>三元操作是一种 <strong>简写的 if-else</strong>，适合在单行内根据条件赋不同值。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br>status = <span class="hljs-string">&quot;成年&quot;</span> <span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;未成年&quot;</span><br><span class="hljs-built_in">print</span>(status)   <span class="hljs-comment"># 输出：成年</span><br></code></pre></td></tr></table></figure>
+
+<p>语法：<code>值1 if 条件 else 值2</code> —— 条件成立取 <code>值1</code>，否则取 <code>值2</code>。</p>
+<h3 id="列表推导式-循环-条件的组合简写"><a href="#列表推导式-循环-条件的组合简写" class="headerlink" title="列表推导式 (循环 + 条件的组合简写)"></a>列表推导式 (循环 + 条件的组合简写)</h3><p>三元操作不只用于单个值的判断，它还可以和循环结合，在<strong>一行代码内</strong>对列表中的所有元素进行批量处理。这种写法被称为 <strong>列表推导式</strong>。</p>
+<p>举个场景：你有一个数字列表，想把所有偶数保留下来，过滤掉奇数。</p>
+<p>传统的写法需要先用 <code>for</code> 循环遍历，再用 <code>if</code> 判断，最后用 <code>append</code> 添加到新列表，至少需要三四行代码。而用列表推导式可以压缩成一行：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 传统写法</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br><br><span class="hljs-comment"># 列表推导式写法 (一行搞定)</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br></code></pre></td></tr></table></figure>
+
+<p>列表推导式还能结合三元操作，在遍历的同时根据条件决定每个元素取什么值。比如把列表中的奇数变成 <code>&quot;奇数&quot;</code>，偶数变成 <code>&quot;偶数&quot;</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]<br>result = [<span class="hljs-string">&quot;偶数&quot;</span> <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;奇数&quot;</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[&#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<p>格式拆解：<code>[对每个元素做的事 for 元素 in 列表 if 筛选条件]</code></p>
+<p>顺序是<strong>先循环、再判断、最后取结果</strong>，读的时候可以从 <code>for</code> 开始往两边读。</p>
+<p><strong>新手须知</strong>：三元操作和列表推导式属于“进阶语法”，它们存在的意义是让代码更简洁、更高效——尤其是在处理大量数据时，列表推导式比手动 <code>for</code> 循环速度更快，因为它在底层经过了优化。但如果你是初学者，暂时不学它们也完全不影响你写程序。先用 <code>if-else</code> 和 <code>for</code> 循环把逻辑理清楚，等你写习惯了，自然会觉得这些简写用起来更顺手。到时候再回来翻这一节也来得及。</p>
+<hr>
+<h1 id="2-Python-的基础运算"><a href="#2-Python-的基础运算" class="headerlink" title="2. Python 的基础运算"></a>2. Python 的基础运算</h1><h2 id="2-1-数学运算符"><a href="#2-1-数学运算符" class="headerlink" title="2.1 数学运算符"></a>2.1 数学运算符</h2><table>
 <thead>
 <tr>
-<th>部件</th>
-<th>最低要求</th>
-<th>推荐配置(入门)</th>
-<th>推荐配置(进阶)</th>
-<th>笔者的配置</th>
+<th>运算符</th>
+<th>含义</th>
+<th>示例</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>CPU</td>
-<td>Intel Core i5-3330, AMD Ryzen 3 1200</td>
-<td>Intel Core i5-8400, AMD Ryzen 5 2600</td>
-<td>Intel Core i7-13700K, AMD Ryzen 7</td>
-<td>AMD Ryzen 7 9700X</td>
+<td><code>+</code></td>
+<td>加</td>
+<td><code>3 + 5</code></td>
 </tr>
 <tr>
-<td>内存</td>
-<td>8 GB RAM</td>
-<td>16 GB RAM</td>
-<td>32 GB RAM</td>
-<td>64 GB RAM</td>
+<td><code>-</code></td>
+<td>减</td>
+<td><code>10 - 4</code></td>
 </tr>
 <tr>
-<td>硬盘(可用空间，推荐固态硬盘)</td>
-<td>20 GB</td>
-<td>100 GB</td>
-<td>100 GB以上</td>
-<td>固态 &gt; 100 GB、机械 &gt; 1 TB</td>
+<td><code>*</code></td>
+<td>乘</td>
+<td><code>2 * 6</code></td>
 </tr>
 <tr>
-<td>GPU(可选，需更新CUDA)</td>
-<td>无(纯CPU运行)</td>
-<td>NVIDIA GTX 1050以上</td>
-<td>NVIDIA RTX 3060以上或专业卡</td>
-<td>NVIDIA RTX 5060Ti 16 GB</td>
+<td><code>/</code></td>
+<td>除 (浮点)</td>
+<td><code>10 / 3</code> → 3.333…</td>
 </tr>
 <tr>
-<td>操作系统</td>
-<td>Linux、Windows、macOS</td>
-<td>Linux(Ubuntu 22.04以上版本)</td>
-<td>Linux(Ubuntu 22.04以上版本)</td>
-<td>Windows 10 WSL Ubuntu 20.04</td>
+<td><code>//</code></td>
+<td>整除 (取整)</td>
+<td><code>10 // 3</code> → 3</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>取余 (模)</td>
+<td><code>10 % 3</code> → 1</td>
+</tr>
+<tr>
+<td><code>**</code></td>
+<td>幂运算</td>
+<td><code>2 ** 3</code> → 8</td>
 </tr>
 </tbody></table>
+<p><strong>需要注意以下几点：</strong></p>
+<ul>
+<li><p>加减乘 (+ - *) ：只要参与运算的任意一方是浮点数，结果就是浮点数。比如 3 + 2.0 得 5.0，4 * 1.5 得 6.0。</p>
+</li>
+<li><p>除法 (&#x2F;) ：结果永远是浮点数，即使两个整数相除能整除，结果也会带上小数位（如 4 &#x2F; 2 得 2.0）。</p>
+</li>
+<li><p>整除 (&#x2F;&#x2F;) ：取整数部分，常用于取整操作。</p>
+</li>
+<li><p>取余 (%) ：返回余数，最常见的用途是判断奇偶：num % 2 &#x3D;&#x3D; 0 表示偶数，否则为奇数。</p>
+</li>
+</ul>
+<h2 id="2-2-逻辑运算符"><a href="#2-2-逻辑运算符" class="headerlink" title="2.2 逻辑运算符"></a>2.2 逻辑运算符</h2><p>逻辑运算符用于组合多个条件，返回布尔值 <code>True</code> 或 <code>False</code>。</p>
+<ul>
+<li><code>and</code> (与) ：两边都为真才为真</li>
+<li><code>or</code> (或) ：至少一边为真即为真</li>
+<li><code>not</code> (非) ：取反</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">x = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> x &lt; <span class="hljs-number">10</span>)   <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">10</span> <span class="hljs-keyword">or</span> x &lt; <span class="hljs-number">3</span>)    <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(<span class="hljs-keyword">not</span> (x == <span class="hljs-number">5</span>))       <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+
+<p>逻辑运算在条件判断中非常常用，比如在 <code>if</code> 或 <code>while</code> 中组合多个判断条件。</p>
+<p><strong>聊聊布尔值本身</strong>。</p>
+<p>在 Python 中，<code>True</code> 和 <code>False</code> 其实是关键字，但它们底层对应的就是整数 <code>1</code> 和 <code>0</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">True</span>))   <span class="hljs-comment"># 输出 1</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">False</span>))  <span class="hljs-comment"># 输出 0</span><br></code></pre></td></tr></table></figure>
+
+<p>这意味着任何需要布尔值的地方，你都可以直接用数字来代替：<strong>非零的数字被视为 <code>True</code>，<code>0</code> 被视为 <code>False</code></strong>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> <span class="hljs-number">1</span>:               <span class="hljs-comment"># 等价于 if True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;成立&quot;</span>)   <span class="hljs-comment"># 永远会执行</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-number">0</span>:               <span class="hljs-comment"># 等价于 if False</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不成立&quot;</span>) <span class="hljs-comment"># 永远不会执行</span><br></code></pre></td></tr></table></figure>
+
+<p>这也解释了一个在 Python 中看似“奇怪”但非常经典的永动机写法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:   <span class="hljs-comment"># 1 永远为真，等价于 while True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中&quot;</span>)   <span class="hljs-comment"># 会无限循环下去</span><br></code></pre></td></tr></table></figure>
+
+<p>这里的 <code>while 1</code> 会一直循环，因为 <code>1</code> 永远被当作 <code>True</code> 处理。这种写法在老代码中很常见，本质上就是 <code>while True</code> 的简写。所以当你看到 <code>while 1</code> 时，只需要知道：<strong>只要数字不是 0，条件就永远为真</strong>。</p>
+<hr>
+<h1 id="3-代码打包-函数与类"><a href="#3-代码打包-函数与类" class="headerlink" title="3. 代码打包 (函数与类)"></a>3. 代码打包 (函数与类)</h1><p>当代码越来越多，我们需要<strong>打包</strong>起来复用，避免重复书写。</p>
+<h2 id="3-1-函数-function"><a href="#3-1-函数-function" class="headerlink" title="3.1 函数 (function)"></a>3.1 函数 (function)</h2><p>简单来说，函数就是<strong>打包了一套数据处理流程</strong>。你不用关心它内部是怎么一步步处理的，只需要知道“给它什么，它会返回什么”就够了。这种把一段逻辑封装成一个独立单元、按流程执行的方式，通常被称为<strong>面向过程编程</strong>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br><br><span class="hljs-comment"># 调用函数</span><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p>我们拆开来看这段代码做了什么。</p>
+<p><strong>定义函数</strong>：用 <code>def</code> 关键字告诉 Python“我要定义一个函数”，后面跟函数名（这里叫 <code>greet</code>），括号里写参数（这里叫 <code>name</code>），冒号后面缩进的部分是函数体。函数体里用 <code>return</code> 返回结果。</p>
+<p><strong>调用函数</strong>：写 <code>greet(&quot;小明&quot;)</code> 时，Python 会跳进函数体，把 <code>&quot;小明&quot;</code> 赋给参数 <code>name</code>，执行完 <code>return</code> 后把结果返回给调用处，赋值给 <code>message</code>。</p>
+<p><strong>函数的好处</strong>：如果你需要多次对不同的名字做同样的操作，不用重复写代码，只需要反复调用同一个函数即可：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小明&quot;</span>))   <span class="hljs-comment"># 你好，小明！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小红&quot;</span>))   <span class="hljs-comment"># 你好，小红！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小刚&quot;</span>))   <span class="hljs-comment"># 你好，小刚！</span><br></code></pre></td></tr></table></figure>
+
 <blockquote>
-<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
+<p><strong>关于“面向过程”的简单理解</strong>：</p>
+<p>面向过程的核心理念是：程序就是一系列操作步骤的集合，把数据丢进去，经过一步步处理，最后输出结果。函数就是用来组织这些步骤的基本单元。你写函数 A 处理第一步，函数 B 处理第二步，然后按顺序把它们串起来，整个程序就按照你设计的流程跑完了。初学阶段你大部分时间都在写这种风格的代码，它直观、好理解，非常适合从零开始建立编程思维。</p>
 </blockquote>
-<p>GROMACS 在编译时会自动检测 CPU 支持哪些指令集(如 SSE4.1、AVX2 等)，这些指令集越新，计算越快。你不需要手动设置，但了解自己的 CPU 世代有助于判断性能。</p>
-<ul>
-<li><strong>2011 年以前的 CPU</strong>：可能只支持 SSE2，可以运行但较慢。  </li>
-<li><strong>2011–2017 年主流 CPU</strong>：支持 AVX&#x2F;AVX2，速度不错。  </li>
-<li><strong>2017 年以后的新 CPU</strong>：支持 AVX-512 或更新的指令集(Intel 第 8 代以后，AMD Zen 4 以后)，速度最快。</li>
-</ul>
-<p>希望这些解释能帮你了解自己的硬件基础。接下来我们就可以开始安装软件环境了！</p>
-<hr>
-<h2 id="2-依赖软件及其安装"><a href="#2-依赖软件及其安装" class="headerlink" title="2. 依赖软件及其安装"></a>2. 依赖软件及其安装</h2><h3 id="2-1-系统环境配置"><a href="#2-1-系统环境配置" class="headerlink" title="2.1 系统环境配置"></a>2.1 系统环境配置</h3><p>GROMACS 可以在三种主流操作系统上运行，但对初学者最推荐的是 Linux(特别是 Ubuntu)。因为：</p>
-<ul>
-<li>Linux 对科学计算支持最好，安装和配置最直接。</li>
-<li>绝大多数高性能计算机（包括超算）都运行 Linux。</li>
-<li>如果你用的是 Windows，也可以通过“适用于 Linux 的 Windows 子系统（WSL）”来安装 Ubuntu，这样既能保留 Windows 习惯，又能享受 Linux 环境。</li>
-</ul>
-<p>关于系统环境的选择，在这篇博客中进行了对比和详细介绍：<a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">如何搭建合适的生信分析平台</a></p>
-<h3 id="2-2-编译器配置"><a href="#2-2-编译器配置" class="headerlink" title="2.2 编译器配置"></a>2.2 编译器配置</h3><p>GROMACS 的源代码是用 C 和 C++ 编写的，需要编译器将其翻译成机器能执行的指令。<br>最低版本要求：<strong>GCC ≥ 11</strong>（必须支持 C++17 标准）。</p>
-<ul>
-<li><p>第一步：检查当前 GCC 版本</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gcc -v<br>g++ -v<br></code></pre></td></tr></table></figure>
-<p>  如果输出的版本号高于或等于 11，说明已满足要求，可以跳过安装步骤；如果版本低于 11 或提示“命令未找到”，则需要安装 GCC 11。</p>
-</li>
-<li><p>第二步：安装 GCC 11</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span><br><span class="hljs-built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test<br><span class="hljs-built_in">sudo</span> apt update<br><br><span class="hljs-comment"># 安装 GCC 11 和 G++ 11</span><br><span class="hljs-built_in">sudo</span> apt install gcc-11 g++-11<br><br><span class="hljs-comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-11<br><br><span class="hljs-comment"># 如果需要同时保留旧版本，可以添加优先级</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-9<br><br></code></pre></td></tr></table></figure>
+<h2 id="3-2-类-class"><a href="#3-2-类-class" class="headerlink" title="3.2 类 (class)"></a>3.2 类 (class)</h2><p>如果说函数是把一段逻辑打包成一个可调用的名字，那么类就是把<strong>数据</strong>和<strong>操作这些数据的函数</strong>打包在一起。类里面定义的函数不叫函数，叫<strong>方法</strong>；类里面存储的数据不叫变量，叫<strong>属性</strong>。</p>
+<p>由于类将操作对象 (数据) 和操作方法 (操作这些数据的函数) 捆绑在一起，这意味着类的设计是围绕着操作对象而展开的。这种打包方式，被称为<strong>面向对象编程</strong>。</p>
+<p>初学者可以先了解概念，后续再深入。我们先看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):   <span class="hljs-comment"># 初始化方法</span><br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br><br>my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>my_dog.bark()   <span class="hljs-comment"># 输出：旺财 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
 
-<p>  安装完成后，再次检查gcc和g++版本是否符合要求。</p>
-</li>
-</ul>
-<h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
-<ul>
-<li><p>第一步：检查当前 CMake 版本</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
-<p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
-</li>
-<li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y wget gnupg<br>wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null<br><br><span class="hljs-comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="hljs-subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/kitware.list<br><br><span class="hljs-comment"># 更新并安装 cmake</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install cmake<br><br><span class="hljs-comment"># 验证安装</span><br>cmake --version<br></code></pre></td></tr></table></figure></li>
-</ul>
-<hr>
-<h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<p>我们拆开来看这段代码做了什么。</p>
+<p><strong>第一步：定义类</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br></code></pre></td></tr></table></figure>
 
-<p>下载完成后，检查文件是否存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+<p><code>class</code> 是关键字，表示“我要定义一个类”，<code>Dog</code> 是类名，约定首字母大写。</p>
+<p><strong>第二步：写初始化方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):<br>    <span class="hljs-variable language_">self</span>.name = name<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br>    <br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br>    <br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>    <br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br>    <br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
-<p><strong>编译选项解释：</strong></p>
-<ul>
-<li><code>-DGMX_BUILD_OWN_FFTW=ON</code> 让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
-<li><code>-DREGRESSIONTEST_DOWNLOAD=ON</code> 下载回归测试集，之后可以通过 <code>make check</code> 验证编译是否正确。如果不需要测试，可以去掉此选项以节省时间。</li>
-</ul>
-<h3 id="3-3-常见问题（debug）"><a href="#3-3-常见问题（debug）" class="headerlink" title="3.3 常见问题（debug）"></a>3.3 常见问题（debug）</h3><p><strong>问题1：cmake .. 时报错提示编译器版本过低或找不到编译器</strong></p>
-<ul>
-<li>如果运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>时报错提示编译器版本过低或找不到编译器，优先检查gcc &amp; g++的版本是否大于11，CMake版本是否大于3.28，并升级不符合要求的软件。</li>
-<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回到build的上级目录，即gromacs-2025.4</span><br><span class="hljs-built_in">cd</span> ../<br><br><span class="hljs-comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span><br><span class="hljs-built_in">rm</span> -rf build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>问题2：安装完成后输入 gmx 提示命令未找到</strong></p>
-<ul>
-<li>检查是否正确执行了 <code>source /usr/local/gromacs/bin/GMXRC</code>。可以运行 <code>echo $GMXRC</code> 查看是否已设置。若未设置，重新执行 source 命令，或检查是否已将 source 命令加入 <code>~/.bashrc</code> 并重新加载。</li>
-</ul>
+<p><code>__init__</code> 是一个特殊的方法名（前后各两个下划线），它的作用是在你创建对象时<strong>自动执行</strong>。你不需要手动调用它，写 <code>Dog(&quot;旺财&quot;)</code> 的时候，Python 会自动把 <code>&quot;旺财&quot;</code> 传给 <code>name</code> 参数，然后执行 <code>__init__</code> 里的代码。</p>
+<p>这里的 <code>self</code> 代表“<strong>这个对象自己</strong>”，也就是将来创建出来的具体那只狗。<code>self.name = name</code> 的意思是：把传入的 <code>name</code> 存到这个对象的 <code>name</code> 属性里，以后可以通过 <code>self.name</code> 来访问它。</p>
+<p><strong>第三步：写一个普通方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><code>bark</code> 是咱们自定义的方法，它接收 <code>self</code> 作为第一个参数（表示“这个对象自己”），然后用 <code>self.name</code> 拿到了之前存好的名字。</p>
+<p><strong>第四步：用类创建对象（也叫“实例化”）</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这句代码做了三件事：</p>
+<ol>
+<li>创建一个新的空对象；</li>
+<li>自动调用 <code>__init__</code> 方法，把 <code>&quot;旺财&quot;</code> 传进去，存到 <code>self.name</code> 里；</li>
+<li>把创建好的对象赋值给变量 <code>my_dog</code>。</li>
+</ol>
+<p>现在 <code>my_dog</code> 就是一只名字叫“旺财”的具体狗了。</p>
+<p><strong>第五步：调用对象的方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">my_dog.bark()<br></code></pre></td></tr></table></figure>
+
+<p>这句代码的含义是：调用 <code>my_dog</code> 这个对象的 <code>bark</code> 方法。执行时，Python 会自动把 <code>my_dog</code> 作为 <code>self</code> 传进去，所以 <code>bark</code> 里的 <code>self.name</code> 拿到的就是 <code>&quot;旺财&quot;</code>，最终输出“旺财 在汪汪叫！”。</p>
+<p><strong>类比理解</strong>：</p>
+<p>类就像是<strong>一张狗的设计图纸</strong>，规定了狗有名字、会叫。而 <code>my_dog = Dog(&quot;旺财&quot;)</code> 就是按照这张图纸造出了一只<strong>真的狗</strong>。你可以用同一张图纸造出很多只狗：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">dog1 = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>dog2 = Dog(<span class="hljs-string">&quot;小黑&quot;</span>)<br>dog1.bark()   <span class="hljs-comment"># 旺财 在汪汪叫！</span><br>dog2.bark()   <span class="hljs-comment"># 小黑 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
+
+<p>每只狗都有自己的名字，互不干扰。</p>
+<blockquote>
+<p><strong>现阶段只需记住</strong>：类是用来创建对象的模板，对象拥有自己的属性和行为。你用同一个类可以创建多个互不干扰的对象，每个对象都有自己的数据。后面的编程中你会越来越习惯这种组织代码的方式。</p>
+</blockquote>
 <hr>
-<p>至此，你已经成功搭建了一个基础的 GROMACS 模拟平台！从硬件认知到软件安装，每一步都经过了实践检验。接下来，你可以：</p>
+<h1 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h1><h2 id="4-1-文件的调用-打开、读取、写入"><a href="#4-1-文件的调用-打开、读取、写入" class="headerlink" title="4.1 文件的调用 (打开、读取、写入)"></a>4.1 文件的调用 (打开、读取、写入)</h2><p>使用函数 <code>open()</code> 可以打开一个文件，它的第一个参数是文件路径，第二个参数是打开模式：</p>
 <ul>
-<li>学习 GROMACS 的输入文件准备（拓扑、坐标、参数）。</li>
-<li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
-<li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
+<li><code>&#39;r&#39;</code> (read) ：读取模式，文件必须已经存在，否则报错。</li>
+<li><code>&#39;w&#39;</code> (write) ：写入模式，文件不存在则自动创建，<strong>存在则会清空原有内容</strong>，相当于覆盖重写。</li>
+<li><code>&#39;a&#39;</code> (append) ：追加模式，文件不存在则自动创建，写入的内容会添加到<strong>文件末尾</strong>，原有内容不会被覆盖。</li>
 </ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#97;&#104;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+<p>此外，当文件包含中文时，建议指定 <code>encoding=&quot;utf-8&quot;</code>，否则在不同系统上可能出现乱码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开文件 (不存在则创建)</span><br>file.write(<span class="hljs-string">&quot;Hello, Python!&quot;</span>)                    <span class="hljs-comment"># 写入内容</span><br>file.close()                                    <span class="hljs-comment"># 关闭文件，释放资源</span><br><br><span class="hljs-comment"># 读取文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开已有文件</span><br>content = file.read()                           <span class="hljs-comment"># 读取全部内容</span><br><span class="hljs-built_in">print</span>(content)                                  <span class="hljs-comment"># 输出：Hello, Python!</span><br>file.close()                                    <span class="hljs-comment"># 读取完成后也要关闭</span><br></code></pre></td></tr></table></figure>
+
+<p>需要留意的是，如果以 <code>&#39;w&#39;</code> 模式打开一个已有文件，它里面的旧内容会被<strong>清空</strong>。如果你只是想追加内容而不是覆盖，应该使用 <code>&#39;a&#39;</code> 模式。手动调用 <code>close()</code> 是为了告诉操作系统“这个文件我不用了”，释放它占用的资源。如果忘记调用，程序结束时系统虽然会自动回收，但在程序运行期间，文件可能一直被占用，导致其他程序无法操作它。</p>
+<h2 id="4-2-Python-的自动关闭特性-with-语句"><a href="#4-2-Python-的自动关闭特性-with-语句" class="headerlink" title="4.2 Python 的自动关闭特性 (with 语句)"></a>4.2 Python 的自动关闭特性 (with 语句)</h2><p>手动调用 <code>close()</code> 的隐患不只是“容易忘”。即使你记得调用，如果程序在到达 <code>close()</code> 之前抛出了异常，这一行仍然可能被跳过。此外，笔者曾遇见过打开一个文件并长时间保持打开状态，却在两次写入之间耗时过久时，这个文件“失效”的情况。等程序继续写入时，文件早已“不可用”，只留下一句报错。目前尚不清楚导致这种 bug 的确切原因是什么。</p>
+<p>这正是 Python 社区普遍推荐 <code>with</code> 上下文管理器的原因。它能在代码块结束时<strong>主动、确定地</strong>执行 <code>close()</code>，即使发生异常退出，也能保证文件被关闭。基本用法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;自动关闭，放心！&quot;</span>)<br><br><span class="hljs-comment"># 读取 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
+
+<p>但有一点需要澄清：<strong><code>with</code> 不能保证在代码块执行中途文件一定安然无恙。</strong> <code>sleep()</code> 是 <code>time</code> 模块中用于让程序暂停的函数，我们用 <code>sleep()</code> 来模拟打开文件后的长时间耗时操作：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep <span class="hljs-comment"># 调用 sleep 包</span><br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在上面这种写法中，文件虽然是用 <code>with</code> 打开的，但在 <code>sleep()</code> 期间文件一直处于打开状态。如果这段时间足够长，且恰好触发了某些未知的边界条件 (比如笔者此前遇到过的情形)，文件就可能意外“失效”，最终在写入时抛出错误。</p>
+<p><strong>更稳妥的做法不是把 <code>with</code> 当作一个“大包”，而是利用它来做“小包”：</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这个写法的关键区别在于：文件只在写入的那几毫秒内打开，写完立即自动关闭。其他操作耗时再长，文件都没有被打开，自然不存在“文件一直开着”的问题。</p>
+<p>换句话说，<code>with</code> 的真正价值不是“用更大的包把代码罩住”，而是“精确控制文件的打开时间”——需要时打开，用完立即关闭，绝不让文件一直开着。这才是 <code>with</code> 在实战中最稳妥的用法。</p>
+<hr>
+<h1 id="5-代码规范性"><a href="#5-代码规范性" class="headerlink" title="5. 代码规范性"></a>5. 代码规范性</h1><p>写出能运行的代码只是第一步，写出<strong>好看、易读</strong>的代码同样重要。</p>
+<h2 id="5-1-缩进-Indentation"><a href="#5-1-缩进-Indentation" class="headerlink" title="5.1 缩进 (Indentation)"></a>5.1 缩进 (Indentation)</h2><p>Python 用<strong>缩进</strong>表示代码块层级，不像其他语言用大括号。缩进必须<strong>一致</strong> (一般用 4 个空格)。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确缩进</span><br><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;缩进 4 空格&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;同一层级&quot;</span>)<br><br><span class="hljs-comment"># 错误示范 (缩进不一致会报错) </span><br><span class="hljs-comment"># if True:</span><br><span class="hljs-comment">#   print(&quot;用了2空格&quot;)</span><br><span class="hljs-comment">#     print(&quot;又用了4空格&quot;)   # IndentationError</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>大多数代码编辑器会自动将 Tab 转为空格，建议设置 Tab &#x3D; 4 空格。</p>
+</blockquote>
+<h2 id="5-2-注释-Comment"><a href="#5-2-注释-Comment" class="headerlink" title="5.2 注释 (Comment)"></a>5.2 注释 (Comment)</h2><p>注释是给<strong>人</strong>看的解释，Python 解释器会完全忽略它，不会影响程序的运行。</p>
+<ul>
+<li><strong>单行注释</strong>：以 <code>#</code> 开头，用于解释单行代码或做简短说明。</li>
+<li><strong>多行注释</strong>：用三个引号 <code>&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;</code> 包裹，通常放在文件开头、函数或类的开头，用于写较长的说明。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这是单行注释，解释下面这行代码的作用</span><br>age = <span class="hljs-number">18</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">这是多行注释</span><br><span class="hljs-string">可以写较长的说明文字</span><br><span class="hljs-string">比如说明整个模块的用途</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注释应该写什么？</strong></p>
+<p>很多新手容易犯的毛病是注释“代码在做什么”，比如 <code>i += 1  # i 加 1</code>，这种注释毫无意义——代码本身已经说清楚了。好的注释应该解释<strong>为什么这么做</strong>，也就是代码背后的意图和思路。</p>
+<p>一个简单而有效的注释习惯是：<strong>记录你的输入、输出和原理</strong>。换句话说，在你写一段逻辑之前，先用注释回答三个问题：</p>
+<ul>
+<li>这段代码的输入是什么？ (数据从哪里来、是什么格式)</li>
+<li>这段代码的输出是什么？ (期望得到什么结果)</li>
+<li>这段代码的核心思路是什么？ (实现逻辑)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 输入：一个包含多个数字的列表</span><br><span class="hljs-comment"># 输出：列表中所有偶数的平方组成的新列表</span><br><span class="hljs-comment"># 原理：遍历列表，筛选偶数后计算平方，收集到新列表中</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n ** <span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[4, 16, 36]</span><br></code></pre></td></tr></table></figure>
+
+<p>这样做有几个好处：首先，写注释的过程会让你先把思路理清楚，而不是直接上手写代码然后在过程中把自己绕晕。其次，当代码量增多时，你能快速回想起当初的设计意图，而不需要从头读一遍每一行代码。在调用时也能快速上手。</p>
+<p><strong>函数的注释 (文档字符串)</strong>：</p>
+<p>在定义函数时，可以在函数内部开头用三个引号写一段说明，这叫<strong>文档字符串 (docstring)</strong>。它和普通注释的区别在于，文档字符串可以通过 <code>help()</code> 函数被查看，方便其他使用者了解函数的用途。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_average</span>(<span class="hljs-params">numbers</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算一个数字列表的平均值。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    输入：一个包含数字的列表</span><br><span class="hljs-string">    输出：平均值 (浮点数)</span><br><span class="hljs-string">    原理：先求和，再除以列表长度</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    total = <span class="hljs-built_in">sum</span>(numbers)<br>    <span class="hljs-keyword">return</span> total / <span class="hljs-built_in">len</span>(numbers)<br><br><span class="hljs-comment"># 通过 help 查看函数说明</span><br><span class="hljs-built_in">help</span>(calculate_average)<br></code></pre></td></tr></table></figure>
+
+<p>在函数中写文档字符串是一个非常好的习惯，它让代码自带“说明书”，别人 (包括未来的你自己) 看这个函数时不需要去猜它是干嘛的。</p>
+<p><strong>最后一点</strong>：不必过度注释。好的代码本身应该是清晰、易读的，变量名取得好、逻辑分得清，很多地方根本不需要注释。把注释留给那些<strong>确实需要解释的复杂逻辑</strong>，它才能真正发挥价值。</p>
+<hr>
+<h1 id="6-做一个“调包侠”"><a href="#6-做一个“调包侠”" class="headerlink" title="6. 做一个“调包侠”"></a>6. 做一个“调包侠”</h1><h2 id="6-1-使用第三方库"><a href="#6-1-使用第三方库" class="headerlink" title="6.1 使用第三方库"></a>6.1 使用第三方库</h2><p>Python 的一大魅力在于<strong>海量的第三方库</strong>。你不需要自己重新发明轮子，只需安装并导入别人写好的库，就能快速实现复杂功能。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 安装库 (在终端执行)：pip install requests</span><br><br><span class="hljs-comment"># 使用库</span><br><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com&quot;</span>)<br><span class="hljs-built_in">print</span>(response.status_code)   <span class="hljs-comment"># 输出 200</span><br></code></pre></td></tr></table></figure>
+
+<p>常用库举例：</p>
+<ul>
+<li><strong><code>pandas</code></strong>：数据处理</li>
+<li><strong><code>numpy</code></strong>：科学计算</li>
+<li><strong><code>matplotlib</code></strong>：绘图</li>
+<li><strong><code>flask</code></strong> &#x2F; <strong><code>django</code></strong>：Web 开发</li>
+</ul>
+<p>初学时，<strong>先学会阅读库的官方文档</strong>，知道怎么调用函数、传递参数，比背下所有方法更重要。</p>
+<h2 id="6-2-调用你自己写的代码"><a href="#6-2-调用你自己写的代码" class="headerlink" title="6.2 调用你自己写的代码"></a>6.2 调用你自己写的代码</h2><p>除了调用别人写的库，你还需要学会调用<strong>自己写的代码</strong>——比如你在一个文件里写好了几个常用函数，想在另一个文件里直接使用，而不需要复制粘贴。</p>
+<p>假设你写了一个 <code>my_tools.py</code> 文件，里面放了一个函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># my_tools.py</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>现在你在另一个文件 (比如 <code>main.py</code>) 里想用这个函数，只需要用 <code>import</code> 导入它：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">import</span> my_tools<br><br>message = my_tools.greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p>如果不想每次写 <code>my_tools.</code> 前缀，也可以用 <code>from ... import ...</code> 直接把函数“拎”出来：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">from</span> my_tools <span class="hljs-keyword">import</span> greet<br><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)   <span class="hljs-comment"># 直接调用，不需要前缀</span><br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意几点</strong>：</p>
+<ul>
+<li>两个文件需要在<strong>同一个文件夹</strong>下，否则 Python 找不到。</li>
+<li>导入时<strong>不需要加 <code>.py</code> 后缀</strong>，写 <code>import my_tools</code> 而不是 <code>import my_tools.py</code>。</li>
+<li>文件名建议用纯英文，不要以数字开头（比如 <code>1_tools.py</code> 就不行）。</li>
+</ul>
+<p>把自己写的代码拆成多个文件，是组织大型项目的常用方式。好处很明显：通用功能放一起，主逻辑放另一个文件，各司其职，方便维护和复用。</p>
+<hr>
+<h1 id="7-print-调试法-最简单的调试手段"><a href="#7-print-调试法-最简单的调试手段" class="headerlink" title="7. print 调试法 (最简单的调试手段)"></a>7. print 调试法 (最简单的调试手段)</h1><p>当程序运行结果与预期不符时，最直接的排查手段是在<strong>关键位置插入 print()</strong> 语句，包括：</p>
+<ul>
+<li>打印出关键变量的值，以便对照实际执行结果与预期是否一致。</li>
+<li>在程序分支的关键节点 (如条件判断处、循环进入&#x2F;退出处) 插入 print()，用以跟踪程序的执行轨迹。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">divide</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;a=<span class="hljs-subst">&#123;a&#125;</span>, b=<span class="hljs-subst">&#123;b&#125;</span>&quot;</span>)   <span class="hljs-comment"># 调试：看传入的参数</span><br>    result = a / b<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;result=<span class="hljs-subst">&#123;result&#125;</span>&quot;</span>) <span class="hljs-comment"># 调试：看计算结果</span><br>    <span class="hljs-keyword">return</span> result<br><br>divide(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)   <span class="hljs-comment"># 你会看到 b=0，然后报错 ZeroDivisionError</span><br></code></pre></td></tr></table></figure>
+
+<p>通过打印信息，你可以快速定位哪一步出了问题。虽然还有更高级的调试工具 (如 pdb、IDE 断点)，但对于入门者，<code>print</code> 足够应对 80% 的场景。</p>
+<hr>
+<p>到这里，你已经浏览了 Python 的核心骨架：结构、运算、打包、文件、规范、调库和调试。这些内容能让你读懂入门代码，也能自己写点小工具。</p>
+<p><strong>接下来做什么？</strong></p>
+<ul>
+<li>打开 Python，把文中示例挨个敲一遍</li>
+<li>不懂就 print() 看看中间结果</li>
+<li>想扩展功能，去 PyPI 找找库</li>
+</ul>
+<p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
+<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#x72;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
 ]]></content>
       <categories>
-        <category>GROMACS分子动力学模拟</category>
+        <category>Python 入门</category>
       </categories>
       <tags>
-        <tag>实验平台搭建</tag>
-        <tag>分子动力学模拟</tag>
+        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
@@ -1207,7 +1607,7 @@
 <p>如果在后续使用中需要创建虚拟环境，可使用：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
 
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#104;&#105;&#107;&#101;&#114;&#x40;&#x31;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#x68;&#x69;&#x6b;&#101;&#x72;&#64;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -1258,7 +1658,7 @@
 <h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
 <p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
 <hr>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#104;&#x69;&#107;&#101;&#114;&#x40;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#64;&#x31;&#54;&#51;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -1268,19 +1668,90 @@
       </tags>
   </entry>
   <entry>
-    <title>欢迎来到 AuroraHiker’s Code Trail</title>
-    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
-<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
-<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#x75;&#x72;&#x6f;&#x72;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#x40;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
+    <title>LightDock分子对接的实验平台搭建</title>
+    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
+<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
+<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
+<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+<hr>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
+<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
+<p>笔者的硬件配置如下：</p>
+<ul>
+<li>CPU：AMD Ryzen 7 9700X</li>
+<li>内存：64 GB RAM</li>
+</ul>
+<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
+<hr>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#108;&#x69;&#103;&#104;&#116;&#x64;&#x6f;&#99;&#x6b;&#105;&#x6e;&#103;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
+<p>支持的具体系统版本如下：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>macOS</td>
+<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
+</tr>
+<tr>
+<td>GNU&#x2F;Linux</td>
+<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
+</tr>
+<tr>
+<td>Scipy</td>
+<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
+</tr>
+<tr>
+<td>Cython</td>
+<td><a href="http://cython.org/">http://cython.org/</a></td>
+</tr>
+<tr>
+<td>ProDy</td>
+<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
+</tr>
+<tr>
+<td>Freesasa</td>
+<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
+<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
+
+<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#97;&#x68;&#105;&#x6b;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>。</p>
+<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
 ]]></content>
       <categories>
-        <category>关于</category>
+        <category>分子对接</category>
       </categories>
       <tags>
-        <tag>欢迎</tag>
-        <tag>介绍</tag>
+        <tag>实验平台搭建</tag>
+        <tag>分子对接</tag>
+        <tag>LightDock</tag>
       </tags>
   </entry>
   <entry>
@@ -1599,7 +2070,7 @@
 <li>可视化特征重要性。</li>
 </ol>
 <p>现在，你可以将这套流程应用到自己的分类任务中。<strong>数据划分 → 调参 → 训练 → 评估</strong> 是机器学习项目的经典流水线，多加练习，你会越来越熟练！</p>
-<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#x68;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
+<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#97;&#x75;&#114;&#x6f;&#x72;&#x61;&#104;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#x36;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
 ]]></content>
       <categories>
         <category>机器学习入门</category>
@@ -1704,7 +2175,7 @@
 <li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#x68;&#x69;&#107;&#x65;&#114;&#x40;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#x6f;&#114;&#97;&#x68;&#x69;&#x6b;&#101;&#114;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
 <hr>
 <p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
 ]]></content>
@@ -1713,385 +2184,6 @@
       </categories>
       <tags>
         <tag>计算机基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LightDock分子对接的实验平台搭建</title>
-    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
-<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
-<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
-<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
-<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
-<p>笔者的硬件配置如下：</p>
-<ul>
-<li>CPU：AMD Ryzen 7 9700X</li>
-<li>内存：64 GB RAM</li>
-</ul>
-<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
-<hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#108;&#105;&#103;&#x68;&#x74;&#x64;&#111;&#x63;&#107;&#x69;&#110;&#103;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
-<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
-<p>支持的具体系统版本如下：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>macOS</td>
-<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
-</tr>
-<tr>
-<td>GNU&#x2F;Linux</td>
-<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
-<table>
-<thead>
-<tr>
-<th>软件</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
-</tr>
-<tr>
-<td>Scipy</td>
-<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
-</tr>
-<tr>
-<td>Cython</td>
-<td><a href="http://cython.org/">http://cython.org/</a></td>
-</tr>
-<tr>
-<td>ProDy</td>
-<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
-</tr>
-<tr>
-<td>Freesasa</td>
-<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
-<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
-
-<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
-
-<hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#97;&#104;&#x69;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>。</p>
-<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
-]]></content>
-      <categories>
-        <category>分子对接</category>
-      </categories>
-      <tags>
-        <tag>实验平台搭建</tag>
-        <tag>分子对接</tag>
-        <tag>LightDock</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 入门：写给完全没学过编程的你</title>
-    <url>/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/</url>
-    <content><![CDATA[<p>本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。</p>
-<p>无论你未来用 Python 做数据分析、网站后端，还是自动化脚本，有 7 个知识点是所有程序都绕不开的。本文就按这 7 大块，带你快速过一遍。不追求面面俱到，只讲最常用、最必须的部分，帮你快速建立编程思维。</p>
-<hr>
-<h1 id="1-程序设计的基本结构"><a href="#1-程序设计的基本结构" class="headerlink" title="1. 程序设计的基本结构"></a>1. 程序设计的基本结构</h1><p>所有任务都可以解构为以下 <strong>顺序、条件、循环</strong> 三种基本结构。无论多么复杂的程序，归根结底都是由这三种结构组合而成的。下面我们逐一来看 Python 如何实现它们。</p>
-<h2 id="1-1-顺序结构"><a href="#1-1-顺序结构" class="headerlink" title="1.1 顺序结构"></a>1.1 顺序结构</h2><p>顺序结构就是代码<strong>从上往下逐行执行</strong>，没有跳转。这是所有程序的默认执行方式，也是另外两种结构 (条件和循环) 的“地基”——即使有分支和循环，代码的整体走向依然是顺序的，只是局部发生了跳转。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第一步&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第二步&quot;</span>)   <span class="hljs-comment"># 先执行完上一行，才执行这一行</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第三步&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<h2 id="1-2-条件结构-if-elif-else"><a href="#1-2-条件结构-if-elif-else" class="headerlink" title="1.2 条件结构 (if &#x2F; elif &#x2F; else)"></a>1.2 条件结构 (if &#x2F; elif &#x2F; else)</h2><p>根据条件是否成立，决定执行哪段代码。语法上注意 <strong>冒号</strong> 和 <strong>缩进</strong> (缩进后面会专门讲)。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">18</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;已成年&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未成年&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>多分支用 <code>elif</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">score = <span class="hljs-number">85</span><br><span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">90</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;优秀&quot;</span>)<br><span class="hljs-keyword">elif</span> score &gt;= <span class="hljs-number">60</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;及格&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不及格&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>在条件结构中，Python 会从<strong>上到下依次判断</strong>每个条件，一旦某个条件成立，就会执行对应的代码块，并跳过后面所有的 elif 和 else。注意，else 不需要写任何条件，它表示所有条件都不满足时的默认情况。</p>
-</blockquote>
-<h2 id="1-3-循环结构-for-while"><a href="#1-3-循环结构-for-while" class="headerlink" title="1.3 循环结构 (for &#x2F; while)"></a>1.3 循环结构 (for &#x2F; while)</h2><p>重复执行某段代码，直到条件不满足。</p>
-<ul>
-<li><strong><code>for</code> 循环</strong>：常用于遍历序列 (如列表、字符串) 或固定次数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 遍历列表</span><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;苹果&quot;</span>, <span class="hljs-string">&quot;香蕉&quot;</span>, <span class="hljs-string">&quot;橘子&quot;</span>]:<br>    <span class="hljs-built_in">print</span>(fruit)<br><br><span class="hljs-comment"># 重复 5 次 (range(5) 生成 0~4) </span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;i&#125;</span> 次循环&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><strong><code>while</code> 循环</strong>：只要条件为真就继续，适合不知道具体次数的情况。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">count = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> count &lt; <span class="hljs-number">3</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中...&quot;</span>)<br>    count += <span class="hljs-number">1</span>   <span class="hljs-comment"># 一定要修改条件，否则死循环</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用 <code>while</code> 时，务必记得在循环体内改变循环变量的值，否则会陷入死循环。</p>
-</blockquote>
-<h2 id="1-4-三元操作与列表推导式-进阶"><a href="#1-4-三元操作与列表推导式-进阶" class="headerlink" title="1.4 三元操作与列表推导式 (进阶)"></a>1.4 三元操作与列表推导式 (进阶)</h2><h3 id="1-4-1-三元操作-if-else-简写"><a href="#1-4-1-三元操作-if-else-简写" class="headerlink" title="1.4.1 三元操作 (if-else 简写)"></a>1.4.1 三元操作 (if-else 简写)</h3><p>三元操作是一种 <strong>简写的 if-else</strong>，适合在单行内根据条件赋不同值。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br>status = <span class="hljs-string">&quot;成年&quot;</span> <span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;未成年&quot;</span><br><span class="hljs-built_in">print</span>(status)   <span class="hljs-comment"># 输出：成年</span><br></code></pre></td></tr></table></figure>
-
-<p>语法：<code>值1 if 条件 else 值2</code> —— 条件成立取 <code>值1</code>，否则取 <code>值2</code>。</p>
-<h3 id="列表推导式-循环-条件的组合简写"><a href="#列表推导式-循环-条件的组合简写" class="headerlink" title="列表推导式 (循环 + 条件的组合简写)"></a>列表推导式 (循环 + 条件的组合简写)</h3><p>三元操作不只用于单个值的判断，它还可以和循环结合，在<strong>一行代码内</strong>对列表中的所有元素进行批量处理。这种写法被称为 <strong>列表推导式</strong>。</p>
-<p>举个场景：你有一个数字列表，想把所有偶数保留下来，过滤掉奇数。</p>
-<p>传统的写法需要先用 <code>for</code> 循环遍历，再用 <code>if</code> 判断，最后用 <code>append</code> 添加到新列表，至少需要三四行代码。而用列表推导式可以压缩成一行：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 传统写法</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br><br><span class="hljs-comment"># 列表推导式写法 (一行搞定)</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[2, 4, 6]</span><br></code></pre></td></tr></table></figure>
-
-<p>列表推导式还能结合三元操作，在遍历的同时根据条件决定每个元素取什么值。比如把列表中的奇数变成 <code>&quot;奇数&quot;</code>，偶数变成 <code>&quot;偶数&quot;</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]<br>result = [<span class="hljs-string">&quot;偶数&quot;</span> <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;奇数&quot;</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers]<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[&#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;, &#x27;偶数&#x27;, &#x27;奇数&#x27;]</span><br></code></pre></td></tr></table></figure>
-
-<p>格式拆解：<code>[对每个元素做的事 for 元素 in 列表 if 筛选条件]</code></p>
-<p>顺序是<strong>先循环、再判断、最后取结果</strong>，读的时候可以从 <code>for</code> 开始往两边读。</p>
-<p><strong>新手须知</strong>：三元操作和列表推导式属于“进阶语法”，它们存在的意义是让代码更简洁、更高效——尤其是在处理大量数据时，列表推导式比手动 <code>for</code> 循环速度更快，因为它在底层经过了优化。但如果你是初学者，暂时不学它们也完全不影响你写程序。先用 <code>if-else</code> 和 <code>for</code> 循环把逻辑理清楚，等你写习惯了，自然会觉得这些简写用起来更顺手。到时候再回来翻这一节也来得及。</p>
-<hr>
-<h1 id="2-Python-的基础运算"><a href="#2-Python-的基础运算" class="headerlink" title="2. Python 的基础运算"></a>2. Python 的基础运算</h1><h2 id="2-1-数学运算符"><a href="#2-1-数学运算符" class="headerlink" title="2.1 数学运算符"></a>2.1 数学运算符</h2><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>含义</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>+</code></td>
-<td>加</td>
-<td><code>3 + 5</code></td>
-</tr>
-<tr>
-<td><code>-</code></td>
-<td>减</td>
-<td><code>10 - 4</code></td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>乘</td>
-<td><code>2 * 6</code></td>
-</tr>
-<tr>
-<td><code>/</code></td>
-<td>除 (浮点)</td>
-<td><code>10 / 3</code> → 3.333…</td>
-</tr>
-<tr>
-<td><code>//</code></td>
-<td>整除 (取整)</td>
-<td><code>10 // 3</code> → 3</td>
-</tr>
-<tr>
-<td><code>%</code></td>
-<td>取余 (模)</td>
-<td><code>10 % 3</code> → 1</td>
-</tr>
-<tr>
-<td><code>**</code></td>
-<td>幂运算</td>
-<td><code>2 ** 3</code> → 8</td>
-</tr>
-</tbody></table>
-<p><strong>需要注意以下几点：</strong></p>
-<ul>
-<li><p>加减乘 (+ - *) ：只要参与运算的任意一方是浮点数，结果就是浮点数。比如 3 + 2.0 得 5.0，4 * 1.5 得 6.0。</p>
-</li>
-<li><p>除法 (&#x2F;) ：结果永远是浮点数，即使两个整数相除能整除，结果也会带上小数位（如 4 &#x2F; 2 得 2.0）。</p>
-</li>
-<li><p>整除 (&#x2F;&#x2F;) ：取整数部分，常用于取整操作。</p>
-</li>
-<li><p>取余 (%) ：返回余数，最常见的用途是判断奇偶：num % 2 &#x3D;&#x3D; 0 表示偶数，否则为奇数。</p>
-</li>
-</ul>
-<h2 id="2-2-逻辑运算符"><a href="#2-2-逻辑运算符" class="headerlink" title="2.2 逻辑运算符"></a>2.2 逻辑运算符</h2><p>逻辑运算符用于组合多个条件，返回布尔值 <code>True</code> 或 <code>False</code>。</p>
-<ul>
-<li><code>and</code> (与) ：两边都为真才为真</li>
-<li><code>or</code> (或) ：至少一边为真即为真</li>
-<li><code>not</code> (非) ：取反</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">x = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> x &lt; <span class="hljs-number">10</span>)   <span class="hljs-comment"># True</span><br><span class="hljs-built_in">print</span>(x &gt; <span class="hljs-number">10</span> <span class="hljs-keyword">or</span> x &lt; <span class="hljs-number">3</span>)    <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(<span class="hljs-keyword">not</span> (x == <span class="hljs-number">5</span>))       <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
-
-<p>逻辑运算在条件判断中非常常用，比如在 <code>if</code> 或 <code>while</code> 中组合多个判断条件。</p>
-<p><strong>聊聊布尔值本身</strong>。</p>
-<p>在 Python 中，<code>True</code> 和 <code>False</code> 其实是关键字，但它们底层对应的就是整数 <code>1</code> 和 <code>0</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">True</span>))   <span class="hljs-comment"># 输出 1</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(<span class="hljs-literal">False</span>))  <span class="hljs-comment"># 输出 0</span><br></code></pre></td></tr></table></figure>
-
-<p>这意味着任何需要布尔值的地方，你都可以直接用数字来代替：<strong>非零的数字被视为 <code>True</code>，<code>0</code> 被视为 <code>False</code></strong>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> <span class="hljs-number">1</span>:               <span class="hljs-comment"># 等价于 if True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;成立&quot;</span>)   <span class="hljs-comment"># 永远会执行</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-number">0</span>:               <span class="hljs-comment"># 等价于 if False</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;不成立&quot;</span>) <span class="hljs-comment"># 永远不会执行</span><br></code></pre></td></tr></table></figure>
-
-<p>这也解释了一个在 Python 中看似“奇怪”但非常经典的永动机写法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:   <span class="hljs-comment"># 1 永远为真，等价于 while True</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;循环中&quot;</span>)   <span class="hljs-comment"># 会无限循环下去</span><br></code></pre></td></tr></table></figure>
-
-<p>这里的 <code>while 1</code> 会一直循环，因为 <code>1</code> 永远被当作 <code>True</code> 处理。这种写法在老代码中很常见，本质上就是 <code>while True</code> 的简写。所以当你看到 <code>while 1</code> 时，只需要知道：<strong>只要数字不是 0，条件就永远为真</strong>。</p>
-<hr>
-<h1 id="3-代码打包-函数与类"><a href="#3-代码打包-函数与类" class="headerlink" title="3. 代码打包 (函数与类)"></a>3. 代码打包 (函数与类)</h1><p>当代码越来越多，我们需要<strong>打包</strong>起来复用，避免重复书写。</p>
-<h2 id="3-1-函数-function"><a href="#3-1-函数-function" class="headerlink" title="3.1 函数 (function)"></a>3.1 函数 (function)</h2><p>简单来说，函数就是<strong>打包了一套数据处理流程</strong>。你不用关心它内部是怎么一步步处理的，只需要知道“给它什么，它会返回什么”就够了。这种把一段逻辑封装成一个独立单元、按流程执行的方式，通常被称为<strong>面向过程编程</strong>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br><br><span class="hljs-comment"># 调用函数</span><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
-
-<p>我们拆开来看这段代码做了什么。</p>
-<p><strong>定义函数</strong>：用 <code>def</code> 关键字告诉 Python“我要定义一个函数”，后面跟函数名（这里叫 <code>greet</code>），括号里写参数（这里叫 <code>name</code>），冒号后面缩进的部分是函数体。函数体里用 <code>return</code> 返回结果。</p>
-<p><strong>调用函数</strong>：写 <code>greet(&quot;小明&quot;)</code> 时，Python 会跳进函数体，把 <code>&quot;小明&quot;</code> 赋给参数 <code>name</code>，执行完 <code>return</code> 后把结果返回给调用处，赋值给 <code>message</code>。</p>
-<p><strong>函数的好处</strong>：如果你需要多次对不同的名字做同样的操作，不用重复写代码，只需要反复调用同一个函数即可：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小明&quot;</span>))   <span class="hljs-comment"># 你好，小明！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小红&quot;</span>))   <span class="hljs-comment"># 你好，小红！</span><br><span class="hljs-built_in">print</span>(greet(<span class="hljs-string">&quot;小刚&quot;</span>))   <span class="hljs-comment"># 你好，小刚！</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>关于“面向过程”的简单理解</strong>：</p>
-<p>面向过程的核心理念是：程序就是一系列操作步骤的集合，把数据丢进去，经过一步步处理，最后输出结果。函数就是用来组织这些步骤的基本单元。你写函数 A 处理第一步，函数 B 处理第二步，然后按顺序把它们串起来，整个程序就按照你设计的流程跑完了。初学阶段你大部分时间都在写这种风格的代码，它直观、好理解，非常适合从零开始建立编程思维。</p>
-</blockquote>
-<h2 id="3-2-类-class"><a href="#3-2-类-class" class="headerlink" title="3.2 类 (class)"></a>3.2 类 (class)</h2><p>如果说函数是把一段逻辑打包成一个可调用的名字，那么类就是把<strong>数据</strong>和<strong>操作这些数据的函数</strong>打包在一起。类里面定义的函数不叫函数，叫<strong>方法</strong>；类里面存储的数据不叫变量，叫<strong>属性</strong>。</p>
-<p>由于类将操作对象 (数据) 和操作方法 (操作这些数据的函数) 捆绑在一起，这意味着类的设计是围绕着操作对象而展开的。这种打包方式，被称为<strong>面向对象编程</strong>。</p>
-<p>初学者可以先了解概念，后续再深入。我们先看一个例子：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):   <span class="hljs-comment"># 初始化方法</span><br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br><br>my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>my_dog.bark()   <span class="hljs-comment"># 输出：旺财 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
-
-<p>我们拆开来看这段代码做了什么。</p>
-<p><strong>第一步：定义类</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br></code></pre></td></tr></table></figure>
-
-<p><code>class</code> 是关键字，表示“我要定义一个类”，<code>Dog</code> 是类名，约定首字母大写。</p>
-<p><strong>第二步：写初始化方法</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):<br>    <span class="hljs-variable language_">self</span>.name = name<br></code></pre></td></tr></table></figure>
-
-<p><code>__init__</code> 是一个特殊的方法名（前后各两个下划线），它的作用是在你创建对象时<strong>自动执行</strong>。你不需要手动调用它，写 <code>Dog(&quot;旺财&quot;)</code> 的时候，Python 会自动把 <code>&quot;旺财&quot;</code> 传给 <code>name</code> 参数，然后执行 <code>__init__</code> 里的代码。</p>
-<p>这里的 <code>self</code> 代表“<strong>这个对象自己</strong>”，也就是将来创建出来的具体那只狗。<code>self.name = name</code> 的意思是：把传入的 <code>name</code> 存到这个对象的 <code>name</code> 属性里，以后可以通过 <code>self.name</code> 来访问它。</p>
-<p><strong>第三步：写一个普通方法</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bark</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> 在汪汪叫！&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p><code>bark</code> 是咱们自定义的方法，它接收 <code>self</code> 作为第一个参数（表示“这个对象自己”），然后用 <code>self.name</code> 拿到了之前存好的名字。</p>
-<p><strong>第四步：用类创建对象（也叫“实例化”）</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">my_dog = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>这句代码做了三件事：</p>
-<ol>
-<li>创建一个新的空对象；</li>
-<li>自动调用 <code>__init__</code> 方法，把 <code>&quot;旺财&quot;</code> 传进去，存到 <code>self.name</code> 里；</li>
-<li>把创建好的对象赋值给变量 <code>my_dog</code>。</li>
-</ol>
-<p>现在 <code>my_dog</code> 就是一只名字叫“旺财”的具体狗了。</p>
-<p><strong>第五步：调用对象的方法</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">my_dog.bark()<br></code></pre></td></tr></table></figure>
-
-<p>这句代码的含义是：调用 <code>my_dog</code> 这个对象的 <code>bark</code> 方法。执行时，Python 会自动把 <code>my_dog</code> 作为 <code>self</code> 传进去，所以 <code>bark</code> 里的 <code>self.name</code> 拿到的就是 <code>&quot;旺财&quot;</code>，最终输出“旺财 在汪汪叫！”。</p>
-<p><strong>类比理解</strong>：</p>
-<p>类就像是<strong>一张狗的设计图纸</strong>，规定了狗有名字、会叫。而 <code>my_dog = Dog(&quot;旺财&quot;)</code> 就是按照这张图纸造出了一只<strong>真的狗</strong>。你可以用同一张图纸造出很多只狗：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">dog1 = Dog(<span class="hljs-string">&quot;旺财&quot;</span>)<br>dog2 = Dog(<span class="hljs-string">&quot;小黑&quot;</span>)<br>dog1.bark()   <span class="hljs-comment"># 旺财 在汪汪叫！</span><br>dog2.bark()   <span class="hljs-comment"># 小黑 在汪汪叫！</span><br></code></pre></td></tr></table></figure>
-
-<p>每只狗都有自己的名字，互不干扰。</p>
-<blockquote>
-<p><strong>现阶段只需记住</strong>：类是用来创建对象的模板，对象拥有自己的属性和行为。你用同一个类可以创建多个互不干扰的对象，每个对象都有自己的数据。后面的编程中你会越来越习惯这种组织代码的方式。</p>
-</blockquote>
-<hr>
-<h1 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h1><h2 id="4-1-文件的调用-打开、读取、写入"><a href="#4-1-文件的调用-打开、读取、写入" class="headerlink" title="4.1 文件的调用 (打开、读取、写入)"></a>4.1 文件的调用 (打开、读取、写入)</h2><p>使用函数 <code>open()</code> 可以打开一个文件，它的第一个参数是文件路径，第二个参数是打开模式：</p>
-<ul>
-<li><code>&#39;r&#39;</code> (read) ：读取模式，文件必须已经存在，否则报错。</li>
-<li><code>&#39;w&#39;</code> (write) ：写入模式，文件不存在则自动创建，<strong>存在则会清空原有内容</strong>，相当于覆盖重写。</li>
-<li><code>&#39;a&#39;</code> (append) ：追加模式，文件不存在则自动创建，写入的内容会添加到<strong>文件末尾</strong>，原有内容不会被覆盖。</li>
-</ul>
-<p>此外，当文件包含中文时，建议指定 <code>encoding=&quot;utf-8&quot;</code>，否则在不同系统上可能出现乱码。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开文件 (不存在则创建)</span><br>file.write(<span class="hljs-string">&quot;Hello, Python!&quot;</span>)                    <span class="hljs-comment"># 写入内容</span><br>file.close()                                    <span class="hljs-comment"># 关闭文件，释放资源</span><br><br><span class="hljs-comment"># 读取文件</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)  <span class="hljs-comment"># 打开已有文件</span><br>content = file.read()                           <span class="hljs-comment"># 读取全部内容</span><br><span class="hljs-built_in">print</span>(content)                                  <span class="hljs-comment"># 输出：Hello, Python!</span><br>file.close()                                    <span class="hljs-comment"># 读取完成后也要关闭</span><br></code></pre></td></tr></table></figure>
-
-<p>需要留意的是，如果以 <code>&#39;w&#39;</code> 模式打开一个已有文件，它里面的旧内容会被<strong>清空</strong>。如果你只是想追加内容而不是覆盖，应该使用 <code>&#39;a&#39;</code> 模式。手动调用 <code>close()</code> 是为了告诉操作系统“这个文件我不用了”，释放它占用的资源。如果忘记调用，程序结束时系统虽然会自动回收，但在程序运行期间，文件可能一直被占用，导致其他程序无法操作它。</p>
-<h2 id="4-2-Python-的自动关闭特性-with-语句"><a href="#4-2-Python-的自动关闭特性-with-语句" class="headerlink" title="4.2 Python 的自动关闭特性 (with 语句)"></a>4.2 Python 的自动关闭特性 (with 语句)</h2><p>手动调用 <code>close()</code> 的隐患不只是“容易忘”。即使你记得调用，如果程序在到达 <code>close()</code> 之前抛出了异常，这一行仍然可能被跳过。此外，笔者曾遇见过打开一个文件并长时间保持打开状态，却在两次写入之间耗时过久时，这个文件“失效”的情况。等程序继续写入时，文件早已“不可用”，只留下一句报错。目前尚不清楚导致这种 bug 的确切原因是什么。</p>
-<p>这正是 Python 社区普遍推荐 <code>with</code> 上下文管理器的原因。它能在代码块结束时<strong>主动、确定地</strong>执行 <code>close()</code>，即使发生异常退出，也能保证文件被关闭。基本用法如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 写入 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&quot;自动关闭，放心！&quot;</span>)<br><br><span class="hljs-comment"># 读取 (自动关闭)</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;test.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>    <span class="hljs-built_in">print</span>(content)<br></code></pre></td></tr></table></figure>
-
-<p>但有一点需要澄清：<strong><code>with</code> 不能保证在代码块执行中途文件一定安然无恙。</strong> <code>sleep()</code> 是 <code>time</code> 模块中用于让程序暂停的函数，我们用 <code>sleep()</code> 来模拟打开文件后的长时间耗时操作：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep <span class="hljs-comment"># 调用 sleep 包</span><br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>在上面这种写法中，文件虽然是用 <code>with</code> 打开的，但在 <code>sleep()</code> 期间文件一直处于打开状态。如果这段时间足够长，且恰好触发了某些未知的边界条件 (比如笔者此前遇到过的情形)，文件就可能意外“失效”，最终在写入时抛出错误。</p>
-<p><strong>更稳妥的做法不是把 <code>with</code> 当作一个“大包”，而是利用它来做“小包”：</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sleep(times)    <span class="hljs-comment"># 假设 times 很长</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(<span class="hljs-string">&#x27;Hello World!&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>这个写法的关键区别在于：文件只在写入的那几毫秒内打开，写完立即自动关闭。其他操作耗时再长，文件都没有被打开，自然不存在“文件一直开着”的问题。</p>
-<p>换句话说，<code>with</code> 的真正价值不是“用更大的包把代码罩住”，而是“精确控制文件的打开时间”——需要时打开，用完立即关闭，绝不让文件一直开着。这才是 <code>with</code> 在实战中最稳妥的用法。</p>
-<hr>
-<h1 id="5-代码规范性"><a href="#5-代码规范性" class="headerlink" title="5. 代码规范性"></a>5. 代码规范性</h1><p>写出能运行的代码只是第一步，写出<strong>好看、易读</strong>的代码同样重要。</p>
-<h2 id="5-1-缩进-Indentation"><a href="#5-1-缩进-Indentation" class="headerlink" title="5.1 缩进 (Indentation)"></a>5.1 缩进 (Indentation)</h2><p>Python 用<strong>缩进</strong>表示代码块层级，不像其他语言用大括号。缩进必须<strong>一致</strong> (一般用 4 个空格)。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确缩进</span><br><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;缩进 4 空格&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;同一层级&quot;</span>)<br><br><span class="hljs-comment"># 错误示范 (缩进不一致会报错) </span><br><span class="hljs-comment"># if True:</span><br><span class="hljs-comment">#   print(&quot;用了2空格&quot;)</span><br><span class="hljs-comment">#     print(&quot;又用了4空格&quot;)   # IndentationError</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>大多数代码编辑器会自动将 Tab 转为空格，建议设置 Tab &#x3D; 4 空格。</p>
-</blockquote>
-<h2 id="5-2-注释-Comment"><a href="#5-2-注释-Comment" class="headerlink" title="5.2 注释 (Comment)"></a>5.2 注释 (Comment)</h2><p>注释是给<strong>人</strong>看的解释，Python 解释器会完全忽略它，不会影响程序的运行。</p>
-<ul>
-<li><strong>单行注释</strong>：以 <code>#</code> 开头，用于解释单行代码或做简短说明。</li>
-<li><strong>多行注释</strong>：用三个引号 <code>&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;</code> 包裹，通常放在文件开头、函数或类的开头，用于写较长的说明。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 这是单行注释，解释下面这行代码的作用</span><br>age = <span class="hljs-number">18</span><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">这是多行注释</span><br><span class="hljs-string">可以写较长的说明文字</span><br><span class="hljs-string">比如说明整个模块的用途</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>注释应该写什么？</strong></p>
-<p>很多新手容易犯的毛病是注释“代码在做什么”，比如 <code>i += 1  # i 加 1</code>，这种注释毫无意义——代码本身已经说清楚了。好的注释应该解释<strong>为什么这么做</strong>，也就是代码背后的意图和思路。</p>
-<p>一个简单而有效的注释习惯是：<strong>记录你的输入、输出和原理</strong>。换句话说，在你写一段逻辑之前，先用注释回答三个问题：</p>
-<ul>
-<li>这段代码的输入是什么？ (数据从哪里来、是什么格式)</li>
-<li>这段代码的输出是什么？ (期望得到什么结果)</li>
-<li>这段代码的核心思路是什么？ (实现逻辑)</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 输入：一个包含多个数字的列表</span><br><span class="hljs-comment"># 输出：列表中所有偶数的平方组成的新列表</span><br><span class="hljs-comment"># 原理：遍历列表，筛选偶数后计算平方，收集到新列表中</span><br>numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]<br>result = []<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> numbers:<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        result.append(n ** <span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(result)   <span class="hljs-comment"># 输出：[4, 16, 36]</span><br></code></pre></td></tr></table></figure>
-
-<p>这样做有几个好处：首先，写注释的过程会让你先把思路理清楚，而不是直接上手写代码然后在过程中把自己绕晕。其次，当代码量增多时，你能快速回想起当初的设计意图，而不需要从头读一遍每一行代码。在调用时也能快速上手。</p>
-<p><strong>函数的注释 (文档字符串)</strong>：</p>
-<p>在定义函数时，可以在函数内部开头用三个引号写一段说明，这叫<strong>文档字符串 (docstring)</strong>。它和普通注释的区别在于，文档字符串可以通过 <code>help()</code> 函数被查看，方便其他使用者了解函数的用途。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_average</span>(<span class="hljs-params">numbers</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算一个数字列表的平均值。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    输入：一个包含数字的列表</span><br><span class="hljs-string">    输出：平均值 (浮点数)</span><br><span class="hljs-string">    原理：先求和，再除以列表长度</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    total = <span class="hljs-built_in">sum</span>(numbers)<br>    <span class="hljs-keyword">return</span> total / <span class="hljs-built_in">len</span>(numbers)<br><br><span class="hljs-comment"># 通过 help 查看函数说明</span><br><span class="hljs-built_in">help</span>(calculate_average)<br></code></pre></td></tr></table></figure>
-
-<p>在函数中写文档字符串是一个非常好的习惯，它让代码自带“说明书”，别人 (包括未来的你自己) 看这个函数时不需要去猜它是干嘛的。</p>
-<p><strong>最后一点</strong>：不必过度注释。好的代码本身应该是清晰、易读的，变量名取得好、逻辑分得清，很多地方根本不需要注释。把注释留给那些<strong>确实需要解释的复杂逻辑</strong>，它才能真正发挥价值。</p>
-<hr>
-<h1 id="6-做一个“调包侠”"><a href="#6-做一个“调包侠”" class="headerlink" title="6. 做一个“调包侠”"></a>6. 做一个“调包侠”</h1><h2 id="6-1-使用第三方库"><a href="#6-1-使用第三方库" class="headerlink" title="6.1 使用第三方库"></a>6.1 使用第三方库</h2><p>Python 的一大魅力在于<strong>海量的第三方库</strong>。你不需要自己重新发明轮子，只需安装并导入别人写好的库，就能快速实现复杂功能。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 安装库 (在终端执行)：pip install requests</span><br><br><span class="hljs-comment"># 使用库</span><br><span class="hljs-keyword">import</span> requests<br><br>response = requests.get(<span class="hljs-string">&quot;https://api.github.com&quot;</span>)<br><span class="hljs-built_in">print</span>(response.status_code)   <span class="hljs-comment"># 输出 200</span><br></code></pre></td></tr></table></figure>
-
-<p>常用库举例：</p>
-<ul>
-<li><strong><code>pandas</code></strong>：数据处理</li>
-<li><strong><code>numpy</code></strong>：科学计算</li>
-<li><strong><code>matplotlib</code></strong>：绘图</li>
-<li><strong><code>flask</code></strong> &#x2F; <strong><code>django</code></strong>：Web 开发</li>
-</ul>
-<p>初学时，<strong>先学会阅读库的官方文档</strong>，知道怎么调用函数、传递参数，比背下所有方法更重要。</p>
-<h2 id="6-2-调用你自己写的代码"><a href="#6-2-调用你自己写的代码" class="headerlink" title="6.2 调用你自己写的代码"></a>6.2 调用你自己写的代码</h2><p>除了调用别人写的库，你还需要学会调用<strong>自己写的代码</strong>——比如你在一个文件里写好了几个常用函数，想在另一个文件里直接使用，而不需要复制粘贴。</p>
-<p>假设你写了一个 <code>my_tools.py</code> 文件，里面放了一个函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># my_tools.py</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;你好，<span class="hljs-subst">&#123;name&#125;</span>！&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>现在你在另一个文件 (比如 <code>main.py</code>) 里想用这个函数，只需要用 <code>import</code> 导入它：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">import</span> my_tools<br><br>message = my_tools.greet(<span class="hljs-string">&quot;小明&quot;</span>)<br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
-
-<p>如果不想每次写 <code>my_tools.</code> 前缀，也可以用 <code>from ... import ...</code> 直接把函数“拎”出来：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">from</span> my_tools <span class="hljs-keyword">import</span> greet<br><br>message = greet(<span class="hljs-string">&quot;小明&quot;</span>)   <span class="hljs-comment"># 直接调用，不需要前缀</span><br><span class="hljs-built_in">print</span>(message)   <span class="hljs-comment"># 输出：你好，小明！</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>注意几点</strong>：</p>
-<ul>
-<li>两个文件需要在<strong>同一个文件夹</strong>下，否则 Python 找不到。</li>
-<li>导入时<strong>不需要加 <code>.py</code> 后缀</strong>，写 <code>import my_tools</code> 而不是 <code>import my_tools.py</code>。</li>
-<li>文件名建议用纯英文，不要以数字开头（比如 <code>1_tools.py</code> 就不行）。</li>
-</ul>
-<p>把自己写的代码拆成多个文件，是组织大型项目的常用方式。好处很明显：通用功能放一起，主逻辑放另一个文件，各司其职，方便维护和复用。</p>
-<hr>
-<h1 id="7-print-调试法-最简单的调试手段"><a href="#7-print-调试法-最简单的调试手段" class="headerlink" title="7. print 调试法 (最简单的调试手段)"></a>7. print 调试法 (最简单的调试手段)</h1><p>当程序运行结果与预期不符时，最直接的排查手段是在<strong>关键位置插入 print()</strong> 语句，包括：</p>
-<ul>
-<li>打印出关键变量的值，以便对照实际执行结果与预期是否一致。</li>
-<li>在程序分支的关键节点 (如条件判断处、循环进入&#x2F;退出处) 插入 print()，用以跟踪程序的执行轨迹。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">divide</span>(<span class="hljs-params">a, b</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;a=<span class="hljs-subst">&#123;a&#125;</span>, b=<span class="hljs-subst">&#123;b&#125;</span>&quot;</span>)   <span class="hljs-comment"># 调试：看传入的参数</span><br>    result = a / b<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;result=<span class="hljs-subst">&#123;result&#125;</span>&quot;</span>) <span class="hljs-comment"># 调试：看计算结果</span><br>    <span class="hljs-keyword">return</span> result<br><br>divide(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)   <span class="hljs-comment"># 你会看到 b=0，然后报错 ZeroDivisionError</span><br></code></pre></td></tr></table></figure>
-
-<p>通过打印信息，你可以快速定位哪一步出了问题。虽然还有更高级的调试工具 (如 pdb、IDE 断点)，但对于入门者，<code>print</code> 足够应对 80% 的场景。</p>
-<hr>
-<p>到这里，你已经浏览了 Python 的核心骨架：结构、运算、打包、文件、规范、调库和调试。这些内容能让你读懂入门代码，也能自己写点小工具。</p>
-<p><strong>接下来做什么？</strong></p>
-<ul>
-<li>打开 Python，把文中示例挨个敲一遍</li>
-<li>不懂就 print() 看看中间结果</li>
-<li>想扩展功能，去 PyPI 找找库</li>
-</ul>
-<p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
-<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#97;&#117;&#114;&#x6f;&#114;&#x61;&#104;&#x69;&#x6b;&#101;&#114;&#64;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
-]]></content>
-      <categories>
-        <category>Python 入门</category>
-      </categories>
-      <tags>
-        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
@@ -2293,7 +2385,7 @@
 </tbody></table>
 <hr>
 <h2 id="8-写在最后"><a href="#8-写在最后" class="headerlink" title="8. 写在最后"></a>8. 写在最后</h2><p>环境配置的本质，不过是一次常规磨合。遇到报错，就耐心地顺藤摸瓜定位原因、查阅官方文档、补全缺失的部分，这套思路适用于任何开发环境的装配。</p>
-<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#x6f;&#x72;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#x40;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
+<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#x65;&#x72;&#64;&#x31;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 <ul>
@@ -2308,6 +2400,22 @@
       <tags>
         <tag>实验平台搭建</tag>
         <tag>图神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>欢迎来到 AuroraHiker’s Code Trail</title>
+    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
+<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
+<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#97;&#x68;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
+]]></content>
+      <categories>
+        <category>关于</category>
+      </categories>
+      <tags>
+        <tag>欢迎</tag>
+        <tag>介绍</tag>
       </tags>
   </entry>
 </search>
