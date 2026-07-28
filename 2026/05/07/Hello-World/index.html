@@ -19,26 +19,23 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
+    <meta name="description" content="本文是新系列”野生程序员的进化之路”的绪论。在这个系列里，我不打算讲解具体的技术教程，而是想系统地分享自己从生化领域转码以来的学习经验和成长感悟。就像所有程序员敲的第一行代码总是”Hello World!”一样，请允许我用这句话作为本系列博客的开篇。 作为一个野生程序员，我的入门和成长几乎都是在跌跌撞撞中完成的。回顾这段经历，我逐渐意识到，推动我进步的，不全是技术知识的积累，也包括心态的调整、面对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LightDock分子对接的实验平台搭建">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:title" content="Hello World!">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/05/07/Hello-World/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
+<meta property="og:description" content="本文是新系列”野生程序员的进化之路”的绪论。在这个系列里，我不打算讲解具体的技术教程，而是想系统地分享自己从生化领域转码以来的学习经验和成长感悟。就像所有程序员敲的第一行代码总是”Hello World!”一样，请允许我用这句话作为本系列博客的开篇。 作为一个野生程序员，我的入门和成长几乎都是在跌跌撞撞中完成的。回顾这段经历，我逐渐意识到，推动我进步的，不全是技术知识的积累，也包括心态的调整、面对">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
-<meta property="article:published_time" content="2026-04-01T09:44:01.533Z">
-<meta property="article:modified_time" content="2026-06-23T11:21:17.117Z">
+<meta property="article:published_time" content="2026-05-07T02:55:58.023Z">
+<meta property="article:modified_time" content="2026-07-28T06:28:27.457Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="LightDock">
-<meta property="article:tag" content="分子对接">
-<meta property="article:tag" content="实验平台搭建">
+<meta property="article:tag" content="学习经验分享">
+<meta property="article:tag" content="野生程序员的进化之路">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
   
   
   
-  <title>LightDock分子对接的实验平台搭建 - AuroraHiker’s Code Trail</title>
+  <title>Hello World! - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -307,7 +304,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LightDock分子对接的实验平台搭建"></span>
+            <span id="subtitle" data-typed-text="Hello World!"></span>
           
         </div>
 
@@ -323,8 +320,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-04-01 17:44" pubdate>
-          2026年4月1日 下午
+        <time datetime="2026-05-07 10:55" pubdate>
+          2026年5月7日 上午
         </time>
       </span>
     
@@ -335,7 +332,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          1.5k 字
         
       </span>
     
@@ -346,7 +343,7 @@
         
         
         
-          16 分钟
+          13 分钟
         
       </span>
     
@@ -385,85 +382,20 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LightDock分子对接的实验平台搭建</h1>
+            <h1 id="seo-header">Hello World!</h1>
             
             
               <div class="markdown-body">
                 
-                <p><img src="/./LightDock_install/lightdock_logo.png" srcset="/img/loading.gif" lazyload></p>
-<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a target="_blank" rel="noopener" href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
-<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
-<p>本教程基于 LightDock 官方基础知识文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
-<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
-<p>笔者的硬件配置如下：</p>
-<ul>
-<li>CPU：AMD Ryzen 7 9700X</li>
-<li>内存：64 GB RAM</li>
-</ul>
-<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
-<hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#x69;&#103;&#104;&#x74;&#100;&#x6f;&#x63;&#107;&#105;&#x6e;&#103;&#x40;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
-<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
-<p>支持的具体系统版本如下：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>macOS</td>
-<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
-</tr>
-<tr>
-<td>GNU&#x2F;Linux</td>
-<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
-<table>
-<thead>
-<tr>
-<th>软件</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td><a target="_blank" rel="noopener" href="http://www.numpy.org/">http://www.numpy.org/</a></td>
-</tr>
-<tr>
-<td>Scipy</td>
-<td><a target="_blank" rel="noopener" href="http://www.scipy.org/">http://www.scipy.org/</a></td>
-</tr>
-<tr>
-<td>Cython</td>
-<td><a target="_blank" rel="noopener" href="http://cython.org/">http://cython.org/</a></td>
-</tr>
-<tr>
-<td>ProDy</td>
-<td><a target="_blank" rel="noopener" href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
-</tr>
-<tr>
-<td>Freesasa</td>
-<td><a target="_blank" rel="noopener" href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
-<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
-
-<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
-
-<hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#x75;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>。</p>
-<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a target="_blank" rel="noopener" href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
+                <p>本文是新系列”野生程序员的进化之路”的绪论。在这个系列里，我不打算讲解具体的技术教程，而是想系统地分享自己从生化领域转码以来的学习经验和成长感悟。就像所有程序员敲的第一行代码总是”Hello World!”一样，请允许我用这句话作为本系列博客的开篇。</p>
+<p>作为一个野生程序员，我的入门和成长几乎都是在跌跌撞撞中完成的。回顾这段经历，我逐渐意识到，推动我进步的，不全是技术知识的积累，也包括心态的调整、面对未知时的应对方式，以及在无人指导的环境中自学和归纳的能力。</p>
+<p>在构思这个系列时，我设想过两类可能的读者。</p>
+<p>一类是正在转码或刚刚入门的读者——无论你来自生物学还是其他学科。对你们而言，我希望这个系列能提供一份尽可能具体的参考。我不会只告诉你要学什么，而是想尽量还原我自己遇到问题时是如何排查的、面对大量未知知识时是如何筛选、取舍，并逐步建立起自己的知识体系的。比起抽象的原则，我更愿意分享那些真实的操作和决策过程。</p>
+<p>另一类是科班出身、已经有系统计算机基础的朋友。我相信你们在算法、体系结构、网络协议等方面的基础比我要扎实得多，但我也希望这个系列能提供一些教科书之外的视角：一个没有经过正统训练的人，在面对工程问题时如何用”够用”的方式先跑起来；如何在缺乏现成参考的情况下，从零搭建出一套基础可用的工作流，再在使用中不断调整，逐步让它贴合自己的习惯；以及生物学背景的思维方式在理解计算问题时可能带来的某些意外优势。如果这些内容能给你们带来一点点启发，甚至只是提供一种不同的思考角度，那便是这个系列的意外之喜。</p>
+<p>以下是关于我转码起点的简短交代。本科四年，我一直沉浸在生化实验室，几乎所有的选修课都集中在本专业方向，很少主动接触计算机相关课程。唯一选修过的计算机类课程是《C程序设计》，原因说来有些荒谬——当时我英语基础很差，而一个流传较广的说法是”英语不好就写不好代码”，于是我试图借这门课来倒逼自己提升英语水平。结果，英语未见起色，反倒是NL不分的拼音水平得到了巨大的进步，但意外的是，我从中体会到了用编程解决小问题的乐趣。此后不久，在做实验的过程中，我逐渐意识到，若想真正回答自己关心的科学问题，或许需要具备主动构建计算工具的能力——于是，在研究生阶段，我选择转向生物信息学。</p>
+<p>然而，研究生阶段的课题组几乎没有成熟的工作流可以依赖，既无系统的内部脚本，也无统一的环境部署方案。当时大语言模型尚未普及，查阅资料和自主学习成为最主要的工作方式。业界流传过一句调侃：”资深码农的资深之处，在于知道从哪复制脚本。”回想起来，我转码初期的相当一部分时间，确实是在反复的检索、借鉴、调试和修正中度过的。不过有一点值得提一下：虽然搭建环境的初期比较繁琐，但由于从一开始就比较注意操作的规范和记录的完整性，环境搭建好之后基本没有出过问题。这段经历让我深刻体会到，前期在环境管理上、实验记录上多花些时间，后面会省下大量精力。</p>
+<p>以上就是我转码的起点。接下来的系列文章，我会逐一拆解那些对我帮助最大的习惯和方法：如何构建和管理自己的代码库，如何建立和维护可复现的计算环境，软件工程的基本原则如何在单人维护的项目中落地，Debug的系统性排查思路，如何在陌生项目中快速上手并建立信心，以及——在反复试错的过程中，如何保持专注且积极的学习状态。每一篇都会附上真实的踩坑记录和具体的应对方式，希望能对你有用。</p>
+<p>欢迎读者通过邮箱 <code>aurorahiker@163.com</code> 留言交流，若你有相似的经历愿意分享，也欢迎投稿，我们可以共同完善这个系列。祝各位在编程的路上走得踏实、走得长远。</p>
 
                 
               </div>
@@ -482,7 +414,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="category-chain-item">分子对接</a>
+  <a href="/categories/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%BF%9B%E5%8C%96%E4%B9%8B%E8%B7%AF/" class="category-chain-item">野生程序员的进化之路</a>
   
   
 
@@ -497,11 +429,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
+        <a href="/tags/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%BF%9B%E5%8C%96%E4%B9%8B%E8%B7%AF/" class="print-no-link">#野生程序员的进化之路</a>
       
-        <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="print-no-link">#分子对接</a>
-      
-        <a href="/tags/LightDock/" class="print-no-link">#LightDock</a>
+        <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" class="print-no-link">#学习经验分享</a>
       
     </div>
   
@@ -513,8 +443,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LightDock分子对接的实验平台搭建</div>
-      <div>https://aurorahiker.github.io/2026/04/01/搭建 LightDock 分子对接平台/</div>
+      <div>Hello World!</div>
+      <div>https://aurorahiker.github.io/2026/05/07/Hello-World/</div>
     </div>
     <div class="license-meta">
       
@@ -526,7 +456,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026-04-01</div>
+          <div>2026-05-07</div>
         </div>
       
       
@@ -558,9 +488,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">
+                      <a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">从零搭建Windows生信分析平台——WSL的安装配置</span>
+                        <span class="hidden-mobile">个人博客搭建指南：基于 GitHub Pages 的完整流程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -568,8 +498,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" title="GROMACS分子动力学模拟的实验平台搭建">
-                        <span class="hidden-mobile">GROMACS分子动力学模拟的实验平台搭建</span>
+                      <a href="/2026/05/04/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/" title="在 50 系显卡上部署 PyG 图神经网络环境">
+                        <span class="hidden-mobile">在 50 系显卡上部署 PyG 图神经网络环境</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
