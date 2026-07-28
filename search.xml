@@ -1,182 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>GROMACS分子动力学模拟的实验平台搭建</title>
-    <url>/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
-<p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
-<p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
-<p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
-<p>本文参考GROMACS的官方说明文档(版本2026.0)：<a href="https://manual.gromacs.org/documentation/current/index.html">https://manual.gromacs.org/documentation/current/index.html</a></p>
-<hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>笔者参照GROMACS官方对运行环境的要求，整理了一份硬件配置速查表，并附上了自己的配置，供大家参考。需要说明的是，这份配置目前仅为理论推测，欢迎各位读者结合实际使用情况提供反馈。</p>
-<p><strong>GROMACS的硬件配置速查表:</strong></p>
-<table>
-<thead>
-<tr>
-<th>部件</th>
-<th>最低要求</th>
-<th>推荐配置(入门)</th>
-<th>推荐配置(进阶)</th>
-<th>笔者的配置</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>CPU</td>
-<td>Intel Core i5-3330, AMD Ryzen 3 1200</td>
-<td>Intel Core i5-8400, AMD Ryzen 5 2600</td>
-<td>Intel Core i7-13700K, AMD Ryzen 7</td>
-<td>AMD Ryzen 7 9700X</td>
-</tr>
-<tr>
-<td>内存</td>
-<td>8 GB RAM</td>
-<td>16 GB RAM</td>
-<td>32 GB RAM</td>
-<td>64 GB RAM</td>
-</tr>
-<tr>
-<td>硬盘(可用空间，推荐固态硬盘)</td>
-<td>20 GB</td>
-<td>100 GB</td>
-<td>100 GB以上</td>
-<td>固态 &gt; 100 GB、机械 &gt; 1 TB</td>
-</tr>
-<tr>
-<td>GPU(可选，需更新CUDA)</td>
-<td>无(纯CPU运行)</td>
-<td>NVIDIA GTX 1050以上</td>
-<td>NVIDIA RTX 3060以上或专业卡</td>
-<td>NVIDIA RTX 5060Ti 16 GB</td>
-</tr>
-<tr>
-<td>操作系统</td>
-<td>Linux、Windows、macOS</td>
-<td>Linux(Ubuntu 22.04以上版本)</td>
-<td>Linux(Ubuntu 22.04以上版本)</td>
-<td>Windows 10 WSL Ubuntu 20.04</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
-</blockquote>
-<p>GROMACS 在编译时会自动检测 CPU 支持哪些指令集(如 SSE4.1、AVX2 等)，这些指令集越新，计算越快。你不需要手动设置，但了解自己的 CPU 世代有助于判断性能。</p>
-<ul>
-<li><strong>2011 年以前的 CPU</strong>：可能只支持 SSE2，可以运行但较慢。  </li>
-<li><strong>2011–2017 年主流 CPU</strong>：支持 AVX&#x2F;AVX2，速度不错。  </li>
-<li><strong>2017 年以后的新 CPU</strong>：支持 AVX-512 或更新的指令集(Intel 第 8 代以后，AMD Zen 4 以后)，速度最快。</li>
-</ul>
-<p>希望这些解释能帮你了解自己的硬件基础。接下来我们就可以开始安装软件环境了！</p>
-<hr>
-<h2 id="2-依赖软件及其安装"><a href="#2-依赖软件及其安装" class="headerlink" title="2. 依赖软件及其安装"></a>2. 依赖软件及其安装</h2><h3 id="2-1-系统环境配置"><a href="#2-1-系统环境配置" class="headerlink" title="2.1 系统环境配置"></a>2.1 系统环境配置</h3><p>GROMACS 可以在三种主流操作系统上运行，但对初学者最推荐的是 Linux(特别是 Ubuntu)。因为：</p>
-<ul>
-<li>Linux 对科学计算支持最好，安装和配置最直接。</li>
-<li>绝大多数高性能计算机（包括超算）都运行 Linux。</li>
-<li>如果你用的是 Windows，也可以通过“适用于 Linux 的 Windows 子系统（WSL）”来安装 Ubuntu，这样既能保留 Windows 习惯，又能享受 Linux 环境。</li>
-</ul>
-<p>关于系统环境的选择，在这篇博客中进行了对比和详细介绍：<a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">如何搭建合适的生信分析平台</a></p>
-<h3 id="2-2-编译器配置"><a href="#2-2-编译器配置" class="headerlink" title="2.2 编译器配置"></a>2.2 编译器配置</h3><p>GROMACS 的源代码是用 C 和 C++ 编写的，需要编译器将其翻译成机器能执行的指令。<br>最低版本要求：<strong>GCC ≥ 11</strong>（必须支持 C++17 标准）。</p>
-<ul>
-<li><p>第一步：检查当前 GCC 版本</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gcc -v<br>g++ -v<br></code></pre></td></tr></table></figure>
-<p>  如果输出的版本号高于或等于 11，说明已满足要求，可以跳过安装步骤；如果版本低于 11 或提示“命令未找到”，则需要安装 GCC 11。</p>
-</li>
-<li><p>第二步：安装 GCC 11</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span><br><span class="hljs-built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test<br><span class="hljs-built_in">sudo</span> apt update<br><br><span class="hljs-comment"># 安装 GCC 11 和 G++ 11</span><br><span class="hljs-built_in">sudo</span> apt install gcc-11 g++-11<br><br><span class="hljs-comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-11<br><br><span class="hljs-comment"># 如果需要同时保留旧版本，可以添加优先级</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-9<br><br></code></pre></td></tr></table></figure>
-
-<p>  安装完成后，再次检查gcc和g++版本是否符合要求。</p>
-</li>
-</ul>
-<h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
-<ul>
-<li><p>第一步：检查当前 CMake 版本</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
-<p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
-</li>
-<li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y wget gnupg<br>wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null<br><br><span class="hljs-comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="hljs-subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/kitware.list<br><br><span class="hljs-comment"># 更新并安装 cmake</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install cmake<br><br><span class="hljs-comment"># 验证安装</span><br>cmake --version<br></code></pre></td></tr></table></figure></li>
-</ul>
-<hr>
-<h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
-
-<p>下载完成后，检查文件是否存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br>    <br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br>    <br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>    <br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br>    <br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
-<p><strong>编译选项解释：</strong></p>
-<ul>
-<li><code>-DGMX_BUILD_OWN_FFTW=ON</code> 让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
-<li><code>-DREGRESSIONTEST_DOWNLOAD=ON</code> 下载回归测试集，之后可以通过 <code>make check</code> 验证编译是否正确。如果不需要测试，可以去掉此选项以节省时间。</li>
-</ul>
-<h3 id="3-3-常见问题（debug）"><a href="#3-3-常见问题（debug）" class="headerlink" title="3.3 常见问题（debug）"></a>3.3 常见问题（debug）</h3><p><strong>问题1：cmake .. 时报错提示编译器版本过低或找不到编译器</strong></p>
-<ul>
-<li>如果运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>时报错提示编译器版本过低或找不到编译器，优先检查gcc &amp; g++的版本是否大于11，CMake版本是否大于3.28，并升级不符合要求的软件。</li>
-<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回到build的上级目录，即gromacs-2025.4</span><br><span class="hljs-built_in">cd</span> ../<br><br><span class="hljs-comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span><br><span class="hljs-built_in">rm</span> -rf build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>问题2：安装完成后输入 gmx 提示命令未找到</strong></p>
-<ul>
-<li>检查是否正确执行了 <code>source /usr/local/gromacs/bin/GMXRC</code>。可以运行 <code>echo $GMXRC</code> 查看是否已设置。若未设置，重新执行 source 命令，或检查是否已将 source 命令加入 <code>~/.bashrc</code> 并重新加载。</li>
-</ul>
-<hr>
-<p>至此，你已经成功搭建了一个基础的 GROMACS 模拟平台！从硬件认知到软件安装，每一步都经过了实践检验。接下来，你可以：</p>
-<ul>
-<li>学习 GROMACS 的输入文件准备（拓扑、坐标、参数）。</li>
-<li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
-<li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
-</ul>
-<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#x61;&#104;&#x69;&#107;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#46;&#99;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
+    <title>Hello World!</title>
+    <url>/2026/05/07/Hello-World/</url>
+    <content><![CDATA[<p>本文是新系列”野生程序员的进化之路”的绪论。在这个系列里，我不打算讲解具体的技术教程，而是想系统地分享自己从生化领域转码以来的学习经验和成长感悟。就像所有程序员敲的第一行代码总是”Hello World!”一样，请允许我用这句话作为本系列博客的开篇。</p>
+<p>作为一个野生程序员，我的入门和成长几乎都是在跌跌撞撞中完成的。回顾这段经历，我逐渐意识到，推动我进步的，不全是技术知识的积累，也包括心态的调整、面对未知时的应对方式，以及在无人指导的环境中自学和归纳的能力。</p>
+<p>在构思这个系列时，我设想过两类可能的读者。</p>
+<p>一类是正在转码或刚刚入门的读者——无论你来自生物学还是其他学科。对你们而言，我希望这个系列能提供一份尽可能具体的参考。我不会只告诉你要学什么，而是想尽量还原我自己遇到问题时是如何排查的、面对大量未知知识时是如何筛选、取舍，并逐步建立起自己的知识体系的。比起抽象的原则，我更愿意分享那些真实的操作和决策过程。</p>
+<p>另一类是科班出身、已经有系统计算机基础的朋友。我相信你们在算法、体系结构、网络协议等方面的基础比我要扎实得多，但我也希望这个系列能提供一些教科书之外的视角：一个没有经过正统训练的人，在面对工程问题时如何用”够用”的方式先跑起来；如何在缺乏现成参考的情况下，从零搭建出一套基础可用的工作流，再在使用中不断调整，逐步让它贴合自己的习惯；以及生物学背景的思维方式在理解计算问题时可能带来的某些意外优势。如果这些内容能给你们带来一点点启发，甚至只是提供一种不同的思考角度，那便是这个系列的意外之喜。</p>
+<p>以下是关于我转码起点的简短交代。本科四年，我一直沉浸在生化实验室，几乎所有的选修课都集中在本专业方向，很少主动接触计算机相关课程。唯一选修过的计算机类课程是《C程序设计》，原因说来有些荒谬——当时我英语基础很差，而一个流传较广的说法是”英语不好就写不好代码”，于是我试图借这门课来倒逼自己提升英语水平。结果，英语未见起色，反倒是NL不分的拼音水平得到了巨大的进步，但意外的是，我从中体会到了用编程解决小问题的乐趣。此后不久，在做实验的过程中，我逐渐意识到，若想真正回答自己关心的科学问题，或许需要具备主动构建计算工具的能力——于是，在研究生阶段，我选择转向生物信息学。</p>
+<p>然而，研究生阶段的课题组几乎没有成熟的工作流可以依赖，既无系统的内部脚本，也无统一的环境部署方案。当时大语言模型尚未普及，查阅资料和自主学习成为最主要的工作方式。业界流传过一句调侃：”资深码农的资深之处，在于知道从哪复制脚本。”回想起来，我转码初期的相当一部分时间，确实是在反复的检索、借鉴、调试和修正中度过的。不过有一点值得提一下：虽然搭建环境的初期比较繁琐，但由于从一开始就比较注意操作的规范和记录的完整性，环境搭建好之后基本没有出过问题。这段经历让我深刻体会到，前期在环境管理上、实验记录上多花些时间，后面会省下大量精力。</p>
+<p>以上就是我转码的起点。接下来的系列文章，我会逐一拆解那些对我帮助最大的习惯和方法：如何构建和管理自己的代码库，如何建立和维护可复现的计算环境，软件工程的基本原则如何在单人维护的项目中落地，Debug的系统性排查思路，如何在陌生项目中快速上手并建立信心，以及——在反复试错的过程中，如何保持专注且积极的学习状态。每一篇都会附上真实的踩坑记录和具体的应对方式，希望能对你有用。</p>
+<p>欢迎读者通过邮箱 <code>aurorahiker@163.com</code> 留言交流，若你有相似的经历愿意分享，也欢迎投稿，我们可以共同完善这个系列。祝各位在编程的路上走得踏实、走得长远。</p>
 ]]></content>
       <categories>
-        <category>GROMACS分子动力学模拟</category>
+        <category>野生程序员的进化之路</category>
       </categories>
       <tags>
-        <tag>分子动力学模拟</tag>
-        <tag>实验平台搭建</tag>
+        <tag>野生程序员的进化之路</tag>
+        <tag>学习经验分享</tag>
       </tags>
   </entry>
   <entry>
-    <title>Pandas 思考题：从 API 使用者到开发者</title>
-    <url>/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/</url>
-    <content><![CDATA[<p>很多初学者看完教程后会产生一种错觉 (包括曾经的我) ：教程里的代码我都跑通了，参数我也都认识了，我应该算“会 Pandas”了吧？</p>
-<p>然后一遇到报错就懵了。</p>
-<p>原因很简单：<strong>教程教的是“在正确路径上怎么走”，但真实世界里的代码，从来不会一路绿灯。</strong></p>
-<p>这篇博客不是教程，是教程的“镜像世界”。在这里，我会刻意制造一些教程里不会出现的场景——参数冲突、列数对不齐、现成函数被禁用。你需要用已有的知识，在一条不那么平坦的路上把代码跑通。</p>
-<p><strong>建议先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 和 <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" title="Pandas 简明教程">Pandas 简明教程</a> 教程的学习后再做本套题。此外，直接看答案将极大削弱训练效果。</strong></p>
-<blockquote>
-<p><strong>说明</strong>：本套题共 6 道，难度由浅入深。前两题侧重“排错”与“基础操作”，中间两题侧重“替代方案”与“原理辨析”，最后两题侧重“从零实现”。建议每道题都先自己写一遍，哪怕写得很“笨”也没关系。</p>
-</blockquote>
+    <title>Python 入门：变量类型专题</title>
+    <url>/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/</url>
+    <content><![CDATA[<p>以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。</p>
+<p>然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相加、列表与字符串方法张冠李戴、字典键值类型不符……几乎每个新手都在这些坑里摔过跤。本文将以实战视角，从Python内置类型出发，逐步深入到数据分析必备的Pandas库，帮你理清类型转换的逻辑，并总结一套可复用的Debug套路，让类型错误不再是拦路虎。</p>
 <hr>
-<h2 id="第-1-题-基础排查与异常定位"><a href="#第-1-题-基础排查与异常定位" class="headerlink" title="第 1 题 (基础排查与异常定位)"></a>第 1 题 (基础排查与异常定位)</h2><p>已知 <code>iris</code> 数据集实际只包含 <strong>5 列</strong>数据 (萼片长、萼片宽、花瓣长、花瓣宽、品种) 。如下方代码所示，该数据已被保存为 <strong>制表符分隔 (.tsv)</strong> 的文件。</p>
-<blockquote>
-<p><strong>要求</strong>：请找出下列代码中的错误代码，并指明报错的具体原因。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据来源与保存 (读者无需修改此段)</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br></code></pre></td></tr></table></figure>
+<h2 id="1-Python-自带的变量类型"><a href="#1-Python-自带的变量类型" class="headerlink" title="1. Python 自带的变量类型"></a>1. Python 自带的变量类型</h2><h3 id="1-1-给变量赋值时自动设定的变量类型"><a href="#1-1-给变量赋值时自动设定的变量类型" class="headerlink" title="1.1 给变量赋值时自动设定的变量类型"></a>1.1 给变量赋值时自动设定的变量类型</h3><p>Python 是动态强类型语言，变量的类型在赋值的那一刻由解释器自动推断并固定下来。为了让你直观感受到不同字面量写法的差异，我们统一用数字 <code>1</code> 来举例，观察其细微却关键的区别：</p>
+<ul>
+<li><strong>整型 (int)</strong>：<code>a = 1</code>。不带小数点的整数。</li>
+<li><strong>浮点数 (float)</strong>：<code>a = 1.0</code>。带小数点的数值。</li>
+<li><strong>字符串 (str)</strong>：<code>a = &#39;1&#39;</code> 或 <code>a = &quot;1&quot;</code>。被引号包裹的内容，此时 <code>1</code> 仅仅是文本字符。</li>
+<li><strong>列表 (list)</strong>：<code>a = [1]</code>。用方括号包裹，有序且可变。</li>
+<li><strong>字典 (dict)</strong>：<code>a = {&#39;key&#39;: 1}</code>。用花括号包裹的键值对。</li>
+</ul>
+<details>
+<summary><b>思考题：设置单引号和双引号等价的意义是什么？</b> (点击展开)</summary>
+<p>主要是为了方便在字符串内容中直接包含另一种引号，从而减少使用繁琐的转义符 <code>\</code>。例如，表示 <code>It's OK</code> 时可以直接用双引号包裹 <code>"It's OK"</code>；表示 <code>He said "Hi"</code> 时可以直接用单引号包裹 <code>'He said "Hi"'</code>，代码更干净、可读性更强。</p>
+</details>
 
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 A</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SW&#x27;</span>, <span class="hljs-string">&#x27;PL&#x27;</span>, <span class="hljs-string">&#x27;PW&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],  <span class="hljs-comment"># 为全部 6 列命名</span><br>    usecols=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],                  <span class="hljs-comment"># 按新列名筛选 (此时 usecols 传入列表)</span><br>    index_col=<span class="hljs-string">&#x27;id&#x27;</span>,                               <span class="hljs-comment"># 将 &#x27;id&#x27; 列设为行索引 (可直接传列名)</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;<br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+<details>
+<summary><b>思考题：字典的键 (key) 和值 (value) 各自可以是什么变量类型？</b> (点击展开)</summary>
+<p><b>键 (Key)</b>：必须是 <b>不可变 (immutable)</b> 类型，如字符串、整数、浮点数、布尔值或元组。因为字典底层依赖哈希表存储，键必须可哈希。<br>
+<b>值 (Value)</b>：可以是 <b>任意</b> 类型，包括列表、字典等可变对象，甚至可以嵌套另一个字典。<br>
+<em>常见新手错误</em>：尝试用列表 <code>['a']</code> 作为键，会直接报错 <code>TypeError: unhashable type: 'list'</code>。</p>
+</details>
 
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 B</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 先筛选出第 1 列 (id)、第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的三列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
-
+<h3 id="1-2-隐式转换"><a href="#1-2-隐式转换" class="headerlink" title="1.2 隐式转换"></a>1.2 隐式转换</h3><p>Python 在运算中会进行隐式类型转换 (Implicit Type Conversion)，但并非万能。理解以下规则，能让你避免大多数低级错误：</p>
+<ul>
+<li><strong>整型 → 浮点型</strong>：<code>1 / 2</code> 的结果是 <code>0.5</code> (浮点数) 。即使 <code>2 / 1</code>，结果也是 <code>2.0</code> (浮点数) 。在 Python 3 中，<code>/</code> 永远返回浮点数；<code>7 // 2</code> 结果是 <code>3</code> (整数向下取整) ；<code>7.0 // 2</code> 或 <code>7 // 2.0</code> 结果是 <code>3.0</code> (浮点数向下取整) 。<code>% + - *</code> 等基础运算同理，当算式中有浮点数时，结果为浮点数，否则结果为整型。</li>
+<li><strong>字符串 → 列表 (Split)</strong>：<code>&quot;1,2&quot;.split(&quot;,&quot;)</code> 结果是 <code>[&#39;1&#39;, &#39;2&#39;]</code>。</li>
+<li><strong>列表 → 字符串 (Join)</strong>：<code>&quot;,&quot;.join([&#39;1&#39;, &#39;2&#39;])</code> 结果是 <code>&quot;1,2&quot;</code>。<strong>注意</strong>：<code>join</code> 是字符串的方法，写法是 <code>分隔符.join(可迭代对象)</code>，新手极容易写成 <code>列表.join(&#39;,&#39;)</code> 导致报错。</li>
+<li><strong>判断产生布尔值 (Boolean)</strong>：比较运算 <code>1 == 1.0</code> 结果为 <code>True</code> (数值相等) ；<code>1 == &#39;1&#39;</code> 结果为 <code>False</code> (类型不同，直接不相等) 。</li>
+</ul>
+<h3 id="1-3-显式转换"><a href="#1-3-显式转换" class="headerlink" title="1.3 显式转换"></a>1.3 显式转换</h3><p>既然隐式转换存在局限 (例如无法自动将 ‘1’ 转为 1) ，我们就必须借助内置函数进行显式转换。同样以数字 1 为例：</p>
+<ul>
+<li><p>int(“1”)：将字符串 ‘1’ 转为整数 1，之后即可进行数学运算 (如 int(“1”) + 2 得到 3) ，需要注意的是，这个运算会向零的方向截断取整。</p>
+</li>
+<li><p>float(“1”) 或 float(1)：得到浮点数 1.0，统一精度。</p>
+</li>
+<li><p>str(1)：将整数 1 转为字符串 ‘1’，之后即可进行拼接操作 (如 str(1) + “ is a number” 得到 “1 is a number”) 。</p>
+</li>
+<li><p>list(“123”)：将字符串拆解为单字符列表 [‘1’, ‘2’, ‘3’]。</p>
+</li>
+</ul>
+<p>提高代码容错率的方法：从外部 (如 input()、文件读取、API 响应) 获得数据后，第一时间根据需要进行显式转换。不要等到运算报错时才回头补救。</p>
+<h3 id="1-4-最常见的变量类型错误成因"><a href="#1-4-最常见的变量类型错误成因" class="headerlink" title="1.4 最常见的变量类型错误成因"></a>1.4 最常见的变量类型错误成因</h3><p>结合 <code>1</code> 的不同写法，我们来看三个最容易踩中的雷区：</p>
+<ol>
+<li><strong>数字被引号包裹变成了字符串</strong>：<code>a = &#39;1&#39;</code>，然后执行 <code>a + 2</code>。报错 <code>TypeError: can only concatenate str (not &quot;int&quot;) to str</code>。因为此时 <code>+</code> 被解释为字符串拼接，而非数学加法。<strong>解决方案</strong>：显式转换 <code>int(a) + 2</code>。</li>
+<li><strong>字符串方法与列表方法张冠李戴</strong>：对字符串 <code>&#39;1,2&#39;</code> 调用 <code>.append(&#39;3&#39;)</code>，或对列表 <code>[1]</code> 调用 <code>.split()</code>。记住：<strong>方法随类型走</strong>，可变序列 (列表) 和不可变序列 (字符串) 的 API 交集很少。</li>
+<li><strong>字符串与列表强行相加</strong>：<code>&#39;1&#39; + [2]</code> 报错，因为 <code>+</code> 号两侧类型必须一致才能进行序列拼接。若想合并，需先 <code>list(&#39;1&#39;)</code> 转为 <code>[&#39;1&#39;]</code>，再与 <code>[2]</code> 相加得到 <code>[&#39;1&#39;, 2]</code>。</li>
+</ol>
 <hr>
-<h2 id="第-2-题-字符串向量化操作"><a href="#第-2-题-字符串向量化操作" class="headerlink" title="第 2 题 (字符串向量化操作)"></a>第 2 题 (字符串向量化操作)</h2><p>将鸢尾花数据集 (<code>iris</code>) 中 <code>species</code> 列的每个字符串元素内的<strong>所有字母 <code>&#39;s&#39;</code></strong> (区分大小写) 替换为下划线 <code>&#39;_&#39;</code>。请写出实现代码，并注意保持原数据结构不变 (或返回新副本) 。</p>
+<h2 id="2-Pandas-的变量类型-dtype"><a href="#2-Pandas-的变量类型-dtype" class="headerlink" title="2. Pandas 的变量类型 (dtype)"></a>2. Pandas 的变量类型 (dtype)</h2><p>进入数据分析领域，Pandas 基于 NumPy 构建了更为丰富且严格的数据类型体系。DataFrame 中的每一列 (Series) 都有其特定的 <code>dtype</code>，理解它是进行高效数据清洗的前提。</p>
+<h3 id="2-1-Pandas-中的常用-dtype"><a href="#2-1-Pandas-中的常用-dtype" class="headerlink" title="2.1 Pandas 中的常用 dtype"></a>2.1 Pandas 中的常用 dtype</h3><p>延续上面的数字 <code>1</code>，在 Pandas 中它会以不同的变量类型出现：</p>
+<ul>
+<li><strong>int64 &#x2F; float64</strong>：最常用的数值类型。例如 <code>pd.Series([1, 2])</code> 是 <code>int64</code>；<code>pd.Series([1.0, 2])</code> 因输入的列表中含有小数，全部自动转为 <code>float64</code>。</li>
+<li><strong>object</strong>：Pandas 中的“万金油”类型，通常用于存储字符串或混合类型。<code>pd.Series([&#39;1&#39;, &#39;2&#39;])</code> 的 dtype 是 <code>object</code> (即 Python 原生的 str 对象) 。<strong>性能较低</strong>，应尽量避免在大型数据中大量使用。</li>
+<li><strong>category</strong>：类别型，适用于取值有限的分类变量 (如性别、等级)。<code>pd.Series([1, 1, 2])</code> 转为 category 后，会将 <code>1</code> 和 <code>2</code> 视为两个类别，极大节省内存。</li>
+<li><strong>datetime64[ns]</strong>：时间日期类型，支持向量化日期运算。<code>pd.to_datetime(pd.Series([&#39;2026-01-01&#39;]))</code> 得到该类型。</li>
+<li><strong>bool</strong>：布尔型，<code>pd.Series([True, False])</code>。</li>
+</ul>
+<p><strong>注意</strong>：当整数列中出现缺失值时，Pandas 会为了容纳 <code>NaN</code> (浮点型空值) 而<strong>自动将整型 <code>int64</code> 提升为浮点型 <code>float64</code></strong>。若必须为整数，请使用 Pandas 的 <code>Int64</code> (大写 I，可空整型)。</p>
+<h3 id="2-2-类型转换方法"><a href="#2-2-类型转换方法" class="headerlink" title="2.2 类型转换方法"></a>2.2 类型转换方法</h3><ul>
+<li><strong><code>astype(new_dtype)</code></strong>：最通用的显式转换。例如 <code>df[&#39;col&#39;].astype(&#39;float64&#39;)</code>。但若列中存在无法转换的值 (如字母 <code>&#39;a&#39;</code>)，会直接报错。</li>
+<li><strong><code>pd.to_numeric()</code></strong>：转为数值类型的“安全利器”。参数 <code>errors=&#39;coerce&#39;</code> 可将非法值强制转为 <code>NaN</code>，避免程序崩溃。例如 <code>pd.to_numeric(pd.Series([&#39;1&#39;, &#39;a&#39;, &#39;2&#39;]), errors=&#39;coerce&#39;)</code> 得到 <code>[1.0, NaN, 2.0]</code>。</li>
+<li><strong><code>pd.to_datetime()</code></strong>：专门转为日期类型，同样支持 <code>errors=&#39;coerce&#39;</code> 优雅处理异常格式。</li>
+<li><strong><code>astype(&#39;category&#39;)</code></strong> 或 <code>pd.Categorical()</code>：将离散列转为类别类型。</li>
+</ul>
+<h3 id="2-3-常见的-Pandas-类型错误"><a href="#2-3-常见的-Pandas-类型错误" class="headerlink" title="2.3 常见的 Pandas 类型错误"></a>2.3 常见的 Pandas 类型错误</h3><ul>
+<li><strong>数值列被识别为 object 无法计算</strong>：读取 CSV 时，由于混入了空格、千位分隔符 (如 <code>1,000</code>) 或特殊符号，数字列被读成字符串。直接调用 <code>.mean()</code> 会报错。解决：先用 <code>pd.to_numeric(df[&#39;col&#39;], errors=&#39;coerce&#39;)</code> 清洗。</li>
+</ul>
 <hr>
-<h2 id="第-3-题-非算术方式的列广播"><a href="#第-3-题-非算术方式的列广播" class="headerlink" title="第 3 题 (非算术方式的列广播)"></a>第 3 题 (非算术方式的列广播)</h2><p>现有一个包含多列数值型数据的 DataFrame。请编写一段代码，为该 DataFrame 的<strong>所有数值列</strong>同时加上一个固定常数 (如 <code>c = 3.14</code>) 。</p>
+<h2 id="3-与数据类型相关的-Debug-常用套路"><a href="#3-与数据类型相关的-Debug-常用套路" class="headerlink" title="3. 与数据类型相关的 Debug 常用套路"></a>3. 与数据类型相关的 Debug 常用套路</h2><p>遇到 <code>TypeError</code> 或 <code>ValueError</code> 时不要慌，按以下流程顺藤摸瓜，90% 的问题都能在 5 分钟内解决：</p>
+<ol>
+<li><p><strong>打印类型</strong><br>在报错行之前插入 <code>print(type(变量名))</code>。如果是 DataFrame，直接 <code>print(df.dtypes)</code> 查看所有列类型。眼见为实，胜过脑中推演。</p>
+</li>
+<li><p><strong>细读报错信息</strong><br>Python 的报错信息非常精准。重点看最后几行的 <code>unsupported operand type(s) for ...</code>，它会直接告诉你参与运算的两种类型分别是什么 (例如 <code>int</code> 和 <code>str</code>)。</p>
+</li>
+<li><p><strong>显式转换</strong><br>永远不要依赖隐式转换。从外部 (文件、数据库、input) 读入数据后，立即用 <code>int()</code>、<code>float()</code>、<code>pd.to_numeric()</code> 等进行强制类型转换。既掌控类型安全，也让自己理清每一步的数据形态。</p>
+</li>
+<li><p><strong>合理利用 <code>errors=&#39;coerce&#39;</code></strong><br>当你无法保证数据 100% 干净时，在 <code>pd.to_numeric</code> 或 <code>pd.to_datetime</code> 中开启 <code>errors=&#39;coerce&#39;</code>。这样程序不会直接崩溃，而是将脏数据标记为 <code>NaN</code>，后续再用 <code>dropna()</code> 或 <code>fillna()</code> 集中处理。</p>
 <blockquote>
-<p><strong>限制条件</strong>：严禁使用 <code>df + c</code>、<code>df.add(c)</code>、<code>df.applymap(lambda x: x+c)</code> 等直接算术运算。</p>
+<p><strong>注意：</strong></p>
+<p>卡bug说明有错，但不卡bug不代表没错。报错和程序中断本质上是一种提醒，当处于数据探索阶段和代码尝试阶段时，建议不要使用这个方法，尝试普通显式转换并输出结果手动检查。</p>
+<p>具体操作上，可以先用 df.head(20) 截取数据样本，在样本上执行严格的显式转换 (如不加 errors 参数) 。一旦报错，报错会精准地说明：是哪一行、哪一个值引发了冲突。这种“主动触雷”能让你最快摸清手中数据的“脏乱程度”，这是数据清洗中最宝贵的第一手信息。</p>
+<p>如果强行忽略错误，一旦出现行或列错位的情况，会将错就错地继续运算，以至于拿到结果时根本发现不了中间算错了。</p>
 </blockquote>
+</li>
+<li><p><strong>拆解复杂表达式</strong>  </p>
+<p>先不写冗长的链式操作，如 <code>df[&#39;a&#39;] + df[&#39;b&#39;].apply(func) * 2</code>。拆成中间变量：<code>temp = df[&#39;b&#39;].apply(func)</code>，再检查 <code>temp</code> 的类型，最后执行加法。分步执行能快速锁定出错的环节。等熟练后再写精简的代码。</p>
+</li>
+<li><p><strong>小规模数据测试</strong><br>对全量数据操作前，先用 <code>df.head(10)</code> 截取一小部分，运行你的转换逻辑。验证通过后再应用到全表，极大节省试错时间。</p>
+</li>
+<li><p><strong>善用 Jupyter 的 <code>?</code> 或 <code>help()</code></strong><br>不确定某个函数参数的含义？在 Jupyter 中执行 <code>pd.to_numeric?</code>，直接查看官方文档签名，明确该函数期望什么输入，返回什么输出，避免“盲猜”。</p>
+</li>
+</ol>
 <hr>
-<h2 id="第-4-题-函数位置参数顺序的影响辨析"><a href="#第-4-题-函数位置参数顺序的影响辨析" class="headerlink" title="第 4 题 (函数位置参数顺序的影响辨析)"></a>第 4 题 (函数位置参数顺序的影响辨析)</h2><p>在调用 pandas 函数时，位置参数的传入顺序<strong>是否一定会</strong>影响最终的运算结果？请以 <code>pd.read_csv</code> 中 <code>usecols</code> (传入整数索引列表 vs 传入列名字符串列表) 与 <code>names</code> 参数的配合使用为例，或自选其他合适的函数 (如 <code>pd.DataFrame.drop</code> 中的 <code>labels</code> 与 <code>axis</code>) ，给出您的结论并详细阐述理由。</p>
-<hr>
-<h2 id="第-5-题-模拟纵向合并-–-堆叠行"><a href="#第-5-题-模拟纵向合并-–-堆叠行" class="headerlink" title="第 5 题 (模拟纵向合并 – 堆叠行)"></a>第 5 题 (模拟纵向合并 – 堆叠行)</h2><p>在不使用 <code>pd.concat()</code> 函数的前提下，实现两个 DataFrame 的<strong>纵向 (按行) 合并</strong>功能。请写出核心实现代码，并简要说明您是如何达成行堆叠效果的。</p>
-<hr>
-<h2 id="第-6-题-模拟横向合并-–-连接列"><a href="#第-6-题-模拟横向合并-–-连接列" class="headerlink" title="第 6 题 (模拟横向合并 – 连接列)"></a>第 6 题 (模拟横向合并 – 连接列)</h2><p>在不使用 <code>pd.merge()</code> 函数的前提下，实现两个 DataFrame 的<strong>横向 (按列) 合并</strong>功能。要求根据两个 DataFrame 的<strong>行索引</strong>进行对齐连接。请写出实现代码，并详细解释您的底层实现逻辑 (例如如何处理索引对齐、如何处理重复列名等) 。</p>
-<hr>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这 6 道题如果做得很顺利，说明你对 Pandas 的理解已经超越了“记住 API”的层面，开始进入“理解设计逻辑”的阶段。</p>
-<p>如果做得不顺利 (尤其是第 5、6 题) ，这恰恰是好事。<strong>真正的成长往往发生在“感觉手里工具不够用”的时刻。</strong> 那些教程没教你的报错场景、那些被禁用的现成函数、那些需要你自己造轮子的瞬间——这些才是把一个“会用工具的人”变成“能创造工具的人”的关键台阶。</p>
-<p>做完之后，欢迎对照参考答案复盘 (后续发布，敬请期待) 。但请记住：参考答案展示的只是一种可行的路径，你自己的解法只要逻辑正确、能跑通，就是好解法。哪怕写得再“笨”，那也是你独立走通的路。</p>
-<p>祝你写代码的时候，能感受到一点点“解谜”的乐趣。</p>
-<p>— Aurora Hiker</p>
+<p>数据类型是编程世界的底层基石，贯穿于每一行代码之中。动态类型赋予的“灵活”从来不是“随意”的代名词——唯有养成清晰的类型意识与良好的调试习惯，才能将入门阶段常见的报错消弭于无形。希望这份指南能帮助你吃透变量类型的底层逻辑，从而写出既健壮又优雅的代码。</p>
+<p>感谢你的阅读！若有任何疑问或建议，欢迎发送邮件至 <strong><a href="mailto:&#x61;&#x75;&#x72;&#x6f;&#x72;&#97;&#104;&#105;&#107;&#101;&#114;&#x40;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong>。每一条反馈我都会认真阅读、尽力回复，你的参与会让这份指南走得更远、变得更好。</p>
 ]]></content>
       <categories>
         <category>Python 入门</category>
@@ -468,7 +411,7 @@
 <li>想扩展功能，去 PyPI 找找库</li>
 </ul>
 <p>编程不是看会的，是练会的。敲范例代码也好，写个小脚本也好，动手就对了。</p>
-<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
+<p>感谢阅读！如有问题或建议，欢迎发邮件至 <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#x61;&#104;&#x69;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>，我会认真阅读并回复，你的反馈会让这份指南变得更好。</p>
 ]]></content>
       <categories>
         <category>Python 入门</category>
@@ -478,354 +421,187 @@
       </tags>
   </entry>
   <entry>
-    <title>Windows系统的安装</title>
-    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+    <title>Pandas 思考题：从 API 使用者到开发者</title>
+    <url>/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/</url>
+    <content><![CDATA[<p>很多初学者看完教程后会产生一种错觉 (包括曾经的我) ：教程里的代码我都跑通了，参数我也都认识了，我应该算“会 Pandas”了吧？</p>
+<p>然后一遇到报错就懵了。</p>
+<p>原因很简单：<strong>教程教的是“在正确路径上怎么走”，但真实世界里的代码，从来不会一路绿灯。</strong></p>
+<p>这篇博客不是教程，是教程的“镜像世界”。在这里，我会刻意制造一些教程里不会出现的场景——参数冲突、列数对不齐、现成函数被禁用。你需要用已有的知识，在一条不那么平坦的路上把代码跑通。</p>
+<p><strong>建议先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 和 <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" title="Pandas 简明教程">Pandas 简明教程</a> 教程的学习后再做本套题。此外，直接看答案将极大削弱训练效果。</strong></p>
+<blockquote>
+<p><strong>说明</strong>：本套题共 6 道，难度由浅入深。前两题侧重“排错”与“基础操作”，中间两题侧重“替代方案”与“原理辨析”，最后两题侧重“从零实现”。建议每道题都先自己写一遍，哪怕写得很“笨”也没关系。</p>
+</blockquote>
 <hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
-<ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
-</ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
-<ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<h2 id="第-1-题-基础排查与异常定位"><a href="#第-1-题-基础排查与异常定位" class="headerlink" title="第 1 题 (基础排查与异常定位)"></a>第 1 题 (基础排查与异常定位)</h2><p>已知 <code>iris</code> 数据集实际只包含 <strong>5 列</strong>数据 (萼片长、萼片宽、花瓣长、花瓣宽、品种) 。如下方代码所示，该数据已被保存为 <strong>制表符分隔 (.tsv)</strong> 的文件。</p>
+<blockquote>
+<p><strong>要求</strong>：请找出下列代码中的错误代码，并指明报错的具体原因。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据来源与保存 (读者无需修改此段)</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 A</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SW&#x27;</span>, <span class="hljs-string">&#x27;PL&#x27;</span>, <span class="hljs-string">&#x27;PW&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],  <span class="hljs-comment"># 为全部 6 列命名</span><br>    usecols=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],                  <span class="hljs-comment"># 按新列名筛选 (此时 usecols 传入列表)</span><br>    index_col=<span class="hljs-string">&#x27;id&#x27;</span>,                               <span class="hljs-comment"># 将 &#x27;id&#x27; 列设为行索引 (可直接传列名)</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;<br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 代码段 B</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 先筛选出第 1 列 (id)、第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    names=[<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的三列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
-<ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
-</li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
-</li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
-</li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
-</li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
-</li>
-</ul>
-</li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png"></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png"></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png"></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png"></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png"></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png"></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png"></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
-</ul>
-</li>
-</ol>
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#x61;&#x68;&#x69;&#x6b;&#x65;&#x72;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<h2 id="第-2-题-字符串向量化操作"><a href="#第-2-题-字符串向量化操作" class="headerlink" title="第 2 题 (字符串向量化操作)"></a>第 2 题 (字符串向量化操作)</h2><p>将鸢尾花数据集 (<code>iris</code>) 中 <code>species</code> 列的每个字符串元素内的<strong>所有字母 <code>&#39;s&#39;</code></strong> (区分大小写) 替换为下划线 <code>&#39;_&#39;</code>。请写出实现代码，并注意保持原数据结构不变 (或返回新副本) 。</p>
+<hr>
+<h2 id="第-3-题-非算术方式的列广播"><a href="#第-3-题-非算术方式的列广播" class="headerlink" title="第 3 题 (非算术方式的列广播)"></a>第 3 题 (非算术方式的列广播)</h2><p>现有一个包含多列数值型数据的 DataFrame。请编写一段代码，为该 DataFrame 的<strong>所有数值列</strong>同时加上一个固定常数 (如 <code>c = 3.14</code>) 。</p>
+<blockquote>
+<p><strong>限制条件</strong>：严禁使用 <code>df + c</code>、<code>df.add(c)</code>、<code>df.applymap(lambda x: x+c)</code> 等直接算术运算。</p>
+</blockquote>
+<hr>
+<h2 id="第-4-题-函数位置参数顺序的影响辨析"><a href="#第-4-题-函数位置参数顺序的影响辨析" class="headerlink" title="第 4 题 (函数位置参数顺序的影响辨析)"></a>第 4 题 (函数位置参数顺序的影响辨析)</h2><p>在调用 pandas 函数时，位置参数的传入顺序<strong>是否一定会</strong>影响最终的运算结果？请以 <code>pd.read_csv</code> 中 <code>usecols</code> (传入整数索引列表 vs 传入列名字符串列表) 与 <code>names</code> 参数的配合使用为例，或自选其他合适的函数 (如 <code>pd.DataFrame.drop</code> 中的 <code>labels</code> 与 <code>axis</code>) ，给出您的结论并详细阐述理由。</p>
+<hr>
+<h2 id="第-5-题-模拟纵向合并-–-堆叠行"><a href="#第-5-题-模拟纵向合并-–-堆叠行" class="headerlink" title="第 5 题 (模拟纵向合并 – 堆叠行)"></a>第 5 题 (模拟纵向合并 – 堆叠行)</h2><p>在不使用 <code>pd.concat()</code> 函数的前提下，实现两个 DataFrame 的<strong>纵向 (按行) 合并</strong>功能。请写出核心实现代码，并简要说明您是如何达成行堆叠效果的。</p>
+<hr>
+<h2 id="第-6-题-模拟横向合并-–-连接列"><a href="#第-6-题-模拟横向合并-–-连接列" class="headerlink" title="第 6 题 (模拟横向合并 – 连接列)"></a>第 6 题 (模拟横向合并 – 连接列)</h2><p>在不使用 <code>pd.merge()</code> 函数的前提下，实现两个 DataFrame 的<strong>横向 (按列) 合并</strong>功能。要求根据两个 DataFrame 的<strong>行索引</strong>进行对齐连接。请写出实现代码，并详细解释您的底层实现逻辑 (例如如何处理索引对齐、如何处理重复列名等) 。</p>
+<hr>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这 6 道题如果做得很顺利，说明你对 Pandas 的理解已经超越了“记住 API”的层面，开始进入“理解设计逻辑”的阶段。</p>
+<p>如果做得不顺利 (尤其是第 5、6 题) ，这恰恰是好事。<strong>真正的成长往往发生在“感觉手里工具不够用”的时刻。</strong> 那些教程没教你的报错场景、那些被禁用的现成函数、那些需要你自己造轮子的瞬间——这些才是把一个“会用工具的人”变成“能创造工具的人”的关键台阶。</p>
+<p>做完之后，欢迎对照参考答案复盘 (后续发布，敬请期待) 。但请记住：参考答案展示的只是一种可行的路径，你自己的解法只要逻辑正确、能跑通，就是好解法。哪怕写得再“笨”，那也是你独立走通的路。</p>
+<p>祝你写代码的时候，能感受到一点点“解谜”的乐趣。</p>
+<p>— Aurora Hiker</p>
 ]]></content>
       <categories>
-        <category>计算机基础与实验平台搭建</category>
+        <category>Python 入门</category>
       </categories>
       <tags>
-        <tag>实验平台搭建</tag>
-        <tag>计算机基础</tag>
+        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
-    <title>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</title>
-    <url>/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<p>在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。</p>
+    <title>GROMACS分子动力学模拟的实验平台搭建</title>
+    <url>/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>分子动力学模拟是一种基于经典力学的计算机模拟方法，通过求解牛顿运动方程来追踪原子和分子的运动轨迹，从而在原子尺度上研究体系的动态演化过程。它已经成为生物学、化学、材料科学等领域不可或缺的研究工具——从蛋白质折叠、酶催化机制，到药物分子与靶点的相互作用，再到新型材料的设计与优化，分子动力学模拟都能够提供实验难以直接观测的微观细节和动态信息。</p>
+<p>在众多分子动力学模拟软件中，GROMACS(GROningen MAchine for Chemical Simulations)因其开源免费、计算效率高、并行扩展性好、以及支持GPU加速等特点，被广泛应用于生物大分子体系的研究。它拥有丰富的力场支持、强大的分析工具以及活跃的社区生态，使得研究者能够快速搭建模拟体系、运行大规模并行计算，并对结果进行深入分析。</p>
+<p>然而，要充分发挥GROMACS的性能，搭建一个稳定、高效的实验平台至关重要。这不仅涉及硬件层面的考量——例如CPU核心数、内存大小、GPU型号与数量、存储系统的I&#x2F;O能力——还包含软件环境的配置：操作系统的选择、编译器的优化、MPI并行库的安装、CUDA及GPU驱动版本匹配、GROMACS本身的编译与调优等。一个精心搭建的平台能够大幅缩短模拟时间，提高资源利用率，并保证计算的准确性和可重复性。</p>
+<p>本文旨在为初学者和有一定经验的研究者提供一个系统的GROMACS实验平台搭建指南。我们将从硬件选型建议开始，讲解Ubuntu系统(20.04，包括WSL2 Ubuntu)下GROMACS v2025.4的编译安装、环境变量设置，并补充常见问题的解决方法，这套方法同样可以迁移至Ubuntu 22.04&#x2F;24.04环境下，GROMACS v2025.4或其他版本的编译安装。希望通过本文，读者能够掌握从零开始构建一套适用于自身研究需求的GROMACS模拟平台的方法，为后续的分子动力学模拟研究打下坚实的基础。</p>
+<p>本文参考GROMACS的官方说明文档(版本2026.0)：<a href="https://manual.gromacs.org/documentation/current/index.html">https://manual.gromacs.org/documentation/current/index.html</a></p>
 <hr>
-<h2 id="WOX：极速启动与搜索工具"><a href="#WOX：极速启动与搜索工具" class="headerlink" title="WOX：极速启动与搜索工具"></a>WOX：极速启动与搜索工具</h2><p>Wox 是一款开源免费的生产力工具，类似于 macOS 上的 Alfred。它可以通过快捷键快速唤出输入框，实现搜索文件、运行程序、计算数学表达式、管理剪贴板、执行命令行等多种功能。通过安装插件，还能扩展更多实用能力。</p>
-<p>Wox 官网: <a href="http://www.wox.one/">http://www.wox.one/</a><br>GitHub 仓库：<a href="https://github.com/Wox-launcher/Wox/releases">https://github.com/Wox-launcher/Wox/releases</a><br>官方说明文档：<a href="https://wox-launcher.github.io/Wox/guide/installation.html">https://wox-launcher.github.io/Wox/guide/installation.html</a><br>备用下载（由于 GitHub 访问不稳定，提供 v2.0.0 安装包）：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox-windows-amd64.exe">wox-2.0.0-windows-amd64.exe</a></p>
-<p><strong>基础设置：</strong><br>安装完成后，建议先根据个人习惯调整设置。</p>
-<ul>
-<li>打开设置页<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80.png" alt="wox设置页的打开"></li>
-<li>在通用设置界面调整设置<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE%E9%A1%B5.png" alt="wox通用设置页"></li>
-</ul>
-<p><strong>常用操作：</strong></p>
-<ul>
-<li><p><strong>唤出&#x2F;隐藏：</strong> 默认快捷键 Alt + 空格，再次按下或点击空白区域可隐藏。在输入框内按 Esc 也可快速隐藏。</p>
-</li>
-<li><p><strong>文件搜索：</strong> Wox 集成了 Everything 引擎，输入 <code>f + 空格 + 关键词</code> 即可搜索全盘文件。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6.png"></p>
-</li>
-<li><p><strong>计算器：</strong> 直接输入数学表达式（如 1+1），Wox 会自动计算结果。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%A1%E7%AE%97%E5%99%A8.png"></p>
-</li>
-<li><p><strong>网页搜索&#x2F;收藏夹：</strong> 直接输入关键词，会调用默认浏览器搜索；若关键词匹配浏览器收藏夹中的网页标题，则可直接打开该网页。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2.png" alt="键入需要联网搜索的关键字"></p>
-<p><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%94%B6%E8%97%8F%E5%A4%B9.png" alt="键入收藏夹页面的关键字"></p>
-</li>
-<li><p><strong>剪贴板历史：</strong> 输入 <code>cb + 空格 + 关键词</code> 可检索剪贴板历史记录<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E5%89%AA%E8%B4%B4%E6%9D%BF.png"></p>
-</li>
-<li><p><strong>运行命令：</strong> 输入 <code>&gt; + 空格 + 命令</code> 可直接在 PowerShell 中执行命令<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%BF%90%E8%A1%8C%E6%8C%87%E4%BB%A4.png"></p>
-</li>
-</ul>
-<p>Wox 支持丰富的插件，你可以在设置中浏览并安装，例如翻译、天气、进程管理等，打造属于自己的效率中心。</p>
-<hr>
-<h2 id="Markdown编辑器推荐"><a href="#Markdown编辑器推荐" class="headerlink" title="Markdown编辑器推荐"></a>Markdown编辑器推荐</h2><p>Markdown 是一种轻量级标记语言，让你的创作专注于内容而非排版。它采用纯文本格式，却能轻松转换为 HTML、PDF 等格式，且具备实时保存、内存占用低等优点，非常适合编写技术文档、实验记录或笔记。以下推荐两款优秀的本地编辑器不仅在编辑时可以预览最终样式，且所有数据均存储在你的设备上，保障数据安全。</p>
-<h3 id="Joplin"><a href="#Joplin" class="headerlink" title="Joplin"></a>Joplin</h3><p>Joplin 是一款免费开源的笔记应用，支持待办事项、多级标签、笔记本分类，并可与多种云服务（Nextcloud、Dropbox 等）同步，实现多端访问。它支持导入&#x2F;导出 Markdown、HTML、PDF 等多种格式，便于备份和分享。</p>
-<p><strong>官网：</strong> <a href="https://joplinapp.org/">https://joplinapp.org/</a><br><strong>特点：</strong></p>
-<ul>
-<li>清晰的笔记组织结构（笔记本、标签、待办）</li>
-<li>支持端到端加密（同步时）</li>
-<li>插件系统，可扩展功能</li>
-</ul>
-<h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h3><p>Typora界面与joplin相比更加简洁美观。</p>
-<p>安装包下载(因官网已收费，提供旧版免费安装包)：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/typora-setup-x64-20210407.exe">typora-setup-x64-20210407.exe</a></p>
-<p>注意：Typora 早期版本免费，但新版本已开始收费。请勿升级，以免失去免费使用权。<br>对比：Joplin 更适合长期笔记管理和多端同步，Typora 则适合纯粹的单篇写作。也可以两者结合使用：用 Typora 撰写，再导入 Joplin 归档。</p>
-<hr>
-<h2 id="GitHub-加速器：Watt-Toolkit"><a href="#GitHub-加速器：Watt-Toolkit" class="headerlink" title="GitHub 加速器：Watt Toolkit"></a>GitHub 加速器：Watt Toolkit</h2><p>GitHub 是全球最大的开源社区，但由于网络原因，国内访问时常不稳定。Watt Toolkit（原名 Steam++）是一款免费工具，可一键加速 GitHub。从 Microsoft Store 即可安全获取。</p>
-<p><strong>安装与使用：</strong></p>
-<ul>
-<li><p>打开 Windows 自带的应用商店（Microsoft Store），搜索“Watt Toolkit”并安装。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png"></p>
-</li>
-<li><p>安装完成后，打开网络加速界面，在列表中找到 GitHub，勾选后点击“一键加速”按钮。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt%E5%8A%A0%E9%80%9F.png"></p>
-</li>
-<li><p>加速成功后，即可流畅访问 GitHub，克隆仓库、浏览代码都不再困难。</p>
-</li>
-</ul>
-<hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#x6b;&#101;&#114;&#64;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
-<hr>
-<p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
-]]></content>
-      <categories>
-        <category>Windows使用技巧</category>
-      </categories>
-      <tags>
-        <tag>Windows使用技巧</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人博客搭建指南：Fluid 主题安装与深度美化</title>
-    <url>/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/</url>
-    <content><![CDATA[<p>在<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
-<p>Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活，内置了暗色模式、访问统计、本地搜索等常用功能。截至本文撰写时，Fluid 最新版本为 1.9.9。</p>
-<blockquote>
-<p><strong>说明</strong>：本文基于上一篇搭建好的 Hexo 博客继续操作，默认您已完成 Hexo 安装、GitHub Pages 配置及本地仓库初始化。若尚未完成，请先参考上一篇指南。</p>
-</blockquote>
-<hr>
-<h1 id="1-安装-Fluid-主题"><a href="#1-安装-Fluid-主题" class="headerlink" title="1. 安装 Fluid 主题"></a>1. 安装 Fluid 主题</h1><h2 id="1-1-环境要求"><a href="#1-1-环境要求" class="headerlink" title="1.1 环境要求"></a>1.1 环境要求</h2><p>Fluid 主题要求 Hexo 版本不低于 5.0.0，Node.js 版本不低于 10.13.0。您可以在终端中执行以下命令确认版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo -v<br>node -v<br></code></pre></td></tr></table></figure>
-
-<p>若 Hexo 版本低于 5.0.0，可通过以下命令升级：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo@latest --save<br></code></pre></td></tr></table></figure>
-
-<h2 id="1-2-安装主题"><a href="#1-2-安装主题" class="headerlink" title="1.2 安装主题"></a>1.2 安装主题</h2><p>Fluid 提供两种安装方式 (npm 与手动)，推荐使用 npm 方式。</p>
-<p><strong>npm 安装 (推荐)</strong></p>
-<p>进入博客根目录，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>即使此前在另一个博客中已安装过 Fluid 主题，在新站点根目录下仍需重新执行安装指令。Hexo 基于当前工作目录加载依赖，Node.js 会从当前博客目录下的 node_modules 或 themes 文件夹中查找 hexo-theme-fluid 包，无法跨目录复用。</p>
-</blockquote>
-<h2 id="1-3-启用主题"><a href="#1-3-启用主题" class="headerlink" title="1.3 启用主题"></a>1.3 启用主题</h2><ol>
-<li>编辑 Hexo 根目录下的 <code>_config.yml</code>，修改以下配置：</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在博客目录下创建 <code>_config.fluid.yml</code> 文件，<a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">官方配置指南</a>中说明需要将主题默认配置的全部或部分内容复制到该文件中。但笔者在 Hexo 8.1.2 环境下测试发现，无需复制任何内容，主题会自动读取默认配置。由于笔者不清楚哪些版本的组合支持此特性，欢迎读者尝试并反馈。</li>
-</ol>
-<p>至此，Fluid 主题已完成安装与启用。接下来开始进行各项配置与美化。</p>
-<hr>
-<h1 id="2-配置文件说明"><a href="#2-配置文件说明" class="headerlink" title="2 配置文件说明"></a>2 配置文件说明</h1><p>理解 Fluid 的配置机制是后续所有操作的基础。</p>
-<ul>
-<li><strong>主题默认配置</strong>：<code>themes/fluid/_config.yml</code> —— 存放主题默认设置，<strong>不建议直接修改</strong>。</li>
-<li><strong>用户自定义配置</strong>：<code>_config.fluid.yml</code> —— 位于博客根目录，优先级更高，更新主题时不会被覆盖。仅当该项在自定义配置中未定义时，才回退使用默认值。</li>
-</ul>
-<p><strong>所有后续修改均在 <code>_config.fluid.yml</code> 中进行</strong>。</p>
-<blockquote>
-<p><strong>提示</strong>：</p>
-<p>1.只要配置存在于 <code>_config.fluid.yml</code> 中，就具有高优先级，修改原 <code>_config.yml</code> 是无效的。每次更新主题后，需留意更新说明，可能需要对 <code>_config.fluid.yml</code> 同步修改。</p>
-<p>2.所有配置中引用的图片或文件，其根目录均为 source 文件夹。</p>
-</blockquote>
-<hr>
-<h1 id="3-关于页配置"><a href="#3-关于页配置" class="headerlink" title="3. 关于页配置"></a>3. 关于页配置</h1><p>关于页是博客中展示作者、博客信息的独立页面，需要单独创建并配置。</p>
-<h2 id="3-1-创建关于页"><a href="#3-1-创建关于页" class="headerlink" title="3.1 创建关于页"></a>3.1 创建关于页</h2><p>Fluid 的关于页需手动创建：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
-<p>然后编辑 <code>/source/about/index.md</code>，添加 <code>layout: about</code> 属性：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown">---<br>title: about<br><span class="hljs-section">layout: about</span><br><span class="hljs-section">---</span><br>这里写关于页的正文，支持 Markdown 和 HTML。<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：layout: about 必须存在且不能修改为其他值，否则无法显示头像、简介等主题样式。</p>
-</blockquote>
-<h2 id="3-2-关于页美化"><a href="#3-2-关于页美化" class="headerlink" title="3.2 关于页美化"></a>3.2 关于页美化</h2><p>以下是与关于页相关的所有配置项，在 <code>_config.fluid.yml</code> 中修改：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">about:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span>        <span class="hljs-comment"># 关于页的背景图</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">60</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-attr">avatar:</span> <span class="hljs-string">/img/avatar.png</span>             <span class="hljs-comment"># 作者头像</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Fluid&quot;</span><br>  <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;An elegant theme for Hexo&quot;</span>  <span class="hljs-comment"># 简介</span><br>  <span class="hljs-comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span><br>  <span class="hljs-comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span><br>  <span class="hljs-attr">icons:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-github-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://github.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;GitHub&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://douban.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;豆瓣&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="hljs-attr">qrcode:</span> <span class="hljs-string">&quot;/img/favicon.png&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-comment"># 网站图标 (浏览器标签页)</span><br><span class="hljs-attr">favicon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 苹果设备图标</span><br><span class="hljs-attr">apple_touch_icon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 标签页标题分隔符</span><br><span class="hljs-attr">tab_title_separator:</span> <span class="hljs-string">&quot; - &quot;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-comment"># 导航栏左侧标题</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;你的博客名称&quot;</span><br>  <span class="hljs-comment"># 导航菜单</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>其中 <code>key</code> 用于关联多语言配置，<code>icon</code> 对应图标库中的图标类名。Fluid 使用 Iconfont 提供图标支持，可以通过修改 <code>icon</code> 值更换菜单图标。</p>
-<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 图片</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-comment"># Banner 遮罩透明度</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-comment"># 首页副标题</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;副标题文本&quot;</span> <span class="hljs-comment"># 为空则使用默认值 (原配置文件的副标题文本)</span><br>  <span class="hljs-comment"># 自动截取文章摘要</span><br>  <span class="hljs-attr">auto_excerpt:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># 文章元信息显示</span><br>  <span class="hljs-attr">post_meta:</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">category:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">tag:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>建议 Banner 图片尺寸为 1920×1080。</p>
-</blockquote>
-<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">footer:</span><br>  <span class="hljs-comment"># 页脚内容（支持 HTML）</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span><br><span class="hljs-string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span><br><span class="hljs-string">  &#x27;</span><br>  <span class="hljs-comment"># 访问统计</span><br>  <span class="hljs-attr">statistics:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">&quot;busuanzi&quot;</span>  <span class="hljs-comment"># 可选：busuanzi / leancloud</span><br></code></pre></td></tr></table></figure>
-
-<p><code>source</code> 可选用不蒜子 (busuanzi，不需要额外配置) 或 LeanCloud (需额外配置) 作为统计来源。</p>
-<hr>
-<h1 id="5-本地搜索配置"><a href="#5-本地搜索配置" class="headerlink" title="5. 本地搜索配置"></a>5. 本地搜索配置</h1><p>Fluid 已集成 <code>hexo-generator-search</code> 插件，默认在根目录生成并使用 <code>local-search.xml</code>。若已安装其他搜索插件，需关闭以避免生成多余的索引文件。</p>
-<p>如未安装，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo-generator-search --save<br></code></pre></td></tr></table></figure>
-
-<p>然后在 <code>_config.fluid.yml</code> 中启用：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">local_search:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="6-高级美化技巧"><a href="#6-高级美化技巧" class="headerlink" title="6. 高级美化技巧"></a>6. 高级美化技巧</h1><h2 id="6-1-Banner-图片与视频背景"><a href="#6-1-Banner-图片与视频背景" class="headerlink" title="6.1 Banner 图片与视频背景"></a>6.1 Banner 图片与视频背景</h2><p>Fluid 支持为不同页面配置独立的 Banner 图片：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">index:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/index_banner.jpg</span><br><br><span class="hljs-attr">archive:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/archive_banner.jpg</span><br><br><span class="hljs-attr">category:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/category_banner.jpg</span><br><br><span class="hljs-attr">tag:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/tag_banner.jpg</span><br></code></pre></td></tr></table></figure>
-
-<p>如需更动态的效果，可参考社区方案为首页添加随机视频背景。</p>
-<h2 id="6-2-友链配置"><a href="#6-2-友链配置" class="headerlink" title="6.2 友链配置"></a>6.2 友链配置</h2><p>Fluid 原生支持友链功能。在 <code>_config.fluid.yml</code> 中配置：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 友链分组</span><br>  <span class="hljs-attr">groups:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group_name:</span> <span class="hljs-string">&quot;好友博客&quot;</span><br>      <span class="hljs-attr">items:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;博客名称&quot;</span><br>          <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;博客简介&quot;</span><br>          <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span><br>          <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;/img/avatar.jpg&quot;</span> <span class="hljs-comment"># 根目录位于 source 文件夹</span><br></code></pre></td></tr></table></figure>
-
-<p>然后在导航菜单中添加友链入口：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;links&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/links/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-link-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="7-更新主题"><a href="#7-更新主题" class="headerlink" title="7. 更新主题"></a>7. 更新主题</h1><p>Fluid 主题持续迭代，定期更新可获得新功能和 bug 修复。</p>
-<p><strong>npm 安装方式</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm update --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
-
-<p><strong>Release 压缩包方式</strong>：</p>
-<p>先将原文件夹重命名为 <code>fluid-bkp</code> 作为备份，然后下载最新 release 解压并重命名为 <code>fluid</code>。</p>
-<blockquote>
-<p><strong>注意</strong>：每次更新后，需留意 release 说明中的配置变更，手动同步修改 <code>_config.fluid.yml</code>。</p>
-</blockquote>
-<hr>
-<p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
-<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#107;&#101;&#114;&#x40;&#49;&#54;&#x33;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 和我交流。</p>
-<p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入评论、图床、优化加载速度、配置 SEO等 ，后续我会继续研究并记录，慢慢把这一整套流程补齐。</p>
-<hr>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://fluid-dev.github.io/hexo-fluid-docs">Fluid 官方文档</a></li>
-<li><a href="https://hexo.fluid-dev.com/docs/guide/">Fluid 配置指南</a></li>
-<li><a href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid GitHub 仓库</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>个人博客搭建指南</category>
-      </categories>
-      <tags>
-        <tag>个人博客搭建指南</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何搭建合适的生信分析平台</title>
-    <url>/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<p>对于初涉生物信息学的朋友来说，搭建一个合适的分析环境往往是入坑的第一道门槛。一方面，生信分析的核心工具几乎都扎根于Linux系统，掌握命令行操作是绕不开的必修课；另一方面，日常办公又离不开Windows或Mac的生态。如何在强大的分析能力与便捷的办公体验之间找到最佳平衡点，直接影响了我们的学习效率和后续的使用体验。</p>
-<p>这篇博文将对目前主流的三种生信平台搭建方案（双系统、纯Linux、Windows + WSL）进行横向对比，分析各自的优缺点与适用人群。如果你正纠结于如何开启自己的生信之路，这份指南或许能帮你找到最适合自己的方向。</p>
-<hr>
-<h3 id="1-生信分析需要什么样的平台？"><a href="#1-生信分析需要什么样的平台？" class="headerlink" title="1. 生信分析需要什么样的平台？"></a>1. 生信分析需要什么样的平台？</h3><p>生物信息学分析通常依赖 Linux 环境，因为许多核心软件（如 <code>bedtools</code>、<code>samtools</code>）仅提供 Linux 版本。此外，Linux 自带的命令行工具（<code>sort</code>、<code>awk</code>、<code>grep</code> 等）能高效处理文本数据，虽然 Python 或 R 也能实现类似功能，但往往需要编写更多代码才能完成同样的任务。</p>
-<p>然而，Linux 的日常使用对新手并不友好：办公软件（如 Word、微信、QQ）要么无法原生运行，要么体验远不如 Windows。即使有替代品，重新学习也会增加时间成本，以及与同组成员的合作成本。因此，搭建生信分析平台的关键是在<strong>分析便利性</strong>和<strong>日常办公完整性</strong>之间找到平衡。</p>
-<p>目前主流的搭建方式有三种，各有优劣，适合不同需求的用户：</p>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，详见这一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>笔者参照GROMACS官方对运行环境的要求，整理了一份硬件配置速查表，并附上了自己的配置，供大家参考。需要说明的是，这份配置目前仅为理论推测，欢迎各位读者结合实际使用情况提供反馈。</p>
+<p><strong>GROMACS的硬件配置速查表:</strong></p>
 <table>
 <thead>
 <tr>
-<th>系统类型</th>
-<th>优点</th>
-<th>缺点</th>
-<th>适用人群</th>
+<th>部件</th>
+<th>最低要求</th>
+<th>推荐配置(入门)</th>
+<th>推荐配置(进阶)</th>
+<th>笔者的配置</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>Windows + Linux 双系统</strong></td>
-<td>两个系统完全独立，均可调用全部硬件资源，且都能拥有图形界面。</td>
-<td>一次只能使用一个系统，切换需要重启，非常不便。</td>
-<td>极少需要切换系统，或对两个系统都有完整图形界面需求的用户。</td>
+<td>CPU</td>
+<td>Intel Core i5-3330, AMD Ryzen 3 1200</td>
+<td>Intel Core i5-8400, AMD Ryzen 5 2600</td>
+<td>Intel Core i7-13700K, AMD Ryzen 7</td>
+<td>AMD Ryzen 7 9700X</td>
 </tr>
 <tr>
-<td><strong>纯 Linux 系统</strong></td>
-<td>系统轻量，性能最大化，能获得原生的 Linux 分析体验。</td>
-<td>办公软件支持不足，协作时可能遇到兼容性问题；对新手操作门槛高。</td>
-<td>熟练使用 Linux 且日常办公可完全在 Linux 下完成的用户。</td>
+<td>内存</td>
+<td>8 GB RAM</td>
+<td>16 GB RAM</td>
+<td>32 GB RAM</td>
+<td>64 GB RAM</td>
 </tr>
 <tr>
-<td><strong>Windows + WSL (适用于 Linux 的 Windows 子系统)</strong></td>
-<td><strong>可同时使用两个系统</strong>，无需重启；文件可以互相访问；既能用 Windows 办公，又能用 Linux 做分析。</td>
-<td>WSL 无法调用全部硬件资源（如 GPU 加速有限制），且 Linux 侧通常只有命令行界面。</td>
-<td><strong>大多数初学者和日常用户</strong>——可在熟悉的 Windows 环境中逐步学习 Linux 命令。</td>
+<td>硬盘(可用空间，推荐固态硬盘)</td>
+<td>20 GB</td>
+<td>100 GB</td>
+<td>100 GB以上</td>
+<td>固态 &gt; 100 GB、机械 &gt; 1 TB</td>
+</tr>
+<tr>
+<td>GPU(可选，需更新CUDA)</td>
+<td>无(纯CPU运行)</td>
+<td>NVIDIA GTX 1050以上</td>
+<td>NVIDIA RTX 3060以上或专业卡</td>
+<td>NVIDIA RTX 5060Ti 16 GB</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>Linux、Windows、macOS</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Linux(Ubuntu 22.04以上版本)</td>
+<td>Windows 10 WSL Ubuntu 20.04</td>
 </tr>
 </tbody></table>
+<blockquote>
+<p><strong>对于零基础初学者</strong>：即使只有一台普通台式机或笔记本(没有独立显卡)，也可以顺利安装 GROMACS 并运行小规模的例子。等熟悉了基本操作，再考虑升级硬件或使用 GPU 加速。</p>
+</blockquote>
+<p>GROMACS 在编译时会自动检测 CPU 支持哪些指令集(如 SSE4.1、AVX2 等)，这些指令集越新，计算越快。你不需要手动设置，但了解自己的 CPU 世代有助于判断性能。</p>
+<ul>
+<li><strong>2011 年以前的 CPU</strong>：可能只支持 SSE2，可以运行但较慢。  </li>
+<li><strong>2011–2017 年主流 CPU</strong>：支持 AVX&#x2F;AVX2，速度不错。  </li>
+<li><strong>2017 年以后的新 CPU</strong>：支持 AVX-512 或更新的指令集(Intel 第 8 代以后，AMD Zen 4 以后)，速度最快。</li>
+</ul>
+<p>希望这些解释能帮你了解自己的硬件基础。接下来我们就可以开始安装软件环境了！</p>
 <hr>
-<h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
-<p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
+<h2 id="2-依赖软件及其安装"><a href="#2-依赖软件及其安装" class="headerlink" title="2. 依赖软件及其安装"></a>2. 依赖软件及其安装</h2><h3 id="2-1-系统环境配置"><a href="#2-1-系统环境配置" class="headerlink" title="2.1 系统环境配置"></a>2.1 系统环境配置</h3><p>GROMACS 可以在三种主流操作系统上运行，但对初学者最推荐的是 Linux(特别是 Ubuntu)。因为：</p>
+<ul>
+<li>Linux 对科学计算支持最好，安装和配置最直接。</li>
+<li>绝大多数高性能计算机（包括超算）都运行 Linux。</li>
+<li>如果你用的是 Windows，也可以通过“适用于 Linux 的 Windows 子系统（WSL）”来安装 Ubuntu，这样既能保留 Windows 习惯，又能享受 Linux 环境。</li>
+</ul>
+<p>关于系统环境的选择，在这篇博客中进行了对比和详细介绍：<a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">如何搭建合适的生信分析平台</a></p>
+<h3 id="2-2-编译器配置"><a href="#2-2-编译器配置" class="headerlink" title="2.2 编译器配置"></a>2.2 编译器配置</h3><p>GROMACS 的源代码是用 C 和 C++ 编写的，需要编译器将其翻译成机器能执行的指令。<br>最低版本要求：<strong>GCC ≥ 11</strong>（必须支持 C++17 标准）。</p>
+<ul>
+<li><p>第一步：检查当前 GCC 版本</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gcc -v<br>g++ -v<br></code></pre></td></tr></table></figure>
+<p>  如果输出的版本号高于或等于 11，说明已满足要求，可以跳过安装步骤；如果版本低于 11 或提示“命令未找到”，则需要安装 GCC 11。</p>
+</li>
+<li><p>第二步：安装 GCC 11</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加 Ubuntu 工具链 PPA（Personal Package Archive）</span><br><span class="hljs-built_in">sudo</span> add-apt-repository ppa:ubuntu-toolchain-r/test<br><span class="hljs-built_in">sudo</span> apt update<br><br><span class="hljs-comment"># 安装 GCC 11 和 G++ 11</span><br><span class="hljs-built_in">sudo</span> apt install gcc-11 g++-11<br><br><span class="hljs-comment"># 安装完成后，可以通过 update-alternatives 将系统默认的 gcc 指向 gcc-11</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-11<br><br><span class="hljs-comment"># 如果需要同时保留旧版本，可以添加优先级</span><br><span class="hljs-built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 \<br>                        --slave /usr/bin/g++ g++ /usr/bin/g++-9<br><br></code></pre></td></tr></table></figure>
+
+<p>  安装完成后，再次检查gcc和g++版本是否符合要求。</p>
+</li>
+</ul>
+<h3 id="2-3-CMake配置"><a href="#2-3-CMake配置" class="headerlink" title="2.3 CMake配置"></a>2.3 CMake配置</h3><p>CMake 是一个“编译管理工具”。它不会直接编译代码，而是检查你的系统环境、找到各种库的位置，然后生成能让编译器工作的“施工图纸”（Makefile）。<br>版本要求：<strong>CMake ≥ 3.28</strong></p>
+<ul>
+<li><p>第一步：检查当前 CMake 版本</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cmake --version <br></code></pre></td></tr></table></figure>
+<p>  若版本 ≥ 3.28，则无需额外操作。若版本过低或未安装，请按以下步骤升级：</p>
+</li>
+<li><p>第二步：使用 Kitware 官方 APT 仓库安装最新 CMake</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装依赖并添加 Kitware 的 GPG 密钥</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y wget gnupg<br>wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null | gpg --dearmor - | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/kitware-archive-keyring.gpg &gt;/dev/null<br><br><span class="hljs-comment"># 添加 Kitware 仓库（自动适配当前 Ubuntu 版本）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ <span class="hljs-subst">$(lsb_release -cs)</span> main&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/kitware.list<br><br><span class="hljs-comment"># 更新并安装 cmake</span><br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install cmake<br><br><span class="hljs-comment"># 验证安装</span><br>cmake --version<br></code></pre></td></tr></table></figure></li>
+</ul>
 <hr>
-<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#49;&#x36;&#51;&#46;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+<h2 id="3-GROMACS安装"><a href="#3-GROMACS安装" class="headerlink" title="3. GROMACS安装"></a>3. GROMACS安装</h2><h3 id="3-1-源码包下载"><a href="#3-1-源码包下载" class="headerlink" title="3.1 源码包下载"></a>3.1 源码包下载</h3><p>前往 GROMACS 官网下载页面：<a href="https://manual.gromacs.org/documentation/current/download.html">https://manual.gromacs.org/documentation/current/download.html</a><br>或直接使用命令行下载 2025.4 版本（示例版本）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入存放软件的目录，例如 ~/software</span><br><span class="hljs-built_in">cd</span> ~/software<br>wget https://ftp.gromacs.org/gromacs/gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+
+<p>下载完成后，检查文件是否存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l gromacs-2025.4.tar.gz<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-编译安装"><a href="#3-2-编译安装" class="headerlink" title="3.2 编译安装"></a>3.2 编译安装</h3><p>依次执行以下命令，并留意输出信息。若出现错误，请参考 3.3 节 debug。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压源码包</span><br>tar xfz gromacs-2025.4.tar.gz<br>    <br><span class="hljs-comment"># 进入解压后的目录</span><br><span class="hljs-built_in">cd</span> gromacs-2025.4<br>    <br><span class="hljs-comment"># 创建独立的构建目录（保持源码干净）</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>    <br><span class="hljs-comment"># 编译安装，并自动下载FFTW库和回归测试集</span><br>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON<br>    <br><span class="hljs-comment"># 编译（-j4 表示用 4 核并行，可根据 CPU 核心数调整，例如 -j8</span><br>make<br><br><span class="hljs-comment"># 运行测试</span><br>make check<br><br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 将 GROMACS 环境配置永久写入 ~/.bashrc，避免每次手动 source</span><br><span class="hljs-comment"># zsh用户需要将下列命令中的~/.bashrc置换为~/.zshrc</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;source /usr/local/gromacs/bin/GMXRC&#x27;</span> &gt;&gt; ~/.bashrc<br><span class="hljs-built_in">source</span> ~/.bashrc<br><br><span class="hljs-comment"># 验证安装</span><br>gmx --version<br></code></pre></td></tr></table></figure>
+<p><strong>编译选项解释：</strong></p>
+<ul>
+<li><code>-DGMX_BUILD_OWN_FFTW=ON</code> 让 GROMACS 自动下载并编译 FFTW 库，这是官方推荐的简易方式，免去了手动安装 FFTW 的麻烦。</li>
+<li><code>-DREGRESSIONTEST_DOWNLOAD=ON</code> 下载回归测试集，之后可以通过 <code>make check</code> 验证编译是否正确。如果不需要测试，可以去掉此选项以节省时间。</li>
+</ul>
+<h3 id="3-3-常见问题（debug）"><a href="#3-3-常见问题（debug）" class="headerlink" title="3.3 常见问题（debug）"></a>3.3 常见问题（debug）</h3><p><strong>问题1：cmake .. 时报错提示编译器版本过低或找不到编译器</strong></p>
+<ul>
+<li>如果运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>时报错提示编译器版本过低或找不到编译器，优先检查gcc &amp; g++的版本是否大于11，CMake版本是否大于3.28，并升级不符合要求的软件。</li>
+<li>升级完成后，直接运行<code>cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=ON</code>会产生bug，需要清理缓存  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回到build的上级目录，即gromacs-2025.4</span><br><span class="hljs-built_in">cd</span> ../<br><br><span class="hljs-comment"># 删除旧的 build 文件夹并创建新的（如果里面有重要文件，请备份）</span><br><span class="hljs-built_in">rm</span> -rf build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>问题2：安装完成后输入 gmx 提示命令未找到</strong></p>
+<ul>
+<li>检查是否正确执行了 <code>source /usr/local/gromacs/bin/GMXRC</code>。可以运行 <code>echo $GMXRC</code> 查看是否已设置。若未设置，重新执行 source 命令，或检查是否已将 source 命令加入 <code>~/.bashrc</code> 并重新加载。</li>
+</ul>
+<hr>
+<p>至此，你已经成功搭建了一个基础的 GROMACS 模拟平台！从硬件认知到软件安装，每一步都经过了实践检验。接下来，你可以：</p>
+<ul>
+<li>学习 GROMACS 的输入文件准备（拓扑、坐标、参数）。</li>
+<li>尝试运行一个完整的模拟例子（如官方教程中的 Lysozyme）。</li>
+<li>根据实际需求，进一步配置 MPI 并行或 GPU 加速。</li>
+</ul>
+<p>如果在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#114;&#97;&#x68;&#105;&#107;&#101;&#x72;&#64;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>发送留言交流。祝你在分子动力学模拟的世界里探索愉快！</p>
 ]]></content>
       <categories>
-        <category>计算机基础与实验平台搭建</category>
+        <category>GROMACS分子动力学模拟</category>
       </categories>
       <tags>
+        <tag>分子动力学模拟</tag>
         <tag>实验平台搭建</tag>
       </tags>
   </entry>
@@ -1075,13 +851,365 @@
 
 <hr>
 <p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
-<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#97;&#104;&#105;&#x6b;&#x65;&#x72;&#64;&#x31;&#x36;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#97;&#x68;&#105;&#x6b;&#101;&#x72;&#x40;&#49;&#54;&#51;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
 ]]></content>
       <categories>
         <category>Python 入门</category>
       </categories>
       <tags>
         <tag>Python 入门</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</title>
+    <url>/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<p>在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。</p>
+<hr>
+<h2 id="WOX：极速启动与搜索工具"><a href="#WOX：极速启动与搜索工具" class="headerlink" title="WOX：极速启动与搜索工具"></a>WOX：极速启动与搜索工具</h2><p>Wox 是一款开源免费的生产力工具，类似于 macOS 上的 Alfred。它可以通过快捷键快速唤出输入框，实现搜索文件、运行程序、计算数学表达式、管理剪贴板、执行命令行等多种功能。通过安装插件，还能扩展更多实用能力。</p>
+<p>Wox 官网: <a href="http://www.wox.one/">http://www.wox.one/</a><br>GitHub 仓库：<a href="https://github.com/Wox-launcher/Wox/releases">https://github.com/Wox-launcher/Wox/releases</a><br>官方说明文档：<a href="https://wox-launcher.github.io/Wox/guide/installation.html">https://wox-launcher.github.io/Wox/guide/installation.html</a><br>备用下载（由于 GitHub 访问不稳定，提供 v2.0.0 安装包）：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox-windows-amd64.exe">wox-2.0.0-windows-amd64.exe</a></p>
+<p><strong>基础设置：</strong><br>安装完成后，建议先根据个人习惯调整设置。</p>
+<ul>
+<li>打开设置页<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80.png" alt="wox设置页的打开"></li>
+<li>在通用设置界面调整设置<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE%E9%A1%B5.png" alt="wox通用设置页"></li>
+</ul>
+<p><strong>常用操作：</strong></p>
+<ul>
+<li><p><strong>唤出&#x2F;隐藏：</strong> 默认快捷键 Alt + 空格，再次按下或点击空白区域可隐藏。在输入框内按 Esc 也可快速隐藏。</p>
+</li>
+<li><p><strong>文件搜索：</strong> Wox 集成了 Everything 引擎，输入 <code>f + 空格 + 关键词</code> 即可搜索全盘文件。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6.png"></p>
+</li>
+<li><p><strong>计算器：</strong> 直接输入数学表达式（如 1+1），Wox 会自动计算结果。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%A1%E7%AE%97%E5%99%A8.png"></p>
+</li>
+<li><p><strong>网页搜索&#x2F;收藏夹：</strong> 直接输入关键词，会调用默认浏览器搜索；若关键词匹配浏览器收藏夹中的网页标题，则可直接打开该网页。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2.png" alt="键入需要联网搜索的关键字"></p>
+<p><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%94%B6%E8%97%8F%E5%A4%B9.png" alt="键入收藏夹页面的关键字"></p>
+</li>
+<li><p><strong>剪贴板历史：</strong> 输入 <code>cb + 空格 + 关键词</code> 可检索剪贴板历史记录<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E5%89%AA%E8%B4%B4%E6%9D%BF.png"></p>
+</li>
+<li><p><strong>运行命令：</strong> 输入 <code>&gt; + 空格 + 命令</code> 可直接在 PowerShell 中执行命令<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%BF%90%E8%A1%8C%E6%8C%87%E4%BB%A4.png"></p>
+</li>
+</ul>
+<p>Wox 支持丰富的插件，你可以在设置中浏览并安装，例如翻译、天气、进程管理等，打造属于自己的效率中心。</p>
+<hr>
+<h2 id="Markdown编辑器推荐"><a href="#Markdown编辑器推荐" class="headerlink" title="Markdown编辑器推荐"></a>Markdown编辑器推荐</h2><p>Markdown 是一种轻量级标记语言，让你的创作专注于内容而非排版。它采用纯文本格式，却能轻松转换为 HTML、PDF 等格式，且具备实时保存、内存占用低等优点，非常适合编写技术文档、实验记录或笔记。以下推荐两款优秀的本地编辑器不仅在编辑时可以预览最终样式，且所有数据均存储在你的设备上，保障数据安全。</p>
+<h3 id="Joplin"><a href="#Joplin" class="headerlink" title="Joplin"></a>Joplin</h3><p>Joplin 是一款免费开源的笔记应用，支持待办事项、多级标签、笔记本分类，并可与多种云服务（Nextcloud、Dropbox 等）同步，实现多端访问。它支持导入&#x2F;导出 Markdown、HTML、PDF 等多种格式，便于备份和分享。</p>
+<p><strong>官网：</strong> <a href="https://joplinapp.org/">https://joplinapp.org/</a><br><strong>特点：</strong></p>
+<ul>
+<li>清晰的笔记组织结构（笔记本、标签、待办）</li>
+<li>支持端到端加密（同步时）</li>
+<li>插件系统，可扩展功能</li>
+</ul>
+<h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h3><p>Typora界面与joplin相比更加简洁美观。</p>
+<p>安装包下载(因官网已收费，提供旧版免费安装包)：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/typora-setup-x64-20210407.exe">typora-setup-x64-20210407.exe</a></p>
+<p>注意：Typora 早期版本免费，但新版本已开始收费。请勿升级，以免失去免费使用权。<br>对比：Joplin 更适合长期笔记管理和多端同步，Typora 则适合纯粹的单篇写作。也可以两者结合使用：用 Typora 撰写，再导入 Joplin 归档。</p>
+<hr>
+<h2 id="GitHub-加速器：Watt-Toolkit"><a href="#GitHub-加速器：Watt-Toolkit" class="headerlink" title="GitHub 加速器：Watt Toolkit"></a>GitHub 加速器：Watt Toolkit</h2><p>GitHub 是全球最大的开源社区，但由于网络原因，国内访问时常不稳定。Watt Toolkit（原名 Steam++）是一款免费工具，可一键加速 GitHub。从 Microsoft Store 即可安全获取。</p>
+<p><strong>安装与使用：</strong></p>
+<ul>
+<li><p>打开 Windows 自带的应用商店（Microsoft Store），搜索“Watt Toolkit”并安装。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png"></p>
+</li>
+<li><p>安装完成后，打开网络加速界面，在列表中找到 GitHub，勾选后点击“一键加速”按钮。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt%E5%8A%A0%E9%80%9F.png"></p>
+</li>
+<li><p>加速成功后，即可流畅访问 GitHub，克隆仓库、浏览代码都不再困难。</p>
+</li>
+</ul>
+<hr>
+<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#97;&#104;&#x69;&#107;&#x65;&#x72;&#64;&#x31;&#x36;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
+<hr>
+<p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
+]]></content>
+      <categories>
+        <category>Windows使用技巧</category>
+      </categories>
+      <tags>
+        <tag>Windows使用技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows系统的安装</title>
+    <url>/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+<hr>
+<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
+<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
+</li>
+<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
+</li>
+</ol>
+<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" alt="可以进行的分区操作"></p>
+<p><strong>磁盘数据丢失的补救：</strong></p>
+<ul>
+<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
+<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
+<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+</ul>
+<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
+<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<ol>
+<li><p>准备材料：</p>
+<ul>
+<li>一个 8GB 或以上容量的U盘。</li>
+<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
+</ul>
+</li>
+<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
+</li>
+<li><p>操作步骤：</p>
+<ul>
+<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
+</li>
+<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
+</li>
+<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
+</li>
+<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
+</li>
+<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
+</li>
+<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/Windows_install/image-20260221083929799.png" alt="Rufus界面设置"></p>
+<hr>
+<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
+<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<ul>
+<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
+</li>
+<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
+</li>
+<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
+</li>
+<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
+</li>
+<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
+</li>
+</ul>
+</li>
+<li><p>开始安装：</p>
+<ul>
+<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall1.png"></p>
+<ul>
+<li>点击【现在安装】。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall2.png"></p>
+<ul>
+<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
+</ul>
+<p> <img src="/Windows_install/wininstall3.png"></p>
+<ul>
+<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall4.png"></p>
+<ul>
+<li>勾选接受许可条款，点击【下一步】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall5.png"></p>
+<ul>
+<li>选择【自定义：仅安装Windows(高级)】</li>
+</ul>
+<p> <img src="/Windows_install/wininstall6.png"></p>
+<ul>
+<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
+</li>
+<li><ul>
+<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
+</ul>
+</li>
+<li><ul>
+<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
+</ul>
+</li>
+<li><ul>
+<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
+</ul>
+</li>
+</ul>
+<p> <img src="/Windows_install/wininstall7.png"></p>
+<ul>
+<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png"></li>
+</ul>
+</li>
+</ol>
+<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#114;&#111;&#114;&#x61;&#x68;&#105;&#107;&#x65;&#x72;&#x40;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何搭建合适的生信分析平台</title>
+    <url>/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<p>对于初涉生物信息学的朋友来说，搭建一个合适的分析环境往往是入坑的第一道门槛。一方面，生信分析的核心工具几乎都扎根于Linux系统，掌握命令行操作是绕不开的必修课；另一方面，日常办公又离不开Windows或Mac的生态。如何在强大的分析能力与便捷的办公体验之间找到最佳平衡点，直接影响了我们的学习效率和后续的使用体验。</p>
+<p>这篇博文将对目前主流的三种生信平台搭建方案（双系统、纯Linux、Windows + WSL）进行横向对比，分析各自的优缺点与适用人群。如果你正纠结于如何开启自己的生信之路，这份指南或许能帮你找到最适合自己的方向。</p>
+<hr>
+<h3 id="1-生信分析需要什么样的平台？"><a href="#1-生信分析需要什么样的平台？" class="headerlink" title="1. 生信分析需要什么样的平台？"></a>1. 生信分析需要什么样的平台？</h3><p>生物信息学分析通常依赖 Linux 环境，因为许多核心软件（如 <code>bedtools</code>、<code>samtools</code>）仅提供 Linux 版本。此外，Linux 自带的命令行工具（<code>sort</code>、<code>awk</code>、<code>grep</code> 等）能高效处理文本数据，虽然 Python 或 R 也能实现类似功能，但往往需要编写更多代码才能完成同样的任务。</p>
+<p>然而，Linux 的日常使用对新手并不友好：办公软件（如 Word、微信、QQ）要么无法原生运行，要么体验远不如 Windows。即使有替代品，重新学习也会增加时间成本，以及与同组成员的合作成本。因此，搭建生信分析平台的关键是在<strong>分析便利性</strong>和<strong>日常办公完整性</strong>之间找到平衡。</p>
+<p>目前主流的搭建方式有三种，各有优劣，适合不同需求的用户：</p>
+<table>
+<thead>
+<tr>
+<th>系统类型</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Windows + Linux 双系统</strong></td>
+<td>两个系统完全独立，均可调用全部硬件资源，且都能拥有图形界面。</td>
+<td>一次只能使用一个系统，切换需要重启，非常不便。</td>
+<td>极少需要切换系统，或对两个系统都有完整图形界面需求的用户。</td>
+</tr>
+<tr>
+<td><strong>纯 Linux 系统</strong></td>
+<td>系统轻量，性能最大化，能获得原生的 Linux 分析体验。</td>
+<td>办公软件支持不足，协作时可能遇到兼容性问题；对新手操作门槛高。</td>
+<td>熟练使用 Linux 且日常办公可完全在 Linux 下完成的用户。</td>
+</tr>
+<tr>
+<td><strong>Windows + WSL (适用于 Linux 的 Windows 子系统)</strong></td>
+<td><strong>可同时使用两个系统</strong>，无需重启；文件可以互相访问；既能用 Windows 办公，又能用 Linux 做分析。</td>
+<td>WSL 无法调用全部硬件资源（如 GPU 加速有限制），且 Linux 侧通常只有命令行界面。</td>
+<td><strong>大多数初学者和日常用户</strong>——可在熟悉的 Windows 环境中逐步学习 Linux 命令。</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="2-对于初学者的建议"><a href="#2-对于初学者的建议" class="headerlink" title="2. 对于初学者的建议"></a>2. 对于初学者的建议</h3><p>对于初学者，我强烈建议选择 <strong>Windows + WSL</strong>。它既满足了生信分析对 Linux 环境的需求，又保留了完整的 Windows 办公体验。你可以在 Windows 里查资料、写文档，同时打开 WSL 终端运行命令，逐步熟悉 Linux 操作。当未来你对 Linux 足够熟练，且希望榨干硬件性能时，再考虑迁移到纯 Linux 系统也不迟。</p>
+<p>相比之下，<strong>Windows + Linux 双系统</strong> 的开关机切换成本太高，除非你有必须使用两个系统图形界面的特殊场景，否则并不推荐——既然切换如此麻烦，为什么不直接选择一个系统呢？</p>
+<hr>
+<p>欢迎各位读者通过邮箱 <a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#x61;&#104;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#x36;&#x33;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 留言交流，共同进步！后续博客将陆续详细介绍这三种平台的搭建方法，敬请期待。</p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人博客搭建指南：Fluid 主题安装与深度美化</title>
+    <url>/2026/07/10/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/</url>
+    <content><![CDATA[<p>在<a href="/2026/06/24/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9A%E5%9F%BA%E4%BA%8E-GitHub-Pages-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/" title="个人博客搭建指南：基于 GitHub Pages 的完整流程">个人博客搭建指南：基于 GitHub Pages 的完整流程</a>中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。</p>
+<p>Fluid 是一款基于 Material Design 风格的 Hexo 主题，由 Fluid-dev 团队开发维护。它设计简洁、配置灵活，内置了暗色模式、访问统计、本地搜索等常用功能。截至本文撰写时，Fluid 最新版本为 1.9.9。</p>
+<blockquote>
+<p><strong>说明</strong>：本文基于上一篇搭建好的 Hexo 博客继续操作，默认您已完成 Hexo 安装、GitHub Pages 配置及本地仓库初始化。若尚未完成，请先参考上一篇指南。</p>
+</blockquote>
+<hr>
+<h1 id="1-安装-Fluid-主题"><a href="#1-安装-Fluid-主题" class="headerlink" title="1. 安装 Fluid 主题"></a>1. 安装 Fluid 主题</h1><h2 id="1-1-环境要求"><a href="#1-1-环境要求" class="headerlink" title="1.1 环境要求"></a>1.1 环境要求</h2><p>Fluid 主题要求 Hexo 版本不低于 5.0.0，Node.js 版本不低于 10.13.0。您可以在终端中执行以下命令确认版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo -v<br>node -v<br></code></pre></td></tr></table></figure>
+
+<p>若 Hexo 版本低于 5.0.0，可通过以下命令升级：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo@latest --save<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-安装主题"><a href="#1-2-安装主题" class="headerlink" title="1.2 安装主题"></a>1.2 安装主题</h2><p>Fluid 提供两种安装方式 (npm 与手动)，推荐使用 npm 方式。</p>
+<p><strong>npm 安装 (推荐)</strong></p>
+<p>进入博客根目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即使此前在另一个博客中已安装过 Fluid 主题，在新站点根目录下仍需重新执行安装指令。Hexo 基于当前工作目录加载依赖，Node.js 会从当前博客目录下的 node_modules 或 themes 文件夹中查找 hexo-theme-fluid 包，无法跨目录复用。</p>
+</blockquote>
+<h2 id="1-3-启用主题"><a href="#1-3-启用主题" class="headerlink" title="1.3 启用主题"></a>1.3 启用主题</h2><ol>
+<li>编辑 Hexo 根目录下的 <code>_config.yml</code>，修改以下配置：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在博客目录下创建 <code>_config.fluid.yml</code> 文件，<a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">官方配置指南</a>中说明需要将主题默认配置的全部或部分内容复制到该文件中。但笔者在 Hexo 8.1.2 环境下测试发现，无需复制任何内容，主题会自动读取默认配置。由于笔者不清楚哪些版本的组合支持此特性，欢迎读者尝试并反馈。</li>
+</ol>
+<p>至此，Fluid 主题已完成安装与启用。接下来开始进行各项配置与美化。</p>
+<hr>
+<h1 id="2-配置文件说明"><a href="#2-配置文件说明" class="headerlink" title="2 配置文件说明"></a>2 配置文件说明</h1><p>理解 Fluid 的配置机制是后续所有操作的基础。</p>
+<ul>
+<li><strong>主题默认配置</strong>：<code>themes/fluid/_config.yml</code> —— 存放主题默认设置，<strong>不建议直接修改</strong>。</li>
+<li><strong>用户自定义配置</strong>：<code>_config.fluid.yml</code> —— 位于博客根目录，优先级更高，更新主题时不会被覆盖。仅当该项在自定义配置中未定义时，才回退使用默认值。</li>
+</ul>
+<p><strong>所有后续修改均在 <code>_config.fluid.yml</code> 中进行</strong>。</p>
+<blockquote>
+<p><strong>提示</strong>：</p>
+<p>1.只要配置存在于 <code>_config.fluid.yml</code> 中，就具有高优先级，修改原 <code>_config.yml</code> 是无效的。每次更新主题后，需留意更新说明，可能需要对 <code>_config.fluid.yml</code> 同步修改。</p>
+<p>2.所有配置中引用的图片或文件，其根目录均为 source 文件夹。</p>
+</blockquote>
+<hr>
+<h1 id="3-关于页配置"><a href="#3-关于页配置" class="headerlink" title="3. 关于页配置"></a>3. 关于页配置</h1><p>关于页是博客中展示作者、博客信息的独立页面，需要单独创建并配置。</p>
+<h2 id="3-1-创建关于页"><a href="#3-1-创建关于页" class="headerlink" title="3.1 创建关于页"></a>3.1 创建关于页</h2><p>Fluid 的关于页需手动创建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
+<p>然后编辑 <code>/source/about/index.md</code>，添加 <code>layout: about</code> 属性：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown">---<br>title: about<br><span class="hljs-section">layout: about</span><br><span class="hljs-section">---</span><br>这里写关于页的正文，支持 Markdown 和 HTML。<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：layout: about 必须存在且不能修改为其他值，否则无法显示头像、简介等主题样式。</p>
+</blockquote>
+<h2 id="3-2-关于页美化"><a href="#3-2-关于页美化" class="headerlink" title="3.2 关于页美化"></a>3.2 关于页美化</h2><p>以下是与关于页相关的所有配置项，在 <code>_config.fluid.yml</code> 中修改：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">about:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span>        <span class="hljs-comment"># 关于页的背景图</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">60</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-attr">avatar:</span> <span class="hljs-string">/img/avatar.png</span>             <span class="hljs-comment"># 作者头像</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Fluid&quot;</span><br>  <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;An elegant theme for Hexo&quot;</span>  <span class="hljs-comment"># 简介</span><br>  <span class="hljs-comment"># 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找</span><br>  <span class="hljs-comment"># `class` 代表图标的 css class；添加 `qrcode` 后，图标变为悬浮二维码</span><br>  <span class="hljs-attr">icons:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-github-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://github.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;GitHub&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-douban-fill&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://douban.com&quot;</span>, <span class="hljs-attr">tip:</span> <span class="hljs-string">&quot;豆瓣&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">class:</span> <span class="hljs-string">&quot;iconfont icon-wechat-fill&quot;</span>, <span class="hljs-attr">qrcode:</span> <span class="hljs-string">&quot;/img/favicon.png&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="4-基础配置"><a href="#4-基础配置" class="headerlink" title="4. 基础配置"></a>4. 基础配置</h1><h2 id="4-1-网站基本信息"><a href="#4-1-网站基本信息" class="headerlink" title="4.1 网站基本信息"></a>4.1 网站基本信息</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-comment"># 网站图标 (浏览器标签页)</span><br><span class="hljs-attr">favicon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 苹果设备图标</span><br><span class="hljs-attr">apple_touch_icon:</span> <span class="hljs-string">/images/logo.png</span><br><span class="hljs-comment"># 标签页标题分隔符</span><br><span class="hljs-attr">tab_title_separator:</span> <span class="hljs-string">&quot; - &quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-2-导航栏配置"><a href="#4-2-导航栏配置" class="headerlink" title="4.2 导航栏配置"></a>4.2 导航栏配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-comment"># 导航栏左侧标题</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;你的博客名称&quot;</span><br>  <span class="hljs-comment"># 导航菜单</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;home&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-home-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;archive&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/archives/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-archive-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/categories/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-category-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;tag&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/tags/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-tags-fill&quot;</span> &#125;<br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;about&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/about/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-user-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中 <code>key</code> 用于关联多语言配置，<code>icon</code> 对应图标库中的图标类名。Fluid 使用 Iconfont 提供图标支持，可以通过修改 <code>icon</code> 值更换菜单图标。</p>
+<h2 id="4-3-首页配置"><a href="#4-3-首页配置" class="headerlink" title="4.3 首页配置"></a>4.3 首页配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 图片</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/default.png</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-comment"># Banner 遮罩透明度</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br>  <span class="hljs-comment"># 首页副标题</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;副标题文本&quot;</span> <span class="hljs-comment"># 为空则使用默认值 (原配置文件的副标题文本)</span><br>  <span class="hljs-comment"># 自动截取文章摘要</span><br>  <span class="hljs-attr">auto_excerpt:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># 文章元信息显示</span><br>  <span class="hljs-attr">post_meta:</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">category:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">tag:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建议 Banner 图片尺寸为 1920×1080。</p>
+</blockquote>
+<h2 id="4-4-页脚配置"><a href="#4-4-页脚配置" class="headerlink" title="4.4 页脚配置"></a>4.4 页脚配置</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">footer:</span><br>  <span class="hljs-comment"># 页脚内容（支持 HTML）</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">    &lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt; |</span><br><span class="hljs-string">    &lt;a href=&quot;https://github.com/fluid-dev/hexo-theme-fluid&quot; target=&quot;_blank&quot;&gt;Fluid&lt;/a&gt;</span><br><span class="hljs-string">  &#x27;</span><br>  <span class="hljs-comment"># 访问统计</span><br>  <span class="hljs-attr">statistics:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">source:</span> <span class="hljs-string">&quot;busuanzi&quot;</span>  <span class="hljs-comment"># 可选：busuanzi / leancloud</span><br></code></pre></td></tr></table></figure>
+
+<p><code>source</code> 可选用不蒜子 (busuanzi，不需要额外配置) 或 LeanCloud (需额外配置) 作为统计来源。</p>
+<hr>
+<h1 id="5-本地搜索配置"><a href="#5-本地搜索配置" class="headerlink" title="5. 本地搜索配置"></a>5. 本地搜索配置</h1><p>Fluid 已集成 <code>hexo-generator-search</code> 插件，默认在根目录生成并使用 <code>local-search.xml</code>。若已安装其他搜索插件，需关闭以避免生成多余的索引文件。</p>
+<p>如未安装，执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo-generator-search --save<br></code></pre></td></tr></table></figure>
+
+<p>然后在 <code>_config.fluid.yml</code> 中启用：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">local_search:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="6-高级美化技巧"><a href="#6-高级美化技巧" class="headerlink" title="6. 高级美化技巧"></a>6. 高级美化技巧</h1><h2 id="6-1-Banner-图片与视频背景"><a href="#6-1-Banner-图片与视频背景" class="headerlink" title="6.1 Banner 图片与视频背景"></a>6.1 Banner 图片与视频背景</h2><p>Fluid 支持为不同页面配置独立的 Banner 图片：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 根目录位于 source 文件夹</span><br><span class="hljs-attr">index:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/index_banner.jpg</span><br><br><span class="hljs-attr">archive:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/archive_banner.jpg</span><br><br><span class="hljs-attr">category:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/category_banner.jpg</span><br><br><span class="hljs-attr">tag:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/tag_banner.jpg</span><br></code></pre></td></tr></table></figure>
+
+<p>如需更动态的效果，可参考社区方案为首页添加随机视频背景。</p>
+<h2 id="6-2-友链配置"><a href="#6-2-友链配置" class="headerlink" title="6.2 友链配置"></a>6.2 友链配置</h2><p>Fluid 原生支持友链功能。在 <code>_config.fluid.yml</code> 中配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">links:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment"># 友链分组</span><br>  <span class="hljs-attr">groups:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">group_name:</span> <span class="hljs-string">&quot;好友博客&quot;</span><br>      <span class="hljs-attr">items:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">title:</span> <span class="hljs-string">&quot;博客名称&quot;</span><br>          <span class="hljs-attr">intro:</span> <span class="hljs-string">&quot;博客简介&quot;</span><br>          <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;https://example.com&quot;</span><br>          <span class="hljs-attr">avatar:</span> <span class="hljs-string">&quot;/img/avatar.jpg&quot;</span> <span class="hljs-comment"># 根目录位于 source 文件夹</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在导航菜单中添加友链入口：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">menu:</span><br>    <span class="hljs-bullet">-</span> &#123; <span class="hljs-attr">key:</span> <span class="hljs-string">&quot;links&quot;</span>, <span class="hljs-attr">link:</span> <span class="hljs-string">&quot;/links/&quot;</span>, <span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;iconfont icon-link-fill&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-更新主题"><a href="#7-更新主题" class="headerlink" title="7. 更新主题"></a>7. 更新主题</h1><p>Fluid 主题持续迭代，定期更新可获得新功能和 bug 修复。</p>
+<p><strong>npm 安装方式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm update --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
+
+<p><strong>Release 压缩包方式</strong>：</p>
+<p>先将原文件夹重命名为 <code>fluid-bkp</code> 作为备份，然后下载最新 release 解压并重命名为 <code>fluid</code>。</p>
+<blockquote>
+<p><strong>注意</strong>：每次更新后，需留意 release 说明中的配置变更，手动同步修改 <code>_config.fluid.yml</code>。</p>
+</blockquote>
+<hr>
+<p>从安装主题到调完每一个细节，博客从“能用”变成了“好用”。这个过程其实没有太多高深的技术——翻文档、改配置、刷新页面看效果，反复几轮，那些陌生的配置项就变成了顺手的东西。</p>
+<p>Fluid 的配置文档写得非常详细，几乎每个配置项都有注释说明。遇到拿不准的，先去<a href="https://hexo.fluid-dev.com/docs/guide/">官方配置指南</a>翻一翻，八成能找到答案。如果发现了更优雅的美化方案，或者踩了文档里没写到的坑，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#x61;&#104;&#x69;&#107;&#101;&#114;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a> 和我交流。</p>
+<p>博客的外观只是第一步，后面还可以折腾的内容还有很多——比如接入评论、图床、优化加载速度、配置 SEO等 ，后续我会继续研究并记录，慢慢把这一整套流程补齐。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://fluid-dev.github.io/hexo-fluid-docs">Fluid 官方文档</a></li>
+<li><a href="https://hexo.fluid-dev.com/docs/guide/">Fluid 配置指南</a></li>
+<li><a href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid GitHub 仓库</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>个人博客搭建指南</category>
+      </categories>
+      <tags>
+        <tag>个人博客搭建指南</tag>
       </tags>
   </entry>
   <entry>
@@ -1315,7 +1443,7 @@
 <hr>
 <h1 id="5-写在最后"><a href="#5-写在最后" class="headerlink" title="5. 写在最后"></a>5. 写在最后</h1><p>从注册 GitHub 到在浏览器里看到自己的站点，整个过程看似步骤繁多，但拆解开其实就是“工具安装 → 密钥配对 → 仓库创建 → 本地部署”这条主线。每完成一步，离那个属于自己的小空间就近了一点，这种逐步推进的踏实感，大概是搭建博客独有的乐趣。</p>
 <p>更重要的是，这一套流程并不只是为博客服务——熟悉了 Git 和 Hexo 的工作流，往后任何静态站点的管理都会顺手很多。遇到报错也别急，顺着提示去查文档、改配置，多试几次，那些红字就变成你的经验值了。</p>
-<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#x72;&#x6f;&#x72;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
+<p>如果你在跟着操作时发现了更省力的办法，发现了本文未曾设想的bug，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#111;&#x72;&#97;&#104;&#105;&#x6b;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#x2e;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a> 和笔者分享。你的一个小提示，说不定就能让下一位读者少绕一大段路。</p>
 <p>至于博客外观和交互细节，笔者打算持续更新 <strong>Fluid 主题的完整配置</strong>——从外观美化、评论系统接入，到响应式优化，都会一步步写清楚。感兴趣的话，记得来看。</p>
 <hr>
 <p><strong>参考资源</strong></p>
@@ -1330,113 +1458,6 @@
       </categories>
       <tags>
         <tag>个人博客搭建指南</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 入门：变量类型专题</title>
-    <url>/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/</url>
-    <content><![CDATA[<p>以Python或R作为第一门编程语言的学习者，往往在“小白”阶段遇到最多的报错就是 TypeError。这是因为Python是动态类型语言，变量在赋值时自动确定类型，且在运算中会隐式转换，不像C语言那样需要在一开始就严格声明。这种灵活性极大降低了入门门槛，但也让初学者习惯“不关心类型”，直到程序突然报错才意识到类型的“存在感”。</p>
-<p>然而，正是这种“不关心”埋下了大量Bug的种子——字符串被当作数字相加、列表与字符串方法张冠李戴、字典键值类型不符……几乎每个新手都在这些坑里摔过跤。本文将以实战视角，从Python内置类型出发，逐步深入到数据分析必备的Pandas库，帮你理清类型转换的逻辑，并总结一套可复用的Debug套路，让类型错误不再是拦路虎。</p>
-<hr>
-<h2 id="1-Python-自带的变量类型"><a href="#1-Python-自带的变量类型" class="headerlink" title="1. Python 自带的变量类型"></a>1. Python 自带的变量类型</h2><h3 id="1-1-给变量赋值时自动设定的变量类型"><a href="#1-1-给变量赋值时自动设定的变量类型" class="headerlink" title="1.1 给变量赋值时自动设定的变量类型"></a>1.1 给变量赋值时自动设定的变量类型</h3><p>Python 是动态强类型语言，变量的类型在赋值的那一刻由解释器自动推断并固定下来。为了让你直观感受到不同字面量写法的差异，我们统一用数字 <code>1</code> 来举例，观察其细微却关键的区别：</p>
-<ul>
-<li><strong>整型 (int)</strong>：<code>a = 1</code>。不带小数点的整数。</li>
-<li><strong>浮点数 (float)</strong>：<code>a = 1.0</code>。带小数点的数值。</li>
-<li><strong>字符串 (str)</strong>：<code>a = &#39;1&#39;</code> 或 <code>a = &quot;1&quot;</code>。被引号包裹的内容，此时 <code>1</code> 仅仅是文本字符。</li>
-<li><strong>列表 (list)</strong>：<code>a = [1]</code>。用方括号包裹，有序且可变。</li>
-<li><strong>字典 (dict)</strong>：<code>a = {&#39;key&#39;: 1}</code>。用花括号包裹的键值对。</li>
-</ul>
-<details>
-<summary><b>思考题：设置单引号和双引号等价的意义是什么？</b> (点击展开)</summary>
-<p>主要是为了方便在字符串内容中直接包含另一种引号，从而减少使用繁琐的转义符 <code>\</code>。例如，表示 <code>It's OK</code> 时可以直接用双引号包裹 <code>"It's OK"</code>；表示 <code>He said "Hi"</code> 时可以直接用单引号包裹 <code>'He said "Hi"'</code>，代码更干净、可读性更强。</p>
-</details>
-
-<details>
-<summary><b>思考题：字典的键 (key) 和值 (value) 各自可以是什么变量类型？</b> (点击展开)</summary>
-<p><b>键 (Key)</b>：必须是 <b>不可变 (immutable)</b> 类型，如字符串、整数、浮点数、布尔值或元组。因为字典底层依赖哈希表存储，键必须可哈希。<br>
-<b>值 (Value)</b>：可以是 <b>任意</b> 类型，包括列表、字典等可变对象，甚至可以嵌套另一个字典。<br>
-<em>常见新手错误</em>：尝试用列表 <code>['a']</code> 作为键，会直接报错 <code>TypeError: unhashable type: 'list'</code>。</p>
-</details>
-
-<h3 id="1-2-隐式转换"><a href="#1-2-隐式转换" class="headerlink" title="1.2 隐式转换"></a>1.2 隐式转换</h3><p>Python 在运算中会进行隐式类型转换 (Implicit Type Conversion)，但并非万能。理解以下规则，能让你避免大多数低级错误：</p>
-<ul>
-<li><strong>整型 → 浮点型</strong>：<code>1 / 2</code> 的结果是 <code>0.5</code> (浮点数) 。即使 <code>2 / 1</code>，结果也是 <code>2.0</code> (浮点数) 。在 Python 3 中，<code>/</code> 永远返回浮点数；<code>7 // 2</code> 结果是 <code>3</code> (整数向下取整) ；<code>7.0 // 2</code> 或 <code>7 // 2.0</code> 结果是 <code>3.0</code> (浮点数向下取整) 。<code>% + - *</code> 等基础运算同理，当算式中有浮点数时，结果为浮点数，否则结果为整型。</li>
-<li><strong>字符串 → 列表 (Split)</strong>：<code>&quot;1,2&quot;.split(&quot;,&quot;)</code> 结果是 <code>[&#39;1&#39;, &#39;2&#39;]</code>。</li>
-<li><strong>列表 → 字符串 (Join)</strong>：<code>&quot;,&quot;.join([&#39;1&#39;, &#39;2&#39;])</code> 结果是 <code>&quot;1,2&quot;</code>。<strong>注意</strong>：<code>join</code> 是字符串的方法，写法是 <code>分隔符.join(可迭代对象)</code>，新手极容易写成 <code>列表.join(&#39;,&#39;)</code> 导致报错。</li>
-<li><strong>判断产生布尔值 (Boolean)</strong>：比较运算 <code>1 == 1.0</code> 结果为 <code>True</code> (数值相等) ；<code>1 == &#39;1&#39;</code> 结果为 <code>False</code> (类型不同，直接不相等) 。</li>
-</ul>
-<h3 id="1-3-显式转换"><a href="#1-3-显式转换" class="headerlink" title="1.3 显式转换"></a>1.3 显式转换</h3><p>既然隐式转换存在局限 (例如无法自动将 ‘1’ 转为 1) ，我们就必须借助内置函数进行显式转换。同样以数字 1 为例：</p>
-<ul>
-<li><p>int(“1”)：将字符串 ‘1’ 转为整数 1，之后即可进行数学运算 (如 int(“1”) + 2 得到 3) ，需要注意的是，这个运算会向零的方向截断取整。</p>
-</li>
-<li><p>float(“1”) 或 float(1)：得到浮点数 1.0，统一精度。</p>
-</li>
-<li><p>str(1)：将整数 1 转为字符串 ‘1’，之后即可进行拼接操作 (如 str(1) + “ is a number” 得到 “1 is a number”) 。</p>
-</li>
-<li><p>list(“123”)：将字符串拆解为单字符列表 [‘1’, ‘2’, ‘3’]。</p>
-</li>
-</ul>
-<p>提高代码容错率的方法：从外部 (如 input()、文件读取、API 响应) 获得数据后，第一时间根据需要进行显式转换。不要等到运算报错时才回头补救。</p>
-<h3 id="1-4-最常见的变量类型错误成因"><a href="#1-4-最常见的变量类型错误成因" class="headerlink" title="1.4 最常见的变量类型错误成因"></a>1.4 最常见的变量类型错误成因</h3><p>结合 <code>1</code> 的不同写法，我们来看三个最容易踩中的雷区：</p>
-<ol>
-<li><strong>数字被引号包裹变成了字符串</strong>：<code>a = &#39;1&#39;</code>，然后执行 <code>a + 2</code>。报错 <code>TypeError: can only concatenate str (not &quot;int&quot;) to str</code>。因为此时 <code>+</code> 被解释为字符串拼接，而非数学加法。<strong>解决方案</strong>：显式转换 <code>int(a) + 2</code>。</li>
-<li><strong>字符串方法与列表方法张冠李戴</strong>：对字符串 <code>&#39;1,2&#39;</code> 调用 <code>.append(&#39;3&#39;)</code>，或对列表 <code>[1]</code> 调用 <code>.split()</code>。记住：<strong>方法随类型走</strong>，可变序列 (列表) 和不可变序列 (字符串) 的 API 交集很少。</li>
-<li><strong>字符串与列表强行相加</strong>：<code>&#39;1&#39; + [2]</code> 报错，因为 <code>+</code> 号两侧类型必须一致才能进行序列拼接。若想合并，需先 <code>list(&#39;1&#39;)</code> 转为 <code>[&#39;1&#39;]</code>，再与 <code>[2]</code> 相加得到 <code>[&#39;1&#39;, 2]</code>。</li>
-</ol>
-<hr>
-<h2 id="2-Pandas-的变量类型-dtype"><a href="#2-Pandas-的变量类型-dtype" class="headerlink" title="2. Pandas 的变量类型 (dtype)"></a>2. Pandas 的变量类型 (dtype)</h2><p>进入数据分析领域，Pandas 基于 NumPy 构建了更为丰富且严格的数据类型体系。DataFrame 中的每一列 (Series) 都有其特定的 <code>dtype</code>，理解它是进行高效数据清洗的前提。</p>
-<h3 id="2-1-Pandas-中的常用-dtype"><a href="#2-1-Pandas-中的常用-dtype" class="headerlink" title="2.1 Pandas 中的常用 dtype"></a>2.1 Pandas 中的常用 dtype</h3><p>延续上面的数字 <code>1</code>，在 Pandas 中它会以不同的变量类型出现：</p>
-<ul>
-<li><strong>int64 &#x2F; float64</strong>：最常用的数值类型。例如 <code>pd.Series([1, 2])</code> 是 <code>int64</code>；<code>pd.Series([1.0, 2])</code> 因输入的列表中含有小数，全部自动转为 <code>float64</code>。</li>
-<li><strong>object</strong>：Pandas 中的“万金油”类型，通常用于存储字符串或混合类型。<code>pd.Series([&#39;1&#39;, &#39;2&#39;])</code> 的 dtype 是 <code>object</code> (即 Python 原生的 str 对象) 。<strong>性能较低</strong>，应尽量避免在大型数据中大量使用。</li>
-<li><strong>category</strong>：类别型，适用于取值有限的分类变量 (如性别、等级)。<code>pd.Series([1, 1, 2])</code> 转为 category 后，会将 <code>1</code> 和 <code>2</code> 视为两个类别，极大节省内存。</li>
-<li><strong>datetime64[ns]</strong>：时间日期类型，支持向量化日期运算。<code>pd.to_datetime(pd.Series([&#39;2026-01-01&#39;]))</code> 得到该类型。</li>
-<li><strong>bool</strong>：布尔型，<code>pd.Series([True, False])</code>。</li>
-</ul>
-<p><strong>注意</strong>：当整数列中出现缺失值时，Pandas 会为了容纳 <code>NaN</code> (浮点型空值) 而<strong>自动将整型 <code>int64</code> 提升为浮点型 <code>float64</code></strong>。若必须为整数，请使用 Pandas 的 <code>Int64</code> (大写 I，可空整型)。</p>
-<h3 id="2-2-类型转换方法"><a href="#2-2-类型转换方法" class="headerlink" title="2.2 类型转换方法"></a>2.2 类型转换方法</h3><ul>
-<li><strong><code>astype(new_dtype)</code></strong>：最通用的显式转换。例如 <code>df[&#39;col&#39;].astype(&#39;float64&#39;)</code>。但若列中存在无法转换的值 (如字母 <code>&#39;a&#39;</code>)，会直接报错。</li>
-<li><strong><code>pd.to_numeric()</code></strong>：转为数值类型的“安全利器”。参数 <code>errors=&#39;coerce&#39;</code> 可将非法值强制转为 <code>NaN</code>，避免程序崩溃。例如 <code>pd.to_numeric(pd.Series([&#39;1&#39;, &#39;a&#39;, &#39;2&#39;]), errors=&#39;coerce&#39;)</code> 得到 <code>[1.0, NaN, 2.0]</code>。</li>
-<li><strong><code>pd.to_datetime()</code></strong>：专门转为日期类型，同样支持 <code>errors=&#39;coerce&#39;</code> 优雅处理异常格式。</li>
-<li><strong><code>astype(&#39;category&#39;)</code></strong> 或 <code>pd.Categorical()</code>：将离散列转为类别类型。</li>
-</ul>
-<h3 id="2-3-常见的-Pandas-类型错误"><a href="#2-3-常见的-Pandas-类型错误" class="headerlink" title="2.3 常见的 Pandas 类型错误"></a>2.3 常见的 Pandas 类型错误</h3><ul>
-<li><strong>数值列被识别为 object 无法计算</strong>：读取 CSV 时，由于混入了空格、千位分隔符 (如 <code>1,000</code>) 或特殊符号，数字列被读成字符串。直接调用 <code>.mean()</code> 会报错。解决：先用 <code>pd.to_numeric(df[&#39;col&#39;], errors=&#39;coerce&#39;)</code> 清洗。</li>
-</ul>
-<hr>
-<h2 id="3-与数据类型相关的-Debug-常用套路"><a href="#3-与数据类型相关的-Debug-常用套路" class="headerlink" title="3. 与数据类型相关的 Debug 常用套路"></a>3. 与数据类型相关的 Debug 常用套路</h2><p>遇到 <code>TypeError</code> 或 <code>ValueError</code> 时不要慌，按以下流程顺藤摸瓜，90% 的问题都能在 5 分钟内解决：</p>
-<ol>
-<li><p><strong>打印类型</strong><br>在报错行之前插入 <code>print(type(变量名))</code>。如果是 DataFrame，直接 <code>print(df.dtypes)</code> 查看所有列类型。眼见为实，胜过脑中推演。</p>
-</li>
-<li><p><strong>细读报错信息</strong><br>Python 的报错信息非常精准。重点看最后几行的 <code>unsupported operand type(s) for ...</code>，它会直接告诉你参与运算的两种类型分别是什么 (例如 <code>int</code> 和 <code>str</code>)。</p>
-</li>
-<li><p><strong>显式转换</strong><br>永远不要依赖隐式转换。从外部 (文件、数据库、input) 读入数据后，立即用 <code>int()</code>、<code>float()</code>、<code>pd.to_numeric()</code> 等进行强制类型转换。既掌控类型安全，也让自己理清每一步的数据形态。</p>
-</li>
-<li><p><strong>合理利用 <code>errors=&#39;coerce&#39;</code></strong><br>当你无法保证数据 100% 干净时，在 <code>pd.to_numeric</code> 或 <code>pd.to_datetime</code> 中开启 <code>errors=&#39;coerce&#39;</code>。这样程序不会直接崩溃，而是将脏数据标记为 <code>NaN</code>，后续再用 <code>dropna()</code> 或 <code>fillna()</code> 集中处理。</p>
-<blockquote>
-<p><strong>注意：</strong></p>
-<p>卡bug说明有错，但不卡bug不代表没错。报错和程序中断本质上是一种提醒，当处于数据探索阶段和代码尝试阶段时，建议不要使用这个方法，尝试普通显式转换并输出结果手动检查。</p>
-<p>具体操作上，可以先用 df.head(20) 截取数据样本，在样本上执行严格的显式转换 (如不加 errors 参数) 。一旦报错，报错会精准地说明：是哪一行、哪一个值引发了冲突。这种“主动触雷”能让你最快摸清手中数据的“脏乱程度”，这是数据清洗中最宝贵的第一手信息。</p>
-<p>如果强行忽略错误，一旦出现行或列错位的情况，会将错就错地继续运算，以至于拿到结果时根本发现不了中间算错了。</p>
-</blockquote>
-</li>
-<li><p><strong>拆解复杂表达式</strong>  </p>
-<p>先不写冗长的链式操作，如 <code>df[&#39;a&#39;] + df[&#39;b&#39;].apply(func) * 2</code>。拆成中间变量：<code>temp = df[&#39;b&#39;].apply(func)</code>，再检查 <code>temp</code> 的类型，最后执行加法。分步执行能快速锁定出错的环节。等熟练后再写精简的代码。</p>
-</li>
-<li><p><strong>小规模数据测试</strong><br>对全量数据操作前，先用 <code>df.head(10)</code> 截取一小部分，运行你的转换逻辑。验证通过后再应用到全表，极大节省试错时间。</p>
-</li>
-<li><p><strong>善用 Jupyter 的 <code>?</code> 或 <code>help()</code></strong><br>不确定某个函数参数的含义？在 Jupyter 中执行 <code>pd.to_numeric?</code>，直接查看官方文档签名，明确该函数期望什么输入，返回什么输出，避免“盲猜”。</p>
-</li>
-</ol>
-<hr>
-<p>数据类型是编程世界的底层基石，贯穿于每一行代码之中。动态类型赋予的“灵活”从来不是“随意”的代名词——唯有养成清晰的类型意识与良好的调试习惯，才能将入门阶段常见的报错消弭于无形。希望这份指南能帮助你吃透变量类型的底层逻辑，从而写出既健壮又优雅的代码。</p>
-<p>感谢你的阅读！若有任何疑问或建议，欢迎发送邮件至 <strong><a href="mailto:&#97;&#117;&#114;&#x6f;&#x72;&#97;&#x68;&#x69;&#107;&#x65;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a></strong>。每一条反馈我都会认真阅读、尽力回复，你的参与会让这份指南走得更远、变得更好。</p>
-]]></content>
-      <categories>
-        <category>Python 入门</category>
-      </categories>
-      <tags>
-        <tag>Python 入门</tag>
       </tags>
   </entry>
   <entry>
@@ -1656,7 +1677,7 @@
 <p>如果在后续使用中需要创建虚拟环境，可使用：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
 
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#x72;&#111;&#x72;&#x61;&#104;&#x69;&#107;&#101;&#114;&#x40;&#x31;&#x36;&#51;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#97;&#x68;&#105;&#107;&#101;&#114;&#x40;&#49;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
 ]]></content>
       <categories>
         <category>计算机基础与实验平台搭建</category>
@@ -1664,109 +1685,6 @@
       <tags>
         <tag>实验平台搭建</tag>
         <tag>计算机基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LightDock分子对接的实验平台搭建</title>
-    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
-<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
-<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
-<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
-<hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
-<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
-<p>笔者的硬件配置如下：</p>
-<ul>
-<li>CPU：AMD Ryzen 7 9700X</li>
-<li>内存：64 GB RAM</li>
-</ul>
-<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
-<hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#x69;&#103;&#x68;&#x74;&#100;&#111;&#x63;&#x6b;&#105;&#110;&#x67;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
-<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
-<p>支持的具体系统版本如下：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>macOS</td>
-<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
-</tr>
-<tr>
-<td>GNU&#x2F;Linux</td>
-<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
-<table>
-<thead>
-<tr>
-<th>软件</th>
-<th>官网</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
-</tr>
-<tr>
-<td>Scipy</td>
-<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
-</tr>
-<tr>
-<td>Cython</td>
-<td><a href="http://cython.org/">http://cython.org/</a></td>
-</tr>
-<tr>
-<td>ProDy</td>
-<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
-</tr>
-<tr>
-<td>Freesasa</td>
-<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
-<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
-
-<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
-
-<hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#97;&#104;&#105;&#107;&#x65;&#x72;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>。</p>
-<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
-]]></content>
-      <categories>
-        <category>分子对接</category>
-      </categories>
-      <tags>
-        <tag>实验平台搭建</tag>
-        <tag>分子对接</tag>
-        <tag>LightDock</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>欢迎来到 AuroraHiker’s Code Trail</title>
-    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
-<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
-<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
-<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#97;&#x75;&#x72;&#111;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>发送留言讨论！</p>
-]]></content>
-      <categories>
-        <category>关于</category>
-      </categories>
-      <tags>
-        <tag>欢迎</tag>
-        <tag>介绍</tag>
       </tags>
   </entry>
   <entry>
@@ -2085,7 +2003,7 @@
 <li>可视化特征重要性。</li>
 </ol>
 <p>现在，你可以将这套流程应用到自己的分类任务中。<strong>数据划分 → 调参 → 训练 → 评估</strong> 是机器学习项目的经典流水线，多加练习，你会越来越熟练！</p>
-<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#x61;&#x68;&#105;&#x6b;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
+<p>如果你在实践过程中遇到问题，或者对某个概念仍有疑惑，欢迎随时发送邮件至  <a href="mailto:&#97;&#x75;&#x72;&#x6f;&#x72;&#x61;&#104;&#x69;&#x6b;&#x65;&#114;&#64;&#49;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a> 交流。你的反馈会让这份指南变得更好。</p>
 ]]></content>
       <categories>
         <category>机器学习入门</category>
@@ -2097,108 +2015,19 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机基础：从零认识计算机硬件</title>
-    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
-    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
-<hr>
-<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
-<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
-<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
-<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
-</ul>
-<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
-<hr>
-<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
-<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
-<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
-</ul>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
-<li><strong>显存</strong>（下文详述）。</li>
-<li><strong>频率、架构</strong>：影响性能的关键。</li>
-</ul>
-<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
-<hr>
-<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
-<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
-<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
-<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
-</ul>
-<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
-<hr>
-<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
-<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
-<p><strong>关键参数</strong>：</p>
-<ul>
-<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
-<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
-</ul>
-<p><strong>与内存的区别</strong>：</p>
-<ul>
-<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
-<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
-<li>两者独立，不可互换。</li>
-</ul>
-<hr>
-<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
-<p><strong>类型</strong>：</p>
-<ul>
-<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
-<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
-<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
-</ul>
-<p><strong>接口与协议</strong>：</p>
-<ul>
-<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
-<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
-</ul>
-<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
-<hr>
-<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
-<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
-<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
-<ul>
-<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
-<li>内存：容量、速度、已使用插槽数。</li>
-<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
-<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
-</ul>
-</li>
-<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
-</li>
-<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
-</li>
-<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
-</li>
-</ol>
-<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
-<ol>
-<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
-<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#107;&#101;&#114;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
-<hr>
-<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
+    <title>欢迎来到 AuroraHiker’s Code Trail</title>
+    <url>/2026/01/26/%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20AuroraHiker%E2%80%99s%20Code%20Trail/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker’s Code Trail</strong>！</p>
+<p>这里是 AuroraHiker 的个人技术博客，我将在这里分享计算机基础、编程、开发工具、学习心得等内容。</p>
+<p>博客地址：<a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a></p>
+<p>希望通过这个空间与大家交流技术，共同进步。欢迎向我的个人邮箱<a href="mailto:&#x61;&#117;&#x72;&#111;&#x72;&#x61;&#104;&#x69;&#x6b;&#x65;&#114;&#x40;&#49;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>发送留言讨论！</p>
 ]]></content>
       <categories>
-        <category>计算机基础与实验平台搭建</category>
+        <category>关于</category>
       </categories>
       <tags>
-        <tag>计算机基础</tag>
+        <tag>欢迎</tag>
+        <tag>介绍</tag>
       </tags>
   </entry>
   <entry>
@@ -2400,7 +2229,7 @@
 </tbody></table>
 <hr>
 <h2 id="8-写在最后"><a href="#8-写在最后" class="headerlink" title="8. 写在最后"></a>8. 写在最后</h2><p>环境配置的本质，不过是一次常规磨合。遇到报错，就耐心地顺藤摸瓜定位原因、查阅官方文档、补全缺失的部分，这套思路适用于任何开发环境的装配。</p>
-<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#x6b;&#101;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
+<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#x61;&#104;&#105;&#107;&#101;&#114;&#x40;&#x31;&#54;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 <ul>
@@ -2415,6 +2244,198 @@
       <tags>
         <tag>实验平台搭建</tag>
         <tag>图神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机基础：从零认识计算机硬件</title>
+    <url>/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/</url>
+    <content><![CDATA[<p>欢迎来到 <strong>AuroraHiker</strong> 的技术博客！作为“计算机基础与实验平台构建”系列的开篇，本文将为初学者简明介绍计算机的核心硬件组件：CPU、GPU、内存、显存和硬盘。了解这些基础知识，能帮助你更好地选择设备、理解程序运行原理，并为后续的实验环境搭建打下坚实基础。</p>
+<hr>
+<h2 id="1-CPU（中央处理器）——计算机的大脑"><a href="#1-CPU（中央处理器）——计算机的大脑" class="headerlink" title="1. CPU（中央处理器）——计算机的大脑"></a>1. CPU（中央处理器）——计算机的大脑</h2><p><strong>功能</strong>：CPU 是计算机的运算和控制核心，负责解释指令、处理数据。它执行算术逻辑运算、控制输入输出，并协调其他部件工作。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>Intel</strong>：酷睿系列（i3&#x2F;i5&#x2F;i7&#x2F;i9）面向消费级，至强（Xeon）面向服务器。</li>
+<li><strong>AMD</strong>：锐龙系列（Ryzen 3&#x2F;5&#x2F;7&#x2F;9）和线程撕裂者（Threadripper）面向高性能桌面，EPYC 面向服务器。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>核心数&#x2F;线程数</strong>：多核心可并行处理任务，超线程技术让一个核心模拟两个逻辑线程，提升多任务效率。</li>
+<li><strong>主频&#x2F;睿频</strong>：主频（GHz）决定单核运算速度，睿频是自动超频能力。</li>
+<li><strong>缓存</strong>：L1&#x2F;L2&#x2F;L3 缓存，容量越大，数据命中率越高，减少访问内存的延迟。</li>
+</ul>
+<p><strong>通俗比喻</strong>：CPU 就像计算机的大脑，协调各项任务，决定整体处理效率。</p>
+<hr>
+<h2 id="2-GPU（图形处理器）——视觉与并行计算引擎"><a href="#2-GPU（图形处理器）——视觉与并行计算引擎" class="headerlink" title="2. GPU（图形处理器）——视觉与并行计算引擎"></a>2. GPU（图形处理器）——视觉与并行计算引擎</h2><p><strong>功能</strong>：最初设计用于加速图形渲染（游戏、设计软件），如今也广泛用于通用计算（深度学习、科学模拟、视频编解码）。GPU 拥有成百上千个小型核心，擅长并行处理简单任务。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>集成显卡</strong>：集成在 CPU 内部，共享系统内存，性能较弱，适合日常办公、轻度娱乐。</li>
+<li><strong>独立显卡</strong>：单独的扩展卡，自带显存，性能强劲。主流品牌 NVIDIA（GeForce RTX 系列）和 AMD（Radeon RX 系列）。</li>
+<li><strong>专业显卡</strong>：如 NVIDIA Quadro、Tesla，用于工作站、服务器，注重稳定性和计算精度。</li>
+</ul>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>流处理器&#x2F;CUDA核心数</strong>：核心越多并行计算能力越强。</li>
+<li><strong>显存</strong>（下文详述）。</li>
+<li><strong>频率、架构</strong>：影响性能的关键。</li>
+</ul>
+<p><strong>通俗比喻</strong>：GPU 就像一群专注的画师，能同时绘制大量画面，也适合处理矩阵运算等并行任务。</p>
+<hr>
+<h2 id="3-内存（RAM）——计算机的工作台"><a href="#3-内存（RAM）——计算机的工作台" class="headerlink" title="3. 内存（RAM）——计算机的工作台"></a>3. 内存（RAM）——计算机的工作台</h2><p><strong>功能</strong>：内存（随机存取存储器）是 CPU 直接访问的临时存储空间，存放当前运行的程序和数据。断电后数据丢失。</p>
+<p><strong>类型</strong>：DDR3、DDR4、DDR5（目前主流 DDR4 和 DDR5）。不同代际不兼容。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：8GB 适合轻度办公，16GB 满足多数游戏和编程，32GB 及以上适用于虚拟机、大型数据处理。</li>
+<li><strong>频率</strong>：如 3200MHz，越高数据传输越快。</li>
+<li><strong>时序</strong>：延迟参数，时序越低响应越快。</li>
+</ul>
+<p><strong>通俗比喻</strong>：内存就像你的办公桌，桌面越大，能同时摊开的文件（任务）越多，工作效率越高。</p>
+<hr>
+<h2 id="4-显存（VRAM）——GPU的专属工作台"><a href="#4-显存（VRAM）——GPU的专属工作台" class="headerlink" title="4. 显存（VRAM）——GPU的专属工作台"></a>4. 显存（VRAM）——GPU的专属工作台</h2><p><strong>功能</strong>：显存（视频内存）是独立显卡自带的专用内存，用于存储纹理、帧缓冲区、模型数据等。容量决定 GPU 能处理的数据量，尤其影响高分辨率游戏、3D 渲染和 AI 训练。</p>
+<p><strong>类型</strong>：GDDR5、GDDR6、HBM（高带宽内存）。GDDR6 是目前主流，带宽更高。</p>
+<p><strong>关键参数</strong>：</p>
+<ul>
+<li><strong>容量</strong>：4GB 适合轻度游戏，8GB 满足多数 1080p&#x2F;1440p 游戏，12GB&#x2F;24GB 适用于 4K 游戏或深度学习。</li>
+<li><strong>位宽与带宽</strong>：位宽（如 256-bit）和带宽（GB&#x2F;s）决定数据传输速度。</li>
+</ul>
+<p><strong>与内存的区别</strong>：</p>
+<ul>
+<li>内存是 CPU 的工作区，显存是 GPU 的工作区。</li>
+<li>显存离 GPU 更近，带宽极高；内存由 CPU 通过内存控制器访问。</li>
+<li>两者独立，不可互换。</li>
+</ul>
+<hr>
+<h2 id="5-硬盘（存储）——计算机的书架"><a href="#5-硬盘（存储）——计算机的书架" class="headerlink" title="5. 硬盘（存储）——计算机的书架"></a>5. 硬盘（存储）——计算机的书架</h2><p><strong>功能</strong>：硬盘（存储设备）用于长期保存操作系统、软件、文档、媒体等数据，断电不丢失。</p>
+<p><strong>类型</strong>：</p>
+<ul>
+<li><strong>HDD（机械硬盘）</strong>：通过磁头读写磁盘，容量大（可达 20TB+）、价格低，但速度慢（约 80-160MB&#x2F;s），有噪音，怕震动。</li>
+<li><strong>SSD（固态硬盘）</strong>：基于闪存芯片，速度快（SATA SSD 约 500MB&#x2F;s，NVMe SSD 可达 3000-7000MB&#x2F;s）、抗震、无噪音。目前操作系统和常用软件都应安装在 SSD 上。</li>
+<li><strong>混合硬盘（SSHD）</strong>：机械硬盘加少量闪存缓存，但已逐渐淘汰。</li>
+</ul>
+<p><strong>接口与协议</strong>：</p>
+<ul>
+<li>SATA：传统接口，兼容性好，速度上限约 600MB&#x2F;s。</li>
+<li>M.2：小巧接口，支持 SATA 或 NVMe 协议。NVMe 利用 PCIe 通道，速度远超 SATA。</li>
+</ul>
+<p><strong>通俗比喻</strong>：硬盘就像书柜，存放长期不用的书籍资料；SSD 相当于书柜里的常用抽屉，取用更快。</p>
+<hr>
+<h2 id="6-查看计算机配置"><a href="#6-查看计算机配置" class="headerlink" title="6. 查看计算机配置"></a>6. 查看计算机配置</h2><p>了解了硬件的基本概念后，你可能想知道自己当前使用的电脑配置如何。下面介绍在主流操作系统下查看硬件信息的方法。</p>
+<h3 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h3><ol>
+<li><p><strong>任务管理器</strong><br>按 <code>Ctrl + Shift + Esc</code> 打开任务管理器，点击“性能”选项卡。你可以看到：</p>
+<ul>
+<li>CPU：型号、核心数、逻辑处理器、使用率、速度等。</li>
+<li>内存：容量、速度、已使用插槽数。</li>
+<li>磁盘：型号、读写速度、类型（SSD&#x2F;HDD）。</li>
+<li>GPU：显卡型号、显存使用情况、专用显存容量。</li>
+</ul>
+</li>
+<li><p><strong>系统信息</strong><br>按 <code>Win + R</code>，输入 <code>msinfo32</code> 并回车。在“系统摘要”中可以查看处理器、内存等详细信息；展开“组件”-&gt;“显示”可看到显卡名称和显存。</p>
+</li>
+<li><p><strong>DirectX 诊断工具</strong><br>按 <code>Win + R</code>，输入 <code>dxdiag</code> 并回车。在“系统”标签页查看 CPU、内存；在“显示”标签页查看显卡型号、显存。</p>
+</li>
+<li><p><strong>第三方工具</strong><br>如 CPU-Z（查看 CPU、内存、主板详细信息）、GPU-Z（查看显卡详细信息）、CrystalDiskInfo（查看硬盘健康状态）。</p>
+</li>
+</ol>
+<h3 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h3><p>大多数 Linux 发行版可以通过命令行查看硬件信息：</p>
+<ol>
+<li><strong>查看 CPU</strong>  <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">lscpu                <span class="hljs-comment"># 显示 CPU 架构信息</span><br><span class="hljs-built_in">cat</span> /proc/cpuinfo    <span class="hljs-comment"># 查看每个核心的详细信息</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>硬件是计算机的物理基础，了解它们的角色和性能指标，能帮你更合理地选购设备，也更容易理解操作系统、编程框架对资源的管理。在后续的文章中，我们将深入操作系统的原理、虚拟化技术、实验环境搭建等内容，逐步构建一个完整的“计算机基础与实验平台”。</p>
+<p>如果你对某个硬件还有疑问，或者希望我深入某个话题（比如 CPU 架构、GPU 计算编程、硬件配置技巧），欢迎向我的邮箱<a href="mailto:&#97;&#x75;&#114;&#x6f;&#x72;&#97;&#104;&#x69;&#107;&#x65;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<hr>
+<p><em>本文首发于 <a href="https://aurorahiker.github.io/">AuroraHiker.github.io</a>，欢迎分享，转载请注明出处。</em></p>
+]]></content>
+      <categories>
+        <category>计算机基础与实验平台搭建</category>
+      </categories>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LightDock分子对接的实验平台搭建</title>
+    <url>/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<p><img src="/./LightDock_install/lightdock_logo.png"></p>
+<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
+<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
+<p>本教程基于 LightDock 官方基础知识文档 (<a href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+<hr>
+<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
+<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
+<p>笔者的硬件配置如下：</p>
+<ul>
+<li>CPU：AMD Ryzen 7 9700X</li>
+<li>内存：64 GB RAM</li>
+</ul>
+<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
+<hr>
+<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#x69;&#103;&#104;&#x74;&#100;&#x6f;&#x63;&#107;&#105;&#x6e;&#103;&#x40;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
+<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
+<p>支持的具体系统版本如下：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>macOS</td>
+<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
+</tr>
+<tr>
+<td>GNU&#x2F;Linux</td>
+<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td><a href="http://www.numpy.org/">http://www.numpy.org/</a></td>
+</tr>
+<tr>
+<td>Scipy</td>
+<td><a href="http://www.scipy.org/">http://www.scipy.org/</a></td>
+</tr>
+<tr>
+<td>Cython</td>
+<td><a href="http://cython.org/">http://cython.org/</a></td>
+</tr>
+<tr>
+<td>ProDy</td>
+<td><a href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
+</tr>
+<tr>
+<td>Freesasa</td>
+<td><a href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
+<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
+
+<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#x61;&#x75;&#x72;&#x6f;&#114;&#97;&#104;&#x69;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#x6d;">aurorahiker@163.com</a>。</p>
+<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
+]]></content>
+      <categories>
+        <category>分子对接</category>
+      </categories>
+      <tags>
+        <tag>实验平台搭建</tag>
+        <tag>分子对接</tag>
+        <tag>LightDock</tag>
       </tags>
   </entry>
 </search>
