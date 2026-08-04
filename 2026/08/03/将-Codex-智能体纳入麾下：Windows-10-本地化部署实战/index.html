@@ -19,26 +19,29 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
+    <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！本文面向从未接触过编程智能体的读者，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。 本文使用的 API 来自西农er’s GPT。截至本文完成时，平台公布的 API 地址为 https:&#x2F;&#x2F;api.nwafu-ai.cn，并为相关模型提供了 Codex 令牌分组。该平台需要使用教育邮箱注册">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LightDock分子对接的实验平台搭建">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:title" content="将 Codex 智能体纳入麾下：Windows 10 本地化部署实战">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/08/03/%E5%B0%86-Codex-%E6%99%BA%E8%83%BD%E4%BD%93%E7%BA%B3%E5%85%A5%E9%BA%BE%E4%B8%8B%EF%BC%9AWindows-10-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="本系列博客面向零基础学习者，基于 LightDock 官方文档 (https:&#x2F;&#x2F;lightdock.org&#x2F;) 与 GitHub 仓库 (https:&#x2F;&#x2F;github.com&#x2F;lightdock&#x2F;lightdock) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。 LightDock 基于萤火虫算法，支持已知或未知相互作用位点">
+<meta property="og:description" content="欢迎来到 AuroraHiker 的技术博客！本文面向从未接触过编程智能体的读者，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。 本文使用的 API 来自西农er’s GPT。截至本文完成时，平台公布的 API 地址为 https:&#x2F;&#x2F;api.nwafu-ai.cn，并为相关模型提供了 Codex 令牌分组。该平台需要使用教育邮箱注册">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
-<meta property="article:published_time" content="2026-04-01T09:44:01.533Z">
-<meta property="article:modified_time" content="2026-06-23T11:21:17.117Z">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E5%AE%89%E8%A3%85.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png">
+<meta property="article:published_time" content="2026-08-03T06:22:07.164Z">
+<meta property="article:modified_time" content="2026-08-04T02:31:18.664Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="LightDock">
-<meta property="article:tag" content="分子对接">
-<meta property="article:tag" content="实验平台搭建">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="开发者工具箱">
+<meta property="article:tag" content="智能体">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aurorahiker.github.io/LightDock_install/lightdock_logo.png">
+<meta name="twitter:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png">
   
   
   
-  <title>LightDock分子对接的实验平台搭建 - AuroraHiker’s Code Trail</title>
+  <title>将 Codex 智能体纳入麾下：Windows 10 本地化部署实战 - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -307,7 +310,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LightDock分子对接的实验平台搭建"></span>
+            <span id="subtitle" data-typed-text="将 Codex 智能体纳入麾下：Windows 10 本地化部署实战"></span>
           
         </div>
 
@@ -323,8 +326,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-04-01 17:44" pubdate>
-          2026年4月1日 下午
+        <time datetime="2026-08-03 14:22" pubdate>
+          2026年8月3日 下午
         </time>
       </span>
     
@@ -335,7 +338,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          3.8k 字
         
       </span>
     
@@ -346,7 +349,7 @@
         
         
         
-          16 分钟
+          33 分钟
         
       </span>
     
@@ -385,85 +388,200 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LightDock分子对接的实验平台搭建</h1>
+            <h1 id="seo-header">将 Codex 智能体纳入麾下：Windows 10 本地化部署实战</h1>
             
             
               <div class="markdown-body">
                 
-                <p><img src="/./LightDock_install/lightdock_logo.png" srcset="/img/loading.gif" lazyload></p>
-<p>本系列博客面向零基础学习者，基于 LightDock 官方文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/">https://lightdock.org/</a>) 与 GitHub 仓库 (<a target="_blank" rel="noopener" href="https://github.com/lightdock/lightdock">https://github.com/lightdock/lightdock</a>) ，系统介绍最新版本 v0.9.4 分子对接实验平台的搭建与使用方法。关于旧版本的安装与使用细节，建议参考官方网站。</p>
-<p>LightDock 基于萤火虫算法，支持已知或未知相互作用位点的蛋白-蛋白、膜受体-可溶性蛋白复合物的预测，以及蛋白质-DNA&#x2F;RNA 的刚性或柔性对接，并可实现多个潜在互作结构的对接分析。与其他分子对接工具相比，LightDock 的优势在于开源、能够探索多个结合模式、支持柔性对接、并行效率高、支持多种打分模式；但其计算成本较高，参数敏感且缺乏自动调参机制，不适用于小分子-蛋白对接。笔者后续将在博客中发布详细的分子对接工具对比，帮助大家选择合适的工具。</p>
-<p>本教程基于 LightDock 官方基础知识文档 (<a target="_blank" rel="noopener" href="https://lightdock.org/tutorials/0.9.3/basics">https://lightdock.org/tutorials/0.9.3/basics</a>) ，详解 LightDock v0.9.4 所依赖的硬件与系统环境配置，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+                <p>欢迎来到 AuroraHiker 的技术博客！本文面向<strong>从未接触过编程智能体的读者</strong>，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。</p>
+<p>本文使用的 API 来自<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>。截至本文完成时，平台公布的 API 地址为 <code>https://api.nwafu-ai.cn</code>，并为相关模型提供了 <code>Codex</code> 令牌分组。该平台需要使用教育邮箱注册，平台规则、模型名称和费用可能变化，请以实际页面为准。</p>
+<blockquote>
+<p><strong>“本地化部署”说明：</strong> 本文所说的本地化，是指 Codex 程序安装在自己的电脑上，并在获得许可后操作本地项目文件。负责推理的 AI 模型仍然位于远程服务器，Codex 需要通过 API 联网调用，并不是将大模型完整下载到电脑中。</p>
+</blockquote>
+<p>智能体可以理解为“接入双手的 AI 模型”。它不仅能读取文件、浏览网页、思考和回答问题，还能把模型的判断转换成文件操作和命令。能力更强也意味着风险更高，因此使用时务必注意：</p>
+<ol>
+<li>看清 Codex 准备执行的操作，再决定是否允许。</li>
+<li>提前备份需要处理的项目。初次使用时，建议复制一份项目到新文件夹，并以新文件夹作为工作目录。</li>
+</ol>
 <hr>
-<h2 id="1-硬件选择"><a href="#1-硬件选择" class="headerlink" title="1. 硬件选择"></a>1. 硬件选择</h2><p>关于计算机硬件的简单介绍，可参考笔者的另一篇博客：<a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">计算机基础：从零认识计算机硬件</a><br>LightDock官方未给出具体的硬件建议，以下为笔者的硬件配置与使用体验，供大家参考。是否启用柔性对接、萤火虫群数量、步数 (step) 以及 CPU 线程数等设置均会影响资源消耗，建议在运行过程中监控资源使用情况，并据此合理调整参数。</p>
-<p>推荐使用 WSL Ubuntu 环境运行，该环境下系统会自动终止过载线程，避免死机。欢迎其他系统环境的读者补充不同系统下的运行表现。</p>
-<p>笔者的硬件配置如下：</p>
+<h2 id="0-准备"><a href="#0-准备" class="headerlink" title="0. 准备"></a>0. 准备</h2><h3 id="0-1-模型的-API-是什么"><a href="#0-1-模型的-API-是什么" class="headerlink" title="0.1 模型的 API 是什么"></a>0.1 模型的 API 是什么</h3><p>AI 模型通常运行在远程服务器中，我们安装的 Codex 则运行在自己的电脑上。两者需要通过 API 进行通信：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">你向 Codex 下达任务<br>        ↓<br>Codex 通过 API 地址发送请求<br>        ↓<br>远程 AI 模型分析任务并返回判断<br>        ↓<br>Codex 在获得许可后操作本地文件<br></code></pre></td></tr></table></figure>
+
+<p>其中有三个概念需要认识：</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">作用</th>
+<th align="left">可以怎样理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">API</td>
+<td align="left">规定软件与模型怎样传递请求和回答</td>
+<td align="left">Codex 与模型之间的通信通道</td>
+</tr>
+<tr>
+<td align="left">API 地址</td>
+<td align="left">告诉 Codex 应该连接哪台服务器</td>
+<td align="left">通信通道的网络地址</td>
+</tr>
+<tr>
+<td align="left">API Key</td>
+<td align="left">证明账户身份并记录调用费用</td>
+<td align="left">使用 API 的个人通行证</td>
+</tr>
+</tbody></table>
+<p>API Key 与账户余额直接相关，任何得到它的人都可能消耗你的额度，因此不能发到群聊、写进公开博客或上传到 GitHub。</p>
+<h3 id="0-2-注册账户并创建-API-Key"><a href="#0-2-注册账户并创建-API-Key" class="headerlink" title="0.2 注册账户并创建 API Key"></a>0.2 注册账户并创建 API Key</h3><p>打开<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>，使用教育邮箱注册并完成验证 (官方使用指南 [<a target="_blank" rel="noopener" href="https://blog.nwafu-ai.cn/archives/1705731294486])%E3%80%82%E6%88%AA%E8%87%B3%E6%9C%AC%E6%96%87%E5%AE%8C%E6%88%90%E6%97%B6%EF%BC%8C%E6%AF%8F%E4%B8%AA%E6%96%B0%E8%B4%A6%E6%88%B7%E6%8F%90%E4%BE%9B">https://blog.nwafu-ai.cn/archives/1705731294486])。截至本文完成时，每个新账户提供</a> 2 元试用额度，具体活动规则以平台实时页面为准。</p>
+<p>登录后从右上角的用户头像点击‘个人资料’或‘钱包’进入个人主页，点击‘API密钥’，创建一个新令牌：</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png" srcset="/img/loading.gif" lazyload alt="API密钥创建界面"></p>
+<ol>
+<li>令牌名称可以填写 <code>codex-win10</code>；</li>
+<li>根据需要设置有效期和额度上限；</li>
+<li>创建后复制生成的 API Key，并妥善保存。</li>
+</ol>
+<p>平台生成的 API Key 通常以 <code>sk-</code> 开头。下文中的 <code>sk-请替换为你自己的API-Key</code> 只是占位符，实际操作时应替换为自己刚刚创建的密钥。</p>
+<blockquote>
+<p><strong>安全提醒：</strong> 如果 API Key 曾经完整出现在聊天记录、截图或公开网页中，应立即在平台删除该密钥并重新生成。仅仅把已经发布的内容打码，并不能保证旧密钥没有被他人复制。</p>
+</blockquote>
+<h2 id="1-Codex-安装配置"><a href="#1-Codex-安装配置" class="headerlink" title="1. Codex 安装配置"></a>1. Codex 安装配置</h2><h3 id="1-1-安装"><a href="#1-1-安装" class="headerlink" title="1.1 安装"></a>1.1 安装</h3><p>Codex 主要有两种本地使用方式：</p>
+<table>
+<thead>
+<tr>
+<th align="left">版本</th>
+<th align="left">操作方式</th>
+<th align="left">适合人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Codex CLI</td>
+<td align="left">在命令行中输入文字，没有传统图形界面</td>
+<td align="left">熟悉 PowerShell、CMD 或终端的读者</td>
+</tr>
+<tr>
+<td align="left">Codex 应用版</td>
+<td align="left">提供图形化窗口，可视化程度更高</td>
+<td align="left">第一次接触智能体的读者</td>
+</tr>
+</tbody></table>
+<p>本文以 <strong>Codex 应用版</strong>为主，CLI 只用于补全本地组件和检查版本。</p>
+<h4 id="1-1-1-下载-Codex-应用版"><a href="#1-1-1-下载-Codex-应用版" class="headerlink" title="1.1.1 下载 Codex 应用版"></a>1.1.1 下载 Codex 应用版</h4><p>打开 <a target="_blank" rel="noopener" href="https://openai.com/zh-Hans-CN/codex/">Codex 中文官网</a>，下载 Windows 安装包。双击安装文件会出现下图所示的界面，等待安装完成即可。</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E5%AE%89%E8%A3%85.png" srcset="/img/loading.gif" lazyload alt="Codex 安装界面"></p>
+<p>第一次启动 Codex 时，在登录页面选择 <strong>Sign in another way</strong>，再选择使用 API Key 的方式，将自己在准备阶段创建的新密钥粘贴进去。</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png" srcset="/img/loading.gif" lazyload alt="Codex 登录界面"></p>
+<h4 id="1-1-2-安装或更新-Codex-CLI"><a href="#1-1-2-安装或更新-Codex-CLI" class="headerlink" title="1.1.2 安装或更新 Codex CLI"></a>1.1.2 安装或更新 Codex CLI</h4><p>打开 CMD 或 PowerShell，先检查 Node.js 和 npm：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">node <span class="hljs-literal">--version</span><br>npm <span class="hljs-literal">--version</span><br></code></pre></td></tr></table></figure>
+
+<p>如果两条命令都能显示版本号，继续执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">npm install <span class="hljs-literal">-g</span> @openai/codex@latest<br>codex <span class="hljs-literal">--version</span><br></code></pre></td></tr></table></figure>
+
+<p><code>npm install -g</code> 表示把 Codex CLI 安装到当前电脑，<code>@latest</code> 表示安装最新稳定版本。最后一条命令用于检查安装结果，能够看到版本号就说明 CLI 已经可以使用。</p>
+<p>如果系统提示找不到 <code>node</code> 或 <code>npm</code>，请先从 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js 官网</a>安装带有 <strong>LTS</strong> 标识的版本。下载 Node.js 或安装 Codex 较慢时，可以在遵守所在网络规定的前提下更换更稳定的网络环境。</p>
+<h3 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h3><p>Codex 的个人设置保存在当前 Windows 用户目录下的 <code>.codex</code> 文件夹中 (路径中的 <code>usersname</code> 请替换为你的实际用户名)：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\usersname\.codex<br></code></pre></td></tr></table></figure>
+
+<p>该目录下有两个关键的配置文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">.codex<br>├── auth.json      # 保存登录方式和 API Key<br>└── config.toml    # 保存模型、API 地址和运行设置<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt=".codex 目录下的配置文件"></p>
+<p>配置时请注意两者的不同用途：</p>
 <ul>
-<li>CPU：AMD Ryzen 7 9700X</li>
-<li>内存：64 GB RAM</li>
+<li><p>config.toml (<strong>必须配置</strong>)：无论你使用应用版还是 CLI，都必须手动修改此文件。这是因为应用版的图形界面没有提供修改 API 地址 (base_url) 和模型名称 (model) 的选项，而我们需要连接西农er’s GPT 的第三方接口，因此必须通过该文件指定。</p>
+</li>
+<li><p>auth.json (<strong>按需配置</strong>)：</p>
+<ul>
+<li>如果你<strong>只使用应用版</strong>，且在 1.1.1 节已通过图形界面登录 (粘贴 API Key)，则<strong>无需</strong>手动配置 auth.json，应用版会自动处理身份验证。</li>
+<li>如果你使用 CLI (或希望 CLI 也能正常工作)，则必须手动编辑 auth.json，写入你的 API Key (具体操作见 1.2.1)。</li>
 </ul>
-<p>基于该配置，对于分子量较小蛋白-蛋白对接，能够覆盖较大的构象空间，在初始种群数量较多、柔性处理充分、100 步搜索较彻底的条件下，可通过八核并行处理实现较快的运算。若其中一个蛋白分子量较大，则只能采用双核、刚性对接、较小种群数量与 50 步的配置。</p>
-<hr>
-<h2 id="2-系统选择"><a href="#2-系统选择" class="headerlink" title="2. 系统选择"></a>2. 系统选择</h2><p>LightDock v0.9.4 支持 macOS 与 GNU&#x2F;Linux 系统，暂不支持 Windows 系统。开发者表示其主要功能在 Windows 上也可运行，有兴趣的用户可联系开发团队 (邮箱：<a href="mailto:&#x6c;&#105;&#x67;&#104;&#x74;&#x64;&#x6f;&#x63;&#107;&#105;&#110;&#103;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">lightdocking@gmail.com</a>) 参与 Windows 版的测试与开发。</p>
-<p>笔者使用的是 Windows 10 环境下的 WSL2 Ubuntu 20.04。建议使用 Windows 系统的读者部署 WSL Ubuntu 22.04 或更高版本，以便运行支持 Linux 系统的软件。详细的WSL部署教程可参考笔者的另一篇博客：<a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">从零搭建Windows生信分析平台——WSL的安装配置</a>。</p>
-<p>支持的具体系统版本如下：</p>
+</li>
+</ul>
+<h4 id="1-2-1-配置-auth-json"><a href="#1-2-1-配置-auth-json" class="headerlink" title="1.2.1 配置 auth.json"></a>1.2.1 配置 <code>auth.json</code></h4><p>找到 <code>auth.json</code> 并复制到其他位置备份，使用记事本打开 <code>auth.json</code>，删除原有内容，再粘贴下面的配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;auth_mode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;apikey&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;OPENAI_API_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sk-请替换为你自己的API-Key&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>将占位符替换成准备阶段创建的新 API Key，然后保存文件。</p>
+<p>这两项配置的含义是：</p>
 <table>
 <thead>
 <tr>
-<th>系统</th>
-<th>版本</th>
+<th align="left">配置项</th>
+<th align="left">含义</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>macOS</td>
-<td>El Capitan, Sierra, High Sierra, Mojave, Catalina.</td>
+<td align="left"><code>auth_mode</code></td>
+<td align="left">指定使用 API Key 进行身份验证</td>
 </tr>
 <tr>
-<td>GNU&#x2F;Linux</td>
-<td>Ubuntu 16+, Debian Stretch+, Scientific Linux 6+, CentOS 6+.</td>
+<td align="left"><code>OPENAI_API_KEY</code></td>
+<td align="left">保存实际调用平台时使用的密钥</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="3-环境依赖"><a href="#3-环境依赖" class="headerlink" title="3. 环境依赖"></a>3. 环境依赖</h2><p>LightDock v0.9.4 依赖以下软件，安装过程中通常会自动下载：</p>
+<blockquote>
+<p><strong>重要：</strong> <code>auth.json</code> 会以明文形式保存 API Key。不要把这个文件上传到 GitHub、网盘公开目录或发送给他人，截图时也必须将密钥完全遮挡。</p>
+</blockquote>
+<h4 id="1-2-2-配置-config-toml"><a href="#1-2-2-配置-config-toml" class="headerlink" title="1.2.2 配置 config.toml"></a>1.2.2 配置 <code>config.toml</code></h4><p>找到 <code>config.toml</code> 并复制到其他位置备份，使用记事本打开 <code>config.toml</code>，删除原有内容，再粘贴：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-attr">model_provider</span> = <span class="hljs-string">&quot;OpenAI&quot;</span><br><span class="hljs-attr">model</span> = <span class="hljs-string">&quot;gpt-5.5&quot;</span><br><span class="hljs-attr">model_reasoning_effort</span> = <span class="hljs-string">&quot;xhigh&quot;</span><br><span class="hljs-attr">network_access</span> = <span class="hljs-string">&quot;enabled&quot;</span><br><span class="hljs-attr">disable_response_storage</span> = <span class="hljs-literal">true</span><br><br><span class="hljs-section">[model_providers.OpenAI]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;OpenAI&quot;</span><br><span class="hljs-attr">base_url</span> = <span class="hljs-string">&quot;https://api.nwafu-ai.cn/v1&quot;</span><br><span class="hljs-attr">wire_api</span> = <span class="hljs-string">&quot;responses&quot;</span><br><span class="hljs-attr">requires_openai_auth</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>主要配置项的作用如下：</p>
 <table>
 <thead>
 <tr>
-<th>软件</th>
-<th>官网</th>
+<th align="left">配置项</th>
+<th align="left">作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>NumPy</td>
-<td><a target="_blank" rel="noopener" href="http://www.numpy.org/">http://www.numpy.org/</a></td>
+<td align="left"><code>model_provider</code></td>
+<td align="left">选择下方名为 <code>OpenAI</code> 的服务商配置</td>
 </tr>
 <tr>
-<td>Scipy</td>
-<td><a target="_blank" rel="noopener" href="http://www.scipy.org/">http://www.scipy.org/</a></td>
+<td align="left"><code>model</code></td>
+<td align="left">指定调用的模型，本文示例为 <code>gpt-5.5</code></td>
 </tr>
 <tr>
-<td>Cython</td>
-<td><a target="_blank" rel="noopener" href="http://cython.org/">http://cython.org/</a></td>
+<td align="left"><code>model_reasoning_effort</code></td>
+<td align="left">设置推理强度，<code>xhigh</code> 表示较高的推理投入</td>
 </tr>
 <tr>
-<td>ProDy</td>
-<td><a target="_blank" rel="noopener" href="http://prody.csb.pitt.edu/">http://prody.csb.pitt.edu/</a></td>
+<td align="left"><code>network_access</code></td>
+<td align="left">在当前环境和授权允许时启用网络访问能力</td>
 </tr>
 <tr>
-<td>Freesasa</td>
-<td><a target="_blank" rel="noopener" href="http://freesasa.github.io/">http://freesasa.github.io/</a></td>
+<td align="left"><code>disable_response_storage</code></td>
+<td align="left">要求兼容接口不要保存响应，但第三方平台实际处理规则仍以其说明为准</td>
+</tr>
+<tr>
+<td align="left"><code>base_url</code></td>
+<td align="left">指定西农er’s GPT 的 API 地址，Codex 配置中需要包含 <code>/v1</code></td>
+</tr>
+<tr>
+<td align="left"><code>wire_api</code></td>
+<td align="left">使用 Codex 所需的 Responses API 通信格式</td>
+</tr>
+<tr>
+<td align="left"><code>requires_openai_auth</code></td>
+<td align="left">从前面的 <code>auth.json</code> 中读取 API Key</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="4-安装"><a href="#4-安装" class="headerlink" title="4. 安装"></a>4. 安装</h2><p>LightDock 对依赖软件的版本无特殊要求，但建议在安装时为其单独创建虚拟环境，以便于管理和调试。编译安装的详细步骤可参考 LightDock 官网。</p>
-<p>配置虚拟环境需要 Conda，后续笔者将在博客中发布详细的 Conda 安装与部署教程。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活虚拟环境</span><br>conda create -n lightdock python=3.8<br>conda activate lightdock<br></code></pre></td></tr></table></figure>
+<p>模型名称可能随平台调整。如果 <code>gpt-5.5</code> 已不可用，请登录平台查看当前 Codex 分组支持的模型，并将完整模型 ID 替换到 <code>model = &quot;...&quot;</code> 中。</p>
+<p>配置完成后，彻底退出 Codex 应用并重新打开，使新设置生效。</p>
+<h4 id="1-2-3-验证是否部署成功"><a href="#1-2-3-验证是否部署成功" class="headerlink" title="1.2.3 验证是否部署成功"></a>1.2.3 验证是否部署成功</h4><p>提前复制一个用于测试的项目文件夹，在 Codex 应用中将它设置为工作目录，然后输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">请先只读取当前文件夹，告诉我其中有哪些文件。不要执行命令，也不要修改任何内容。<br></code></pre></td></tr></table></figure>
 
-<p>若不需配置虚拟环境，可直接运行以下命令安装最新版 LightDock：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install lightdock<br></code></pre></td></tr></table></figure>
-
+<p>如果 Codex 能正确列出测试目录中的文件，并且没有出现身份验证或模型错误，就说明应用、API Key、API 地址和模型已经连接成功。</p>
 <hr>
-<p>欢迎各位读者结合实际使用情况提供补充，也欢迎通过邮件与笔者交流使用过程中遇到问题：<a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#104;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#x36;&#x33;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a>。</p>
-<p>若在学术研究或论文中使用了 LightDock 软件，请按照官方要求引用相关文献。具体的引用信息可查阅 LightDock 官方引用建议 (<a target="_blank" rel="noopener" href="https://lightdock.org/reference/">https://lightdock.org/reference/</a>) 或 GitHub 仓库中的说明。</p>
+<p>至此，Codex 智能体的本地化部署已全部完成。我们先后完成了应用安装、CLI 环境更新、API Key 写入以及模型接口配置，为后续的使用打下了基础。</p>
+<p>在下一期内容中，我们将聚焦 Codex 的基础操作，探讨如何在保障文件安全的前提下，让它高效协助我们处理实际项目。</p>
+<p>若在部署过程中遇到任何问题，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#111;&#114;&#x61;&#104;&#105;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 与笔者交流。<strong>求助时请务必提供已对敏感信息打码的错误截图，切勿发送 auth.json 或明文 API Key。</strong></p>
+<hr>
+<p><strong>参考资源</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://openai.com/zh-Hans-CN/codex/">Codex 中文官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openai/codex">Codex CLI 官方仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js 官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a></li>
+</ul>
 
                 
               </div>
@@ -482,7 +600,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="category-chain-item">分子对接</a>
+  <a href="/categories/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="category-chain-item">开发者工具箱</a>
   
   
 
@@ -497,11 +615,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
+        <a href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" class="print-no-link">#智能体</a>
       
-        <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="print-no-link">#分子对接</a>
+        <a href="/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#开发者工具箱</a>
       
-        <a href="/tags/LightDock/" class="print-no-link">#LightDock</a>
+        <a href="/tags/Codex/" class="print-no-link">#Codex</a>
       
     </div>
   
@@ -513,8 +631,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LightDock分子对接的实验平台搭建</div>
-      <div>https://aurorahiker.github.io/2026/04/01/搭建 LightDock 分子对接平台/</div>
+      <div>将 Codex 智能体纳入麾下：Windows 10 本地化部署实战</div>
+      <div>https://aurorahiker.github.io/2026/08/03/将-Codex-智能体纳入麾下：Windows-10-本地化部署实战/</div>
     </div>
     <div class="license-meta">
       
@@ -526,7 +644,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026-04-01</div>
+          <div>2026-08-03</div>
         </div>
       
       
@@ -558,18 +676,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">从零搭建Windows生信分析平台——WSL的安装配置</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/02/25/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" title="GROMACS分子动力学模拟的实验平台搭建">
-                        <span class="hidden-mobile">GROMACS分子动力学模拟的实验平台搭建</span>
+                      <a href="/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/" title="Python 入门：变量类型专题">
+                        <span class="hidden-mobile">Python 入门：变量类型专题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
