@@ -19,33 +19,29 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。  WOX：极速启动与搜索工具Wox 是一款">
+    <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！本文面向从未接触过编程智能体的读者，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。 本文使用的 API 来自西农er’s GPT。截至本文完成时，平台公布的 API 地址为 https:&#x2F;&#x2F;api.nwafu-ai.cn，并为相关模型提供了 Codex 令牌分组。该平台需要使用教育邮箱注册">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:title" content="将 Codex 智能体纳入麾下：Windows 10 本地化部署实战">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/08/03/%E5%B0%86-Codex-%E6%99%BA%E8%83%BD%E4%BD%93%E7%BA%B3%E5%85%A5%E9%BA%BE%E4%B8%8B%EF%BC%9AWindows-10-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。  WOX：极速启动与搜索工具Wox 是一款">
+<meta property="og:description" content="欢迎来到 AuroraHiker 的技术博客！本文面向从未接触过编程智能体的读者，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。 本文使用的 API 来自西农er’s GPT。截至本文完成时，平台公布的 API 地址为 https:&#x2F;&#x2F;api.nwafu-ai.cn，并为相关模型提供了 Codex 令牌分组。该平台需要使用教育邮箱注册">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE%E9%A1%B5.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%A1%E7%AE%97%E5%99%A8.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%94%B6%E8%97%8F%E5%A4%B9.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E5%89%AA%E8%B4%B4%E6%9D%BF.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%BF%90%E8%A1%8C%E6%8C%87%E4%BB%A4.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt%E5%8A%A0%E9%80%9F.png">
-<meta property="article:published_time" content="2026-02-21T17:02:59.006Z">
-<meta property="article:modified_time" content="2026-06-23T11:22:26.265Z">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E5%AE%89%E8%A3%85.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png">
+<meta property="article:published_time" content="2026-08-03T06:22:07.164Z">
+<meta property="article:modified_time" content="2026-08-04T02:20:01.989Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="Windows使用技巧">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="开发者工具箱">
+<meta property="article:tag" content="智能体">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aurorahiker.github.io/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80.png">
+<meta name="twitter:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png">
   
   
   
-  <title>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南 - AuroraHiker’s Code Trail</title>
+  <title>将 Codex 智能体纳入麾下：Windows 10 本地化部署实战 - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -314,7 +310,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南"></span>
+            <span id="subtitle" data-typed-text="将 Codex 智能体纳入麾下：Windows 10 本地化部署实战"></span>
           
         </div>
 
@@ -330,8 +326,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-02-22 01:02" pubdate>
-          2026年2月22日 凌晨
+        <time datetime="2026-08-03 14:22" pubdate>
+          2026年8月3日 下午
         </time>
       </span>
     
@@ -342,7 +338,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          3.5k 字
         
       </span>
     
@@ -353,7 +349,7 @@
         
         
         
-          16 分钟
+          30 分钟
         
       </span>
     
@@ -392,64 +388,188 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</h1>
+            <h1 id="seo-header">将 Codex 智能体纳入麾下：Windows 10 本地化部署实战</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在日常工作和学习中，重复的鼠标操作、繁琐的文档格式切换或缓慢的 GitHub 访问大大削减了我们的工作效率，通过合理利用工具可以化繁为简，让这些烦恼迎刃而解。本文将介绍三款实用软件：Wox（快速启动与搜索工具）、Markdown编辑器（Joplin与Typora）以及GitHub加速器 Watt Toolkit。它们组合使用能带来更流畅的开发与工作体验。</p>
+                <p>欢迎来到 AuroraHiker 的技术博客！本文面向<strong>从未接触过编程智能体的读者</strong>，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。</p>
+<p>本文使用的 API 来自<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>。截至本文完成时，平台公布的 API 地址为 <code>https://api.nwafu-ai.cn</code>，并为相关模型提供了 <code>Codex</code> 令牌分组。该平台需要使用教育邮箱注册，平台规则、模型名称和费用可能变化，请以实际页面为准。</p>
+<blockquote>
+<p><strong>“本地化部署”说明：</strong> 本文所说的本地化，是指 Codex 程序安装在自己的电脑上，并在获得许可后操作本地项目文件。负责推理的 AI 模型仍然位于远程服务器，Codex 需要通过 API 联网调用，并不是将大模型完整下载到电脑中。</p>
+</blockquote>
+<p>智能体可以理解为“接入双手的 AI 模型”。它不仅能读取文件、浏览网页、思考和回答问题，还能把模型的判断转换成文件操作和命令。能力更强也意味着风险更高，因此使用时务必注意：</p>
+<ol>
+<li>看清 Codex 准备执行的操作，再决定是否允许。</li>
+<li>提前备份需要处理的项目。初次使用时，建议复制一份项目到新文件夹，并以新文件夹作为工作目录。</li>
+</ol>
 <hr>
-<h2 id="WOX：极速启动与搜索工具"><a href="#WOX：极速启动与搜索工具" class="headerlink" title="WOX：极速启动与搜索工具"></a>WOX：极速启动与搜索工具</h2><p>Wox 是一款开源免费的生产力工具，类似于 macOS 上的 Alfred。它可以通过快捷键快速唤出输入框，实现搜索文件、运行程序、计算数学表达式、管理剪贴板、执行命令行等多种功能。通过安装插件，还能扩展更多实用能力。</p>
-<p>Wox 官网: <a target="_blank" rel="noopener" href="http://www.wox.one/">http://www.wox.one/</a><br>GitHub 仓库：<a target="_blank" rel="noopener" href="https://github.com/Wox-launcher/Wox/releases">https://github.com/Wox-launcher/Wox/releases</a><br>官方说明文档：<a target="_blank" rel="noopener" href="https://wox-launcher.github.io/Wox/guide/installation.html">https://wox-launcher.github.io/Wox/guide/installation.html</a><br>备用下载（由于 GitHub 访问不稳定，提供 v2.0.0 安装包）：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox-windows-amd64.exe">wox-2.0.0-windows-amd64.exe</a></p>
-<p><strong>基础设置：</strong><br>安装完成后，建议先根据个人习惯调整设置。</p>
+<h2 id="0-准备"><a href="#0-准备" class="headerlink" title="0. 准备"></a>0. 准备</h2><h3 id="0-1-模型的-API-是什么"><a href="#0-1-模型的-API-是什么" class="headerlink" title="0.1 模型的 API 是什么"></a>0.1 模型的 API 是什么</h3><p>AI 模型通常运行在远程服务器中，我们安装的 Codex 则运行在自己的电脑上。两者需要通过 API 进行通信：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">你向 Codex 下达任务<br>        ↓<br>Codex 通过 API 地址发送请求<br>        ↓<br>远程 AI 模型分析任务并返回判断<br>        ↓<br>Codex 在获得许可后操作本地文件<br></code></pre></td></tr></table></figure>
+
+<p>其中有三个概念需要认识：</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">作用</th>
+<th align="left">可以怎样理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">API</td>
+<td align="left">规定软件与模型怎样传递请求和回答</td>
+<td align="left">Codex 与模型之间的通信通道</td>
+</tr>
+<tr>
+<td align="left">API 地址</td>
+<td align="left">告诉 Codex 应该连接哪台服务器</td>
+<td align="left">通信通道的网络地址</td>
+</tr>
+<tr>
+<td align="left">API Key</td>
+<td align="left">证明账户身份并记录调用费用</td>
+<td align="left">使用 API 的个人通行证</td>
+</tr>
+</tbody></table>
+<p>API Key 与账户余额直接相关，任何得到它的人都可能消耗你的额度，因此不能发到群聊、写进公开博客或上传到 GitHub。</p>
+<h3 id="0-2-注册账户并创建-API-Key"><a href="#0-2-注册账户并创建-API-Key" class="headerlink" title="0.2 注册账户并创建 API Key"></a>0.2 注册账户并创建 API Key</h3><p>打开<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>，使用教育邮箱注册并完成验证 (官方使用指南 [<a target="_blank" rel="noopener" href="https://blog.nwafu-ai.cn/archives/1705731294486])%E3%80%82%E6%88%AA%E8%87%B3%E6%9C%AC%E6%96%87%E5%AE%8C%E6%88%90%E6%97%B6%EF%BC%8C%E6%AF%8F%E4%B8%AA%E6%96%B0%E8%B4%A6%E6%88%B7%E6%8F%90%E4%BE%9B">https://blog.nwafu-ai.cn/archives/1705731294486])。截至本文完成时，每个新账户提供</a> 2 元试用额度，具体活动规则以平台实时页面为准。</p>
+<p>登录后从右上角的用户头像点击‘个人资料’或‘钱包’进入个人主页，点击‘API密钥’，创建一个新令牌：</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png" srcset="/img/loading.gif" lazyload alt="API密钥创建界面"></p>
+<ol>
+<li>令牌名称可以填写 <code>codex-win10</code>；</li>
+<li>根据需要设置有效期和额度上限；</li>
+<li>创建后复制生成的 API Key，并妥善保存。</li>
+</ol>
+<p>平台生成的 API Key 通常以 <code>sk-</code> 开头。下文中的 <code>sk-请替换为你自己的API-Key</code> 只是占位符，实际操作时应替换为自己刚刚创建的密钥。</p>
+<blockquote>
+<p><strong>安全提醒：</strong> 如果 API Key 曾经完整出现在聊天记录、截图或公开网页中，应立即在平台删除该密钥并重新生成。仅仅把已经发布的内容打码，并不能保证旧密钥没有被他人复制。</p>
+</blockquote>
+<h2 id="1-Codex-安装配置"><a href="#1-Codex-安装配置" class="headerlink" title="1. Codex 安装配置"></a>1. Codex 安装配置</h2><h3 id="1-1-安装"><a href="#1-1-安装" class="headerlink" title="1.1 安装"></a>1.1 安装</h3><p>Codex 主要有两种本地使用方式：</p>
+<table>
+<thead>
+<tr>
+<th align="left">版本</th>
+<th align="left">操作方式</th>
+<th align="left">适合人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Codex CLI</td>
+<td align="left">在命令行中输入文字，没有传统图形界面</td>
+<td align="left">熟悉 PowerShell、CMD 或终端的读者</td>
+</tr>
+<tr>
+<td align="left">Codex 应用版</td>
+<td align="left">提供图形化窗口，可视化程度更高</td>
+<td align="left">第一次接触智能体的读者</td>
+</tr>
+</tbody></table>
+<p>本文以 <strong>Codex 应用版</strong>为主，CLI 只用于补全本地组件和检查版本。</p>
+<h4 id="1-1-1-下载-Codex-应用版"><a href="#1-1-1-下载-Codex-应用版" class="headerlink" title="1.1.1 下载 Codex 应用版"></a>1.1.1 下载 Codex 应用版</h4><p>打开 <a target="_blank" rel="noopener" href="https://openai.com/zh-Hans-CN/codex/">Codex 中文官网</a>，下载 Windows 安装包。双击安装文件会出现下图所示的界面，等待安装完成即可。</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E5%AE%89%E8%A3%85.png" srcset="/img/loading.gif" lazyload alt="Codex 安装界面"></p>
+<p>第一次启动 Codex 时，在登录页面选择 <strong>Sign in another way</strong>，再选择使用 API Key 的方式，将自己在准备阶段创建的新密钥粘贴进去。</p>
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png" srcset="/img/loading.gif" lazyload alt="Codex 登录界面"></p>
+<h4 id="1-1-2-安装或更新-Codex-CLI"><a href="#1-1-2-安装或更新-Codex-CLI" class="headerlink" title="1.1.2 安装或更新 Codex CLI"></a>1.1.2 安装或更新 Codex CLI</h4><p>打开 CMD 或 PowerShell，先检查 Node.js 和 npm：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">node <span class="hljs-literal">--version</span><br>npm <span class="hljs-literal">--version</span><br></code></pre></td></tr></table></figure>
+
+<p>如果两条命令都能显示版本号，继续执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">npm install <span class="hljs-literal">-g</span> @openai/codex@latest<br>codex <span class="hljs-literal">--version</span><br></code></pre></td></tr></table></figure>
+
+<p><code>npm install -g</code> 表示把 Codex CLI 安装到当前电脑，<code>@latest</code> 表示安装最新稳定版本。最后一条命令用于检查安装结果，能够看到版本号就说明 CLI 已经可以使用。</p>
+<p>如果系统提示找不到 <code>node</code> 或 <code>npm</code>，请先从 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js 官网</a>安装带有 <strong>LTS</strong> 标识的版本。下载 Node.js 或安装 Codex 较慢时，可以在遵守所在网络规定的前提下更换更稳定的网络环境。</p>
+<h3 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h3><p>Codex 的个人设置保存在当前 Windows 用户目录下的 <code>.codex</code> 文件夹中，不同电脑的用户名不同，需要用自己的用户名替换 <code>usersname</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\usersname\.codex<br></code></pre></td></tr></table></figure>
+
+<p>该目录中需要配置两个文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">.codex<br>├── auth.json      # 保存登录方式和 API Key<br>└── config.toml    # 保存模型、API 地址和运行设置<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt=".codex 目录下的配置文件"></p>
+<h4 id="1-2-1-配置-auth-json"><a href="#1-2-1-配置-auth-json" class="headerlink" title="1.2.1 配置 auth.json"></a>1.2.1 配置 <code>auth.json</code></h4><p>找到 <code>auth.json</code> 并复制到其他位置备份，使用记事本打开 <code>auth.json</code>，删除原有内容，再粘贴下面的配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;auth_mode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;apikey&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;OPENAI_API_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sk-请替换为你自己的API-Key&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>将占位符替换成准备阶段创建的新 API Key，然后保存文件。</p>
+<p>这两项配置的含义是：</p>
+<table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>auth_mode</code></td>
+<td align="left">指定使用 API Key 进行身份验证</td>
+</tr>
+<tr>
+<td align="left"><code>OPENAI_API_KEY</code></td>
+<td align="left">保存实际调用平台时使用的密钥</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>重要：</strong> <code>auth.json</code> 会以明文形式保存 API Key。不要把这个文件上传到 GitHub、网盘公开目录或发送给他人，截图时也必须将密钥完全遮挡。</p>
+</blockquote>
+<h4 id="1-2-2-配置-config-toml"><a href="#1-2-2-配置-config-toml" class="headerlink" title="1.2.2 配置 config.toml"></a>1.2.2 配置 <code>config.toml</code></h4><p>找到 <code>config.toml</code> 并复制到其他位置备份，使用记事本打开 <code>config.toml</code>，删除原有内容，再粘贴：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-attr">model_provider</span> = <span class="hljs-string">&quot;OpenAI&quot;</span><br><span class="hljs-attr">model</span> = <span class="hljs-string">&quot;gpt-5.5&quot;</span><br><span class="hljs-attr">model_reasoning_effort</span> = <span class="hljs-string">&quot;xhigh&quot;</span><br><span class="hljs-attr">network_access</span> = <span class="hljs-string">&quot;enabled&quot;</span><br><span class="hljs-attr">disable_response_storage</span> = <span class="hljs-literal">true</span><br><br><span class="hljs-section">[model_providers.OpenAI]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;OpenAI&quot;</span><br><span class="hljs-attr">base_url</span> = <span class="hljs-string">&quot;https://api.nwafu-ai.cn/v1&quot;</span><br><span class="hljs-attr">wire_api</span> = <span class="hljs-string">&quot;responses&quot;</span><br><span class="hljs-attr">requires_openai_auth</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>主要配置项的作用如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>model_provider</code></td>
+<td align="left">选择下方名为 <code>OpenAI</code> 的服务商配置</td>
+</tr>
+<tr>
+<td align="left"><code>model</code></td>
+<td align="left">指定调用的模型，本文示例为 <code>gpt-5.5</code></td>
+</tr>
+<tr>
+<td align="left"><code>model_reasoning_effort</code></td>
+<td align="left">设置推理强度，<code>xhigh</code> 表示较高的推理投入</td>
+</tr>
+<tr>
+<td align="left"><code>network_access</code></td>
+<td align="left">在当前环境和授权允许时启用网络访问能力</td>
+</tr>
+<tr>
+<td align="left"><code>disable_response_storage</code></td>
+<td align="left">要求兼容接口不要保存响应，但第三方平台实际处理规则仍以其说明为准</td>
+</tr>
+<tr>
+<td align="left"><code>base_url</code></td>
+<td align="left">指定西农er’s GPT 的 API 地址，Codex 配置中需要包含 <code>/v1</code></td>
+</tr>
+<tr>
+<td align="left"><code>wire_api</code></td>
+<td align="left">使用 Codex 所需的 Responses API 通信格式</td>
+</tr>
+<tr>
+<td align="left"><code>requires_openai_auth</code></td>
+<td align="left">从前面的 <code>auth.json</code> 中读取 API Key</td>
+</tr>
+</tbody></table>
+<p>模型名称可能随平台调整。如果 <code>gpt-5.5</code> 已不可用，请登录平台查看当前 Codex 分组支持的模型，并将完整模型 ID 替换到 <code>model = &quot;...&quot;</code> 中。</p>
+<p>配置完成后，彻底退出 Codex 应用并重新打开，使新设置生效。</p>
+<h4 id="1-2-3-验证是否部署成功"><a href="#1-2-3-验证是否部署成功" class="headerlink" title="1.2.3 验证是否部署成功"></a>1.2.3 验证是否部署成功</h4><p>提前复制一个用于测试的项目文件夹，在 Codex 应用中将它设置为工作目录，然后输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">请先只读取当前文件夹，告诉我其中有哪些文件。不要执行命令，也不要修改任何内容。<br></code></pre></td></tr></table></figure>
+
+<p>如果 Codex 能正确列出测试目录中的文件，并且没有出现身份验证或模型错误，就说明应用、API Key、API 地址和模型已经连接成功。</p>
+<hr>
+<p>到这里，Codex 智能体就部署成功啦！我们已经完成了应用安装、CLI 更新、API Key 写入和模型接口配置。下一期博客将继续介绍 Codex 助手的基础用法，以及怎样让它在保证文件安全的前提下协助处理实际项目。</p>
+<p>如果在部署过程中遇到问题，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 与笔者交流。求助时请提供已经打码的错误截图，绝对不要发送 <code>auth.json</code> 或真实 API Key。</p>
+<hr>
+<p><strong>参考资源</strong></p>
 <ul>
-<li>打开设置页<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80.png" srcset="/img/loading.gif" lazyload alt="wox设置页的打开"></li>
-<li>在通用设置界面调整设置<br>  <img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE%E9%A1%B5.png" srcset="/img/loading.gif" lazyload alt="wox通用设置页"></li>
+<li><a target="_blank" rel="noopener" href="https://openai.com/zh-Hans-CN/codex/">Codex 中文官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openai/codex">Codex CLI 官方仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js 官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a></li>
 </ul>
-<p><strong>常用操作：</strong></p>
-<ul>
-<li><p><strong>唤出&#x2F;隐藏：</strong> 默认快捷键 Alt + 空格，再次按下或点击空白区域可隐藏。在输入框内按 Esc 也可快速隐藏。</p>
-</li>
-<li><p><strong>文件搜索：</strong> Wox 集成了 Everything 引擎，输入 <code>f + 空格 + 关键词</code> 即可搜索全盘文件。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><strong>计算器：</strong> 直接输入数学表达式（如 1+1），Wox 会自动计算结果。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%AE%A1%E7%AE%97%E5%99%A8.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><strong>网页搜索&#x2F;收藏夹：</strong> 直接输入关键词，会调用默认浏览器搜索；若关键词匹配浏览器收藏夹中的网页标题，则可直接打开该网页。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%90%9C%E7%B4%A2.png" srcset="/img/loading.gif" lazyload alt="键入需要联网搜索的关键字"></p>
-<p><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E6%94%B6%E8%97%8F%E5%A4%B9.png" srcset="/img/loading.gif" lazyload alt="键入收藏夹页面的关键字"></p>
-</li>
-<li><p><strong>剪贴板历史：</strong> 输入 <code>cb + 空格 + 关键词</code> 可检索剪贴板历史记录<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E5%89%AA%E8%B4%B4%E6%9D%BF.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><strong>运行命令：</strong> 输入 <code>&gt; + 空格 + 命令</code> 可直接在 PowerShell 中执行命令<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/wox%E8%BF%90%E8%A1%8C%E6%8C%87%E4%BB%A4.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-<p>Wox 支持丰富的插件，你可以在设置中浏览并安装，例如翻译、天气、进程管理等，打造属于自己的效率中心。</p>
-<hr>
-<h2 id="Markdown编辑器推荐"><a href="#Markdown编辑器推荐" class="headerlink" title="Markdown编辑器推荐"></a>Markdown编辑器推荐</h2><p>Markdown 是一种轻量级标记语言，让你的创作专注于内容而非排版。它采用纯文本格式，却能轻松转换为 HTML、PDF 等格式，且具备实时保存、内存占用低等优点，非常适合编写技术文档、实验记录或笔记。以下推荐两款优秀的本地编辑器不仅在编辑时可以预览最终样式，且所有数据均存储在你的设备上，保障数据安全。</p>
-<h3 id="Joplin"><a href="#Joplin" class="headerlink" title="Joplin"></a>Joplin</h3><p>Joplin 是一款免费开源的笔记应用，支持待办事项、多级标签、笔记本分类，并可与多种云服务（Nextcloud、Dropbox 等）同步，实现多端访问。它支持导入&#x2F;导出 Markdown、HTML、PDF 等多种格式，便于备份和分享。</p>
-<p><strong>官网：</strong> <a target="_blank" rel="noopener" href="https://joplinapp.org/">https://joplinapp.org/</a><br><strong>特点：</strong></p>
-<ul>
-<li>清晰的笔记组织结构（笔记本、标签、待办）</li>
-<li>支持端到端加密（同步时）</li>
-<li>插件系统，可扩展功能</li>
-</ul>
-<h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h3><p>Typora界面与joplin相比更加简洁美观。</p>
-<p>安装包下载(因官网已收费，提供旧版免费安装包)：<a href="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/typora-setup-x64-20210407.exe">typora-setup-x64-20210407.exe</a></p>
-<p>注意：Typora 早期版本免费，但新版本已开始收费。请勿升级，以免失去免费使用权。<br>对比：Joplin 更适合长期笔记管理和多端同步，Typora 则适合纯粹的单篇写作。也可以两者结合使用：用 Typora 撰写，再导入 Joplin 归档。</p>
-<hr>
-<h2 id="GitHub-加速器：Watt-Toolkit"><a href="#GitHub-加速器：Watt-Toolkit" class="headerlink" title="GitHub 加速器：Watt Toolkit"></a>GitHub 加速器：Watt Toolkit</h2><p>GitHub 是全球最大的开源社区，但由于网络原因，国内访问时常不稳定。Watt Toolkit（原名 Steam++）是一款免费工具，可一键加速 GitHub。从 Microsoft Store 即可安全获取。</p>
-<p><strong>安装与使用：</strong></p>
-<ul>
-<li><p>打开 Windows 自带的应用商店（Microsoft Store），搜索“Watt Toolkit”并安装。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>安装完成后，打开网络加速界面，在列表中找到 GitHub，勾选后点击“一键加速”按钮。<br><img src="/Windows%E5%AE%9E%E7%94%A8%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/watt%E5%8A%A0%E9%80%9F.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>加速成功后，即可流畅访问 GitHub，克隆仓库、浏览代码都不再困难。</p>
-</li>
-</ul>
-<hr>
-<p>上述三款工具分别从快捷操作、写作管理和网络访问三个维度切入，共同构筑了一个更高效、更安全的工作流。能让开发与工作更加顺畅，不妨现在就下载试试，开启你的效率之旅。如果你有其他珍藏的效率工具或独特的配置心得，欢迎在向我的邮箱<a href="mailto:&#97;&#x75;&#x72;&#x6f;&#114;&#97;&#x68;&#x69;&#107;&#101;&#114;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a>投稿分享，让我们一起进步！</p>
-<hr>
-<p><em>注：本文提供的软件下载链接均为本地备份，请放心使用。部分软件为开源或免费软件，请尊重开发者版权。</em></p>
 
                 
               </div>
@@ -468,7 +588,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="category-chain-item">Windows使用技巧</a>
+  <a href="/categories/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="category-chain-item">开发者工具箱</a>
   
   
 
@@ -483,7 +603,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="print-no-link">#Windows使用技巧</a>
+        <a href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" class="print-no-link">#智能体</a>
+      
+        <a href="/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#开发者工具箱</a>
+      
+        <a href="/tags/Codex/" class="print-no-link">#Codex</a>
       
     </div>
   
@@ -495,8 +619,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</div>
-      <div>https://aurorahiker.github.io/2026/02/22/Windows效率神器推荐-Wox-Markdown编辑器与GitHub加速器配置指南/</div>
+      <div>将 Codex 智能体纳入麾下：Windows 10 本地化部署实战</div>
+      <div>https://aurorahiker.github.io/2026/08/03/将-Codex-智能体纳入麾下：Windows-10-本地化部署实战/</div>
     </div>
     <div class="license-meta">
       
@@ -508,7 +632,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026-02-22</div>
+          <div>2026-08-03</div>
         </div>
       
       
@@ -540,18 +664,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/02/22/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E5%90%88%E9%80%82%E7%9A%84%E7%94%9F%E4%BF%A1%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0/" title="如何搭建合适的生信分析平台">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">如何搭建合适的生信分析平台</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/" title="Windows系统的安装">
-                        <span class="hidden-mobile">Windows系统的安装</span>
+                      <a href="/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/" title="Python 入门：变量类型专题">
+                        <span class="hidden-mobile">Python 入门：变量类型专题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
