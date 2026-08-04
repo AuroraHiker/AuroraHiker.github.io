@@ -1,12 +1,25 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
   
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>从零搭建Windows生信分析平台——WSL的安装配置 | AuroraHiker’s Code Trail</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、U">
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Rising Sun、AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、U">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零搭建Windows生信分析平台——WSL的安装配置">
 <meta property="og:url" content="https://aurorahiker.github.io/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/index.html">
@@ -23,91 +36,364 @@
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="实验平台搭建">
 <meta property="article:tag" content="计算机基础">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://aurorahiker.github.io/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png">
   
-    <link rel="alternate" href="/atom.xml" title="AuroraHiker’s Code Trail" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
+  <title>从零搭建Windows生信分析平台——WSL的安装配置 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
-<link rel="stylesheet" href="/css/style.css">
+
 
   
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
 <meta name="generator" content="Hexo 8.1.2"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">AuroraHiker’s Code Trail</a>
-      </h1>
-      
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
         
-      </nav>
-      <nav id="sub-nav">
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
         
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://aurorahiker.github.io"></form>
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
       </div>
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-从零搭建Windows生信分析平台_WSL的安装配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time class="dt-published" datetime="2026-04-02T03:02:19.727Z" itemprop="datePublished">2026-04-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">计算机基础与实验平台搭建</a>
-  </div>
+  
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="从零搭建Windows生信分析平台——WSL的安装配置"></span>
+          
+        </div>
+
         
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      从零搭建Windows生信分析平台——WSL的安装配置
-    </h1>
-  
-
-      </header>
+          
+  <div class="mt-3">
     
-    <div class="e-content article-entry" itemprop="articleBody">
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Rising Sun、AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-04-02 11:02" pubdate>
+          2026年4月2日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-        <p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">从零搭建Windows生信分析平台——WSL的安装配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>欢迎来到 AuroraHiker 的技术博客！本系列博客(计算机基础与实验平台构建)此前已详细讲解 Windows 系统的安装，本文面向零基础学习者，基于 Windows 环境，详细介绍通过 WSL2 搭建 Ubuntu 子系统的完整流程，为后续运行 wget、awk、grep 等 Linux 系统自带工具以及 Bedtools、LightDock 等生信软件奠定基础。本文涵盖 WSL2 安装、Ubuntu 系统配置、图形界面配置、Zsh 终端优化及 Anaconda 环境部署等内容，供大家参考。欢迎各位读者结合实际使用情况提供补充。</p>
 <hr>
 <h2 id="1-WSL2-ubuntu安装和迁移"><a href="#1-WSL2-ubuntu安装和迁移" class="headerlink" title="1. WSL2 ubuntu安装和迁移"></a>1. WSL2 ubuntu安装和迁移</h2><p><strong>注意：</strong></p>
 <ul>
@@ -132,133 +418,133 @@
 <li><p><strong>启用“适用于 Linux 的 Windows 子系统”：</strong><br>以管理员身份运行 Windows PowerShell，执行以下命令：</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /online /<span class="built_in">enable-feature</span> /featurename:Microsoft<span class="literal">-Windows-Subsystem-Linux</span> /all /norestart</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">dism.exe /online /<span class="hljs-built_in">enable-feature</span> /featurename:Microsoft<span class="hljs-literal">-Windows-Subsystem-Linux</span> /all /norestart<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>安装 WSL 并升级至 WSL2：</strong></li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br><span class="line">wsl <span class="literal">--update</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--install</span><br>wsl <span class="hljs-literal">--update</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" alt="在 Microsoft Store 中搜索 Ubuntu"></li>
+<li><strong>下载 Ubuntu 系统：</strong><br><strong>在 Microsoft Store 中搜索“Ubuntu”，选择所需的系统版本(如 Ubuntu 22.04)并下载安装。</strong><br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/WSLubuntu_install.png" srcset="/img/loading.gif" lazyload alt="在 Microsoft Store 中搜索 Ubuntu"></li>
 </ul>
 <h3 id="1-2-Ubuntu子系统的迁移"><a href="#1-2-Ubuntu子系统的迁移" class="headerlink" title="1.2 Ubuntu子系统的迁移"></a>1.2 Ubuntu子系统的迁移</h3><ul>
 <li>查看wsl状态</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">-l</span> <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>关掉正在运行的wsl</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--shutdown</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>导出需要迁移的Ubuntu子系统</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="comment"># 该文件也可作为备份</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--export</span> &lt;发行版名称&gt; D:\wsl_backup\Ubuntu.tar <span class="hljs-comment"># 该文件也可作为备份</span><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>请将 &lt;发行版名称&gt; 替换为与 <code>wsl -l -v</code> 输出完全一致(大小写敏感)的实际发行版名，如 Ubuntu-22.04，下同.</p>
 </blockquote>
 <ul>
 <li>确认导出.tar文件后，注销原来的版本</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--unregister</span> &lt;发行版名称&gt;</span><br><span class="line"><span class="comment"># 查看是否注销</span></span><br><span class="line">wsl <span class="literal">-l</span> <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--unregister</span> &lt;发行版名称&gt;<br><span class="hljs-comment"># 查看是否注销</span><br>wsl <span class="hljs-literal">-l</span> <span class="hljs-literal">-v</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>在目标盘符(如D盘)创建新目录并导入</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="literal">--version</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--import</span> &lt;发行版名称&gt; D:\WSL\Ubuntu D:\wsl_backup\Ubuntu.tar <span class="hljs-literal">--version</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>设置默认登录用户(可选，否则默认以 root 登录)</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu config <span class="literal">--default-user</span> 你的用户名</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">ubuntu config <span class="hljs-literal">--default-user</span> 你的用户名<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>验证迁移是否成功</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--list</span> <span class="literal">--verbose</span></span><br><span class="line">wsl</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--list</span> <span class="hljs-literal">--verbose</span><br>wsl<br></code></pre></td></tr></table></figure>
 
 <p>迁移完成后，原 C 盘中的子系统文件已被清理，新系统位于 D 盘(或其他分区)。后续所有操作均在新位置进行，无需重新配置环境。</p>
 <hr>
-<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" alt="设置用户名和密码"></p>
+<h2 id="2-Ubuntu基础配置"><a href="#2-Ubuntu基础配置" class="headerlink" title="2. Ubuntu基础配置"></a>2. Ubuntu基础配置</h2><p>安装完成后，启动 Ubuntu，按提示设置用户名和密码。<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/ubuntu_username.png" srcset="/img/loading.gif" lazyload alt="设置用户名和密码"></p>
 <h3 id="2-1-更换国内镜像源并更新系统"><a href="#2-1-更换国内镜像源并更新系统" class="headerlink" title="2.1 更换国内镜像源并更新系统"></a>2.1 更换国内镜像源并更新系统</h3><ul>
 <li><strong>备份原始配置文件</strong></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources_bk.list<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>编辑源文件：</strong><br>使用 vim 打开配置文件：</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/apt/sources.list<br></code></pre></td></tr></table></figure>
 <p>打开后，按 <code>ggdG</code>(依次按 g、g、d、G 键)可快速删除全部内容，然后按 <code>i</code> 进入插入模式，将以下清华镜像源内容粘贴进去(以 Ubuntu 22.04 为例)：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预发布软件源，不建议启用</span></span><br><span class="line"><span class="comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse</span><br>deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse<br><span class="hljs-comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse</span><br><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse</span><br><br>deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse<br><span class="hljs-comment"># deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><br><span class="hljs-comment"># 预发布软件源，不建议启用</span><br><span class="hljs-comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-comment"># # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse</span><br></code></pre></td></tr></table></figure>
 
 <p>粘贴完成后，按 <code>Esc</code> 键退出插入模式，输入 <code>:wq</code> 保存并退出 vim。</p>
 <blockquote>
 <p>提示：若编辑过程中误操作想放弃保存，可按 <code>Esc</code> 后输入 <code>:q!</code> 强制退出。</p>
 </blockquote>
-<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt upgrade</span><br><span class="line"><span class="built_in">sudo</span> apt install aptitude <span class="comment">#智能安装、升级、降级或卸载依赖的软件包</span></span><br><span class="line"><span class="built_in">sudo</span> aptitude install aria2 <span class="comment">#多线程下载软件</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-更新并安装基础软件"><a href="#2-2-更新并安装基础软件" class="headerlink" title="2.2 更新并安装基础软件"></a>2.2 更新并安装基础软件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt upgrade<br><span class="hljs-built_in">sudo</span> apt install aptitude <span class="hljs-comment">#智能安装、升级、降级或卸载依赖的软件包</span><br><span class="hljs-built_in">sudo</span> aptitude install aria2 <span class="hljs-comment">#多线程下载软件</span><br></code></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="3-图形界面的安装和配置"><a href="#3-图形界面的安装和配置" class="headerlink" title="3. 图形界面的安装和配置"></a>3. 图形界面的安装和配置</h2><blockquote>
 <p><strong>说明：</strong> 笔者个人感觉 Ubuntu 图形界面运行较慢且体验一般，不如在 Ubuntu 中安装 Jupyter Notebook 进行文件操作更方便。本部分仅供有图形界面需求的读者参考。</p>
 </blockquote>
-<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> aptitude install xorg</span><br><span class="line"><span class="built_in">sudo</span> aptitude install xfce4</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-安装图形界面"><a href="#3-1-安装图形界面" class="headerlink" title="3.1 安装图形界面"></a>3.1 安装图形界面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xorg<br><span class="hljs-built_in">sudo</span> aptitude install xfce4<br></code></pre></td></tr></table></figure>
 
 <h3 id="3-2-安装并配置xrdp"><a href="#3-2-安装并配置xrdp" class="headerlink" title="3.2 安装并配置xrdp"></a>3.2 安装并配置xrdp</h3><p>Xrdp 通过远程桌面的方式来访问另外一台主机</p>
 <ul>
 <li><strong>安装</strong></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> aptitude install xrdp</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install xrdp<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>设置使用3390端口</strong></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i &#x27;s/port=3389/port=3390/g&#x27; /etc/xrdp/xrdp.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">sudo sed <span class="hljs-punctuation">-</span>i &#x27;s/port=<span class="hljs-number">3389</span>/port=<span class="hljs-number">3390</span>/g&#x27; /etc/xrdp/xrdp.ini<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>向xsession中写入xfce4-session</strong></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo echo xfce4-session &gt;~/.xsession</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">echo</span> xfce4-session &gt;~/.xsession<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>重启xrdp服务</strong></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> service xrdp restart<br></code></pre></td></tr></table></figure>
 
 <h3 id="3-3-Windows-端远程桌面连接"><a href="#3-3-Windows-端远程桌面连接" class="headerlink" title="3.3 Windows 端远程桌面连接"></a>3.3 Windows 端远程桌面连接</h3><p>在 Windows 中打开“远程桌面连接”，输入以下信息：</p>
 <ul>
 <li>计算机：localhost:3390</li>
 <li>用户名：Ubuntu 用户名</li>
 </ul>
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" alt="远程桌面连接配置"></p>
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE.png" srcset="/img/loading.gif" lazyload alt="远程桌面连接配置"></p>
 <p><strong>注意：</strong> 若连接失败，可尝试在 Ubuntu 中重启 xrdp 服务后重试。</p>
-<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" alt="远程桌面连接成功"></p>
+<p>连接成功后显示 Ubuntu 桌面环境：<br><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2.png" srcset="/img/loading.gif" lazyload alt="远程桌面连接成功"></p>
 <hr>
 <h2 id="4-Zsh-与-Oh-My-Zsh-的安装与配置"><a href="#4-Zsh-与-Oh-My-Zsh-的安装与配置" class="headerlink" title="4. Zsh 与 Oh My Zsh 的安装与配置"></a>4. Zsh 与 Oh My Zsh 的安装与配置</h2><p><strong>关于 Zsh 的说明：</strong><br>Zsh(Z shell)是一种功能更强大的 Shell，相较于系统默认的 Bash，它提供了更丰富的特性：智能命令补全、语法高亮、主题自定义、强大的插件机制等。结合 Oh My Zsh 框架，可以极大提升终端使用效率。<br><strong>若您不希望配置 Zsh</strong>，也可以直接使用默认的 Bash 完成后续 Conda 等软件的安装与配置，跳过本章节即可。使用 Bash 时，配置文件为 <code>~/.bashrc</code>，后续操作中的 <code>~/.zshrc</code> 请相应替换为 <code>~/.bashrc</code>。</p>
-<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> aptitude install zsh</span><br><span class="line">zsh  <span class="comment"># 运行一次以完成初始化配置</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-1-ZSH安装"><a href="#4-1-ZSH安装" class="headerlink" title="4.1 ZSH安装"></a>4.1 ZSH安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> aptitude install zsh<br>zsh  <span class="hljs-comment"># 运行一次以完成初始化配置</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>将zsh设为默认终端：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> chsh -s /bin/zsh<br></code></pre></td></tr></table></figure>
 <p>执行后需重新登录或重启终端使设置生效。</p>
 <h3 id="4-2-Oh-My-Zsh-安装"><a href="#4-2-Oh-My-Zsh-安装" class="headerlink" title="4.2 Oh My Zsh 安装"></a>4.2 Oh My Zsh 安装</h3><p>Oh My Zsh 是一个开源的 Zsh 配置管理框架，能大幅简化插件与主题的管理。本文使用清华镜像源进行下载安装。</p>
 <blockquote>
 <p>注意：执行 git clone 时，若终端出现类似 <code>remote: Waiting in queue... (Position: 881)</code> 的提示，说明镜像服务器正在排队处理请求，请耐心等待。</p>
 </blockquote>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git</span><br><span class="line"><span class="built_in">cd</span> ohmyzsh/tools</span><br><span class="line">REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git<br><span class="hljs-built_in">cd</span> ohmyzsh/tools<br>REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git sh install.sh<br></code></pre></td></tr></table></figure>
 
 <p>安装完成后，Oh My Zsh 的配置文件位于 <code>~/.zshrc</code>，插件目录为 <code>~/.oh-my-zsh/custom/plugins/</code> 。</p>
 <h3 id="4-3-配置常用插件"><a href="#4-3-配置常用插件" class="headerlink" title="4.3 配置常用插件"></a>4.3 配置常用插件</h3><h4 id="4-3-1-autojump-目录快速跳转"><a href="#4-3-1-autojump-目录快速跳转" class="headerlink" title="4.3.1 autojump(目录快速跳转)"></a>4.3.1 autojump(目录快速跳转)</h4><p>autojump 可以根据历史访问记录快速跳转到指定目录。使用国内镜像源下载安装：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://gitee.com/holyvan/autojump.git </span><br><span class="line"><span class="built_in">cd</span> autojump</span><br><span class="line">./install.py <span class="comment"># 或 python3 install.py</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs zsh">git <span class="hljs-built_in">clone</span> https://gitee.com/holyvan/autojump.git <br><span class="hljs-built_in">cd</span> autojump<br>./install.py <span class="hljs-comment"># 或 python3 install.py</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>注意：</strong> <code>./install.py</code>脚本依赖 Python，建议在安装 Conda 后再执行此步骤。但 Zsh 需在 Conda 安装前设为默认 Shell，请根据实际情况安排顺序。</p>
 </blockquote>
 <p>安装成功后，脚本会输出类似以下提示，请将中间三行代码添加到 <code>~/.zshrc</code> 中(路径以实际输出为准，通常位于 $HOME&#x2F;.autojump 目录下)：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Please manually add the following line(s) to ~/.zshrc:</span><br><span class="line"></span><br><span class="line">    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh</span><br><span class="line"></span><br><span class="line">    <span class="built_in">autoload</span> -U compinit &amp;&amp; compinit -u</span><br><span class="line"></span><br><span class="line">Please restart terminal(s) before running autojump.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs zsh">Please manually add the following line(s) to ~/.zshrc:<br><br>    [[ -s /data4/jxs/.autojump/etc/profile.d/autojump.sh ]] &amp;&amp; <span class="hljs-built_in">source</span> /data4/jxs/.autojump/etc/profile.d/autojump.sh<br><br>    <span class="hljs-built_in">autoload</span> -U compinit &amp;&amp; compinit -u<br><br>Please restart terminal(s) before running autojump.<br><br></code></pre></td></tr></table></figure>
 
-<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" alt="autojump的输出"></p>
+<p><img src="/./%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/autojump%E8%BE%93%E5%87%BA.png" srcset="/img/loading.gif" lazyload alt="autojump的输出"></p>
 <p>根据提示把中间的三行代码加到<code>.zshrc</code>文件中，<br>添加方法：使用 <code>vim ~/.zshrc</code> 打开配置文件，将上述三行内容粘贴到文件末尾，保存并退出(按 <code>Esc</code>，输入 <code>:wq</code>)。</p>
 <h4 id="4-3-2-自动补全与语法高亮插件"><a href="#4-3-2-自动补全与语法高亮插件" class="headerlink" title="4.3.2 自动补全与语法高亮插件"></a>4.3.2 自动补全与语法高亮插件</h4><p><strong>功能与用法</strong></p>
 <ul>
@@ -269,24 +555,24 @@
 </ul>
 <p>同时启用这两个插件后，能获得实时语法校验与智能补全提示，大幅提升终端输入效率。</p>
 <p><strong>插件下载：</strong></p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动补全插件</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 语法高亮插件</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-comment"># 自动补全插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/hailin_cool/zsh-autosuggestions.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions<br><br><span class="hljs-comment"># 语法高亮插件</span><br>git <span class="hljs-built_in">clone</span> https://gitee.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>说明：</strong> <code>${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</code> 表示优先使用环境变量 <code>ZSH_CUSTOM</code> 定义的目录，若未定义则使用默认的 <code>~/.oh-my-zsh/custom</code>。</p>
 </blockquote>
 <p><strong>检查插件是否下载到正确位置</strong><br>执行以下命令查看插件目录内容：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">ls</span> -l <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/<br></code></pre></td></tr></table></figure>
 
 <p>若插件未出现在该目录中，可手动将其移动至正确位置。例如，若 zsh-syntax-highlighting 下载到了当前目录，可执行：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">mv</span> ./zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
 
 <p>若不确定插件下载到了哪里，可使用 <code>find</code> 命令搜索：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ~ -<span class="built_in">type</span> d -name <span class="string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">find ~ -<span class="hljs-built_in">type</span> d -name <span class="hljs-string">&quot;zsh-syntax-highlighting&quot;</span> 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
 
 <p><strong>启用插件</strong><br>编辑 <code>~/.zshrc</code> 文件，找到 <code>plugins=(...)</code> 行，修改为：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">plugins=(git zsh-autosuggestions zsh-syntax-highlighting autojump)<br></code></pre></td></tr></table></figure>
 
 <p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">source</span> ~/.zshrc<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="5-conda的安装与配置"><a href="#5-conda的安装与配置" class="headerlink" title="5. conda的安装与配置"></a>5. conda的安装与配置</h2><h3 id="5-1-conda简介"><a href="#5-1-conda简介" class="headerlink" title="5.1 conda简介"></a>5.1 conda简介</h3><p>conda 是一个开源的 Python 和 R 语言发行版，专注于数据科学、机器学习和科学计算。它内置了包管理器，可以方便地创建隔离的虚拟环境、安装和管理软件包，尤其适合生信分析中不同工具对 Python 版本的依赖管理。<strong>但笔者使用 Conda 管理 R 环境的体验不佳</strong>，不建议用 Conda 安装或管理 R 及相关包。推荐使用 Rstudio 进行 R 环境管理，更稳定、兼容性更好。</p>
@@ -297,7 +583,7 @@
 </ul>
 <p>本教程以 Anaconda 为例进行安装，若您偏好 Miniconda，可前往 Miniconda 官网下载对应版本，后续使用方式与 Anaconda 基本一致。</p>
 <h3 id="5-2-下载并安装-Anaconda"><a href="#5-2-下载并安装-Anaconda" class="headerlink" title="5.2 下载并安装 Anaconda"></a>5.2 下载并安装 Anaconda</h3><p>从 Anaconda 官网获取最新 Linux 版本的下载链接(建议使用稳定版)。本文以 <code>Anaconda3-2023.09-0-Linux-x86_64.sh</code> 为例：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh</span><br><span class="line">bash Anaconda3-2023.09-0-Linux-x86_64.sh </span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zsh">wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh<br>bash Anaconda3-2023.09-0-Linux-x86_64.sh <br></code></pre></td></tr></table></figure>
 
 <p>安装过程中，请仔细阅读许可协议，按提示确认安装位置,默认为 <code>~/anaconda3</code>。在最后选择是否初始化 <code>conda</code>，建议选择<code>yes</code>，这样 <code>conda</code> 会自动将自身添加到 Shell 配置文件中(如 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>)。</p>
 <h3 id="5-2-配置环境变量"><a href="#5-2-配置环境变量" class="headerlink" title="5.2 配置环境变量"></a>5.2 配置环境变量</h3><p>若安装时未自动添加，或需要手动配置，请将以下内容添加到对应的配置文件中：</p>
@@ -306,174 +592,454 @@
 <li>使用 Bash 的用户：编辑 <code>~/.bashrc</code></li>
 </ul>
 <p>在文件末尾添加，请将 <code>/path/to/anaconda3</code> 替换为实际安装路径：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/path/to/anaconda3/bin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;/path/to/anaconda3/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br></code></pre></td></tr></table></figure>
 
 <p>保存后执行以下命令使配置生效：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc   <span class="comment"># 若使用 Zsh</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc  <span class="comment"># 若使用 Bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc   <span class="hljs-comment"># 若使用 Zsh</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">source</span> ~/.bashrc  <span class="hljs-comment"># 若使用 Bash</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>验证安装</strong></p>
 <p>重新打开终端，或执行 source 后，运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda --version</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda --version<br></code></pre></td></tr></table></figure>
 <p>若输出版本号(如 conda 23.10.0)，则表示安装成功。</p>
 <blockquote>
 <p><strong>提示：</strong> 如果您已按照第 4 章配置了语法高亮插件，在终端输入 conda 后，命令会显示为绿色(表示合法命令)；若未配置高亮插件，直接运行上述命令即可。</p>
 </blockquote>
 <p>如果在后续使用中需要创建虚拟环境，可使用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n 环境名称 python=3.8</span><br><span class="line">conda activate 环境名称</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n 环境名称 python=3.8<br>conda activate 环境名称<br></code></pre></td></tr></table></figure>
 
-<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#97;&#104;&#105;&#x6b;&#101;&#114;&#x40;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
+<p>如在使用过程中遇到问题，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#x6f;&#x72;&#x61;&#104;&#105;&#x6b;&#x65;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://aurorahiker.github.io/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" data-id="cuidVgB0zetS6bcJ5CCCW5isv" data-title="从零搭建Windows生信分析平台——WSL的安装配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" rel="tag">实验平台搭建</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="tag">计算机基础</a></li></ul>
 
-    </footer>
-  </div>
+<span class="category-chains">
+  
   
     
-<nav id="article-nav">
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="category-chain-item">计算机基础与实验平台搭建</a>
   
-    <a href="/2026/05/04/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">前一篇</strong>
-      <div class="article-nav-title">
-        
-          在 50 系显卡上部署 PyG 图神经网络环境
-        
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="print-no-link">#计算机基础</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>从零搭建Windows生信分析平台——WSL的安装配置</div>
+      <div>https://aurorahiker.github.io/2026/04/02/从零搭建Windows生信分析平台_WSL的安装配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Rising Sun、AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-04-02</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/05/04/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/" title="在 50 系显卡上部署 PyG 图神经网络环境">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">在 50 系显卡上部署 PyG 图神经网络环境</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/" title="LightDock分子对接的实验平台搭建">
+                        <span class="hidden-mobile">LightDock分子对接的实验平台搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
       </div>
-    </a>
-  
-  
-    <a href="/2026/04/01/%E6%90%AD%E5%BB%BA%20LightDock%20%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%B9%B3%E5%8F%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">LightDock分子对接的实验平台搭建</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GROMACS%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/">GROMACS分子动力学模拟</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python-%E5%85%A5%E9%97%A8/">Python 入门</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">Windows使用技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">个人博客搭建指南</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B3%E4%BA%8E/">关于</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/">分子对接</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">图神经网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/">开发者工具箱</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/">机器学习入门</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/Python-%E5%85%A5%E9%97%A8/">Python 入门</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">计算机基础与实验平台搭建</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%BF%9B%E5%8C%96%E4%B9%8B%E8%B7%AF/">野生程序员的进化之路</a></li></ul>
     </div>
-  </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/" rel="tag">Codex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightDock/" rel="tag">LightDock</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python-%E5%85%A5%E9%97%A8/" rel="tag">Python 入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="tag">Windows使用技巧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" rel="tag">个人博客搭建指南</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%8B%E7%BB%8D/" rel="tag">介绍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" rel="tag">分子动力学模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" rel="tag">分子对接</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag">图神经网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" rel="tag">学习经验分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" rel="tag">实验平台搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" rel="tag">开发者工具箱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" rel="tag">智能体</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/" rel="tag">机器学习入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AC%A2%E8%BF%8E/" rel="tag">欢迎</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="tag">计算机基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%BF%9B%E5%8C%96%E4%B9%8B%E8%B7%AF/" rel="tag">野生程序员的进化之路</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Codex/" style="font-size: 10px;">Codex</a> <a href="/tags/LightDock/" style="font-size: 10px;">LightDock</a> <a href="/tags/Python-%E5%85%A5%E9%97%A8/" style="font-size: 17.5px;">Python 入门</a> <a href="/tags/Windows%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">Windows使用技巧</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" style="font-size: 12.5px;">个人博客搭建指南</a> <a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 10px;">介绍</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F/" style="font-size: 10px;">分子动力学模拟</a> <a href="/tags/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" style="font-size: 10px;">分子对接</a> <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">图神经网络</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" style="font-size: 10px;">学习经验分享</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" style="font-size: 20px;">实验平台搭建</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%AE%B1/" style="font-size: 10px;">开发者工具箱</a> <a href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 10px;">智能体</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/" style="font-size: 10px;">机器学习入门</a> <a href="/tags/%E6%AC%A2%E8%BF%8E/" style="font-size: 10px;">欢迎</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">计算机基础</a> <a href="/tags/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%BF%9B%E5%8C%96%E4%B9%8B%E8%B7%AF/" style="font-size: 10px;">野生程序员的进化之路</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/08/">八月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/08/03/%E5%B0%86-Codex-%E6%99%BA%E8%83%BD%E4%BD%93%E7%BA%B3%E5%85%A5%E9%BA%BE%E4%B8%8B%EF%BC%9AWindows-10-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/">将 Codex 智能体纳入麾下：Windows 10 本地化部署实战</a>
-          </li>
-        
-          <li>
-            <a href="/2026/07/27/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%93%E9%A2%98/">Python 入门：变量类型专题</a>
-          </li>
-        
-          <li>
-            <a href="/2026/07/21/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1/">机器学习入门：随机森林分类任务</a>
-          </li>
-        
-          <li>
-            <a href="/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/">Pandas 思考题：从 API 使用者到开发者</a>
-          </li>
-        
-          <li>
-            <a href="/2026/07/16/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/">Pandas 简明教程</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-      &copy; 2026 AuroraHiker<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+  </div>
+</div>
+
+
+
+
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
