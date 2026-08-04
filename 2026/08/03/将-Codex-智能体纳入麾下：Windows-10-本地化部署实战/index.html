@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png">
 <meta property="article:published_time" content="2026-08-03T06:22:07.164Z">
-<meta property="article:modified_time" content="2026-08-04T02:20:01.989Z">
+<meta property="article:modified_time" content="2026-08-04T02:31:18.664Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="Codex">
 <meta property="article:tag" content="开发者工具箱">
@@ -338,7 +338,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          3.8k 字
         
       </span>
     
@@ -349,7 +349,7 @@
         
         
         
-          30 分钟
+          33 分钟
         
       </span>
     
@@ -478,13 +478,24 @@
 
 <p><code>npm install -g</code> 表示把 Codex CLI 安装到当前电脑，<code>@latest</code> 表示安装最新稳定版本。最后一条命令用于检查安装结果，能够看到版本号就说明 CLI 已经可以使用。</p>
 <p>如果系统提示找不到 <code>node</code> 或 <code>npm</code>，请先从 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js 官网</a>安装带有 <strong>LTS</strong> 标识的版本。下载 Node.js 或安装 Codex 较慢时，可以在遵守所在网络规定的前提下更换更稳定的网络环境。</p>
-<h3 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h3><p>Codex 的个人设置保存在当前 Windows 用户目录下的 <code>.codex</code> 文件夹中，不同电脑的用户名不同，需要用自己的用户名替换 <code>usersname</code>：</p>
+<h3 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h3><p>Codex 的个人设置保存在当前 Windows 用户目录下的 <code>.codex</code> 文件夹中 (路径中的 <code>usersname</code> 请替换为你的实际用户名)：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\usersname\.codex<br></code></pre></td></tr></table></figure>
 
-<p>该目录中需要配置两个文件：</p>
+<p>该目录下有两个关键的配置文件：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">.codex<br>├── auth.json      # 保存登录方式和 API Key<br>└── config.toml    # 保存模型、API 地址和运行设置<br></code></pre></td></tr></table></figure>
 
 <p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt=".codex 目录下的配置文件"></p>
+<p>配置时请注意两者的不同用途：</p>
+<ul>
+<li><p>config.toml (<strong>必须配置</strong>)：无论你使用应用版还是 CLI，都必须手动修改此文件。这是因为应用版的图形界面没有提供修改 API 地址 (base_url) 和模型名称 (model) 的选项，而我们需要连接西农er’s GPT 的第三方接口，因此必须通过该文件指定。</p>
+</li>
+<li><p>auth.json (<strong>按需配置</strong>)：</p>
+<ul>
+<li>如果你<strong>只使用应用版</strong>，且在 1.1.1 节已通过图形界面登录 (粘贴 API Key)，则<strong>无需</strong>手动配置 auth.json，应用版会自动处理身份验证。</li>
+<li>如果你使用 CLI (或希望 CLI 也能正常工作)，则必须手动编辑 auth.json，写入你的 API Key (具体操作见 1.2.1)。</li>
+</ul>
+</li>
+</ul>
 <h4 id="1-2-1-配置-auth-json"><a href="#1-2-1-配置-auth-json" class="headerlink" title="1.2.1 配置 auth.json"></a>1.2.1 配置 <code>auth.json</code></h4><p>找到 <code>auth.json</code> 并复制到其他位置备份，使用记事本打开 <code>auth.json</code>，删除原有内容，再粘贴下面的配置：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;auth_mode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;apikey&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;OPENAI_API_KEY&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sk-请替换为你自己的API-Key&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
 
@@ -560,8 +571,9 @@
 
 <p>如果 Codex 能正确列出测试目录中的文件，并且没有出现身份验证或模型错误，就说明应用、API Key、API 地址和模型已经连接成功。</p>
 <hr>
-<p>到这里，Codex 智能体就部署成功啦！我们已经完成了应用安装、CLI 更新、API Key 写入和模型接口配置。下一期博客将继续介绍 Codex 助手的基础用法，以及怎样让它在保证文件安全的前提下协助处理实际项目。</p>
-<p>如果在部署过程中遇到问题，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#x72;&#x6f;&#114;&#x61;&#x68;&#105;&#x6b;&#101;&#114;&#64;&#x31;&#54;&#51;&#x2e;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 与笔者交流。求助时请提供已经打码的错误截图，绝对不要发送 <code>auth.json</code> 或真实 API Key。</p>
+<p>至此，Codex 智能体的本地化部署已全部完成。我们先后完成了应用安装、CLI 环境更新、API Key 写入以及模型接口配置，为后续的使用打下了基础。</p>
+<p>在下一期内容中，我们将聚焦 Codex 的基础操作，探讨如何在保障文件安全的前提下，让它高效协助我们处理实际项目。</p>
+<p>若在部署过程中遇到任何问题，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#114;&#111;&#114;&#x61;&#104;&#105;&#107;&#101;&#x72;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;">aurorahiker@163.com</a> 与笔者交流。<strong>求助时请务必提供已对敏感信息打码的错误截图，切勿发送 auth.json 或明文 API Key。</strong></p>
 <hr>
 <p><strong>参考资源</strong></p>
 <ul>
