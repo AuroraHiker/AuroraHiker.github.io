@@ -27,7 +27,7 @@
 <meta property="og:description" content="Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，DataFrame (数据框) 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。 建议尚未接触过 Py">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-15T23:31:59.961Z">
-<meta property="article:modified_time" content="2026-07-20T23:33:57.916Z">
+<meta property="article:modified_time" content="2026-08-06T06:44:29.216Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="Python 入门">
 <meta name="twitter:card" content="summary_large_image">
@@ -331,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          14k 字
+          15k 字
         
       </span>
     
@@ -342,7 +342,7 @@
         
         
         
-          114 分钟
+          123 分钟
         
       </span>
     
@@ -389,12 +389,40 @@
                 <p>Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，<strong>DataFrame (数据框)</strong> 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。</p>
 <p><strong>建议尚未接触过 Python 语法的读者先完成 <a href="/2026/07/15/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E5%86%99%E7%BB%99%E5%AE%8C%E5%85%A8%E6%B2%A1%E5%AD%A6%E8%BF%87%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BD%A0/" title="Python 入门：写给完全没学过编程的你">Python 入门：写给完全没学过编程的你</a> 的学习，再回到这里。</strong></p>
 <hr>
-<h1 id="0-准备工作：数据导入与查看"><a href="#0-准备工作：数据导入与查看" class="headerlink" title="0. 准备工作：数据导入与查看"></a>0. 准备工作：数据导入与查看</h1><p>拿到数据的第一步，不是急着处理，而是先 “看一眼”。我们使用 Seaborn 库内置的 Iris 数据。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-comment"># 加载数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br><br><span class="hljs-comment"># ---- 查看数据概览 ----</span><br><span class="hljs-built_in">print</span>(iris.head(x))      <span class="hljs-comment"># 查看前 X 行，如括号内为空，则默认查看前五行，了解数据长什么样</span><br><span class="hljs-built_in">print</span>(iris.info())      <span class="hljs-comment"># 查看列名、非空数量及数据类型</span><br><span class="hljs-built_in">print</span>(iris.describe())  <span class="hljs-comment"># 查看数值列的统计摘要 (均值、标准差、分位数)</span><br><span class="hljs-built_in">print</span>(iris.shape)       <span class="hljs-comment"># 数据形状 (几行几列)</span><br><span class="hljs-built_in">print</span>(iris.columns)     <span class="hljs-comment"># 查看列名</span><br><span class="hljs-built_in">print</span>(iris.index)       <span class="hljs-comment"># 查看索引范围</span><br><span class="hljs-built_in">print</span>(iris.count())     <span class="hljs-comment"># 快速统计非空值个数 (与 info 互补)</span><br></code></pre></td></tr></table></figure>
+<h1 id="0-准备工作：数据导入与查看"><a href="#0-准备工作：数据导入与查看" class="headerlink" title="0. 准备工作：数据导入与查看"></a>0. 准备工作：数据导入与查看</h1><h2 id="0-1-安装所需的库"><a href="#0-1-安装所需的库" class="headerlink" title="0.1 安装所需的库"></a>0.1 安装所需的库</h2><blockquote>
+<p>小技巧：在 Jupyter Notebook 中，行首的感叹号 <code>!</code> 可以让 Python 识别并执行终端命令。因此无需切换窗口，直接在单元格中运行 <code>!pip install ...</code> 即可安装库。例如：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">!pip install pandas seaborn openpyxl<br></code></pre></td></tr></table></figure>
 
-<p>为了便于后续演示从文件读取，我们先利用导出功能将数据保存为本地文件 (导出功能的详细用法将在最后一节介绍)。这里先执行保存操作：</p>
+<p>若在终端&#x2F;命令行中执行 (不加感叹号) ，则使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install pandas seaborn openpyxl<br></code></pre></td></tr></table></figure>
+
+<h2 id="0-2-初识数据：载入并查看-Iris-数据集"><a href="#0-2-初识数据：载入并查看-Iris-数据集" class="headerlink" title="0.2 初识数据：载入并查看 Iris 数据集"></a>0.2 初识数据：载入并查看 Iris 数据集</h2><p>拿到数据的第一步，不是急着处理，而是先 “看一眼”。我们使用 Seaborn 库内置的 Iris 数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-comment"># 加载数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br><br><span class="hljs-comment"># ---- 查看数据概览 ----</span><br><span class="hljs-built_in">print</span>(iris.head())      <span class="hljs-comment"># 查看前 5 行 (可指定行数，如 head(10)) </span><br><span class="hljs-built_in">print</span>(iris.info())      <span class="hljs-comment"># 查看列名、非空数量及数据类型</span><br><span class="hljs-built_in">print</span>(iris.describe())  <span class="hljs-comment"># 查看数值列的统计摘要 (均值、标准差、分位数)</span><br><span class="hljs-built_in">print</span>(iris.shape)       <span class="hljs-comment"># 数据形状 (几行几列)</span><br><span class="hljs-built_in">print</span>(iris.columns)     <span class="hljs-comment"># 查看列名</span><br><span class="hljs-built_in">print</span>(iris.index)       <span class="hljs-comment"># 查看索引范围</span><br><span class="hljs-built_in">print</span>(iris.count())     <span class="hljs-comment"># 快速统计非空值个数 (与 info 互补)</span><br></code></pre></td></tr></table></figure>
+
+<details>
+<summary><b>Debug: <code>sns.load_dataset('iris')</code> 失败 (Timeout Error) 怎么办？</b></summary>
+
+<p><strong>Bug 成因</strong></p>
+<p>该错误通常由 Seaborn 无法从 GitHub 自动下载数据集引发。</p>
+<p>**解决方案 (手动下载并放置到本地目录) **</p>
+<ol>
+<li><p><strong>找到 Seaborn 的数据存放目录</strong><br>Windows 默认路径为：<br><code>C:\Users\你的用户名\seaborn-data</code><br> (若不存在，可手动创建该文件夹) </p>
+</li>
+<li><p><strong>从 GitHub 获取 <code>iris.csv</code> 文件</strong><br>访问 <a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">Seaborn 官方数据仓库</a>，找到 <code>iris.csv</code> 文件并下载。<br>若 GitHub 访问不稳定，推荐使用 **Watt Toolkit (加速器) ** 改善连接，具体配置可参考 <a href="/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>。</p>
+<p>另外，出于交流学习的目的，本教程也提供该数据集的直接下载：<br><a href="/dataset/iris.csv">iris.csv</a></p>
+</li>
+<li><p><strong>将下载的 <code>iris.csv</code> 放入 <code>seaborn-data</code> 目录</strong>，之后重新运行 <code>sns.load_dataset(&#39;iris&#39;)</code> 即可正常加载。</p>
+</li>
+</ol>
+</details>
+
+<hr>
+<h2 id="0-3-导出本次教程所需的数据"><a href="#0-3-导出本次教程所需的数据" class="headerlink" title="0.3 导出本次教程所需的数据"></a>0.3 导出本次教程所需的数据</h2><p>为了便于后续演示从文件读取，我们先利用导出功能将数据保存为本地文件 (导出功能的详细用法将在最后一节介绍)。这里先执行保存操作：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">iris.to_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)          <span class="hljs-comment"># 带表头的标准 CSV</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, index=<span class="hljs-literal">False</span>, header=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 不带表头的版本 (用于演示 header=None)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br>iris.to_excel(<span class="hljs-string">&#x27;iris.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 excel</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>)  <span class="hljs-comment"># 有行索引的版本 (用于演示 指定行索引)</span><br></code></pre></td></tr></table></figure>
 
+<p>勘误：当 iris数据集导入失败时产生timeout error报错的解决方案：<br>bug原因：联网下载数据集失败<br>解决思路：手动下载数据集，存到seaborn包相应的目录中。<br>解决步骤：1.找到本地seaborn包存放数据的目录：C:\Users\用户名\seaborn-data<br>2.从github下载数据集：打开<a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">seaborn官方项目</a>,找到<code>iris.csv</code>文件打开，快捷键<code>ctrl+s</code>保存。使用Watt Toolkit加速器可以稳定访问GitHub，详见<a href="/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>。出于交流学习的目的，本教程也提供iris数据集的下载，供有需要的读者使用：iris.csv(插入下载索引)</p>
+<p>3.下载后保存到<code>seaborn-data</code>目录即可。</p>
 <hr>
 <h1 id="1-读取-创建-DataFrame"><a href="#1-读取-创建-DataFrame" class="headerlink" title="1. 读取 &#x2F; 创建 DataFrame"></a>1. 读取 &#x2F; 创建 DataFrame</h1><h2 id="1-1-读取文件"><a href="#1-1-读取文件" class="headerlink" title="1.1 读取文件"></a>1.1 读取文件</h2><p>Pandas 对常见表格格式的支持非常友好，只需一行代码就能导入。但现实中拿到的文件往往不规整，学会灵活配置参数，才是真正“会用”的开始。</p>
 <p>先看三种基本读法：</p>
@@ -427,22 +455,22 @@
 <li>按列索引调用  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 单列 → 返回 Series (带索引的一维数组)</span><br>sepal = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]  <br><span class="hljs-comment"># 快捷方式 (列名无空格时)</span><br>sepal = iris.sepal_length  <br><br><span class="hljs-comment"># 多列 → 返回 DataFrame (注意双中括号)</span><br>sub_df = iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>]]<br></code></pre></td></tr></table></figure></li>
 </ul>
 <details>
-  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong>（点击展开参考答案）</summary>
+  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong> (点击展开参考答案) </summary>
 
-<p><strong>1. 外层中括号（<code>df[...]</code>）</strong> 是 Pandas 的<strong>列索引运算符</strong>，它的功能是“从 DataFrame 中取出指定的列”。</p>
-<p><strong>2. 最里层的中括号 <code>[ ]</code></strong> 代表 <strong>Python 原生的列表（List）</strong>。</p>
+<p><strong>1. 外层中括号 (<code>df[...]</code>) ** 是 Pandas 的</strong>列索引运算符**，它的功能是“从 DataFrame 中取出指定的列”。</p>
+<p><strong>2. 最里层的中括号 <code>[ ]</code></strong> 代表 **Python 原生的列表 (List) **。</p>
 <ul>
 <li><p><strong>为什么必须用双层？</strong><br>因为 Pandas 的 <code>df[ ]</code> 语法规定：<strong>括号内只能传入一个参数</strong>。</p>
 <ul>
-<li>如果你想取<strong>单列</strong>，传入一个<strong>字符串</strong>（<code>df[&#39;列名&#39;]</code>），返回 <code>Series</code>。</li>
+<li>如果你想取<strong>单列</strong>，传入一个<strong>字符串</strong> (<code>df[&#39;列名&#39;]</code>) ，返回 <code>Series</code>。</li>
 <li>如果你想取<strong>多列</strong>，你必须把多个列名<strong>打包成一个整体</strong>传入。而 Python 中最直接的“打包容器”就是<strong>列表</strong>。</li>
 <li>所以 <code>df[ [&#39;列1&#39;, &#39;列2&#39;] ]</code> 的逻辑是：<strong>外层的索引器</strong>接收到了<strong>一个列表对象</strong>，Pandas 识别出这个列表里装了多个字符串，于是解析并返回多列组成的 <code>DataFrame</code>。</li>
 </ul>
 </li>
-<li><p><strong>如果少写一层会怎样？</strong><br>如果你写成 <code>df[&#39;列1&#39;, &#39;列2&#39;]</code>，Python 解释器会把 <code>&#39;列1&#39;, &#39;列2&#39;</code> 解释为一个<strong>元组（Tuple）</strong>。此时 Pandas 会去 DataFrame 中查找名为 <code>(&#39;列1&#39;, &#39;列2&#39;)</code> 的<strong>单一列名</strong>（这在多层索引 MultiIndex 中才用得到），绝大多数情况下会直接报错 <code>KeyError</code>。</p>
+<li><p><strong>如果少写一层会怎样？</strong><br>如果你写成 <code>df[&#39;列1&#39;, &#39;列2&#39;]</code>，Python 解释器会把 <code>&#39;列1&#39;, &#39;列2&#39;</code> 解释为一个<strong>元组 (Tuple) <strong>。此时 Pandas 会去 DataFrame 中查找名为 <code>(&#39;列1&#39;, &#39;列2&#39;)</code> 的</strong>单一列名</strong> (这在多层索引 MultiIndex 中才用得到) ，绝大多数情况下会直接报错 <code>KeyError</code>。</p>
 </li>
 </ul>
-<h2 id="代码验证（你可以在-Jupyter-中试一下）"><a href="#代码验证（你可以在-Jupyter-中试一下）" class="headerlink" title="代码验证（你可以在 Jupyter 中试一下）"></a>代码验证（你可以在 Jupyter 中试一下）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df = pd.DataFrame(&#123;<span class="hljs-string">&#x27;A&#x27;</span>: [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], <span class="hljs-string">&#x27;B&#x27;</span>: [<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-string">&#x27;C&#x27;</span>: [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]&#125;)<br><br><span class="hljs-comment"># 正确：传入一个列表（双括号）</span><br><span class="hljs-built_in">print</span>(df[[<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>]])  <br><br><span class="hljs-comment"># 错误：传入一个元组（单括号内加逗号），会报错 KeyError</span><br><span class="hljs-comment"># print(df[&#x27;A&#x27;, &#x27;B&#x27;])  </span><br></code></pre></td></tr></table></figure>
+<h2 id="代码验证-你可以在-Jupyter-中试一下"><a href="#代码验证-你可以在-Jupyter-中试一下" class="headerlink" title="代码验证 (你可以在 Jupyter 中试一下)"></a>代码验证 (你可以在 Jupyter 中试一下)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df = pd.DataFrame(&#123;<span class="hljs-string">&#x27;A&#x27;</span>: [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], <span class="hljs-string">&#x27;B&#x27;</span>: [<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-string">&#x27;C&#x27;</span>: [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]&#125;)<br><br><span class="hljs-comment"># 正确：传入一个列表 (双括号) </span><br><span class="hljs-built_in">print</span>(df[[<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>]])  <br><br><span class="hljs-comment"># 错误：传入一个元组 (单括号内加逗号) ，会报错 KeyError</span><br><span class="hljs-comment"># print(df[&#x27;A&#x27;, &#x27;B&#x27;])  </span><br></code></pre></td></tr></table></figure>
 </details> 
 
 <ul>
@@ -496,7 +524,7 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>axis=0</code>（默认）</td>
+<td><code>axis=0</code> (默认)</td>
 <td>按列遍历，对每一列执行函数</td>
 <td>函数接收一列数据 (Series)</td>
 </tr>
@@ -522,10 +550,10 @@
 </blockquote>
 </li>
 <li><p>对整行应用函数</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：接收一行数据，返回花瓣长度 / 花萼长度</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calc_ratio</span>(<span class="hljs-params">row</span>):<br>    <span class="hljs-comment"># row 是一行数据（Series），可以通过列名取到每个字段的值</span><br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] != <span class="hljs-number">0</span>:   <span class="hljs-comment"># 防止除以零</span><br>        <span class="hljs-keyword">return</span> row[<span class="hljs-string">&#x27;petal_length&#x27;</span>] / row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br><span class="hljs-comment"># axis=1 表示按行遍历，每一行都会传入 calc_ratio 函数</span><br>iris[<span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>] = iris.apply(calc_ratio, axis=<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：接收一行数据，返回花瓣长度 / 花萼长度</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calc_ratio</span>(<span class="hljs-params">row</span>):<br>    <span class="hljs-comment"># row 是一行数据 (Series) ，可以通过列名取到每个字段的值</span><br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] != <span class="hljs-number">0</span>:   <span class="hljs-comment"># 防止除以零</span><br>        <span class="hljs-keyword">return</span> row[<span class="hljs-string">&#x27;petal_length&#x27;</span>] / row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br><span class="hljs-comment"># axis=1 表示按行遍历，每一行都会传入 calc_ratio 函数</span><br>iris[<span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>] = iris.apply(calc_ratio, axis=<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>结合条件判断，实现复杂的逻辑映射</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据花瓣长度给出等级（多分支逻辑）</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">grade_petal</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;S&#x27;</span><br>    <span class="hljs-keyword">elif</span> x &lt; <span class="hljs-number">4.0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;M&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;L&#x27;</span><br><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(grade_petal)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_grade&#x27;</span>]].head())<br><span class="hljs-comment"># lambda 版本（嵌套三元运算符）</span><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;S&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span> <span class="hljs-keyword">else</span> (<span class="hljs-string">&#x27;M&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">4.0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;L&#x27;</span>)<br>)<br></code></pre></td></tr></table></figure></li>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据花瓣长度给出等级 (多分支逻辑) </span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">grade_petal</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;S&#x27;</span><br>    <span class="hljs-keyword">elif</span> x &lt; <span class="hljs-number">4.0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;M&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;L&#x27;</span><br><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(grade_petal)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_grade&#x27;</span>]].head())<br><span class="hljs-comment"># lambda 版本 (嵌套三元运算符) </span><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;S&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span> <span class="hljs-keyword">else</span> (<span class="hljs-string">&#x27;M&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">4.0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;L&#x27;</span>)<br>)<br></code></pre></td></tr></table></figure></li>
 </ol>
 </li>
 </ul>
@@ -573,7 +601,7 @@
 </tr>
 <tr>
 <td><code>on</code></td>
-<td>用于连接的列名（左右表必须同名）</td>
+<td>用于连接的列名 (左右表必须同名)</td>
 <td>列名字符串，或多个列名组成的列表</td>
 </tr>
 <tr>
@@ -584,7 +612,7 @@
 <tr>
 <td><code>how</code></td>
 <td>连接方式，决定哪些行保留</td>
-<td><code>&#39;inner&#39;</code>（默认）、<code>&#39;left&#39;</code>、<code>&#39;right&#39;</code>、<code>&#39;outer&#39;</code></td>
+<td><code>&#39;inner&#39;</code> (默认) 、<code>&#39;left&#39;</code>、<code>&#39;right&#39;</code>、<code>&#39;outer&#39;</code></td>
 </tr>
 </tbody></table>
 <blockquote>
@@ -599,8 +627,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>&#39;inner&#39;</code>（默认）</td>
-<td>只保留两张表<strong>键列都匹配</strong>的行（交集）</td>
+<td><code>&#39;inner&#39;</code> (默认)</td>
+<td>只保留两张表<strong>键列都匹配</strong>的行 (交集)</td>
 </tr>
 <tr>
 <td><code>&#39;left&#39;</code></td>
@@ -612,7 +640,7 @@
 </tr>
 <tr>
 <td><code>&#39;outer&#39;</code></td>
-<td>保留<strong>两张表所有行</strong>，无匹配则填充 <code>NaN</code>（并集）</td>
+<td>保留<strong>两张表所有行</strong>，无匹配则填充 <code>NaN</code> (并集)</td>
 </tr>
 </tbody></table>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 构建一个汇总表：每个品种的平均花萼长度</span><br>avg_by_species = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].mean().reset_index()<br>avg_by_species.columns = [<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]<br><br><span class="hljs-comment"># 左连接，将平均长度匹配回原表的每一行</span><br>iris_merged = iris.merge(avg_by_species, on=<span class="hljs-string">&#x27;species&#x27;</span>, how=<span class="hljs-string">&#x27;left&#x27;</span>)<br><span class="hljs-built_in">print</span>(iris_merged[[<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
@@ -629,7 +657,7 @@
 
 <hr>
 <p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
-<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#x75;&#114;&#x6f;&#x72;&#x61;&#x68;&#x69;&#107;&#x65;&#114;&#64;&#x31;&#54;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#117;&#x72;&#x6f;&#114;&#x61;&#x68;&#x69;&#107;&#101;&#x72;&#x40;&#49;&#x36;&#51;&#46;&#99;&#x6f;&#x6d;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
 
                 
               </div>
