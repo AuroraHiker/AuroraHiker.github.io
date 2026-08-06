@@ -17,6 +17,22 @@ Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据�
 
 # 0. 准备工作：数据导入与查看
 
+## 0.1 安装所需的库
+
+> 小技巧：在 Jupyter Notebook 中，行首的感叹号 `!` 可以让 Python 识别并执行终端命令。因此无需切换窗口，直接在单元格中运行 `!pip install ...` 即可安装库。例如：
+
+```python
+!pip install pandas seaborn openpyxl
+```
+
+若在终端/命令行中执行 (不加感叹号) ，则使用：
+
+```python
+pip install pandas seaborn openpyxl
+```
+
+## 0.2 初识数据：载入并查看 Iris 数据集
+
 拿到数据的第一步，不是急着处理，而是先 "看一眼"。我们使用 Seaborn 库内置的 Iris 数据。
 
 ```python
@@ -27,7 +43,7 @@ import seaborn as sns
 iris = sns.load_dataset('iris')
 
 # ---- 查看数据概览 ----
-print(iris.head(x))      # 查看前 X 行，如括号内为空，则默认查看前五行，了解数据长什么样
+print(iris.head())      # 查看前 5 行 (可指定行数，如 head(10)) 
 print(iris.info())      # 查看列名、非空数量及数据类型
 print(iris.describe())  # 查看数值列的统计摘要 (均值、标准差、分位数)
 print(iris.shape)       # 数据形状 (几行几列)
@@ -35,6 +51,35 @@ print(iris.columns)     # 查看列名
 print(iris.index)       # 查看索引范围
 print(iris.count())     # 快速统计非空值个数 (与 info 互补)
 ```
+
+<details>
+<summary><b>Debug: <code>sns.load_dataset('iris')</code> 失败 (Timeout Error) 怎么办？</b></summary>
+
+**Bug 成因**
+
+该错误通常由 Seaborn 无法从 GitHub 自动下载数据集引发。
+
+**解决方案 (手动下载并放置到本地目录) **
+
+1. **找到 Seaborn 的数据存放目录**  
+   Windows 默认路径为：  
+   `C:\Users\你的用户名\seaborn-data`  
+    (若不存在，可手动创建该文件夹) 
+
+2. **从 GitHub 获取 `iris.csv` 文件**  
+   访问 [Seaborn 官方数据仓库](https://github.com/mwaskom/seaborn-data/)，找到 `iris.csv` 文件并下载。  
+   若 GitHub 访问不稳定，推荐使用 **Watt Toolkit (加速器) ** 改善连接，具体配置可参考 {% post_link Windows效率神器推荐-Wox-Markdown编辑器与GitHub加速器配置指南 %}。
+
+   另外，出于交流学习的目的，本教程也提供该数据集的直接下载：  
+   [iris.csv](/dataset/iris.csv)
+
+3. **将下载的 `iris.csv` 放入 `seaborn-data` 目录**，之后重新运行 `sns.load_dataset('iris')` 即可正常加载。
+
+</details>
+
+---
+
+## 0.3 导出本次教程所需的数据
 
 为了便于后续演示从文件读取，我们先利用导出功能将数据保存为本地文件 (导出功能的详细用法将在最后一节介绍)。这里先执行保存操作：
 
@@ -45,6 +90,15 @@ iris.to_csv('iris.tsv', sep='\t', index=False)  # 保存为 tsv
 iris.to_excel('iris.xlsx', index=False)  # 保存为 excel
 iris.to_csv('iris_index.csv')  # 有行索引的版本 (用于演示 指定行索引)
 ```
+
+勘误：当 iris数据集导入失败时产生timeout error报错的解决方案：
+bug原因：联网下载数据集失败
+解决思路：手动下载数据集，存到seaborn包相应的目录中。
+解决步骤：1.找到本地seaborn包存放数据的目录：C:\Users\用户名\seaborn-data
+2.从github下载数据集：打开[seaborn官方项目](https://github.com/mwaskom/seaborn-data/),找到`iris.csv`文件打开，快捷键`ctrl+s`保存。使用Watt Toolkit加速器可以稳定访问GitHub，详见{% post_link Windows效率神器推荐-Wox-Markdown编辑器与GitHub加速器配置指南 %}。出于交流学习的目的，本教程也提供iris数据集的下载，供有需要的读者使用：iris.csv(插入下载索引)
+
+3.下载后保存到`seaborn-data`目录即可。
+
 
 ---
 
@@ -160,30 +214,30 @@ df2 = pd.DataFrame(data_list, columns=['sepal_length', 'sepal_width', 'species']
     sub_df = iris[['sepal_length', 'species']]
     ```
 <details>
-  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong>（点击展开参考答案）</summary>
+  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong> (点击展开参考答案) </summary>
 
-**1. 外层中括号（`df[...]`）** 是 Pandas 的**列索引运算符**，它的功能是“从 DataFrame 中取出指定的列”。
+**1. 外层中括号 (`df[...]`) ** 是 Pandas 的**列索引运算符**，它的功能是“从 DataFrame 中取出指定的列”。
 
-**2. 最里层的中括号 `[ ]`** 代表 **Python 原生的列表（List）**。
+**2. 最里层的中括号 `[ ]`** 代表 **Python 原生的列表 (List) **。
 
 - **为什么必须用双层？**
   因为 Pandas 的 `df[ ]` 语法规定：**括号内只能传入一个参数**。
-  - 如果你想取**单列**，传入一个**字符串**（`df['列名']`），返回 `Series`。
+  - 如果你想取**单列**，传入一个**字符串** (`df['列名']`) ，返回 `Series`。
   - 如果你想取**多列**，你必须把多个列名**打包成一个整体**传入。而 Python 中最直接的“打包容器”就是**列表**。
   - 所以 `df[ ['列1', '列2'] ]` 的逻辑是：**外层的索引器**接收到了**一个列表对象**，Pandas 识别出这个列表里装了多个字符串，于是解析并返回多列组成的 `DataFrame`。
 
 - **如果少写一层会怎样？**
-  如果你写成 `df['列1', '列2']`，Python 解释器会把 `'列1', '列2'` 解释为一个**元组（Tuple）**。此时 Pandas 会去 DataFrame 中查找名为 `('列1', '列2')` 的**单一列名**（这在多层索引 MultiIndex 中才用得到），绝大多数情况下会直接报错 `KeyError`。
+  如果你写成 `df['列1', '列2']`，Python 解释器会把 `'列1', '列2'` 解释为一个**元组 (Tuple) **。此时 Pandas 会去 DataFrame 中查找名为 `('列1', '列2')` 的**单一列名** (这在多层索引 MultiIndex 中才用得到) ，绝大多数情况下会直接报错 `KeyError`。
 
-## 代码验证（你可以在 Jupyter 中试一下）
+## 代码验证 (你可以在 Jupyter 中试一下) 
 ```python
 import pandas as pd
 df = pd.DataFrame({'A': [1,2], 'B': [3,4], 'C': [5,6]})
 
-# 正确：传入一个列表（双括号）
+# 正确：传入一个列表 (双括号) 
 print(df[['A', 'B']])  
 
-# 错误：传入一个元组（单括号内加逗号），会报错 KeyError
+# 错误：传入一个元组 (单括号内加逗号) ，会报错 KeyError
 # print(df['A', 'B'])  
 ```
 </details> 
@@ -332,7 +386,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
 
     | axis 取值 | 含义 | 函数接收的参数 |
     |-----------|------|----------------|
-    | `axis=0`（默认） | 按列遍历，对每一列执行函数 | 函数接收一列数据 (Series) |
+    | `axis=0` (默认)  | 按列遍历，对每一列执行函数 | 函数接收一列数据 (Series) |
     | `axis=1` | 按行遍历，对每一行执行函数 | 函数接收一行数据 (Series) |
 
 - **示例**
@@ -366,7 +420,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
         ```python
         # 自定义函数：接收一行数据，返回花瓣长度 / 花萼长度
         def calc_ratio(row):
-            # row 是一行数据（Series），可以通过列名取到每个字段的值
+            # row 是一行数据 (Series) ，可以通过列名取到每个字段的值
             if row['sepal_length'] != 0:   # 防止除以零
                 return row['petal_length'] / row['sepal_length']
             else:
@@ -380,7 +434,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
     3. 结合条件判断，实现复杂的逻辑映射
 
         ```python
-        # 根据花瓣长度给出等级（多分支逻辑）
+        # 根据花瓣长度给出等级 (多分支逻辑) 
         def grade_petal(x):
             if x < 1.5:
                 return 'S'
@@ -391,7 +445,7 @@ Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际�
 
         iris['petal_grade'] = iris['petal_length'].apply(grade_petal)
         print(iris[['petal_length', 'petal_grade']].head())
-        # lambda 版本（嵌套三元运算符）
+        # lambda 版本 (嵌套三元运算符) 
         iris['petal_grade'] = iris['petal_length'].apply(
             lambda x: 'S' if x < 1.5 else ('M' if x < 4.0 else 'L')
         )
@@ -471,18 +525,18 @@ print(iris[['species', 'sepal_length', 'sepal_length_z']].head())
 |------|------|----------|
 | `left` | 左侧 DataFrame | — |
 | `right` | 右侧 DataFrame | — |
-| `on` | 用于连接的列名（左右表必须同名） | 列名字符串，或多个列名组成的列表 |
+| `on` | 用于连接的列名 (左右表必须同名)  | 列名字符串，或多个列名组成的列表 |
 | `left_on` / `right_on` | 左右表连接列名不同时分别指定 | `left_on='左表列名', right_on='右表列名'` |
-| `how` | 连接方式，决定哪些行保留 | `'inner'`（默认）、`'left'`、`'right'`、`'outer'` |
+| `how` | 连接方式，决定哪些行保留 | `'inner'` (默认) 、`'left'`、`'right'`、`'outer'` |
 > **注意**：如果左右表的键列**列名不同**，需要分别指定 `left_on` 和 `right_on`。例如左表叫 `species`，右表叫 `species_name`，则写法为：`left.merge(right, left_on='species', right_on='species_name', how='left')`。
 
 **连接方式**
 | how 取值 | 结果 |
 |----------|------|
-| `'inner'`（默认） | 只保留两张表**键列都匹配**的行（交集） |
+| `'inner'` (默认)  | 只保留两张表**键列都匹配**的行 (交集)  |
 | `'left'` | 保留**左表所有行**，右表无匹配则填充 `NaN` |
 | `'right'` | 保留**右表所有行**，左表无匹配则填充 `NaN` |
-| `'outer'` | 保留**两张表所有行**，无匹配则填充 `NaN`（并集） |
+| `'outer'` | 保留**两张表所有行**，无匹配则填充 `NaN` (并集)  |
 
 ```python
 # 构建一个汇总表：每个品种的平均花萼长度
