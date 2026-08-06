@@ -16,7 +16,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="AuroraHiker">
+  <meta name="author" content="鸟剑飞、AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
     <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！本文面向从未接触过编程智能体的读者，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。 本文使用的 API 来自西农er’s GPT。截至本文完成时，平台公布的 API 地址为 https:&#x2F;&#x2F;api.nwafu-ai.cn，并为相关模型提供了 Codex 令牌分组。该平台需要使用教育邮箱注册">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png">
 <meta property="article:published_time" content="2026-08-03T06:22:07.164Z">
-<meta property="article:modified_time" content="2026-08-04T02:31:18.664Z">
+<meta property="article:modified_time" content="2026-08-06T06:49:40.082Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="Codex">
 <meta property="article:tag" content="开发者工具箱">
@@ -320,7 +320,7 @@
     
       <span class="post-meta mr-2">
         <i class="iconfont icon-author" aria-hidden="true"></i>
-        AuroraHiker
+        鸟剑飞、AuroraHiker
       </span>
     
     
@@ -338,7 +338,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k 字
+          3.9k 字
         
       </span>
     
@@ -433,8 +433,8 @@
 </tr>
 </tbody></table>
 <p>API Key 与账户余额直接相关，任何得到它的人都可能消耗你的额度，因此不能发到群聊、写进公开博客或上传到 GitHub。</p>
-<h3 id="0-2-注册账户并创建-API-Key"><a href="#0-2-注册账户并创建-API-Key" class="headerlink" title="0.2 注册账户并创建 API Key"></a>0.2 注册账户并创建 API Key</h3><p>打开<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>，使用教育邮箱注册并完成验证 (官方使用指南 [<a target="_blank" rel="noopener" href="https://blog.nwafu-ai.cn/archives/1705731294486])%E3%80%82%E6%88%AA%E8%87%B3%E6%9C%AC%E6%96%87%E5%AE%8C%E6%88%90%E6%97%B6%EF%BC%8C%E6%AF%8F%E4%B8%AA%E6%96%B0%E8%B4%A6%E6%88%B7%E6%8F%90%E4%BE%9B">https://blog.nwafu-ai.cn/archives/1705731294486])。截至本文完成时，每个新账户提供</a> 2 元试用额度，具体活动规则以平台实时页面为准。</p>
-<p>登录后从右上角的用户头像点击‘个人资料’或‘钱包’进入个人主页，点击‘API密钥’，创建一个新令牌：</p>
+<h3 id="0-2-注册账户并创建-API-Key"><a href="#0-2-注册账户并创建-API-Key" class="headerlink" title="0.2 注册账户并创建 API Key"></a>0.2 注册账户并创建 API Key</h3><p>打开<a target="_blank" rel="noopener" href="https://gpt.nwafu-ai.cn/">西农er’s GPT</a>，使用教育邮箱注册并完成验证 ( [点此跳转官方使用指南] (<a target="_blank" rel="noopener" href="https://blog.nwafu-ai.cn/archives/1705731294486">https://blog.nwafu-ai.cn/archives/1705731294486</a>) )。截至本文完成时，每个新账户提供 2 元试用额度，具体活动规则以平台实时页面为准。</p>
+<p>登录后从右上角的用户头像点击‘个人资料’或‘钱包’进入个人主页，点击‘API密钥’，创建一个新令牌，选择分组为<code>codex</code>：</p>
 <p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/%E5%88%9B%E5%BB%BAAPI%E5%AF%86%E9%92%A5.png" srcset="/img/loading.gif" lazyload alt="API密钥创建界面"></p>
 <ol>
 <li>令牌名称可以填写 <code>codex-win10</code>；</li>
@@ -445,6 +445,7 @@
 <blockquote>
 <p><strong>安全提醒：</strong> 如果 API Key 曾经完整出现在聊天记录、截图或公开网页中，应立即在平台删除该密钥并重新生成。仅仅把已经发布的内容打码，并不能保证旧密钥没有被他人复制。</p>
 </blockquote>
+<hr>
 <h2 id="1-Codex-安装配置"><a href="#1-Codex-安装配置" class="headerlink" title="1. Codex 安装配置"></a>1. Codex 安装配置</h2><h3 id="1-1-安装"><a href="#1-1-安装" class="headerlink" title="1.1 安装"></a>1.1 安装</h3><p>Codex 主要有两种本地使用方式：</p>
 <table>
 <thead>
@@ -470,6 +471,7 @@
 <p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E5%AE%89%E8%A3%85.png" srcset="/img/loading.gif" lazyload alt="Codex 安装界面"></p>
 <p>第一次启动 Codex 时，在登录页面选择 <strong>Sign in another way</strong>，再选择使用 API Key 的方式，将自己在准备阶段创建的新密钥粘贴进去。</p>
 <p><img src="/%E6%99%BA%E8%83%BD%E4%BD%93%E9%83%A8%E7%BD%B2/codex%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E7%99%BB%E9%99%86.png" srcset="/img/loading.gif" lazyload alt="Codex 登录界面"></p>
+<p>若因网络问题导致安装失败，可下载<a target="_blank" rel="noopener" href="https://fenjueai.com/pages/codex-offline.html">离线版 Codex 安装包</a>进行手动安装，该方式可有效规避网络异常带来的影响。</p>
 <h4 id="1-1-2-安装或更新-Codex-CLI"><a href="#1-1-2-安装或更新-Codex-CLI" class="headerlink" title="1.1.2 安装或更新 Codex CLI"></a>1.1.2 安装或更新 Codex CLI</h4><p>打开 CMD 或 PowerShell，先检查 Node.js 和 npm：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">node <span class="hljs-literal">--version</span><br>npm <span class="hljs-literal">--version</span><br></code></pre></td></tr></table></figure>
 
@@ -573,7 +575,7 @@
 <hr>
 <p>至此，Codex 智能体的本地化部署已全部完成。我们先后完成了应用安装、CLI 环境更新、API Key 写入以及模型接口配置，为后续的使用打下了基础。</p>
 <p>在下一期内容中，我们将聚焦 Codex 的基础操作，探讨如何在保障文件安全的前提下，让它高效协助我们处理实际项目。</p>
-<p>若在部署过程中遇到任何问题，欢迎通过邮箱 <a href="mailto:&#x61;&#117;&#114;&#x6f;&#114;&#97;&#x68;&#x69;&#x6b;&#101;&#114;&#x40;&#x31;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a> 与笔者交流。<strong>求助时请务必提供已对敏感信息打码的错误截图，切勿发送 auth.json 或明文 API Key。</strong></p>
+<p>若在部署过程中遇到任何问题，欢迎通过邮箱 <a href="mailto:&#97;&#117;&#114;&#111;&#x72;&#97;&#x68;&#x69;&#107;&#101;&#114;&#64;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109;">aurorahiker@163.com</a> 与笔者交流。<strong>求助时请务必提供已对敏感信息打码的错误截图，切勿发送 auth.json 或明文 API Key。</strong></p>
 <hr>
 <p><strong>参考资源</strong></p>
 <ul>
@@ -638,7 +640,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>AuroraHiker</div>
+          <div>鸟剑飞、AuroraHiker</div>
         </div>
       
       
