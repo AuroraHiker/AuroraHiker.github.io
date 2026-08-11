@@ -11,7 +11,7 @@ author: AuroraHiker
 
 Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，**DataFrame (数据框)** 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。
 
-**建议尚未接触过 Python 语法的读者先完成 {% post_link Python-入门：写给完全没学过编程的你 %} 的学习，再回到这里。**
+**建议尚未接触过 Python 语法的读者先完成 {% post_link Python-入门：零基础编程速通指南 %} 的学习，再回到这里。**
 
 ---
 
@@ -55,6 +55,7 @@ print(iris.count())     # 快速统计非空值个数 (与 info 互补)
 <details>
 <summary><b>Debug: <code>sns.load_dataset('iris')</code> 失败 (Timeout Error) 怎么办？</b></summary>
 
+
 **Bug 成因**
 
 该错误通常由 Seaborn 无法从 GitHub 自动下载数据集引发。
@@ -68,7 +69,7 @@ print(iris.count())     # 快速统计非空值个数 (与 info 互补)
 
 2. **从 GitHub 获取 `iris.csv` 文件**  
    访问 [Seaborn 官方数据仓库](https://github.com/mwaskom/seaborn-data/)，找到 `iris.csv` 文件并下载。  
-   若 GitHub 访问不稳定，推荐使用 **Watt Toolkit (加速器) ** 改善连接，具体配置可参考 {% post_link Windows效率神器推荐-Wox-Markdown编辑器与GitHub加速器配置指南 %}。
+   若 GitHub 访问不稳定，推荐使用 **Watt Toolkit (加速器)** 改善连接，具体配置可参考 {% post_link Windows效率神器推荐-Wox-Markdown编辑器与GitHub加速器配置指南 %}。
 
    另外，出于交流学习的目的，本教程也提供该数据集的直接下载：  
    [iris.csv](/dataset/iris.csv)

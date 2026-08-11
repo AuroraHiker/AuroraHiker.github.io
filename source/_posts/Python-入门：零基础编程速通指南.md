@@ -1,5 +1,5 @@
 ---
-title: Python 入门：写给完全没学过编程的你
+title: Python 入门：零基础编程速通指南
 tags:
   - Python 入门
 series:
