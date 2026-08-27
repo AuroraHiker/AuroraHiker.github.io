@@ -55,6 +55,7 @@ iris = load_iris(as_frame=True)
 df = iris.frame.copy()
 print(df.head())
 ```
+> 如果加载 Iris 数据集时遇到报错，可参考 {% post_link 鸢尾花数据集加载报错的两种解法 %} 中的详细解法。
 
 此时，表示鸢尾花品种的是target列，以数值标签 (0、1、2) 标识，需转换为对应的鸢尾花品种名称 (setosa、versicolor、virginica) 
 
