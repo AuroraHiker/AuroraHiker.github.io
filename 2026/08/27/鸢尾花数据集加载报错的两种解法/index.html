@@ -19,36 +19,25 @@
   <meta name="author" content="AuroraHiker">
   <meta name="keywords" content="技术,博客,编程,生信">
   
-    <meta name="description" content="欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。  1.Wi">
+    <meta name="description" content="很多 Python 数据分析教程都会用到 Iris (鸢尾花) 数据集。它小巧、规整、字段含义直观，非常适合用来练习数据分析与可视化。 但不少初学者第一次运行下面这行代码时，就会遇到一个让人困惑的报错： 123import seaborn as snsiris &#x3D; sns.load_dataset(&quot;iris&quot;)  如果你遇到的是 TimeoutError、URLError、H">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows系统的安装">
-<meta property="og:url" content="https://aurorahiker.github.io/2026/02/21/Windows%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:title" content="sns.load_dataset(“iris”) 报错？网络问题的两种解法">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/08/27/%E9%B8%A2%E5%B0%BE%E8%8A%B1%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8A%A0%E8%BD%BD%E6%8A%A5%E9%94%99%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%A3%E6%B3%95/index.html">
 <meta property="og:site_name" content="AuroraHiker’s Code Trail">
-<meta property="og:description" content="欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。  1.Wi">
+<meta property="og:description" content="很多 Python 数据分析教程都会用到 Iris (鸢尾花) 数据集。它小巧、规整、字段含义直观，非常适合用来练习数据分析与可视化。 但不少初学者第一次运行下面这行代码时，就会遇到一个让人困惑的报错： 123import seaborn as snsiris &#x3D; sns.load_dataset(&quot;iris&quot;)  如果你遇到的是 TimeoutError、URLError、H">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/abd1f628566a3b622831cfc279fb6897.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/image-20260221083929799.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall1.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall2.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall3.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall4.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall5.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall6.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall7.png">
-<meta property="og:image" content="https://aurorahiker.github.io/Windows_install/wininstall8.png">
-<meta property="article:published_time" content="2026-02-21T01:50:55.121Z">
-<meta property="article:modified_time" content="2026-06-23T11:22:16.699Z">
+<meta property="article:published_time" content="2026-08-27T07:11:42.444Z">
+<meta property="article:modified_time" content="2026-08-27T10:41:16.253Z">
 <meta property="article:author" content="AuroraHiker">
-<meta property="article:tag" content="实验平台搭建">
-<meta property="article:tag" content="计算机基础">
+<meta property="article:tag" content="Bug 图鉴">
+<meta property="article:tag" content="Python 入门">
+<meta property="article:tag" content="Seaborn">
+<meta property="article:tag" content="数据可视化">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aurorahiker.github.io/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png">
   
   
   
-  <title>Windows系统的安装 - AuroraHiker’s Code Trail</title>
+  <title>sns.load_dataset(“iris”) 报错？网络问题的两种解法 - AuroraHiker’s Code Trail</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -317,7 +306,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Windows系统的安装"></span>
+            <span id="subtitle" data-typed-text="sns.load_dataset(“iris”) 报错？网络问题的两种解法"></span>
           
         </div>
 
@@ -333,8 +322,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-02-21 09:50" pubdate>
-          2026年2月21日 上午
+        <time datetime="2026-08-27 15:11" pubdate>
+          2026年8月27日 下午
         </time>
       </span>
     
@@ -345,7 +334,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3k 字
         
       </span>
     
@@ -356,7 +345,7 @@
         
         
         
-          21 分钟
+          25 分钟
         
       </span>
     
@@ -395,127 +384,106 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Windows系统的安装</h1>
+            <h1 id="seo-header">sns.load_dataset(“iris”) 报错？网络问题的两种解法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>欢迎来到 AuroraHiker 的技术博客！作为“计算机基础与实验平台构建”系列的重要一环，本文将从零开始，完整整理一遍 Windows 系统的安装流程。无论你是第一次重装系统的新手，还是想系统梳理操作细节的老朋友，只需跟着图文步骤一步步来，从备份数据、制作启动盘，到进入安装界面、完成系统配置，都能轻松搞定。安装好 Windows，就等于为后续的编程学习、环境搭建铺好了最稳固的地基。</p>
+                <p>很多 Python 数据分析教程都会用到 Iris (鸢尾花) 数据集。它小巧、规整、字段含义直观，非常适合用来练习数据分析与可视化。</p>
+<p>但不少初学者第一次运行下面这行代码时，就会遇到一个让人困惑的报错：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><br>iris = sns.load_dataset(<span class="hljs-string">&quot;iris&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>如果你遇到的是 <code>TimeoutError</code>、<code>URLError</code>、<code>HTTPError</code>，或者提示无法从网络获取数据，大概率是 <strong>Seaborn 自动下载示例数据集时连接 GitHub 失败</strong>。</p>
+<p>这篇小博客专门记录这个问题的原因和两种稳妥的解决方式。以后在教程里遇到 <code>sns.load_dataset(&quot;iris&quot;)</code> 失败，可以直接照此排查。</p>
 <hr>
-<h2 id="1-Windows系统的安装的准备工作"><a href="#1-Windows系统的安装的准备工作" class="headerlink" title="1.Windows系统的安装的准备工作"></a>1.Windows系统的安装的准备工作</h2><h3 id="装机须知"><a href="#装机须知" class="headerlink" title="装机须知"></a>装机须知</h3><ol>
-<li><p>重装系统的影响范围：对于旧电脑的系统重装，安装程序主要修改的是系统盘（通常是C盘）的内容。原则上，这一过程不会直接删除或影响非系统盘（如D盘、E盘）的文件。此外，Windows 10安装程序通常会将旧系统的文件（如Windows.old文件夹）保留在系统盘根目录，以便回滚。<br><strong>重要提示：</strong> 为了保证系统安装后的流畅运行及后续更新，系统盘（C盘）需要保留至少20GB的闲置空间（建议50GB以上为佳，10GB仅能保证基础运行，极易导致系统卡顿）。</p>
-</li>
-<li><p>数据备份：虽然系统重装主要针对系统盘，但任何涉及磁盘分区的操作（如误删分区、格式化）或不可预见的意外（如断电、安装程序Bug）都可能导致数据丢失。因此，在开始任何操作前，务必将所有重要文件（包括桌面文件、文档、照片等）备份至移动硬盘、U盘或云盘。</p>
-</li>
-</ol>
-<h3 id="Windows磁盘管理"><a href="#Windows磁盘管理" class="headerlink" title="Windows磁盘管理"></a>Windows磁盘管理</h3><p>此步骤旨在为Windows系统的安装准备硬盘分区。如果是仅需重装系统且不改变系统盘大小的旧电脑，可跳过此步。<br><strong>操作路径：右键点击【此电脑】 - 选择【管理】 - 点击【磁盘管理】（加载可能需要等待一段时间）。</strong><br><img src="/Windows_install/e74a1e319573d1fdfd88ca3f8bc3127c.png" srcset="/img/loading.gif" lazyload alt="磁盘管理的打开"><br>识别系统分区：如图所示，图中磁盘0是win10系统盘（C盘），系统盘（C盘）附近往往存在几个几百MB大小、类型为“系统”、“恢复”或“EFI”的分区。这些分区是Windows启动所必需的，请务必不要对其进行删除、格式化或修改操作。<br><img src="/Windows_install/abd1f628566a3b622831cfc279fb6897.png" srcset="/img/loading.gif" lazyload alt="磁盘管理界面"><br>磁盘操作：在此界面，右键点击某个分区（卷），可以对硬盘进行格式化、删除卷、压缩卷（从现有分区中拆分出未分配空间）或扩展卷（将未分配空间合并到现有分区）。通常，建议为Windows系统分配 100GB至150GB 的磁盘空间。<br><img src="/Windows_install/7fdb1a4856808174d505d87d4f25a5cc.png" srcset="/img/loading.gif" lazyload alt="可以进行的分区操作"></p>
-<p><strong>磁盘数据丢失的补救：</strong></p>
+<h2 id="1-Bug-成因：本地未缓存，联网拉取-GitHub-数据超时"><a href="#1-Bug-成因：本地未缓存，联网拉取-GitHub-数据超时" class="headerlink" title="1. Bug 成因：本地未缓存，联网拉取 GitHub 数据超时"></a>1. Bug 成因：本地未缓存，联网拉取 GitHub 数据超时</h2><p><code>sns.load_dataset(&quot;iris&quot;)</code> 看起来像是在读取 Seaborn 自带的数据，实则在调用 Seaborn 提供的示例数据加载工具。</p>
 <ul>
-<li>黄金原则：一旦发生误删文件或误格式化分区，<strong>请立即停止对该磁盘进行任何写入操作</strong>（包括新建文件、下载、安装软件等）。</li>
-<li>原理：删除或格式化操作，本质上是移除了文件系统的“索引”，数据本身依然停留在磁盘扇区中。只有当新数据写入并覆盖这些扇区后，原文件才真正难以恢复。</li>
-<li>恢复工具：在停止写入的前提下，可以使用专业的数据恢复软件（如 Recuva, DiskGenius 等）尝试扫描并恢复丢失的数据。</li>
+<li>当本地已经缓存过 <code>iris.csv</code> 时，Seaborn 会直接从本地读取，代码顺利运行；</li>
+<li>当本地还没有这个文件时，Seaborn 会尝试从官方数据仓库下载：<br><a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">Seaborn 官方数据仓库</a></li>
 </ul>
-<p><strong>特别注意：</strong> 如果你计划在新电脑上安装双系统（保留原系统，安装另一个新系统），请务必提前通过磁盘管理划分出足够的未分配空间，安装程序会在此空间内创建新系统的分区。</p>
-<h3 id="Windows系统启动盘制作"><a href="#Windows系统启动盘制作" class="headerlink" title="Windows系统启动盘制作"></a>Windows系统启动盘制作</h3><p>微软官方提供了详细的指南：<a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/windows/%E4%B8%BA-windows-%E5%88%9B%E5%BB%BA%E5%AE%89%E8%A3%85%E5%AA%92%E4%BD%93-99a58364-8c02-206f-aa6f-40c3b507420d">为 Windows 创建安装媒体 - Microsoft 支持</a></p>
+<p>因此，报错通常由以下连续步骤引发：</p>
 <ol>
-<li><p>准备材料：</p>
-<ul>
-<li>一个 8GB 或以上容量的U盘。</li>
-<li>Windows 10 系统的 ISO 镜像文件（可从微软官网下载）。</li>
-</ul>
-</li>
-<li><p>制作工具：<br> 推荐使用开源工具 Rufus，其兼容性好，制作成功率高。<br> Rufus-3.17软件(可以直接使用，不需要安装)：<a href="/Windows_install/rufus-3.17.exe">Rufus-3.17.exe</a></p>
-</li>
-<li><p>操作步骤：</p>
-<ul>
-<li><p><strong>重要警告：</strong> 制作过程会格式化U盘，请提前备份U盘内所有个人数据。</p>
-</li>
-<li><p>打开 Rufus 软件，在【设备】栏中选择你的U盘。</p>
-</li>
-<li><p>点击【选择】，找到并选中下载好的 Windows 10 ISO 镜像文件。</p>
-</li>
-<li><p>分区类型：对于2010年后出厂的大多数电脑，请选择 GPT；对于非常老的电脑（传统BIOS），选择 MBR。如果不确定，可优先尝试GPT。Rufus通常会自动识别并给出推荐。</p>
-</li>
-<li><p>其他选项（卷标、文件系统）保持默认即可。</p>
-</li>
-<li><p>点击【开始】，等待状态栏进度条走完即表示启动盘制作完成，关闭软件即可。</p>
-</li>
-</ul>
-</li>
+<li>本地从未缓存过 <code>iris.csv</code> 文件；  </li>
+<li>Seaborn 检测到缺失后，自动前往 GitHub 仓库在线拉取数据；  </li>
+<li>当前网络环境访问 GitHub 不稳定，导致下载请求超时。</li>
 </ol>
-<p><img src="/Windows_install/image-20260221083929799.png" srcset="/img/loading.gif" lazyload alt="Rufus界面设置"></p>
+<p>总的来说，不是数据分析代码错了，而是示例数据集没有成功下载到本地。</p>
 <hr>
-<h2 id="2-win10系统安装"><a href="#2-win10系统安装" class="headerlink" title="2. win10系统安装"></a>2. win10系统安装</h2><ol>
-<li><p>进入BIOS&#x2F;UEFI并设置U盘启动：</p>
+<h2 id="2-解决方案一：手动下载-iris-csv-并放入-Seaborn-缓存目录"><a href="#2-解决方案一：手动下载-iris-csv-并放入-Seaborn-缓存目录" class="headerlink" title="2. 解决方案一：手动下载 iris.csv 并放入 Seaborn 缓存目录"></a>2. 解决方案一：手动下载 <code>iris.csv</code> 并放入 Seaborn 缓存目录</h2><p>既然自动下载常常受网络影响而失败，最直接的办法就是手动下载 <code>iris.csv</code>，并放入 Seaborn 的默认数据目录。此后运行 <code>sns.load_dataset(&quot;iris&quot;)</code> 时，Seaborn 会直接从本地读取，不再依赖网络。</p>
+<h3 id="2-1-找到-Seaborn-的数据存放目录"><a href="#2-1-找到-Seaborn-的数据存放目录" class="headerlink" title="2.1 找到 Seaborn 的数据存放目录"></a>2.1 找到 Seaborn 的数据存放目录</h3><p>Windows 下默认路径通常是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\你的用户名\seaborn-data<br></code></pre></td></tr></table></figure>
+
+<p>如果不确定自己的用户名，或者想让 Python 直接告诉你路径，可以运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-built_in">print</span>(sns.get_data_home())<br></code></pre></td></tr></table></figure>
+
+<p>如果这个文件夹不存在，可以手动创建。注意文件夹名称是 <code>seaborn-data</code>，中间有一个短横线。</p>
+<h3 id="2-2-下载-iris-csv"><a href="#2-2-下载-iris-csv" class="headerlink" title="2.2 下载 iris.csv"></a>2.2 下载 <code>iris.csv</code></h3><p>前往 <a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">Seaborn 官方数据仓库</a>，找到 <code>iris.csv</code> 文件并下载即可。</p>
+<p>如果 GitHub 访问不稳定，可以借助 <strong>Watt Toolkit</strong> 等工具来改善连接 (具体配置可参考 <a href="/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>) 。此外，出于交流学习的目的，本博客也提供了该数据集的直接下载链接：</p>
+<blockquote>
+<p><a href="/dataset/iris.csv">iris.csv</a></p>
+</blockquote>
+<p>下载完成后，建议检查以下几点：</p>
 <ul>
-<li><p>将制作好的系统盘插入待安装电脑的USB接口。</p>
-</li>
-<li><p>按下开机键，并在屏幕亮起后立即、不间断地按特定快捷键进入BIOS&#x2F;UEFI设置界面。常见按键为：F2, F10, F12, Del, Esc（具体取决于主板品牌，开机画面通常会有提示）。</p>
-</li>
-<li><p>在BIOS界面中，找到 Boot（启动） 选项卡或类似选项。</p>
-</li>
-<li><p>将U盘（通常显示为U盘品牌名或带有“USB”字样）设置为第一启动项。</p>
-</li>
-<li><p>保存更改并退出（通常按F10），电脑将自动重启。</p>
-</li>
+<li><strong>文件名</strong>：必须是 <code>iris.csv</code>，不要变成 <code>iris (1).csv</code> 或 <code>iris.csv.txt</code> (Windows 可能隐藏扩展名，请留意) ；</li>
+<li><strong>文件内容</strong>：用记事本打开时，第一行应该是表头 (<code>sepal_length,sepal_width,...</code>) ，而不是 GitHub 网页的 HTML 内容；</li>
+<li><strong>存放位置</strong>：<code>iris.csv</code> 应放在 <code>seaborn-data</code> 文件夹里，而不是放在你的 <code>.py</code> 文件旁边。</li>
 </ul>
-</li>
-<li><p>开始安装：</p>
-<ul>
-<li>重启后，系统将从U盘引导，进入蓝色背景的Windows安装程序界面，点击【下一步】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall1.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>点击【现在安装】。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall2.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>点击【我没有产品密钥】（可在安装完成后通过系统设置输入）。</li>
-</ul>
-<p> <img src="/Windows_install/wininstall3.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>选择操作系统版本，推荐选择专业版，然后点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall4.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>勾选接受许可条款，点击【下一步】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall5.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>选择【自定义：仅安装Windows(高级)】</li>
-</ul>
-<p> <img src="/Windows_install/wininstall6.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li><p>此时会进入硬盘分区列表界面。这里需要极其谨慎：</p>
-</li>
-<li><ul>
-<li>情景一（新硬盘&#x2F;准备充分）：如果之前在磁盘管理中预留了“未分配空间”，可以直接选中该空间，点击【下一步】，安装程序会自动在此创建必要分区并安装。</li>
-</ul>
-</li>
-<li><ul>
-<li>情景二（重装系统，覆盖旧C盘）：你需要根据分区大小和分区类型准确识别出旧的系统盘（C盘）。请务必再三确认（例如，原先C盘是100GB，这里看到一个100GB左右的主分区）。选中它，直接点击【下一步】。安装程序会提示“可能将旧文件移入Windows.old文件夹”，确认无误后继续。</li>
-</ul>
-</li>
-<li><ul>
-<li>⚠️ <strong>风险提示：如果你不确定哪个分区是旧系统盘，或者哪个分区存有重要数据，请立即停止！</strong> 此时应该退出安装程序，关机，并拔掉U盘。重启进入原系统后，打开磁盘管理再次确认分区布局和盘符对应关系。一旦在此处选错分区并进行安装，该分区的所有数据将被覆盖，极难恢复。</li>
-</ul>
-</li>
-</ul>
-<p> <img src="/Windows_install/wininstall7.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>等待安装程序运行。安装完成后电脑会自动重启，此时需要拔掉U盘。重启后进入系统设置界面。<br> <img src="/Windows_install/wininstall8.png" srcset="/img/loading.gif" lazyload></li>
-</ul>
-</li>
+<h3 id="2-3-放入本地目录后重新运行"><a href="#2-3-放入本地目录后重新运行" class="headerlink" title="2.3 放入本地目录后重新运行"></a>2.3 放入本地目录后重新运行</h3><p>最终目录结构大致如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">C:\Users\你的用户名\seaborn-data\iris.csv<br></code></pre></td></tr></table></figure>
+
+<p>然后重新运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><br>iris = sns.load_dataset(<span class="hljs-string">&quot;iris&quot;</span>)<br><span class="hljs-built_in">print</span>(iris.head())<br></code></pre></td></tr></table></figure>
+
+<p>如果能看到类似下面的表格，就说明加载成功了：</p>
+<table>
+<thead>
+<tr>
+<th>sepal_length</th>
+<th>sepal_width</th>
+<th>petal_length</th>
+<th>petal_width</th>
+<th>species</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>setosa</td>
+</tr>
+<tr>
+<td>4.9</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>setosa</td>
+</tr>
+<tr>
+<td>4.7</td>
+<td>3.2</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>setosa</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-故障排查清单"><a href="#2-4-故障排查清单" class="headerlink" title="2.4 故障排查清单"></a>2.4 故障排查清单</h3><p>虽然 2.2 已提醒过，但如果放置后仍报错，不妨按下面几点逐一核对：</p>
+<ol>
+<li><strong>路径是否正确</strong>：运行 <code>print(sns.get_data_home())</code>，确认 <code>iris.csv</code> 就在打印出来的目录里。</li>
+<li><strong>文件名是否正确</strong>：尤其注意 Windows 隐藏扩展名的问题。</li>
+<li><strong>文件内容是否正确</strong>：打开文件检查：如果包含 <html> 标签，说明下载成了网页；如果文件为空，则说明下载未完成。两者都无法被 Pandas 正常读取，需要重新下载。</li>
 </ol>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#97;&#117;&#x72;&#111;&#114;&#x61;&#104;&#x69;&#x6b;&#x65;&#x72;&#64;&#49;&#54;&#x33;&#x2e;&#x63;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
-=======
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#x75;&#x72;&#111;&#114;&#x61;&#104;&#105;&#107;&#101;&#x72;&#64;&#x31;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;">aurorahiker@163.com</a>留言！下篇见。</p>
->>>>>>> b2484eda05545ec019a613f8d11fec85610fd888
-=======
-<p>如果你对上述Windows系统安装步骤还有疑问，欢迎向我的邮箱<a href="mailto:&#x61;&#117;&#114;&#111;&#114;&#x61;&#x68;&#x69;&#107;&#x65;&#x72;&#64;&#x31;&#54;&#51;&#46;&#x63;&#111;&#109;">aurorahiker@163.com</a>留言！下篇见。</p>
->>>>>>> f8c7b6fb4792ddc2ccbd14d156cc2939489020c0
+<p>也可以用下面这段代码快速验证文件是否真的存在：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><br>iris_path = Path(sns.get_data_home()) / <span class="hljs-string">&quot;iris.csv&quot;</span><br><span class="hljs-built_in">print</span>(iris_path)<br><span class="hljs-built_in">print</span>(iris_path.exists())<br></code></pre></td></tr></table></figure>
+
+<p>如果第二行输出是 <code>True</code>，说明文件位置基本没问题；如果是 <code>False</code>，则表明文件没有放进 Seaborn 正在查找的目录，请回到第 1 步重新核对路径。</p>
+<hr>
+<h2 id="3-解决方案二：直接使用-sklearn-datasets-load-iris"><a href="#3-解决方案二：直接使用-sklearn-datasets-load-iris" class="headerlink" title="3. 解决方案二：直接使用 sklearn.datasets.load_iris()"></a>3. 解决方案二：直接使用 <code>sklearn.datasets.load_iris()</code></h2><p>如果只是为了学习绘图或机器学习，不一定非要使用 <code>sns.load_dataset(&quot;iris&quot;)</code>。<code>scikit-learn</code> 也内置了 Iris 数据集，而且不需要从 GitHub 下载，离线可用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br><br>iris_raw = load_iris(as_frame=<span class="hljs-literal">True</span>)<br>iris = iris_raw.frame.copy()<br><br><span class="hljs-comment"># 将数值标签映射为物种名称</span><br>species_map = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">enumerate</span>(iris_raw.target_names))<br>iris[<span class="hljs-string">&quot;species&quot;</span>] = iris[<span class="hljs-string">&quot;target&quot;</span>].<span class="hljs-built_in">map</span>(species_map)<br>iris = iris.drop(columns=<span class="hljs-string">&quot;target&quot;</span>)<br><br><span class="hljs-comment"># 统一列名，与 Seaborn 版本保持一致</span><br>iris = iris.rename(columns=&#123;<br>    <span class="hljs-string">&quot;sepal length (cm)&quot;</span>: <span class="hljs-string">&quot;sepal_length&quot;</span>,<br>    <span class="hljs-string">&quot;sepal width (cm)&quot;</span>: <span class="hljs-string">&quot;sepal_width&quot;</span>,<br>    <span class="hljs-string">&quot;petal length (cm)&quot;</span>: <span class="hljs-string">&quot;petal_length&quot;</span>,<br>    <span class="hljs-string">&quot;petal width (cm)&quot;</span>: <span class="hljs-string">&quot;petal_width&quot;</span><br>&#125;)<br><br><span class="hljs-built_in">print</span>(iris.head())<br></code></pre></td></tr></table></figure>
+
+<p>这样得到的 <code>iris</code> DataFrame 与 Seaborn 示例数据的列名基本一致，后续绘图代码通常只需要很少修改 (甚至无需修改) 。</p>
+<hr>
+<p>如果在使用上述两种方法后，依然无法顺利加载 Iris 数据集，欢迎发邮件至 <a href="mailto:&#x61;&#117;&#x72;&#111;&#114;&#x61;&#104;&#105;&#107;&#101;&#114;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 留言交流，我们共同探讨 Bug 的解决方式，完善这篇博客。</p>
 
                 
               </div>
@@ -534,7 +502,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="category-chain-item">计算机基础与实验平台搭建</a>
+  <a href="/categories/Bug-%E5%9B%BE%E9%89%B4/" class="category-chain-item">Bug 图鉴</a>
   
   
 
@@ -549,9 +517,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
+        <a href="/tags/Python-%E5%85%A5%E9%97%A8/" class="print-no-link">#Python 入门</a>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="print-no-link">#计算机基础</a>
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" class="print-no-link">#数据可视化</a>
+      
+        <a href="/tags/Seaborn/" class="print-no-link">#Seaborn</a>
+      
+        <a href="/tags/Bug-%E5%9B%BE%E9%89%B4/" class="print-no-link">#Bug 图鉴</a>
       
     </div>
   
@@ -563,8 +535,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Windows系统的安装</div>
-      <div>https://aurorahiker.github.io/2026/02/21/Windows系统的安装/</div>
+      <div>sns.load_dataset(“iris”) 报错？网络问题的两种解法</div>
+      <div>https://aurorahiker.github.io/2026/08/27/鸢尾花数据集加载报错的两种解法/</div>
     </div>
     <div class="license-meta">
       
@@ -576,7 +548,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026-02-21</div>
+          <div>2026-08-27</div>
         </div>
       
       
@@ -608,18 +580,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/02/22/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/02/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/" title="计算机基础：从零认识计算机硬件">
-                        <span class="hidden-mobile">计算机基础：从零认识计算机硬件</span>
+                      <a href="/2026/08/14/Git-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B%EF%BC%9A%E5%86%99%E7%BB%99%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E4%BB%A3%E7%A0%81%E6%97%B6%E9%97%B4%E7%BA%BF%E7%AE%A1%E7%90%86%E6%8C%87%E5%8D%97/" title="Git 简明教程：写给个人开发者的代码时间线管理指南">
+                        <span class="hidden-mobile">Git 简明教程：写给个人开发者的代码时间线管理指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
