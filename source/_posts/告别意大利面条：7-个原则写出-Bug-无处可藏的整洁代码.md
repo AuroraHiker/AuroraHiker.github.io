@@ -9,6 +9,7 @@ series:
 categories:
   - 野生程序员的进化之路
 author: AuroraHiker
+date: 2026-08-11 14:30:00
 ---
 
 第一次尝试把代码打包成一个 `class` 的时候，笔者其实还不知道软件工程里这些最基本的原则。
