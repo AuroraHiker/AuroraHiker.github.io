@@ -1,0 +1,1094 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，DataFrame (数据框) 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。 建议尚未接触过 Py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas 简明教程">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/07/17/Pandas-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="AuroraHiker’s Code Trail">
+<meta property="og:description" content="Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，DataFrame (数据框) 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。 建议尚未接触过 Py">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-17T01:28:23.000Z">
+<meta property="article:modified_time" content="2026-08-29T19:05:40.781Z">
+<meta property="article:author" content="AuroraHiker">
+<meta property="article:tag" content="Python 入门">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Pandas 简明教程 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Pandas 简明教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-07-17 09:28" pubdate>
+          2026年7月17日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          123 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Pandas 简明教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Pandas 是利用 Python 进行数据分析的基石，内置多种强大数据类型，在日常分析中，<strong>DataFrame (数据框)</strong> 的使用频率一骑绝尘，足以应对 80% 以上的实战需求。作为一份专为新手设计的入门级简明教程，本文将手把手带您走通 DataFrame 从读取、清洗、运算到导出的全流程，轻松上手最核心的数据分析技能。所有示例数据均采用经典的 Iris (鸢尾花) 数据集。</p>
+<p><strong>建议尚未接触过 Python 语法的读者先完成 <a href="/2026/08/11/Python-%E5%85%A5%E9%97%A8%EF%BC%9A%E9%9B%B6%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E9%80%9F%E9%80%9A%E6%8C%87%E5%8D%97/" title="Python 入门：零基础编程速通指南">Python 入门：零基础编程速通指南</a> 的学习，再回到这里。</strong></p>
+<hr>
+<h1 id="0-准备工作：数据导入与查看"><a href="#0-准备工作：数据导入与查看" class="headerlink" title="0. 准备工作：数据导入与查看"></a>0. 准备工作：数据导入与查看</h1><h2 id="0-1-安装所需的库"><a href="#0-1-安装所需的库" class="headerlink" title="0.1 安装所需的库"></a>0.1 安装所需的库</h2><blockquote>
+<p>小技巧：在 Jupyter Notebook 中，行首的感叹号 <code>!</code> 可以让 Python 识别并执行终端命令。因此无需切换窗口，直接在单元格中运行 <code>!pip install ...</code> 即可安装库。例如：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">!pip install pandas seaborn openpyxl<br></code></pre></td></tr></table></figure>
+
+<p>若在终端&#x2F;命令行中执行 (不加感叹号) ，则使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install pandas seaborn openpyxl<br></code></pre></td></tr></table></figure>
+
+<h2 id="0-2-初识数据：载入并查看-Iris-数据集"><a href="#0-2-初识数据：载入并查看-Iris-数据集" class="headerlink" title="0.2 初识数据：载入并查看 Iris 数据集"></a>0.2 初识数据：载入并查看 Iris 数据集</h2><p>拿到数据的第一步，不是急着处理，而是先 “看一眼”。我们使用 Seaborn 库内置的 Iris 数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-comment"># 加载数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>iris = sns.load_dataset(<span class="hljs-string">&#x27;iris&#x27;</span>)<br><br><span class="hljs-comment"># ---- 查看数据概览 ----</span><br><span class="hljs-built_in">print</span>(iris.head())      <span class="hljs-comment"># 查看前 5 行 (可指定行数，如 head(10)) </span><br><span class="hljs-built_in">print</span>(iris.info())      <span class="hljs-comment"># 查看列名、非空数量及数据类型</span><br><span class="hljs-built_in">print</span>(iris.describe())  <span class="hljs-comment"># 查看数值列的统计摘要 (均值、标准差、分位数)</span><br><span class="hljs-built_in">print</span>(iris.shape)       <span class="hljs-comment"># 数据形状 (几行几列)</span><br><span class="hljs-built_in">print</span>(iris.columns)     <span class="hljs-comment"># 查看列名</span><br><span class="hljs-built_in">print</span>(iris.index)       <span class="hljs-comment"># 查看索引范围</span><br><span class="hljs-built_in">print</span>(iris.count())     <span class="hljs-comment"># 快速统计非空值个数 (与 info 互补)</span><br></code></pre></td></tr></table></figure>
+
+<details>
+<summary><b>Debug: <code>sns.load_dataset('iris')</code> 失败 (Timeout Error) 怎么办？</b></summary>
+
+
+<p><strong>Bug 成因</strong></p>
+<p>该错误通常由 Seaborn 无法从 GitHub 自动下载数据集引发。</p>
+<p><strong>解决方案 (手动下载并放置到本地目录)</strong></p>
+<ol>
+<li><p><strong>找到 Seaborn 的数据存放目录</strong><br>Windows 默认路径为：<br><code>C:\Users\你的用户名\seaborn-data</code><br> (若不存在，可手动创建该文件夹) </p>
+</li>
+<li><p><strong>从 GitHub 获取 <code>iris.csv</code> 文件</strong><br>访问 <a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">Seaborn 官方数据仓库</a>，找到 <code>iris.csv</code> 文件并下载。<br>若 GitHub 访问不稳定，推荐使用 <strong>Watt Toolkit (加速器)</strong> 改善连接，具体配置可参考 <a href="/2026/05/05/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>。</p>
+<p>另外，出于交流学习的目的，本教程也提供该数据集的直接下载：<br><a href="/dataset/iris.csv">iris.csv</a></p>
+</li>
+<li><p><strong>将下载的 <code>iris.csv</code> 放入 <code>seaborn-data</code> 目录</strong>，之后重新运行 <code>sns.load_dataset(&#39;iris&#39;)</code> 即可正常加载。</p>
+</li>
+</ol>
+</details>
+
+<hr>
+<h2 id="0-3-导出本次教程所需的数据"><a href="#0-3-导出本次教程所需的数据" class="headerlink" title="0.3 导出本次教程所需的数据"></a>0.3 导出本次教程所需的数据</h2><p>为了便于后续演示从文件读取，我们先利用导出功能将数据保存为本地文件 (导出功能的详细用法将在最后一节介绍)。这里先执行保存操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">iris.to_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)          <span class="hljs-comment"># 带表头的标准 CSV</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, index=<span class="hljs-literal">False</span>, header=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 不带表头的版本 (用于演示 header=None)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 tsv</span><br>iris.to_excel(<span class="hljs-string">&#x27;iris.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存为 excel</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>)  <span class="hljs-comment"># 有行索引的版本 (用于演示 指定行索引)</span><br></code></pre></td></tr></table></figure>
+
+<p>勘误：当 iris数据集导入失败时产生timeout error报错的解决方案：<br>bug原因：联网下载数据集失败<br>解决思路：手动下载数据集，存到seaborn包相应的目录中。<br>解决步骤：1.找到本地seaborn包存放数据的目录：C:\Users\用户名\seaborn-data<br>2.从github下载数据集：打开<a target="_blank" rel="noopener" href="https://github.com/mwaskom/seaborn-data/">seaborn官方项目</a>,找到<code>iris.csv</code>文件打开，快捷键<code>ctrl+s</code>保存。使用Watt Toolkit加速器可以稳定访问GitHub，详见<a href="/2026/05/05/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>。出于交流学习的目的，本教程也提供iris数据集的下载，供有需要的读者使用：iris.csv(插入下载索引)</p>
+<p>3.下载后保存到<code>seaborn-data</code>目录即可。</p>
+<hr>
+<h1 id="1-读取-创建-DataFrame"><a href="#1-读取-创建-DataFrame" class="headerlink" title="1. 读取 &#x2F; 创建 DataFrame"></a>1. 读取 &#x2F; 创建 DataFrame</h1><h2 id="1-1-读取文件"><a href="#1-1-读取文件" class="headerlink" title="1.1 读取文件"></a>1.1 读取文件</h2><p>Pandas 对常见表格格式的支持非常友好，只需一行代码就能导入。但现实中拿到的文件往往不规整，学会灵活配置参数，才是真正“会用”的开始。</p>
+<p>先看三种基本读法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># CSV (逗号分隔，最常用) —— 读取带表头的 iris.csv</span><br>df_csv = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>)<br><br><span class="hljs-comment"># TSV (制表符分隔，指定 sep 参数)</span><br>tsv = pd.read_csv(<span class="hljs-string">&#x27;iris.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>)<br><br><span class="hljs-comment"># Excel (需安装 openpyxl) </span><br>df_excel = pd.read_excel(<span class="hljs-string">&#x27;iris.xlsx&#x27;</span>, sheet_name=<span class="hljs-string">&#x27;Sheet1&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>其中 read_csv 是使用率最高的函数，下面介绍的是常用参数。read_excel 的用法也大致相同，区别主要在于多了 sheet_name 参数 (用于指定读取哪个工作表，可以传工作表名称、位置序号或 None 读取所有表)。掌握这些参数后, 就能轻松完成 CSV 和 Excel 文件的导入。更详细的参数说明，可查阅官方文档。</p>
+<p><strong>列名处理</strong></p>
+<ol>
+<li><strong>文件自带表头</strong>。当首行就是列名时，保持默认即可 (<code>header=0</code>)，Pandas 会自动将第一行识别为列名。当第 x 行是列名，则 <code>header=x-1</code> (注意python是从0开始计数的)。</li>
+<li><strong>文件没有表头 (数据从第一行就开始)</strong>。务必加上 <code>header=None</code>，否则第一行数据会被“错认”成列名，导致数据少一行。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, header=<span class="hljs-literal">None</span>)  <span class="hljs-comment"># 列名变为默认值 0, 1, 2, 3, 4</span><br></code></pre></td></tr></table></figure></li>
+<li><strong>自定义列名 (覆盖原表头或为无表头文件命名)</strong>。用 <code>names</code> 参数传入一个列表，它会强行指定数据框的列名。若文件有表头，需与 <code>header=0</code> 搭配, 它会直接覆盖原来的列名。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 为无表头文件指定列名</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris_no_header.csv&#x27;</span>, header=<span class="hljs-literal">None</span>,<br>             names=[<span class="hljs-string">&#x27;sepal_len&#x27;</span>, <span class="hljs-string">&#x27;sepal_wid&#x27;</span>, <span class="hljs-string">&#x27;petal_len&#x27;</span>, <span class="hljs-string">&#x27;petal_wid&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br><span class="hljs-comment"># 覆盖有表头文件的列名 (如改为中文，方便阅读)</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, names=[<span class="hljs-string">&#x27;花萼长度&#x27;</span>, <span class="hljs-string">&#x27;花萼宽度&#x27;</span>, <span class="hljs-string">&#x27;花瓣长度&#x27;</span>, <span class="hljs-string">&#x27;花瓣宽度&#x27;</span>, <span class="hljs-string">&#x27;品种&#x27;</span>], header=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>其他实用参数</strong></p>
+<ul>
+<li><strong><code>index_col</code> (指定行索引)</strong>：若文件中第 x 列可作为行的唯一标识 (如 <code>id</code> 列)，设置 <code>index_col=x-1</code> 即可将其设为行索引，后续按行取值会更方便。默认情况下，Pandas 会使用从 0 开始的数字序号作为行索引。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris_index.csv&#x27;</span>, index_col=<span class="hljs-number">0</span>)  <span class="hljs-comment"># 将第一列 (id) 设为行索引，id 是唯一值，适合做索引</span><br></code></pre></td></tr></table></figure></li>
+<li><strong><code>usecols</code> (只读取部分列)</strong>：当文件有几十列而你只需要 3 列时，用该参数能大幅减少内存占用。比如 <code>usecols=[&#39;sepal_length&#39;,&#39;species&#39;]</code> (按列名) 或 <code>usecols=[0, 4]</code> (按位置)。  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只读取花萼长度和品种两列 (按列名)</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br><span class="hljs-comment"># 或按位置</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, usecols=[<span class="hljs-number">0</span>, <span class="hljs-number">4</span>])<br></code></pre></td></tr></table></figure></li>
+<li><strong><code>dtype</code> (预指定数据类型)</strong>：防止 Pandas 自作聪明地把 “001” 读成数值 1，或把身份证号读成浮点数。传入字典即可，如 <code>dtype=&#123;&#39;id&#39;: str, &#39;score&#39;: float&#125;</code>。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_csv(<span class="hljs-string">&#x27;iris.csv&#x27;</span>, dtype=&#123;<span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;species&#x27;</span>: <span class="hljs-built_in">str</span>&#125;)<br></code></pre></td></tr></table></figure></li>
+<li><strong><code>encoding</code> (编码格式)</strong>：读取中文文件时容易遇到乱码，优先试 <code>encoding=&#39;utf-8&#39;</code>，若报错或乱码依旧，换 <code>encoding=&#39;gbk&#39;</code> 或 <code>encoding=&#39;utf-8-sig&#39;</code> (后者对 Excel 导出的 CSV 更友好)。</li>
+<li><strong><code>skiprows</code> (跳过开头若干行)</strong>：如果文件前N行是注释或说明，用 <code>skiprows=N</code> 直接跳过。</li>
+</ul>
+<p>下面是一个综合示例，把上面几个参数串起来，展示如何用 Iris 文件做一些定制化读取:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 综合实战：读取 iris.csv，自定义列名，将第一列设为行索引，</span><br><span class="hljs-comment"># 只读取花萼长度和品种两列，并强制指定数据类型</span><br>df_custom = pd.read_csv(<br>    <span class="hljs-string">&#x27;iris_index.csv&#x27;</span>,<br>    usecols=[<span class="hljs-number">1</span>, <span class="hljs-number">5</span>],          <span class="hljs-comment"># 筛选出第 2 列 (sepal_length) 和第 6 列 (species)</span><br>    header=<span class="hljs-number">0</span>,                  <span class="hljs-comment"># 指定表头行 (默认值为 0)</span><br>    names=[<span class="hljs-string">&#x27;SL&#x27;</span>, <span class="hljs-string">&#x27;SP&#x27;</span>],   <span class="hljs-comment"># 为筛选出的列依次命名 (必须与 usecols 的列数一致)</span><br>    index_col=<span class="hljs-number">0</span>,                <span class="hljs-comment"># 将第一列 (id) 设为行索引</span><br>    dtype=&#123;<span class="hljs-string">&#x27;SL&#x27;</span>: <span class="hljs-built_in">float</span>, <span class="hljs-string">&#x27;SP&#x27;</span>: <span class="hljs-built_in">str</span>&#125;   <span class="hljs-comment"># 指定类型</span><br>)<br><span class="hljs-built_in">print</span>(df_custom.head())<br></code></pre></td></tr></table></figure>
+
+<p>学会这些参数，无论面对的是干净的标准数据集，还是从各处收集来的格式未统一的文件，你都能顺利导入 Pandas 中，为后续分析铺平道路。</p>
+<h2 id="1-2-从头构建"><a href="#1-2-从头构建" class="headerlink" title="1.2 从头构建"></a>1.2 从头构建</h2><p>当手头有少量测试数据时，可以直接在代码里创建：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方式一：字典 (键为列名，值为列表)</span><br>data_dict = &#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: [<span class="hljs-number">5.1</span>, <span class="hljs-number">4.9</span>, <span class="hljs-number">4.7</span>],<br>    <span class="hljs-string">&#x27;sepal_width&#x27;</span>: [<span class="hljs-number">3.5</span>, <span class="hljs-number">3.0</span>, <span class="hljs-number">3.2</span>],<br>    <span class="hljs-string">&#x27;species&#x27;</span>: [<span class="hljs-string">&#x27;setosa&#x27;</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>]<br>&#125;<br><br>df1 = pd.DataFrame(data_dict)<br><br><span class="hljs-comment"># 方式二：列表嵌套 (每行作为一个列表)</span><br>data_list = [[<span class="hljs-number">5.1</span>, <span class="hljs-number">3.5</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>], [<span class="hljs-number">4.9</span>, <span class="hljs-number">3.0</span>, <span class="hljs-string">&#x27;setosa&#x27;</span>]]<br>df2 = pd.DataFrame(data_list, columns=[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;sepal_width&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>])<br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="2-选择与筛选数据"><a href="#2-选择与筛选数据" class="headerlink" title="2. 选择与筛选数据"></a>2. 选择与筛选数据</h1><p>这是数据分析中最频繁的动作，请务必熟练掌握。</p>
+<h2 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h2><ul>
+<li>按列索引调用  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 单列 → 返回 Series (带索引的一维数组)</span><br>sepal = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]  <br><span class="hljs-comment"># 快捷方式 (列名无空格时)</span><br>sepal = iris.sepal_length  <br><br><span class="hljs-comment"># 多列 → 返回 DataFrame (注意双中括号)</span><br>sub_df = iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;species&#x27;</span>]]<br></code></pre></td></tr></table></figure></li>
+</ul>
+<details>
+  <summary><strong>思考1：为什么提取多列需要用双中括号？最里层中括号代表什么意思？</strong> (点击展开参考答案) </summary>
+
+<p><strong>1. 外层中括号 (<code>df[...]</code>) ** 是 Pandas 的</strong>列索引运算符**，它的功能是“从 DataFrame 中取出指定的列”。</p>
+<p><strong>2. 最里层的中括号 <code>[ ]</code></strong> 代表 **Python 原生的列表 (List) **。</p>
+<ul>
+<li><p><strong>为什么必须用双层？</strong><br>因为 Pandas 的 <code>df[ ]</code> 语法规定：<strong>括号内只能传入一个参数</strong>。</p>
+<ul>
+<li>如果你想取<strong>单列</strong>，传入一个<strong>字符串</strong> (<code>df[&#39;列名&#39;]</code>) ，返回 <code>Series</code>。</li>
+<li>如果你想取<strong>多列</strong>，你必须把多个列名<strong>打包成一个整体</strong>传入。而 Python 中最直接的“打包容器”就是<strong>列表</strong>。</li>
+<li>所以 <code>df[ [&#39;列1&#39;, &#39;列2&#39;] ]</code> 的逻辑是：<strong>外层的索引器</strong>接收到了<strong>一个列表对象</strong>，Pandas 识别出这个列表里装了多个字符串，于是解析并返回多列组成的 <code>DataFrame</code>。</li>
+</ul>
+</li>
+<li><p><strong>如果少写一层会怎样？</strong><br>如果你写成 <code>df[&#39;列1&#39;, &#39;列2&#39;]</code>，Python 解释器会把 <code>&#39;列1&#39;, &#39;列2&#39;</code> 解释为一个<strong>元组 (Tuple) <strong>。此时 Pandas 会去 DataFrame 中查找名为 <code>(&#39;列1&#39;, &#39;列2&#39;)</code> 的</strong>单一列名</strong> (这在多层索引 MultiIndex 中才用得到) ，绝大多数情况下会直接报错 <code>KeyError</code>。</p>
+</li>
+</ul>
+<h2 id="代码验证-你可以在-Jupyter-中试一下"><a href="#代码验证-你可以在-Jupyter-中试一下" class="headerlink" title="代码验证 (你可以在 Jupyter 中试一下)"></a>代码验证 (你可以在 Jupyter 中试一下)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df = pd.DataFrame(&#123;<span class="hljs-string">&#x27;A&#x27;</span>: [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], <span class="hljs-string">&#x27;B&#x27;</span>: [<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-string">&#x27;C&#x27;</span>: [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]&#125;)<br><br><span class="hljs-comment"># 正确：传入一个列表 (双括号) </span><br><span class="hljs-built_in">print</span>(df[[<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>]])  <br><br><span class="hljs-comment"># 错误：传入一个元组 (单括号内加逗号) ，会报错 KeyError</span><br><span class="hljs-comment"># print(df[&#x27;A&#x27;, &#x27;B&#x27;])  </span><br></code></pre></td></tr></table></figure>
+</details> 
+
+<ul>
+<li>按列位置调用  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">col_0 = iris.iloc[:, <span class="hljs-number">0</span>]          <span class="hljs-comment"># 冒号表示所有行，0 表示第一列</span><br><br><span class="hljs-comment"># 选择前 3 列,类似于列表切片 (位置 0, 1, 2) → sepal_length, sepal_width, petal_length</span><br>first_3_cols = iris.iloc[:, <span class="hljs-number">0</span>:<span class="hljs-number">3</span>]<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-2-选择行-loc-按标签-iloc-按位置"><a href="#2-2-选择行-loc-按标签-iloc-按位置" class="headerlink" title="2.2 选择行 (loc 按标签 &#x2F; iloc 按位置)"></a>2.2 选择行 (loc 按标签 &#x2F; iloc 按位置)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按位置 (前 3 行)</span><br>row_first3 = iris.iloc[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]  <br><br><span class="hljs-comment"># 按索引名 (假设索引是 0,1,2...，此处同 iloc)</span><br>row_5 = iris.loc[<span class="hljs-number">4</span>]  <br></code></pre></td></tr></table></figure>
+
+<h2 id="2-3-条件筛选-布尔索引"><a href="#2-3-条件筛选-布尔索引" class="headerlink" title="2.3 条件筛选 (布尔索引)"></a>2.3 条件筛选 (布尔索引)</h2><p>通过逻辑判断快速过滤出符合条件的子集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 筛选出所有 &quot;setosa&quot; 品种</span><br>setosa_df = iris[iris[<span class="hljs-string">&#x27;species&#x27;</span>] == <span class="hljs-string">&#x27;setosa&#x27;</span>]<br><br><span class="hljs-comment"># 筛选出 &quot;sepal_length &gt; 6.0&quot; 且品种为 &quot;virginica&quot; 的数据</span><br><span class="hljs-comment"># 注意：多个条件用 &amp; (且) 或 | (或)，每个条件必须加括号</span><br>virginica_large = iris[(iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] &gt; <span class="hljs-number">6.0</span>) &amp; (iris[<span class="hljs-string">&#x27;species&#x27;</span>] == <span class="hljs-string">&#x27;virginica&#x27;</span>)]<br><br><span class="hljs-comment"># 筛选出花瓣长度在 [3.0, 5.0] 区间内的数据</span><br>between_df = iris[iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].between(<span class="hljs-number">3.0</span>, <span class="hljs-number">5.0</span>)]<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-4-排序-sort-values"><a href="#2-4-排序-sort-values" class="headerlink" title="2.4 排序 (sort_values)"></a>2.4 排序 (sort_values)</h2><p>查看最大值、最小值或排名时，排序是极为常用的操作。</p>
+<p><code>sort_values</code> 的核心参数是 <code>ascending：ascending=True</code> (默认) 表示升序 (从小到大)，<code>ascending=False</code> 表示降序 (从大到小)。当按多列排序时，<code>ascending</code> 可以传入一个与列名顺序对应的布尔列表，分别控制每列的升降序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按花萼长度升序排列</span><br>sorted_asc = iris.sort_values(<span class="hljs-string">&#x27;sepal_length&#x27;</span>)<br><br><span class="hljs-comment"># 按花萼长度降序，若相同则按花瓣宽度升序</span><br>sorted_mix = iris.sort_values([<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_width&#x27;</span>], ascending=[<span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>])<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="3-数据清洗"><a href="#3-数据清洗" class="headerlink" title="3. 数据清洗"></a>3. 数据清洗</h1><p>现实数据往往有异常值，或数据本身缺失、类型错误，清洗是绕不开的步骤。</p>
+<h2 id="3-1-缺失值检测与处理"><a href="#3-1-缺失值检测与处理" class="headerlink" title="3.1 缺失值检测与处理"></a>3.1 缺失值检测与处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 检测缺失值 (Iris 数据很干净，此处仅为演示方法)</span><br><span class="hljs-built_in">print</span>(iris.isnull().<span class="hljs-built_in">sum</span>())  <span class="hljs-comment"># 统计每列缺失个数</span><br><br><span class="hljs-comment"># 方法一：粗暴删除含 NA 的行 (慎用)</span><br>df_dropped = iris.dropna()<br><br><span class="hljs-comment"># 方法二：填充缺失值 (更推荐)</span><br><span class="hljs-comment"># 用该列均值填充 (数值列)</span><br><span class="hljs-comment"># iris[&#x27;sepal_length&#x27;].fillna(iris[&#x27;sepal_length&#x27;].mean(), inplace=True)</span><br><span class="hljs-comment"># 或用特定值填充 (字符串列)</span><br><span class="hljs-comment"># iris[&#x27;species&#x27;].fillna(&#x27;unknown&#x27;, inplace=True)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="3-2-类型转换-astype"><a href="#3-2-类型转换-astype" class="headerlink" title="3.2 类型转换 (astype)"></a>3.2 类型转换 (astype)</h2><p>确保数据类型符合预期，避免计算时报错：</p>
+<ul>
+<li>将物种列转为 category 类型：就是将 species 列从普通的字符串列 (object 类型)，转换为分类类型。  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;species&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].astype(<span class="hljs-string">&#x27;category&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>如果查看 <code>iris[&#39;species&#39;].cat.categories</code>，会看到底层存储的三个类别值：<code>[&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]</code>。</p>
+</blockquote>
+</li>
+<li>将浮点型转为整型 (注意精度丢失)：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].astype(<span class="hljs-string">&#x27;int&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-3-列名重命名-rename"><a href="#3-3-列名重命名-rename" class="headerlink" title="3.3 列名重命名 (rename)"></a>3.3 列名重命名 (rename)</h2><p>列名过长、含空格或大小写不规范时，需要修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将列名改为更简洁的英文 (或中文)</span><br>iris.rename(columns=&#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: <span class="hljs-string">&#x27;Sepal_Len&#x27;</span>,<br>    <span class="hljs-string">&#x27;sepal_width&#x27;</span>: <span class="hljs-string">&#x27;Sepal_Wid&#x27;</span><br>&#125;, inplace=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># inplace=True 表示直接修改原数据框</span><br><br><span class="hljs-comment"># 试验完记得再调整回来</span><br><span class="hljs-comment"># iris = sns.load_dataset(&#x27;iris&#x27;)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="4-常用计算与变换"><a href="#4-常用计算与变换" class="headerlink" title="4. 常用计算与变换"></a>4. 常用计算与变换</h1><h2 id="4-1-行列求和、均值、计数"><a href="#4-1-行列求和、均值、计数" class="headerlink" title="4.1 行列求和、均值、计数"></a>4.1 行列求和、均值、计数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 对列求均值 (axis=0，默认)</span><br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;sepal_width&#x27;</span>]].mean())<br><br><span class="hljs-comment"># 对行求均值 (axis=1)</span><br>iris[<span class="hljs-string">&#x27;avg_feature&#x27;</span>] = iris.iloc[:, :<span class="hljs-number">4</span>].mean(axis=<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 计数 (非空值数量)</span><br><span class="hljs-built_in">print</span>(iris.count())<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-2-对列进行算术运算"><a href="#4-2-对列进行算术运算" class="headerlink" title="4.2 对列进行算术运算"></a>4.2 对列进行算术运算</h2><p>Pandas 支持将列视为变量进行直接的算术运算，包括列与列之间的运算，以及列与常数之间的运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建新列：花萼长宽比</span><br>iris[<span class="hljs-string">&#x27;sepal_ratio&#x27;</span>] = iris[<span class="hljs-string">&#x27;Sepal_length&#x27;</span>] / iris[<span class="hljs-string">&#x27;sepal_width&#x27;</span>]<br><br><span class="hljs-comment"># 所有花瓣长度 + 2</span><br>iris[<span class="hljs-string">&#x27;petal_length_plus&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>] + <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-3-应用函数-apply-与字符串处理"><a href="#4-3-应用函数-apply-与字符串处理" class="headerlink" title="4.3 应用函数 (apply) 与字符串处理"></a>4.3 应用函数 (apply) 与字符串处理</h2><p>Pandas 内置了大量常用函数 (如求和、均值、排序等)，但实际分析中总会遇到一些个性化需求——比如按某个条件给数据打标签、把两列数据按某种规则组合成一个新值，或者对字符串做拆分提取。这时候 <code>apply</code> 函数就派上了用场。</p>
+<ul>
+<li><p><strong>apply 是什么？</strong></p>
+<p>  <code>apply</code> 是 Pandas 中最灵活的变换工具。它的作用简单说就是：<strong>把函数 (包括你的自定义函数) 应用到 DataFrame 的每一行或每一列上</strong>，然后返回一个新的 Series 或 DataFrame。</p>
+<p>  通俗地理解，<code>apply</code> 就像一条“数据加工流水线”，你只需要告诉它“加工规则 (函数)”和“加工方向 (按行还是按列)”，它就会自动帮你处理完所有数据。</p>
+</li>
+<li><p><strong>axis 参数：控制加工方向</strong></p>
+<p>  <code>axis</code> 是 <code>apply</code> 最核心的参数，决定了函数是逐列执行还是逐行执行：</p>
+<table>
+<thead>
+<tr>
+<th>axis 取值</th>
+<th>含义</th>
+<th>函数接收的参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>axis=0</code> (默认)</td>
+<td>按列遍历，对每一列执行函数</td>
+<td>函数接收一列数据 (Series)</td>
+</tr>
+<tr>
+<td><code>axis=1</code></td>
+<td>按行遍历，对每一行执行函数</td>
+<td>函数接收一行数据 (Series)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>示例</strong></p>
+<ol>
+<li><p>对单列应用函数</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：判断花萼长度是否大于 5</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mark_length</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Long&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Short&#x27;</span><br><br><span class="hljs-comment"># apply 会把 mark_length 应用到 sepal_length 列的每一个值上</span><br>iris[<span class="hljs-string">&#x27;len_tag&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].apply(mark_length)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;len_tag&#x27;</span>]].head())<br><br><span class="hljs-comment"># 也可以直接用 lambda 匿名函数，更简洁</span><br>iris[<span class="hljs-string">&#x27;len_tag&#x27;</span>] = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;Long&#x27;</span> <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;Short&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>lambda 是 Python 中的匿名函数，即“没有名字的临时函数”，专为一次性使用而设计。它的语法非常简洁：<code>lambda 参数: 表达式</code></p>
+<ul>
+<li>左侧 (lambda 参数:)：定义传入的参数</li>
+<li>右侧 (表达式)：对参数执行操作，并自动返回结果</li>
+</ul>
+<p>对比普通函数 (def)，lambda 不用写 return，也不需要起函数名，特别适合作为参数传递给 apply 这类“用完即弃”的场景。</p>
+<p><strong>练习:</strong> 判断sepal_width列度是否大于 3。</p>
+</blockquote>
+</li>
+<li><p>对整行应用函数</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义函数：接收一行数据，返回花瓣长度 / 花萼长度</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calc_ratio</span>(<span class="hljs-params">row</span>):<br>    <span class="hljs-comment"># row 是一行数据 (Series) ，可以通过列名取到每个字段的值</span><br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] != <span class="hljs-number">0</span>:   <span class="hljs-comment"># 防止除以零</span><br>        <span class="hljs-keyword">return</span> row[<span class="hljs-string">&#x27;petal_length&#x27;</span>] / row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>]<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br><span class="hljs-comment"># axis=1 表示按行遍历，每一行都会传入 calc_ratio 函数</span><br>iris[<span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>] = iris.apply(calc_ratio, axis=<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_sepal_ratio&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>结合条件判断，实现复杂的逻辑映射</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据花瓣长度给出等级 (多分支逻辑) </span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">grade_petal</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;S&#x27;</span><br>    <span class="hljs-keyword">elif</span> x &lt; <span class="hljs-number">4.0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;M&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;L&#x27;</span><br><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(grade_petal)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;petal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_grade&#x27;</span>]].head())<br><span class="hljs-comment"># lambda 版本 (嵌套三元运算符) </span><br>iris[<span class="hljs-string">&#x27;petal_grade&#x27;</span>] = iris[<span class="hljs-string">&#x27;petal_length&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&#x27;S&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">1.5</span> <span class="hljs-keyword">else</span> (<span class="hljs-string">&#x27;M&#x27;</span> <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">4.0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;L&#x27;</span>)<br>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h2 id="4-4-字符串处理"><a href="#4-4-字符串处理" class="headerlink" title="4.4 字符串处理"></a>4.4 字符串处理</h2><p>Pandas 为字符串类型的列提供了专门的 <code>.str</code> 接口，方便进行拆分、提取、替换等操作，无需手动写循环。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设我们有列 &#x27;species_info&#x27; 格式为 &#x27;setosa_1&#x27; (品种_编号)</span><br><span class="hljs-comment"># 先创建一个示例列</span><br>iris[<span class="hljs-string">&#x27;species_info&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>] + <span class="hljs-string">&#x27;_&#x27;</span> + iris.index.astype(<span class="hljs-built_in">str</span>)<br><br><span class="hljs-comment"># 使用 .str.split() 拆分为两列</span><br>iris[[<span class="hljs-string">&#x27;species_clean&#x27;</span>, <span class="hljs-string">&#x27;id_num&#x27;</span>]] = iris[<span class="hljs-string">&#x27;species_info&#x27;</span>].<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&#x27;_&#x27;</span>, expand=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;species_info&#x27;</span>, <span class="hljs-string">&#x27;species_clean&#x27;</span>, <span class="hljs-string">&#x27;id_num&#x27;</span>]].head())<br><br><span class="hljs-comment"># 其他常用的 str 方法</span><br>iris[<span class="hljs-string">&#x27;species_upper&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.upper()          <span class="hljs-comment"># 转大写</span><br>iris[<span class="hljs-string">&#x27;contains_setosa&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.contains(<span class="hljs-string">&#x27;setosa&#x27;</span>)  <span class="hljs-comment"># 判断是否包含</span><br>iris[<span class="hljs-string">&#x27;species_len&#x27;</span>] = iris[<span class="hljs-string">&#x27;species&#x27;</span>].<span class="hljs-built_in">str</span>.<span class="hljs-built_in">len</span>()              <span class="hljs-comment"># 计算字符串长度</span><br></code></pre></td></tr></table></figure>
+
+<p>当内置函数无法满足需求时，<code>apply</code> 能帮你快速实现个性化的数据处理逻辑。配合 <code>axis</code> 参数的灵活切换，无论是逐列还是逐行操作都能轻松应对。而 <code>.str</code> 方法则专门用于处理文本数据，与 <code>apply</code> 互为补充。掌握这两种方法，你就掌握了数据清晰的诀窍。</p>
+<hr>
+<h1 id="5-分组聚合"><a href="#5-分组聚合" class="headerlink" title="5. 分组聚合"></a>5. 分组聚合</h1><p>功能与 Excel 数据透视表相似，其基本逻辑如下。</p>
+<ol>
+<li>按照某一列 (或多列) 将数据划分为若干组。</li>
+<li>对每组数据独立执行某种运算 (如求和、均值、计数，或自定义函数)。</li>
+<li>将各组运算结果合并为一个新的数据结构。</li>
+</ol>
+<p>调用模式为:<code>df.groupby(&#39;分组列&#39;)[&#39;待计算列&#39;].聚合方法()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按 species 分组，计算各数值列的均值 (默认)</span><br>grouped_mean = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[[<span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;petal_length&#x27;</span>]].mean()<br><span class="hljs-built_in">print</span>(grouped_mean)<br></code></pre></td></tr></table></figure>
+
+<p>当需要<strong>对不同列执行不同的聚合运算</strong>时，agg() 方法提供了更大的灵活性。调用模式为：<br><code>df.groupby(&#39;分组列&#39;).agg(&#123;&#39;列名1&#39;: [&#39;统计量1&#39;, &#39;统计量2&#39;], &#39;列名2&#39;: &#39;统计量3&#39;&#125;)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">grouped_agg = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>).agg(&#123;<br>    <span class="hljs-string">&#x27;sepal_length&#x27;</span>: [<span class="hljs-string">&#x27;mean&#x27;</span>, <span class="hljs-string">&#x27;std&#x27;</span>, <span class="hljs-string">&#x27;min&#x27;</span>],<br>    <span class="hljs-string">&#x27;petal_length&#x27;</span>: [<span class="hljs-string">&#x27;max&#x27;</span>, <span class="hljs-string">&#x27;count&#x27;</span>]<br>&#125;)<br><span class="hljs-built_in">print</span>(grouped_agg)<br><br></code></pre></td></tr></table></figure>
+
+<p>如果需要计算每个品种内部的花萼长度标准化值 (z-score),即：(每个值 - 该品种均值) &#x2F; 该品种标准差,则需要 <code>.transform()</code>。这种方法会将计算结果广播回原始数据的每一行，保持行数不变。这在需要为每一行添加分组统计特征时非常有用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">iris[<span class="hljs-string">&#x27;sepal_length_z&#x27;</span>] = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].transform(<br>    <span class="hljs-keyword">lambda</span> x: (x - x.mean()) / x.std()<br>)<br><span class="hljs-built_in">print</span>(iris[[<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;sepal_length_z&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="6-合并与拼接-DataFrame-间的运算"><a href="#6-合并与拼接-DataFrame-间的运算" class="headerlink" title="6. 合并与拼接 (DataFrame 间的运算)"></a>6. 合并与拼接 (DataFrame 间的运算)</h1><h2 id="6-1-左右合并"><a href="#6-1-左右合并" class="headerlink" title="6.1 左右合并"></a>6.1 左右合并</h2><p><code>merge</code> 是 Pandas 中最常用的表连接方法，其核心逻辑为: <strong>根据一个或多个共同的列，将两张表横向拼接到一起</strong>。</p>
+<p><strong>核心调用模式：</strong> <code>pd.merge(left, right, on=&#39;键列&#39;, how=&#39;连接方式&#39;)</code>,或等价于：<code>left.merge(right, on=&#39;键列&#39;, how=&#39;连接方式&#39;)</code></p>
+<p><strong>参数解析</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>常用取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>left</code></td>
+<td>左侧 DataFrame</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>right</code></td>
+<td>右侧 DataFrame</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>on</code></td>
+<td>用于连接的列名 (左右表必须同名)</td>
+<td>列名字符串，或多个列名组成的列表</td>
+</tr>
+<tr>
+<td><code>left_on</code> &#x2F; <code>right_on</code></td>
+<td>左右表连接列名不同时分别指定</td>
+<td><code>left_on=&#39;左表列名&#39;, right_on=&#39;右表列名&#39;</code></td>
+</tr>
+<tr>
+<td><code>how</code></td>
+<td>连接方式，决定哪些行保留</td>
+<td><code>&#39;inner&#39;</code> (默认) 、<code>&#39;left&#39;</code>、<code>&#39;right&#39;</code>、<code>&#39;outer&#39;</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：如果左右表的键列<strong>列名不同</strong>，需要分别指定 <code>left_on</code> 和 <code>right_on</code>。例如左表叫 <code>species</code>，右表叫 <code>species_name</code>，则写法为：<code>left.merge(right, left_on=&#39;species&#39;, right_on=&#39;species_name&#39;, how=&#39;left&#39;)</code>。</p>
+</blockquote>
+<p><strong>连接方式</strong></p>
+<table>
+<thead>
+<tr>
+<th>how 取值</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&#39;inner&#39;</code> (默认)</td>
+<td>只保留两张表<strong>键列都匹配</strong>的行 (交集)</td>
+</tr>
+<tr>
+<td><code>&#39;left&#39;</code></td>
+<td>保留<strong>左表所有行</strong>，右表无匹配则填充 <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>&#39;right&#39;</code></td>
+<td>保留<strong>右表所有行</strong>，左表无匹配则填充 <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>&#39;outer&#39;</code></td>
+<td>保留<strong>两张表所有行</strong>，无匹配则填充 <code>NaN</code> (并集)</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 构建一个汇总表：每个品种的平均花萼长度</span><br>avg_by_species = iris.groupby(<span class="hljs-string">&#x27;species&#x27;</span>)[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].mean().reset_index()<br>avg_by_species.columns = [<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]<br><br><span class="hljs-comment"># 左连接，将平均长度匹配回原表的每一行</span><br>iris_merged = iris.merge(avg_by_species, on=<span class="hljs-string">&#x27;species&#x27;</span>, how=<span class="hljs-string">&#x27;left&#x27;</span>)<br><span class="hljs-built_in">print</span>(iris_merged[[<span class="hljs-string">&#x27;species&#x27;</span>, <span class="hljs-string">&#x27;sepal_length&#x27;</span>, <span class="hljs-string">&#x27;avg_sepal_len&#x27;</span>]].head())<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-2-上下拼接"><a href="#6-2-上下拼接" class="headerlink" title="6.2 上下拼接"></a>6.2 上下拼接</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 拆分两个子集再拼回去 (模拟追加数据)</span><br>part1 = iris.iloc[:<span class="hljs-number">50</span>]<br>part2 = iris.iloc[<span class="hljs-number">50</span>:<span class="hljs-number">100</span>]<br>concat_df = pd.concat([part1, part2], axis=<span class="hljs-number">0</span>)  <span class="hljs-comment"># axis=0 纵向堆叠</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="6-3-逐行读取-for-循环与-iterrows"><a href="#6-3-逐行读取-for-循环与-iterrows" class="headerlink" title="6.3 逐行读取 (for 循环与 iterrows)"></a>6.3 逐行读取 (for 循环与 iterrows)</h2><p>虽然强烈建议优先使用向量化操作，但某些特殊逻辑下循环仍有价值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 逐行遍历 (注意：大数据集下速度较慢，慎用)</span><br><span class="hljs-keyword">for</span> idx, row <span class="hljs-keyword">in</span> iris.iterrows():<br>    <span class="hljs-keyword">if</span> row[<span class="hljs-string">&#x27;sepal_length&#x27;</span>] &gt; <span class="hljs-number">7.0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第 <span class="hljs-subst">&#123;idx&#125;</span> 行是大型鸢尾花，品种: <span class="hljs-subst">&#123;row[<span class="hljs-string">&#x27;species&#x27;</span>]&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 提示 (若非必要，请用 apply 或向量化替代循环，速度更快)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-数据导出"><a href="#7-数据导出" class="headerlink" title="7. 数据导出"></a>7. 数据导出</h1><h2 id="7-1-导出为列表格式"><a href="#7-1-导出为列表格式" class="headerlink" title="7.1 导出为列表格式"></a>7.1 导出为列表格式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将某列转为 Python 列表 (便于与其他库交互)</span><br>sepal_list = iris[<span class="hljs-string">&#x27;sepal_length&#x27;</span>].tolist()<br><span class="hljs-built_in">print</span>(sepal_list[:<span class="hljs-number">5</span>])  <span class="hljs-comment"># 输出前 5 个</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="7-2-导出到文件"><a href="#7-2-导出到文件" class="headerlink" title="7.2 导出到文件"></a>7.2 导出到文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导出为 CSV (最通用，index=False 避免多出索引列)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_final.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)<br><br><span class="hljs-comment"># 导出为 TSV (通过sep指定分隔符)</span><br>iris.to_csv(<span class="hljs-string">&#x27;iris_final.tsv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>, index=<span class="hljs-literal">False</span>)<br><br><span class="hljs-comment"># 导出为 Excel (需 openpyxl 库)</span><br><span class="hljs-comment"># iris.to_excel(&#x27;iris_final.xlsx&#x27;, index=False)</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>以上便是 Pandas 数据框最核心、最常用的功能。从数据探查、条件筛选，到清洗转换，再到分组聚合与合并导出，这套组合拳打下来，足以让你轻松应对绝大多数数据分析场景。记住，遇到报错别慌张，多查文档 <code>print(help(pd.DataFrame))</code> 或利用搜索引擎拆解错误信息，是成长最快的方式。</p>
+<p>本博客的初衷是与各位读者共同探讨技术、共同进步，如果你在实战中遇到卡点，或有更好的技巧想分享，亦或发现教程有待优化之处，都非常欢迎你发邮件至 <strong><a href="mailto:&#x61;&#117;&#114;&#111;&#x72;&#x61;&#x68;&#105;&#107;&#101;&#114;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">aurorahiker@163.com</a></strong> 与我交流。你的每一次提问和建议，都会让这份教程变得更加实用和鲜活。期待与你一起，把数据分析这条路走得既扎实又有趣！ </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python-%E5%85%A5%E9%97%A8/" class="category-chain-item">Python 入门</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python-%E5%85%A5%E9%97%A8/" class="print-no-link">#Python 入门</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Pandas 简明教程</div>
+      <div>https://aurorahiker.github.io/2026/07/17/Pandas-简明教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-07-17</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/07/20/Pandas-%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%9A%E4%BB%8E-API-%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E5%BC%80%E5%8F%91%E8%80%85/" title="Pandas 思考题：从 API 使用者到开发者">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandas 思考题：从 API 使用者到开发者</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/07/14/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%EF%BC%9AFluid-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BE%8E%E5%8C%96/" title="个人博客搭建指南：Fluid 主题安装与深度美化">
+                        <span class="hidden-mobile">个人博客搭建指南：Fluid 主题安装与深度美化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

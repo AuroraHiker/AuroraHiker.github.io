@@ -1,0 +1,1028 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="鸟剑飞、AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="最近在使用 RTX 5060 Ti 训练图神经网络模型 (GNN) 时，发现在新硬件上配置环境比预想中要多花一些功夫。这篇博客记录了从零开始搭建 PyTorch Geometric (PyG) 环境的完整过程，适用于 WSL2或原生 Ubuntu 20.04 及以上版本的系统，可作为一份新手友好的 checklist。跟随这篇博客完成配置，你将得到：  一个在 50 系显卡 (以 RTX 5060">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 50 系显卡上部署 PyG 图神经网络环境">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/05/05/%E5%9C%A8%2050%20%E7%B3%BB%E6%98%BE%E5%8D%A1%E4%B8%8A%E9%83%A8%E7%BD%B2%20PyG%20%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83/index/index.html">
+<meta property="og:site_name" content="AuroraHiker’s Code Trail">
+<meta property="og:description" content="最近在使用 RTX 5060 Ti 训练图神经网络模型 (GNN) 时，发现在新硬件上配置环境比预想中要多花一些功夫。这篇博客记录了从零开始搭建 PyTorch Geometric (PyG) 环境的完整过程，适用于 WSL2或原生 Ubuntu 20.04 及以上版本的系统，可作为一份新手友好的 checklist。跟随这篇博客完成配置，你将得到：  一个在 50 系显卡 (以 RTX 5060">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-05T09:18:59.000Z">
+<meta property="article:modified_time" content="2026-08-29T19:01:46.719Z">
+<meta property="article:author" content="AuroraHiker">
+<meta property="article:tag" content="图神经网络">
+<meta property="article:tag" content="实验平台搭建">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>在 50 系显卡上部署 PyG 图神经网络环境 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="在 50 系显卡上部署 PyG 图神经网络环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        鸟剑飞、AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-05-05 17:18" pubdate>
+          2026年5月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">在 50 系显卡上部署 PyG 图神经网络环境</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>最近在使用 RTX 5060 Ti 训练图神经网络模型 (GNN) 时，发现在新硬件上配置环境比预想中要多花一些功夫。这篇博客记录了从零开始搭建 PyTorch Geometric (PyG) 环境的完整过程，适用于 WSL2或原生 Ubuntu 20.04 及以上版本的系统，可作为一份新手友好的 checklist。跟随这篇博客完成配置，你将得到：</p>
+<ul>
+<li>一个在 50 系显卡 (以 RTX 5060 Ti 为代表) 上稳定运行 PyG 的 conda 环境</li>
+<li>编译安装 torch-sparse 与 torch-scatter 的实操方法，以及遇到依赖缺失时的处理思路</li>
+<li>一套完整、可复用的图神经网络环境配置方案，日后换机或重建环境可直接照做</li>
+</ul>
+<hr>
+<h2 id="1-环境配置方案总览"><a href="#1-环境配置方案总览" class="headerlink" title="1. 环境配置方案总览"></a>1. 环境配置方案总览</h2><p>这套方案基于 WSL2 (Ubuntu 20.04)，原生系统同样适用。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本&#x2F;说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPU</td>
+<td>NVIDIA GeForce RTX 5060 Ti</td>
+</tr>
+<tr>
+<td>驱动版本</td>
+<td>581.57 (包含GameReady版和Studio版，后者更稳定)</td>
+</tr>
+<tr>
+<td>环境管理器</td>
+<td>Conda 24.11.0</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.10.16</td>
+</tr>
+<tr>
+<td>pip</td>
+<td>26.0.1</td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>12.8.1</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>2.12.0.dev20260407+cu128 (Nightly)</td>
+</tr>
+<tr>
+<td>torchvision</td>
+<td>0.27.0.dev20260407+cu128</td>
+</tr>
+<tr>
+<td>torchaudio</td>
+<td>2.11.0.dev20260407+cu128</td>
+</tr>
+<tr>
+<td>torch-scatter</td>
+<td>2.1.2 (手动编译)</td>
+</tr>
+<tr>
+<td>torch-sparse</td>
+<td>0.6.18 (手动编译)</td>
+</tr>
+<tr>
+<td>PyTorch Geometric</td>
+<td>2.8.0.dev20260504 (pyg-nightly)</td>
+</tr>
+<tr>
+<td>triton</td>
+<td>3.7.0+git9c288bc5</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>2.2.6</td>
+</tr>
+<tr>
+<td>scipy</td>
+<td>1.15.3</td>
+</tr>
+<tr>
+<td>networkx</td>
+<td>3.4.2</td>
+</tr>
+<tr>
+<td>tqdm</td>
+<td>4.67.3</td>
+</tr>
+<tr>
+<td>jupyterlab</td>
+<td>4.5.7</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>为什么一定要用 Nightly 版 PyTorch？</strong>  </p>
+<p>在软件开发中，很多大型项目 (比如 PyTorch) 都会设置一套持续集成系统。每当有开发者向主分支提交代码后，这套系统就会在每天夜间自动拉取最新代码，编译、打包、跑测试，并生成可供下载的安装包，被称为 <strong>Nightly Build (每夜构建版)</strong>，简称 Nightly 版本，通俗而言就是抢先体验版。也正因包含了最新代码，它才能率先支持新硬件。</p>
+<p>RTX 5060 Ti 是 Blackwell 架构，计算能力 <code>sm_120</code>。截至本文写作时，稳定版 PyTorch 的预编译包并不支持 <code>sm_120</code>，无法识别新卡。要让 GPU 正常工作，必须从 Nightly 源安装并配合 CUDA 12.8 (截至本文写作时的推荐组合)。</p>
+</blockquote>
+<hr>
+<h2 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2. 环境准备"></a>2. 环境准备</h2><p>先建一个新环境，把编译工具和常用库装好。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并激活环境</span><br>conda create -n GNN python=3.10 -y<br>conda activate GNN<br><br><span class="hljs-comment"># 常用科学计算与可视化</span><br>pip install pandas numpy scipy matplotlib seaborn tqdm jupyterlab<br><br><span class="hljs-comment"># 编译依赖 (后续编译 torch-sparse 等需要)</span><br>pip install ninja cmake<br><span class="hljs-built_in">sudo</span> apt install -y build-essential cmake ninja-build<br><span class="hljs-built_in">sudo</span> apt install -y cuda-toolkit-12-8<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-安装-PyTorch-Nightly"><a href="#3-安装-PyTorch-Nightly" class="headerlink" title="3. 安装 PyTorch Nightly"></a>3. 安装 PyTorch Nightly</h2><p>这一步最关键，必须指定 CUDA 12.8 的 Nightly 源。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128<br></code></pre></td></tr></table></figure>
+
+<p>装完马上验证，确保新 GPU 被正确支持：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 检查编译架构列表</span><br>python -c <span class="hljs-string">&quot;import torch; print(torch.cuda.get_arch_list());&quot;</span><br><br><span class="hljs-comment"># [预期输出] 必须包含 sm_120。这是 Blackwell 架构 (如 RTX 5060 Ti) 的关键标识</span><br><span class="hljs-comment"># [&#x27;sm_50&#x27;, &#x27;sm_60&#x27;, &#x27;sm_70&#x27;, &#x27;sm_75&#x27;, &#x27;sm_80&#x27;, &#x27;sm_86&#x27;, &#x27;sm_90&#x27;, &#x27;sm_100&#x27;, &#x27;sm_120&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 检查版本和 CUDA 可用性</span><br>python -c <span class="hljs-string">&quot;import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available())&quot;</span><br><br><span class="hljs-comment"># [预期输出] 版本号随 Nightly 更新，但 CUDA 须为 12.8，is_available 须为 True</span><br><span class="hljs-comment"># 2.12.0.dev20260407+cu128 12.8 True</span><br></code></pre></td></tr></table></figure>
+
+<p>如果 <code>get_arch_list()</code> 没有 <code>sm_120</code>，说明 Nightly 源不对或安装失败，此时应检查pip命令中的–index-url是否正确，或确认网络能正常访问PyTorch Nightly源后重试安装。</p>
+<hr>
+<h2 id="4-手动编译-torch-sparse-与-torch-scatter"><a href="#4-手动编译-torch-sparse-与-torch-scatter" class="headerlink" title="4. 手动编译 torch-sparse 与 torch-scatter"></a>4. 手动编译 torch-sparse 与 torch-scatter</h2><p>PyG 在稠密图计算时的性能高度依赖这两个底层库。因为我们的 PyTorch 版本特别新，截至本文写作时预编译的 whl 不兼容，自己编译相对稳妥。</p>
+<h3 id="4-1-获取源码"><a href="#4-1-获取源码" class="headerlink" title="4.1 获取源码"></a>4.1 获取源码</h3><p>从 GitHub 下载 <code>pytorch_sparse</code> 和 <code>pytorch_scatter</code> 的 master 分支源码。推荐两种方式：</p>
+<ul>
+<li><strong>直接下载压缩包</strong>(适合国内网络不稳定时使用)</li>
+<li><strong>git 克隆</strong>：<code>git clone https://github.com/rusty1s/pytorch_sparse.git</code>(同理克隆 scatter 仓库)</li>
+</ul>
+<blockquote>
+<p>国内访问 GitHub 偶尔不稳定。我在之前的博客中曾推荐过一款免费加速器 (<a href="/2026/05/05/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</a>)，但这款加速器无法加速 WSL 内部的网络访问。  </p>
+<p>因此，如果你使用 WSL，建议在 Windows 下用浏览器或下载工具提前下载好项目的 zip 压缩包，下载后放置在任意目录，然后通过 WSL 访问 <code>/mnt/c/</code> 路径进行操作。</p>
+</blockquote>
+<p>假设已将压缩包下载至 Windows 的 <code>Downloads</code> 文件夹：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /mnt/c/Users/你的用户名/Downloads<br>unzip pytorch_sparse-master.zip<br>unzip pytorch_scatter-master.zip<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-编译-torch-sparse"><a href="#4-2-编译-torch-sparse" class="headerlink" title="4.2 编译 torch-sparse"></a>4.2 编译 torch-sparse</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> pytorch_sparse-master<br><span class="hljs-built_in">export</span> TORCH_CUDA_ARCH_LIST=<span class="hljs-string">&quot;12.0&quot;</span><br><span class="hljs-built_in">export</span> MAX_JOBS=12<br>python setup.py clean --all<br>python setup.py install --verbose<br></code></pre></td></tr></table></figure>
+
+<p>编译过程中可能会遇到一个常见的错误信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">fatal error: parallel_hashmap/phmap.h: No such file or directory<br></code></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：<code>torch-sparse</code> 依赖的第三方头文件库 <code>parallel-hashmap</code> 虽然文件夹存在，但里面缺少实际的 <code>.h</code> 文件，属于源码打包时的小疏忽。</p>
+<p><strong>解决方法</strong>：手动补全这 6 个头文件。由于 WSL 内直接 <code>wget</code> 也可能因 <code>raw.githubusercontent.com</code> 网络不稳定而失败，这里提供两种互补方案，请先执行共同步骤，再任选其一获取文件。</p>
+<h4 id="共同步骤：创建目标文件夹"><a href="#共同步骤：创建目标文件夹" class="headerlink" title="共同步骤：创建目标文件夹"></a>共同步骤：创建目标文件夹</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> pytorch_sparse-master/third_party/parallel-hashmap<br><span class="hljs-built_in">mkdir</span> -p parallel_hashmap<br><span class="hljs-built_in">cd</span> parallel_hashmap<br></code></pre></td></tr></table></figure>
+
+<h4 id="方法一：WSL-内直接-wget-网络通畅时推荐"><a href="#方法一：WSL-内直接-wget-网络通畅时推荐" class="headerlink" title="方法一：WSL 内直接 wget (网络通畅时推荐)"></a>方法一：WSL 内直接 wget (网络通畅时推荐)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap.h<br>wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_base.h<br>wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_bits.h<br>wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_config.h<br>wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_fwd_decl.h<br>wget https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_utils.h<br></code></pre></td></tr></table></figure>
+
+<h4 id="方法二：Windows-下浏览器手动下载-备选，稳定可靠"><a href="#方法二：Windows-下浏览器手动下载-备选，稳定可靠" class="headerlink" title="方法二：Windows 下浏览器手动下载 (备选，稳定可靠)"></a>方法二：Windows 下浏览器手动下载 (备选，稳定可靠)</h4><ol>
+<li>在 Windows 浏览器中分别打开以下链接，每个页面打开后按 <code>Ctrl+S</code> 保存为对应的 <code>.h</code> 文件 (确保文件名和数量完全一致)：</li>
+</ol>
+  <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap.h<br>https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_base.h<br>https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_bits.h<br>https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_config.h<br>https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_fwd_decl.h<br>https://raw.githubusercontent.com/greg7mdp/parallel-hashmap/master/parallel_hashmap/phmap_utils.h<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>将下载好的 6 个 <code>.h</code> 文件集中放到 Windows 的 <code>Downloads</code> 文件夹 (或其他方便的位置)。</p>
+</li>
+<li><p>回到 WSL 终端，应该仍停留在 <code>parallel_hashmap</code> 目录 (请确保你已在该目录下，可输入<code>pwd</code>命令确认)，执行拷贝命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /mnt/c/Users/你的Windows用户名/Downloads/phmap*.h .<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="最后一步：重新编译"><a href="#最后一步：重新编译" class="headerlink" title="最后一步：重新编译"></a>最后一步：重新编译</h4><p>无论用哪种方法获得头文件，完成后都返回源码根目录并重新编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ../../..<br>python setup.py clean --all<br>python setup.py install --verbose<br></code></pre></td></tr></table></figure>
+
+<p>补全头文件后编译即可顺利通过，<code>torch-sparse</code> 安装完成。</p>
+<h3 id="4-3-编译-torch-scatter"><a href="#4-3-编译-torch-scatter" class="headerlink" title="4.3 编译 torch-scatter"></a>4.3 编译 torch-scatter</h3><p>同样的方式，进入 <code>pytorch_scatter-master</code> 目录执行编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ../pytorch_scatter-master<br><span class="hljs-built_in">export</span> TORCH_CUDA_ARCH_LIST=<span class="hljs-string">&quot;12.0&quot;</span><br><span class="hljs-built_in">export</span> MAX_JOBS=12<br>python setup.py clean --all<br>python setup.py install --verbose<br></code></pre></td></tr></table></figure>
+
+<p><code>torch-scatter</code> 一般不会缺文件，正常等待结束即可。</p>
+<hr>
+<h2 id="5-安装-PyG-主库"><a href="#5-安装-PyG-主库" class="headerlink" title="5. 安装 PyG 主库"></a>5. 安装 PyG 主库</h2><p>依赖就绪后，安装 PyTorch Geometric 本体，也推荐 Nightly 版以保持兼容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install pyg-nightly<br></code></pre></td></tr></table></figure>
+
+<p>不必再单独安装 <code>torch-cluster</code>、<code>torch-spline-conv</code> 等旧式 whl，它们可能与 Nightly PyTorch 产生依赖冲突。</p>
+<hr>
+<h2 id="6-最终验证"><a href="#6-最终验证" class="headerlink" title="6. 最终验证"></a>6. 最终验证</h2><p>依次执行以下检查，确保每个组件都正常工作。</p>
+<h3 id="6-1-GPU-硬件信息"><a href="#6-1-GPU-硬件信息" class="headerlink" title="6.1 GPU 硬件信息"></a>6.1 GPU 硬件信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">nvidia-smi -q | grep -E <span class="hljs-string">&quot;Product Name|CUDA Version|Driver Version&quot;</span><br><br><span class="hljs-comment"># [预期输出] Product Name 应为你的显卡版本 (笔者的是RTX 5060 Ti)，驱动版本 ≥ 535，CUDA Version 需 ≥ 12.8</span><br><span class="hljs-comment">#     Driver Version                      : 581.57</span><br><span class="hljs-comment">#     CUDA Version                        : 13.0</span><br><span class="hljs-comment">#     Product Name                        : NVIDIA GeForce RTX 5060 Ti</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-PyTorch-支持的架构列表"><a href="#6-2-PyTorch-支持的架构列表" class="headerlink" title="6.2 PyTorch 支持的架构列表"></a>6.2 PyTorch 支持的架构列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;import torch; print(torch.cuda.get_arch_list())&quot;</span><br><br><span class="hljs-comment"># [预期输出] 必须包含 `sm_120`，这是 Blackwell 架构 RTX 5060 Ti 的关键标识</span><br><span class="hljs-comment"># [&#x27;sm_50&#x27;, &#x27;sm_60&#x27;, &#x27;sm_70&#x27;, &#x27;sm_75&#x27;, &#x27;sm_80&#x27;, &#x27;sm_86&#x27;, &#x27;sm_90&#x27;, &#x27;sm_100&#x27;, &#x27;sm_120&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-PyTorch-基本状态"><a href="#6-3-PyTorch-基本状态" class="headerlink" title="6.3 PyTorch 基本状态"></a>6.3 PyTorch 基本状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;import torch; print(f&#x27;PyTorch &#123;torch.__version__&#125;&#x27;); print(f&#x27;CUDA &#123;torch.version.cuda&#125;&#x27;); print(f&#x27;Available: &#123;torch.cuda.is_available()&#125;&#x27;)&quot;</span><br><br><span class="hljs-comment"># [预期输出] 版本号随 Nightly 更新，但编译 CUDA 版本须为 12.8，且 is_available 为 True，否则无法为 RTX 5060 Ti 生成正确内核</span><br><span class="hljs-comment"># PyTorch 2.12.0.dev20260407+cu128</span><br><span class="hljs-comment"># CUDA 12.8</span><br><span class="hljs-comment"># Available: True</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-4-GNN-所需库状态"><a href="#6-4-GNN-所需库状态" class="headerlink" title="6.4 GNN 所需库状态"></a>6.4 GNN 所需库状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&quot;import torch_sparse, torch_scatter, torch_geometric; print(&#x27;torch-sparse:&#x27;, torch_sparse.__version__); print(&#x27;torch-scatter:&#x27;, torch_scatter.__version__); print(&#x27;PyG:&#x27;, torch_geometric.__version__)&quot;</span><br><br><span class="hljs-comment"># [预期输出]</span><br><span class="hljs-comment"># torch-sparse: 0.6.18</span><br><span class="hljs-comment"># torch-scatter: 2.1.2</span><br><span class="hljs-comment"># PyG: 2.8.0.dev20260504</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>✅ 如果这四条命令都输出正常，你的 RTX 5060 Ti 就已完整支持图神经网络计算了！</p>
+</blockquote>
+<hr>
+<h2 id="7-回顾：问题与处理"><a href="#7-回顾：问题与处理" class="headerlink" title="7. 回顾：问题与处理"></a>7. 回顾：问题与处理</h2><table>
+<thead>
+<tr>
+<th>遇到的状况</th>
+<th>原因分析</th>
+<th>解决方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPU 不工作，PyTorch 只调用 CPU</td>
+<td>稳定版 PyTorch 缺少 <code>sm_120</code> 目标架构</td>
+<td>安装 PyTorch Nightly (CUDA 12.8)</td>
+</tr>
+<tr>
+<td><code>torch-sparse</code> 编译报错 <code>phmap.h: No such file or directory</code></td>
+<td><code>parallel-hashmap</code> 头文件缺失</td>
+<td>手动获取 6 个核心头文件后重新编译</td>
+</tr>
+<tr>
+<td>旧式 whl 包与 Nightly PyTorch 冲突</td>
+<td>ABI 不兼容</td>
+<td>统一使用 Nightly 源安装 PyG，不混用旧版子包</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="8-写在最后"><a href="#8-写在最后" class="headerlink" title="8. 写在最后"></a>8. 写在最后</h2><p>环境配置的本质，不过是一次常规磨合。遇到报错，就耐心地顺藤摸瓜定位原因、查阅官方文档、补全缺失的部分，这套思路适用于任何开发环境的装配。</p>
+<p>希望这篇记录不仅能帮你节省搜索和尝试的时间，也能让你在跟练过程中慢慢建立起解决环境配置问题的 debug 思维。如果配置时有什么新发现，欢迎通过邮箱 <a href="mailto:&#97;&#x75;&#x72;&#111;&#x72;&#97;&#104;&#x69;&#107;&#101;&#114;&#64;&#x31;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;">aurorahiker@163.com</a> 留言交流。说不定你的经验，正好能帮到下一个正在给 50 系显卡配环境的人。</p>
+<hr>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">PyTorch 官方安装页</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch-geometric.readthedocs.io/">PyTorch Geometric 文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-gpus">NVIDIA CUDA 计算能力查询</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="category-chain-item">图神经网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="print-no-link">#实验平台搭建</a>
+      
+        <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="print-no-link">#图神经网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>在 50 系显卡上部署 PyG 图神经网络环境</div>
+      <div>https://aurorahiker.github.io/2026/05/05/在 50 系显卡上部署 PyG 图神经网络环境/index/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>鸟剑飞、AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-05-05</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/05/05/Windows%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E6%8E%A8%E8%8D%90-Wox-Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EGitHub%E5%8A%A0%E9%80%9F%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" title="Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Windows效率神器推荐：Wox、Markdown编辑器与GitHub加速器配置指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/04/02/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAWindows%E7%94%9F%E4%BF%A1%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0_WSL%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" title="从零搭建Windows生信分析平台——WSL的安装配置">
+                        <span class="hidden-mobile">从零搭建Windows生信分析平台——WSL的安装配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
