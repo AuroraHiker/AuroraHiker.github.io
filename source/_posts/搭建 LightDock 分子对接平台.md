@@ -10,6 +10,7 @@ series:
 categories:
   - 分子对接
 author: AuroraHiker
+date: 2026-04-02 10:34:24
 ---
 ![](./LightDock_install/lightdock_logo.png)
 

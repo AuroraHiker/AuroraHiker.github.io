@@ -7,6 +7,7 @@ series:
 categories:
   - Python 入门
 author: AuroraHiker
+date: 2026-08-11 17:47:33
 ---
 
 本篇博客面向编程小白，目标只有一个：帮助大家快速开始写 Python 代码。在实践中学习，而不是被繁杂的语法和包绕晕，直接从入门到放弃。

@@ -8,6 +8,7 @@ series: 开发者工具箱
 categories:
   - 开发者工具箱
 author: 鸟剑飞、AuroraHiker
+date: 2026-08-04 10:31:40
 ---
 
 欢迎来到 AuroraHiker 的技术博客！本文面向**从未接触过编程智能体的读者**，以 Codex 为例，介绍如何在 Windows 10 中部署一个能够协助我们处理本地文件和项目的智能体助手。

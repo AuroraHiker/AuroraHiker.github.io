@@ -7,6 +7,7 @@ series:
 categories:
   - 个人博客搭建指南
 author: AuroraHiker
+date: 2026-07-14 03:41:32
 ---
 
 在{% post_link 个人博客搭建指南：基于-GitHub-Pages-的完整流程 %}中，我们完成了 Hexo 博客从零到部署的全过程。博客能正常发布和浏览了，但外观还是默认的 landscape 主题，功能不够全面，也略显单调。在这篇博客，笔者将带领大家一起来给博客“装修”。
