@@ -1,0 +1,1070 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/%E9%BB%91%E6%B4%9E.png">
+  <link rel="icon" href="/image/%E9%BB%91%E6%B4%9E.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AuroraHiker">
+  <meta name="keywords" content="技术,博客,编程,生信">
+  
+    <meta name="description" content="当我们确定了一对相互作用的蛋白质与小分子后，往往想知道：该分子可能结合在何处？它会以何种姿态进入口袋，又可能与哪些残基发生相互作用？分子对接正是帮助我们探索这些问题的一类计算方法。 在计算机中，程序会移动、旋转配体，并在允许的范围内调整其内部构象，生成一批候选结合姿态，再依据评分函数进行筛选和排序。最终得到的结构图和分数，能够帮助我们提出结合假设、确定验证优先级；其可信度则取决于输入结构、搜索是否">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蛋白—小分子对接入门：原理、算法与结果判断">
+<meta property="og:url" content="https://aurorahiker.github.io/2026/09/23/%E8%9B%8B%E7%99%BD%E2%80%94%E5%B0%8F%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8%EF%BC%9A%E5%8E%9F%E7%90%86%E3%80%81%E7%AE%97%E6%B3%95%E4%B8%8E%E7%BB%93%E6%9E%9C%E5%88%A4%E6%96%AD/index.html">
+<meta property="og:site_name" content="AuroraHiker’s Code Trail">
+<meta property="og:description" content="当我们确定了一对相互作用的蛋白质与小分子后，往往想知道：该分子可能结合在何处？它会以何种姿态进入口袋，又可能与哪些残基发生相互作用？分子对接正是帮助我们探索这些问题的一类计算方法。 在计算机中，程序会移动、旋转配体，并在允许的范围内调整其内部构象，生成一批候选结合姿态，再依据评分函数进行筛选和排序。最终得到的结构图和分数，能够帮助我们提出结合假设、确定验证优先级；其可信度则取决于输入结构、搜索是否">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%94%81%E9%92%A5%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E8%AF%B1%E5%AF%BC%E5%A5%91%E5%90%88%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E8%AF%B1%E5%AF%BC%E5%A5%91%E5%90%88%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E6%8B%89%E9%A9%AC%E5%85%8B%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/vina%E9%9A%8F%E6%9C%BA%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%B1%80%E9%83%A8%E4%BC%98%E5%8C%96%E7%9B%B8%E7%BB%93%E5%90%88.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png">
+<meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-22T18:22:06.105Z">
+<meta property="article:author" content="AuroraHiker">
+<meta property="article:tag" content="蛋白-配体分子对接">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%94%81%E9%92%A5%E6%A8%A1%E5%9E%8B.png">
+  
+  
+  
+  <title>蛋白—小分子对接入门：原理、算法与结果判断 - AuroraHiker’s Code Trail</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aurorahiker.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AuroraHiker’s Code Trail</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="蛋白—小分子对接入门：原理、算法与结果判断"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        AuroraHiker
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-23 02:00" pubdate>
+          2026年9月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          92 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">蛋白—小分子对接入门：原理、算法与结果判断</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>当我们确定了一对相互作用的蛋白质与小分子后，往往想知道：该分子可能结合在何处？它会以何种姿态进入口袋，又可能与哪些残基发生相互作用？分子对接正是帮助我们探索这些问题的一类计算方法。</p>
+<p>在计算机中，程序会移动、旋转配体，并在允许的范围内调整其内部构象，生成一批候选结合姿态，再依据评分函数进行筛选和排序。最终得到的结构图和分数，能够帮助我们提出结合假设、确定验证优先级；其可信度则取决于输入结构、搜索是否充分，以及评分模型是否适用于当前体系。</p>
+<p>本文主要介绍分子对接的基本原理、常见软件在算法上的差异，以及判断结果是否可信的方法。<strong>全文以蛋白—小分子的常规非共价对接为主</strong>，共价结合、特殊金属配位等体系需要专门设置，不不宜直接套用常规流程。</p>
+<p>作为本系列的第一篇，本文先帮助读者建立理解框架。后续三篇将围绕 AutoDock 4 展开，依次介绍环境安装、结构预处理与 AutoGrid 网格计算，以及正式对接与结果可视化。</p>
+<hr>
+<h2 id="1-蛋白—小分子对接能回答哪些问题？"><a href="#1-蛋白—小分子对接能回答哪些问题？" class="headerlink" title="1.蛋白—小分子对接能回答哪些问题？"></a>1.蛋白—小分子对接能回答哪些问题？</h2><p>在蛋白—小分子对接中，蛋白质通常称为<strong>受体</strong>，小分子通常称为<strong>配体</strong>。这里的“受体”是计算中的角色名称，并不专指生物学上的受体蛋白。</p>
+<p>对于一个给定的结合区域，对接主要帮助我们回答三个问题：</p>
+<ol>
+<li><strong>配体可能怎样结合？</strong> 包括它在口袋中的位置、朝向和内部构象。</li>
+<li><strong>哪些候选姿态更值得关注？</strong> 通过评分和聚类，筛出一组相对合理的结果。</li>
+<li><strong>这些结果能提出哪些可检验的假设？</strong> 例如哪些残基可能参与相互作用，哪些化合物值得优先开展实验。</li>
+</ol>
+<p>要确定结合口袋在哪，通常需要先借助实验结构、已有文献或口袋预测工具确定。也可以把搜索范围扩展到较大区域，进行“盲对接”，但这会增加搜索难度，得到的高分位置也仍需验证。<strong>口袋识别与对接姿态预测是相关但不同的任务，普通对接流程不一定能可靠地同时完成两者。</strong></p>
+<p>解释结果时，应始终区分以下几个层次：</p>
+<blockquote>
+<p>候选结合姿态 → 相互作用假设 → 实验或其他独立证据支持的结论。</p>
+</blockquote>
+<p>单凭一个对接分数，不能证明真实结合、准确测定亲和力，更不能直接推断药效或作用机制。</p>
+<hr>
+<h2 id="2-理论基础：从锁钥模型到诱导契合"><a href="#2-理论基础：从锁钥模型到诱导契合" class="headerlink" title="2. 理论基础：从锁钥模型到诱导契合"></a>2. 理论基础：从锁钥模型到诱导契合</h2><h3 id="2-1-锁钥模型"><a href="#2-1-锁钥模型" class="headerlink" title="2.1 锁钥模型"></a>2.1 锁钥模型</h3><p>分子对接的思想源头，可以追溯到 1894 年 Emil Fischer 提出的“锁钥模型”。他把酶与底物的结合比作钥匙插入锁般的“几何互补”：酶具有一个形状固定的活性位点，底物只有形状和化学性质都匹配时才能结合。<br>这一模型非常直观地解释了酶的专一性和分子之间的互补性：能够进入口袋只是第一步，还需要具有合适的接触关系。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/cber.18940270364">1</a></p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%94%81%E9%92%A5%E6%A8%A1%E5%9E%8B.png" srcset="/img/loading.gif" lazyload alt="锁钥模型"></p>
+<p>对初学者来说，锁钥模型提供了一个容易理解的起点。但它把结合双方看得过于静态，不能完整描述真实蛋白质的运动和构象变化。</p>
+<h3 id="2-2-诱导契合：结合伴随着结构调整"><a href="#2-2-诱导契合：结合伴随着结构调整" class="headerlink" title="2.2 诱导契合：结合伴随着结构调整"></a>2.2 诱导契合：结合伴随着结构调整</h3><p>1958 年，Daniel Koshland 提出“诱导契合模型”：酶和底物初始时并不完全互补，底物的靠近和结合会诱导活性位点改变构象，最终形成更紧密的复合物。<a target="_blank" rel="noopener" href="https://doi.org/10.1073/pnas.44.2.98">2</a></p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E8%AF%B1%E5%AF%BC%E5%A5%91%E5%90%88%E6%A8%A1%E5%9E%8B.png" srcset="/img/loading.gif" lazyload alt="诱导契合模型"></p>
+<p>可以把诱导契合的过程想象成手和手套，手套不是一开始就完全贴合，而是被手撑出合适形状。诱导契合把结合从“形状匹配”推进为“动态识别”。对蛋白质而言，这种调整可能涉及侧链旋转、局部环区移动，甚至更大范围的结构变化。</p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E8%AF%B1%E5%AF%BC%E5%A5%91%E5%90%88%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="诱导契合过程示意"></p>
+<h3 id="2-3-构象选择：合适的形态也可能原本就存在"><a href="#2-3-构象选择：合适的形态也可能原本就存在" class="headerlink" title="2.3 构象选择：合适的形态也可能原本就存在"></a>2.3 构象选择：合适的形态也可能原本就存在</h3><p>蛋白质在溶液中通常会在多种构象之间转换。配体可能更容易结合其中某种构象，并使这种构象在结合后的状态中更加稳定，这就是“构象选择”的基本含义。</p>
+<p>构象选择和诱导契合可以共同参与同一体系的结合过程，但不能把它们概括成固定的“先选择、再调整”两步。不同体系和条件下，两类路径的相对贡献可能不同，具体机制需要动力学等证据判断。<a target="_blank" rel="noopener" href="https://doi.org/10.1073/pnas.0907195106">3</a></p>
+<p>这些认识也解释了为什么对接需要考虑柔性：</p>
+<ul>
+<li><strong>刚性对接</strong>：受体和配体的内部构象保持固定，主要改变双方的相对位置和朝向。</li>
+<li><strong>常见的半柔性对接</strong>：受体基本固定，允许配体的部分可旋转键转动。</li>
+<li><strong>考虑受体柔性的对接</strong>：允许指定侧链调整，或使用多个受体构象分别计算；更复杂的流程还会结合额外的结构优化。</li>
+</ul>
+<p>柔性处理越充分，需要探索的空间通常也越大。即使软件允许部分结构运动，也不意味着它已经完整模拟了真实的结合过程。</p>
+<hr>
+<h2 id="3-计算流程概述"><a href="#3-计算流程概述" class="headerlink" title="3. 计算流程概述"></a>3. 计算流程概述</h2><p>典型的蛋白—小分子对接流程可以概括为：</p>
+<p><strong>准备结构 → 确定搜索区域 → 搜索并评分 → 整理、聚类和排序 → 检查候选结果。</strong></p>
+<p>这是一条便于理解的工作流程。在实际算法中，搜索和评分通常会反复交替：程序利用已有评分，引导下一轮搜索。</p>
+<h3 id="3-1-搜索对象：配体的结合姿态"><a href="#3-1-搜索对象：配体的结合姿态" class="headerlink" title="3.1 搜索对象：配体的结合姿态"></a>3.1 搜索对象：配体的结合姿态</h3><p>一个结合姿态 (pose) 不仅包括配体自身的构象，还包括它相对受体的位置和朝向。即使小分子的内部结构不变，整体平移或旋转一个角度，也会得到不同的结合姿态。</p>
+<p>可旋转键越多、搜索区域越大，可能的姿态通常也越多。搜索算法的任务，是在有限计算时间内尽量找到有代表性、较合理的候选结果。</p>
+<h3 id="3-2-评分函数：结合作用的近似模型"><a href="#3-2-评分函数：结合作用的近似模型" class="headerlink" title="3.2 评分函数：结合作用的近似模型"></a>3.2 评分函数：结合作用的近似模型</h3><p>真实结合涉及分子间接触、溶剂效应、构象变化和熵等因素。为了快速评估大量姿态，对接软件必须作出简化。例如，有些评分函数会显式计算静电或去溶剂化项，另一些则用经验项或基于数据的模型间接描述部分作用。</p>
+<p>因此，<strong>不同软件并不一定计算相同的物理量，也不一定采用相同的评分方向</strong>。即使输出单位是 kcal&#x2F;mol，也不能据此把分数当作精确的实验结合自由能，更不能直接换算出可靠的实验解离常数。</p>
+<h3 id="3-3-准确性评价：采样、排序与筛选"><a href="#3-3-准确性评价：采样、排序与筛选" class="headerlink" title="3.3 准确性评价：采样、排序与筛选"></a>3.3 准确性评价：采样、排序与筛选</h3><p>讨论准确性时，应区分三个具体问题：</p>
+<table>
+<thead>
+<tr>
+<th>评价问题</th>
+<th>具体看什么</th>
+<th>能说明什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>姿态采样</td>
+<td>候选结果中是否出现接近实验结构的姿态</td>
+<td>搜索是否找到了合理答案</td>
+</tr>
+<tr>
+<td>姿态排序</td>
+<td>接近实验结构的姿态是否排在前列</td>
+<td>评分能否从候选姿态中选出较好的结果</td>
+</tr>
+<tr>
+<td>化合物筛选</td>
+<td>已知活性化合物是否相对无活性对照或诱饵分子富集在前列</td>
+<td>流程能否帮助确定候选化合物的验证优先级</td>
+</tr>
+</tbody></table>
+<p>前两项针对同一配体的不同姿态，第三项针对不同化合物。能够恢复某个共晶配体的姿态，并不代表能够准确区分不同化合物的活性，更不代表能够准确预测亲和力数值。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm050362n">16</a></p>
+<p>增加计算量主要有助于缓解采样不足。如果合理姿态已经生成，却被评分函数排在后面，反复增加搜索次数也未必能解决问题。</p>
+<hr>
+<h2 id="4-常用软件介绍"><a href="#4-常用软件介绍" class="headerlink" title="4. 常用软件介绍"></a>4. 常用软件介绍</h2><p>这些软件的共同目标都是生成并评估候选结合姿态，区别主要在于搜索策略、评分模型、柔性处理方式和工作流程。下文将保留必要的算法细节介绍，以帮助理解各软件分别适合承担何种任务。</p>
+<h3 id="4-1-AutoDock-4：遗传、局部优化与“拉马克式”继承驱动互作构象的定向进化"><a href="#4-1-AutoDock-4：遗传、局部优化与“拉马克式”继承驱动互作构象的定向进化" class="headerlink" title="4.1 AutoDock 4：遗传、局部优化与“拉马克式”继承驱动互作构象的定向进化"></a>4.1 AutoDock 4：遗传、局部优化与“拉马克式”继承驱动互作构象的定向进化</h3><p>AutoDock 4 常用的搜索方法是<strong>拉马克遗传算法</strong> (Lamarckian Genetic Algorithm，LGA) ，同时也提供其他搜索方法。LGA 可理解为让一组候选姿态不断“进化”，并对其中部分个体进行局部优化。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21256">4</a></p>
+<p><strong>生成初始群体 → 评分与选择 → 交叉和变异 → 局部优化 → 将优化结果写回个体 → 继续迭代。</strong></p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E6%8B%89%E9%A9%AC%E5%85%8B%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="AutoDock 4 采用的拉马克遗传算法"></p>
+<p>这里的“拉马克式”继承，是指局部优化得到的构象信息可以保留下来，并参与后续搜索。该名称描述的是算法设计思路。</p>
+<p>AutoDock 4 采用半经验评分，会考虑范德华作用、氢键、静电、去溶剂化，以及与配体扭转自由度相关的熵代价等因素。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21256">4</a></p>
+<blockquote>
+<p><strong>怎样理解“配体扭转自由度相关的熵代价”？</strong> AutoDock 4 按输入配体的可旋转键数加一个扭转惩罚项：可旋转键越多，该项越大、评分越不利，用来粗略近似结合后扭转自由度减少的代价；它是经验近似，不是严格熵计算，也不取决于生成姿态。</p>
+</blockquote>
+<p><strong>优势：</strong> 搜索与评分逻辑相对清晰，便于理解对接的基本流程；可通过多次独立运行并结合聚类分析，评估采样收敛性与构象稳定性；支持将指定的受体残基侧链设为柔性，从而部分考虑受体柔性。</p>
+<p><strong>局限性：</strong> 可调参数较多，结果对参数设置较敏感，需要合理调参和验证；高柔性配体通常需要更充分的构象采样，计算成本较高，且不保证一定收敛；常规流程中蛋白主链&#x2F;整体骨架仍多保持刚性，难以完全模拟诱导契合。此外，原子类型、部分电荷、质子化&#x2F;互变异构状态、网格与结合位点定义等前处理因素均会显著影响结果。</p>
+<p>本系列后续博客将讲解 AutoDock 套件的实操。其中，AutoDockTools (ADT) 是图形化辅助工具，主要负责受体&#x2F;配体准备、格式转换、网格参数设置和对接结果可视化；AutoGrid 根据受体与探针原子生成三维相互作用能量网格，如范德华、静电、氢键等项；AutoDock 4 读取这些网格，运行构象搜索并给出评分，输出候选结合构象。ADT 本身不执行对接搜索，AutoGrid 也不做构象采样；AutoDock 4 的对接通常依赖 AutoGrid 预计算得到的网格。理清三者的分工，有助于理解后续操作流程。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21256">4</a></p>
+<hr>
+<h3 id="4-2-AutoDock-Vina：随机全局搜索与快速局部优化"><a href="#4-2-AutoDock-Vina：随机全局搜索与快速局部优化" class="headerlink" title="4.2 AutoDock Vina：随机全局搜索与快速局部优化"></a>4.2 AutoDock Vina：随机全局搜索与快速局部优化</h3><p>AutoDock Vina 将分子对接看作一个<strong>寻找较低评分能量姿态的优化问题</strong>：通过调整配体的位置、朝向和可旋转键，寻找评分函数认为更有利的结合姿态。它采用基于<strong>迭代局部搜索的随机全局优化方法</strong>，基本思路是：<strong>从多个随机起点出发，反复尝试新姿态，并对每次尝试进行局部优化。</strong></p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/vina%E9%9A%8F%E6%9C%BA%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%B1%80%E9%83%A8%E4%BC%98%E5%8C%96%E7%9B%B8%E7%BB%93%E5%90%88.png" srcset="/img/loading.gif" lazyload alt="AutoDock Vina：随机全局搜索与快速局部优化"></p>
+<p>一次对接计算包含多个相互独立的搜索运行 (run) 。每个运行从随机生成的初始姿态出发，依次重复以下步骤：</p>
+<ol>
+<li><p>随机扰动：改变配体的位置、朝向或部分可旋转键的角度；如果设置了受体柔性侧链，也会搜索这些侧链的构象。</p>
+</li>
+<li><p>局部优化：使用 BFGS 拟牛顿算法，根据评分函数及其梯度调整姿态，在当前姿态附近寻找能量更低的构象。</p>
+</li>
+<li><p>决定是否接受：按照 Metropolis 准则，能量更低的新姿态直接接受；能量更高的新姿态也有一定概率被接受。这使搜索有机会离开当前的局部低能区域，继续探索其他区域。</p>
+</li>
+</ol>
+<p>部分被接受的姿态还会再次进行局部优化，并作为候选结果保存。</p>
+<p>每个运行的搜索步数由程序根据配体及所设置柔性侧链的大小和柔性等因素，按经验规则确定。与 AutoDock 4 不同，Vina 的每个运行可以保留多个有潜力的中间结果。所有运行结束后，程序会汇总这些结果，进一步优化，将结构相近的姿态归为一类，并按评分排序，最终输出候选结合姿态。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">5</a></p>
+<p><code>exhaustiveness</code> 控制独立搜索运行的次数，可以理解为搜索的充分程度。 Vina 支持多线程，各个运行可以并行执行，因此实际并行程度同时受到独立运行数量、CPU 线程设置和可用计算资源的限制。提高 <code>exhaustiveness</code> 通常能增加找到较低能量姿态的机会，但也会增加计算量，继续提高时收益可能逐渐减小。需要注意，<strong>评分更低不一定意味着更接近真实结合姿态</strong>；增加搜索次数可以改善搜索不足，却不能消除评分函数本身的误差。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a> <a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">13</a></p>
+<p><strong>优势：</strong> 开源 (Apache 2.0 许可) ，常规参数较少；适合建立基础对接流程，也便于组织成批量虚拟筛选流程。对于可旋转键较多的柔性配体，Vina 的搜索效率通常高于 AutoDock 4，但具体表现仍取决于体系和参数。与 AutoDock 4 一样，Vina 允许将指定的受体侧链设为柔性。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">5</a></p>
+<p><strong>局限性：</strong> 常规 Vina 流程仍多以刚性受体为基础；虽可指定部分柔性侧链，但对大范围构象变化 (如主链运动、诱导契合) 的处理有限。提高 <code>exhaustiveness</code> 不能修复错误的输入结构，也不能保证评分模型适合当前靶点。Vina 给出的亲和力为近似相对评分，不宜直接等同于实验结合自由能；对共价结合、金属配位、显式水、变构等情形需谨慎并验证。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">13</a></p>
+<p>AutoDock Vina 官方明确指出，其<strong>预测准确性会因靶点不同而显著变化</strong>。因此，在预测未知互作结构之前，最好先针对同一蛋白及其结合口袋，用共晶配体或已知活性化合物进行一次“基准测试” (重对接) ，确认该流程能够复现已知结果后，再用于预测未知的相互作用结构。官方 FAQ 进一步指出，即使评分函数的最小值对应正确构象，搜索算法仍可能因运气问题无法找到该构象，此时可尝试更换随机种子或提高 <code>exhaustiveness</code>。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a></p>
+<p>还需要注意：<strong>Vina 和 AutoDock 4 使用不同的评分函数，两者的分数不能直接横向比较。</strong> 官方 FAQ 说明，二者评分函数不同且均属近似，因此在任何给定靶点上，任一程序都可能给出更好的结果。Vina 的分数只适合在其自身评分体系内进行排序和比较。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a></p>
+<h3 id="4-3-Glide：分层过滤与精细评估"><a href="#4-3-Glide：分层过滤与精细评估" class="headerlink" title="4.3 Glide：分层过滤与精细评估"></a>4.3 Glide：分层过滤与精细评估</h3><p>Glide 是 Schrödinger 平台中的商业对接工具。其代表性思路是分层处理：先较快地排除明显不合适的候选，再对保留下来的姿态进行更细致的优化与评分，这一过程被称为“对接漏斗” (docking funnel) 。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm0306430">8</a></p>
+<p>经典流程中的三种常见模式可以这样理解：</p>
+<ul>
+<li>**HTVS (High-Throughput Virtual Screening) **：侧重通量，适合化合物库的早期筛选。</li>
+<li>**SP (Standard Precision) **：在搜索投入与计算速度之间取得平衡。</li>
+<li>**XP (Extra Precision) **：采用更严格的判断和惩罚规则，适合对较少候选分子进行精筛。</li>
+</ul>
+<p>这三种模式可以组成分阶段筛选流程，也可以按任务单独使用；更精细的模式并不保证对所有体系都更准确。<a target="_blank" rel="noopener" href="https://www.schrodinger.com/platform/products/glide/">14</a></p>
+<p>**优势：**可以与平台中的蛋白准备、配体准备和结果分析工具衔接，便于组织较完整的筛选流程。</p>
+<p><strong>局限性</strong>需要相应许可；参数和前处理流程较多；XP模式更严格，但不代表对所有靶点都更准确；过于严格的规则可能遗漏某些特殊结合方式。</p>
+<p>Glide更适合拥有完整商业软件环境、需要建立标准化药物筛选流程的研究团队。</p>
+<h3 id="4-4-GOLD：以遗传算法探索配体姿态"><a href="#4-4-GOLD：以遗传算法探索配体姿态" class="headerlink" title="4.4 GOLD：以遗传算法探索配体姿态"></a>4.4 GOLD：以遗传算法探索配体姿态</h3><p>GOLD 同样采用遗传算法，通过选择、交叉和变异等操作，不断生成和筛选候选配体姿态。</p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="GOLD 采用的遗传算法"></p>
+<p>理解其搜索特点，可以重点关注两个机制：<strong>岛屿模型与小生境技术</strong>。</p>
+<p>岛屿模型将种群分成多个子群，各自在不同的“岛屿”上搜索，并允许个体在相邻岛屿之间迁移。小生境技术则用于维持种群多样性：当两个候选姿态的氢键供体和受体原子位置足够接近时，它们会被归入同一小生境；当其中的个体数量超过设定阈值时，新个体将替换该小生境中评分最差的成员，而非整个种群中评分最差的成员。通俗地说，这些机制让搜索能够保留多种可能的结合方式，避免候选姿态过早集中到少数相似结果上。<a target="_blank" rel="noopener" href="https://doi.org/10.1006/jmbi.1996.0897">9</a></p>
+<p>在柔性处理方面，GOLD 提供多种配体柔性搜索选项，也支持按设置考虑部分蛋白质侧链的柔性。</p>
+<p>GOLD 提供 ChemPLP、GoldScore、ChemScore 和 ASP 等评分函数，可用于对接搜索或对候选姿态重新评分。由于各评分函数对相互作用的描述和权重不同，同一组候选姿态可能得到不同的排序，因此应结合具体体系选择和验证。<a target="_blank" rel="noopener" href="https://www.ccdc.cam.ac.uk/solutions/software/gold/">15</a></p>
+<p>**优势：**可以结合已知结合位点信息设置约束，比较不同评分函数，并尝试不同的柔性处理方式。</p>
+<p>**局限性：**属于商业软件；遗传算法具有随机性，需要进行足够次数的独立运行；搜索越充分，计算时间通常越长；支持柔性搜索并不代表对高柔性配体必然更可靠，仍应结合具体体系验证。</p>
+<h3 id="4-5-DOCK-6：先放置锚定片段，再逐段生长"><a href="#4-5-DOCK-6：先放置锚定片段，再逐段生长" class="headerlink" title="4.5 DOCK 6：先放置锚定片段，再逐段生长"></a>4.5 DOCK 6：先放置锚定片段，再逐段生长</h3><p>DOCK 6 的代表性搜索策略之一是 **anchor-and-grow (锚定并生长) **。程序先从配体中选择较刚性的片段，尝试将其放入口袋，再沿可旋转键逐步构建和调整其余部分。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.23905">10</a></p>
+<p><strong>选择锚定片段 → 尝试不同放置方式 → 逐段添加结构 → 调整与筛选 → 形成完整候选姿态。</strong></p>
+<p>这里的“生长”发生在计算中，并不是让小分子在蛋白口袋里发生化学合成。锚定片段也不一定只尝试一个位置。</p>
+<p>**优势：**提供网格评分、多种重新评分方法和虚拟筛选相关功能，因此具有较高的可配置性，便于搭建虚拟筛选流程或开展方法研究。</p>
+<p>**局限性：**命令行操作和参数设置相对复杂；锚点选择、构象保留数量和评分方式都会影响结果。</p>
+<h3 id="4-6-GNINA：用神经网络辅助评价结合构象"><a href="#4-6-GNINA：用神经网络辅助评价结合构象" class="headerlink" title="4.6 GNINA：用神经网络辅助评价结合构象"></a>4.6 GNINA：用神经网络辅助评价结合构象</h3><p>GNINA建立在Vina&#x2F;smina一类对接框架之上，同时加入了三维卷积神经网络评分。引入三维卷积神经网络 (CNN) 。模型从蛋白—配体复合物等训练数据中学习三维原子排列与姿态质量、亲和力标签之间的关系，进而判别更接近真实的结合构象的三维原子排列。<a target="_blank" rel="noopener" href="https://doi.org/10.1186/s13321-021-00522-2">11</a></p>
+<p>在常见的默认流程中，程序先通过经验评分进行对接，再用 CNN 对生成的姿态重新排序。GNINA 也支持让 CNN 参与局部精修等模式，因此它既可以完成对接，也可以用于重新评分。<a target="_blank" rel="noopener" href="https://doi.org/10.1186/s13321-021-00522-2">11</a> <a target="_blank" rel="noopener" href="https://github.com/gnina/gnina">12</a></p>
+<p>**优势：**开源；可以使用神经网络对候选构象进行评分或重新排序；在部分基准测试中能够改善构象筛选。</p>
+<p>**局限性：**效果受训练数据和应用体系的差异影响；金属配位、特殊化学类型等体系需要单独检查适用性；使用兼容GPU时更适合开展较大规模计算。</p>
+<p>读取结果时，还要区分不同输出：<code>CNNscore</code> 用于评价姿态，<code>CNNaffinity</code> 是模型给出的亲和力相关预测，两者含义和标度不同，不能当作同一个指标。它们都不能直接替代实验测量。<a target="_blank" rel="noopener" href="https://github.com/gnina/gnina">12</a></p>
+<h3 id="4-7-小结"><a href="#4-7-小结" class="headerlink" title="4.7 小结"></a>4.7 小结</h3><p>常用软件对比</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>代表性搜索方式</th>
+<th>主要评分方式</th>
+<th>常见受体处理</th>
+<th>常见应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AutoDock 4</td>
+<td>拉马克遗传算法，结合局部搜索</td>
+<td>半经验结合自由能评分</td>
+<td>通常固定受体主体，可指定部分侧链参与柔性搜索</td>
+<td>常规对接、经典算法教学与研究</td>
+</tr>
+<tr>
+<td>AutoDock Vina</td>
+<td>迭代局部搜索，结合随机扰动与局部优化</td>
+<td>Vina 评分；较新版本还支持 Vinardo、AutoDock4 等评分<a target="_blank" rel="noopener" href="https://doi.org/10.1021/acs.jcim.1c00203">6</a></td>
+<td>通常固定受体主体，可指定部分柔性侧链</td>
+<td>常规对接、批量计算与虚拟筛选</td>
+</tr>
+<tr>
+<td>Glide</td>
+<td>分层构象搜索、过滤与局部优化</td>
+<td>以 GlideScore 为代表，配合姿态筛选相关评分</td>
+<td>常规流程以刚性受体网格为主；更充分的受体柔性处理需结合诱导契合等专门流程</td>
+<td>分级虚拟筛选、候选结合姿态分析</td>
+</tr>
+<tr>
+<td>GOLD</td>
+<td>遗传算法，结合岛屿模型与小生境机制</td>
+<td>ChemPLP、GoldScore、ChemScore、ASP 等</td>
+<td>可设置部分侧链柔性，也支持受体系综及软对接等策略</td>
+<td>利用已知相互作用施加约束、多评分方案比较</td>
+</tr>
+<tr>
+<td>DOCK 6</td>
+<td>以“锚定并生长”为代表的配体构象搜索</td>
+<td>以力场型网格评分为代表，支持多种重评分方法</td>
+<td>常规网格对接通常固定受体；AMBER 评分流程可引入受体柔性</td>
+<td>可定制虚拟筛选、评分与方法研究</td>
+</tr>
+<tr>
+<td>GNINA</td>
+<td>基于 smina&#x2F;Vina 的随机搜索与局部优化</td>
+<td>默认以经验评分搜索，再用 CNN 重评分；可配置 CNN 参与优化</td>
+<td>通常固定受体主体，可指定部分柔性侧链</td>
+<td>对接、候选姿态重排序与神经网络评分研究</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：表中概括的是各软件的代表性方法和常见设置，并非全部功能；具体能力取决于版本、参数及所使用的模块。</p>
+</blockquote>
+<p>**这张表用于理解方法特点，不能作为通用准确率排行榜。**比较软件时，应区分“能否预测合理的结合姿态”与“能否有效区分或排序候选化合物”。实际结果还取决于受体与配体的结构准备、配体柔性、口袋特征、搜索范围、搜索投入及评分函数与具体体系的适配程度。硬件条件主要影响计算速度和限定时间内可投入的搜索量，并可能进一步影响结果的稳定性与搜索覆盖程度。</p>
+<h2 id="此外，不同软件或不同评分函数给出的分数通常不能直接横向比较；即使都以-kcal-mol-表示，也不意味着数值具有相同的含义和标度。"><a href="#此外，不同软件或不同评分函数给出的分数通常不能直接横向比较；即使都以-kcal-mol-表示，也不意味着数值具有相同的含义和标度。" class="headerlink" title="此外，不同软件或不同评分函数给出的分数通常不能直接横向比较；即使都以 kcal&#x2F;mol 表示，也不意味着数值具有相同的含义和标度。"></a>此外，不同软件或不同评分函数给出的分数通常不能直接横向比较；即使都以 kcal&#x2F;mol 表示，也不意味着数值具有相同的含义和标度。</h2><h2 id="5-初学者怎样选择工具？"><a href="#5-初学者怎样选择工具？" class="headerlink" title="5. 初学者怎样选择工具？"></a>5. 初学者怎样选择工具？</h2><p>先明确任务需求，再选择工具，通常比直接寻找“最准的软件”更有效。</p>
+<ul>
+<li><strong>希望尽快建立第一套基础流程：</strong> 可以从 AutoDock Vina 开始，重点掌握结构准备、搜索框设置、姿态查看和基本验证。</li>
+<li><strong>希望理解经典遗传算法与网格评分，或跟随本系列操作：</strong> 使用 AutoDock 4，逐步弄清 AutoDockTools、AutoGrid 和对接程序的分工。</li>
+<li><strong>已有商业平台，并需要整合筛选工作：</strong> 可以考虑 Glide 或 GOLD，具体选择取决于现有许可、任务需求与验证结果。</li>
+<li><strong>希望定制筛选流程或研究评分方法：</strong> 可以进一步了解 DOCK 6，或用 GNINA 比较神经网络评分是否带来改善。</li>
+</ul>
+<p>选定工具后，先用有已知结构或活性信息的体系测试流程。<strong>探索流程能够在什么条件下给出有用结果，能辅助我们更准确地判断。</strong></p>
+<hr>
+<h2 id="6-怎样检查结果是否可信？"><a href="#6-怎样检查结果是否可信？" class="headerlink" title="6. 怎样检查结果是否可信？"></a>6. 怎样检查结果是否可信？</h2><p>结果验证应从输入准备开始，并贯穿整个计算过程。下面几项检查各自回答不同问题，不能相互替代。</p>
+<h3 id="6-1-输入结构是否合理？"><a href="#6-1-输入结构是否合理？" class="headerlink" title="6.1 输入结构是否合理？"></a>6.1 输入结构是否合理？</h3><p>检查受体和配体的三维结构、化学键、立体化学、质子化状态、互变异构体和原子类型；若所用评分需要部分电荷，还应检查电荷的赋值方法。对受体，应关注结合区域中的缺失残基、替代构象及结构质量。</p>
+<p>金属离子、辅因子和结构水需要结合具体体系决定如何处理，不能机械地全部删除。搜索框应覆盖有依据的结合区域，并为配体的移动和转动留出合理空间。</p>
+<p>输入有系统性错误时，多款软件可能同时给出看似一致的错误结果。</p>
+<h3 id="6-2-能否恢复已知配体的结合姿态？"><a href="#6-2-能否恢复已知配体的结合姿态？" class="headerlink" title="6.2 能否恢复已知配体的结合姿态？"></a>6.2 能否恢复已知配体的结合姿态？</h3><p>若有可信的蛋白—配体实验复合物结构，可以移出配体，在相应受体上重新对接，并与实验姿态比较，这通常称为**重对接 (redocking) **。</p>
+<p>常用指标是配体重原子 RMSD，即对应重原子位置偏差的均方根。约 <strong>2 Å</strong> 是文献中常见的参考阈值，但应结合配体大小、对称性和结构质量解释。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm050362n">16</a></p>
+<p>比较时还要注意三件事：</p>
+<ul>
+<li>在一致的受体坐标系中比较；需要时先对齐受体，再计算配体位置差异，不能单独把两个配体自由叠合后当作结合姿态误差。</li>
+<li>处理好原子对应关系和化学等价的对称原子，避免原子编号差异造成误判。</li>
+<li>区分“所有候选中最接近实验结构的姿态”与“评分第一的姿态”，分别评价采样和排序。</li>
+</ul>
+<p>重对接使用的受体通常已经处于适合原配体结合的构象。因此，重对接成功只说明这项测试表现良好，不能保证未知配体或其他受体构象上的预测同样可靠。</p>
+<h3 id="6-3-重复计算是否稳定？"><a href="#6-3-重复计算是否稳定？" class="headerlink" title="6.3 重复计算是否稳定？"></a>6.3 重复计算是否稳定？</h3><p>更换随机种子并进行独立运行，观察主要姿态或构象簇是否重复出现。结果差异较大时，可以检查搜索是否充分、是否存在多个接近的评分极小值，以及受体构象是否合适。</p>
+<p>可尝试增加搜索投入，或比较多个有依据的受体构象。但反复出现的姿态仍可能是评分模型偏好的错误答案，<strong>计算稳定性不等于结构正确性</strong>。</p>
+<h3 id="6-4-能否区分已知对照？"><a href="#6-4-能否区分已知对照？" class="headerlink" title="6.4 能否区分已知对照？"></a>6.4 能否区分已知对照？</h3><p>若目的是虚拟筛选，应使用同一靶点、可比实验条件下的已知活性分子和无活性对照，检查活性分子是否更容易排在前列。</p>
+<p>也可以加入理化性质相近的诱饵分子，以减少分子大小等差异造成的偏倚。但诱饵分子不一定经过实验证实为无活性，不能与已验证的阴性对照完全等同。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm300687b">17</a></p>
+<p>用于调整参数的样本，尽量不要同时作为宣称预测能力的唯一测试集。</p>
+<h3 id="6-5-结构和分数是否支持当前解释？"><a href="#6-5-结构和分数是否支持当前解释？" class="headerlink" title="6.5 结构和分数是否支持当前解释？"></a>6.5 结构和分数是否支持当前解释？</h3><p>目视检查是否存在明显的空间碰撞、异常键构象、不合理的氢键几何，或配体落在搜索边界附近等情况。对埋藏电荷、金属配位和水介导相互作用，应结合具体化学环境判断。</p>
+<p>比较分数时，应明确评分函数、版本、受体状态与前处理条件。不同评分体系下的 <code>-9.0</code> 和 <code>-8.0</code> 没有直接的优劣关系；即使来自同一体系，小幅分数差异也不宜直接解释为确定的亲和力差异。</p>
+<p>多个方法得出相似结果，可以增加进一步研究的理由；但如果它们共享相似的输入和模型偏差，这种一致性也可能重复同一种错误，不能当作独立实验验证。</p>
+<h3 id="6-6-结果能否复核，结论是否越过证据？"><a href="#6-6-结果能否复核，结论是否越过证据？" class="headerlink" title="6.6 结果能否复核，结论是否越过证据？"></a>6.6 结果能否复核，结论是否越过证据？</h3><p>至少保留受体结构来源及链选择、配体结构及处理方式、软件版本、评分函数、搜索区域、主要参数、随机种子和输出文件。记录这些信息，才能在结果变化时找到原因，也方便他人复核。</p>
+<p>撰写结果时，可以表述为：</p>
+<blockquote>
+<p>对接得到一组候选结合姿态，提示配体可能在该口袋中与若干残基形成相互作用。这一假设仍需结合实验或其他独立证据检验。</p>
+</blockquote>
+<p>进一步的结构优化、分子动力学或自由能计算可以提供补充信息，但仍然是具有各自假设和误差的计算方法。有关真实结合、活性和机制的结论，需要与能够回答相应问题的证据对应。</p>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7. 结语"></a>7. 结语</h2><p>学习分子对接，最有价值的收获，是能够把一个模糊的猜想转化为具体的研究问题：配体可能怎样进入口袋？哪些残基值得关注？哪几个候选分子值得优先验证？</p>
+<p>要让这些问题有意义，需要把三件事连起来：**合理的输入结构、与任务匹配的搜索和评分，以及能够检验预测的验证设计。**理解这条逻辑后，结构图和分数才有了清楚的解释范围。</p>
+<p>带着这个框架进入实操，我们就能更清楚地理解每一步设置的目的。下一篇将从 AutoDock 4 与 PyMOL 的环境安装开始，逐步搭建一套能够运行、查看并复核结果的基础流程。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>以下论文用于理解方法原理，官方文档用于核对软件功能。操作时应以所安装版本的说明为准。</p>
+<ol>
+<li>Fischer E. <a target="_blank" rel="noopener" href="https://doi.org/10.1002/cber.18940270364">Einfluss der Configuration auf die Wirkung der Enzyme</a>. <em>Berichte der deutschen chemischen Gesellschaft</em>, 1894.</li>
+<li>Koshland DE. <a target="_blank" rel="noopener" href="https://doi.org/10.1073/pnas.44.2.98">Application of a Theory of Enzyme Specificity to Protein Synthesis</a>. <em>Proceedings of the National Academy of Sciences</em>, 1958.</li>
+<li>Hammes GG, Chang YC, Oas TG. <a target="_blank" rel="noopener" href="https://doi.org/10.1073/pnas.0907195106">Conformational Selection or Induced Fit: A Flux Description of Reaction Mechanism</a>. <em>Proceedings of the National Academy of Sciences</em>, 2009.</li>
+<li>Morris GM, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21256">AutoDock4 and AutoDockTools4: Automated Docking with Selective Receptor Flexibility</a>. <em>Journal of Computational Chemistry</em>, 2009.</li>
+<li>Trott O, Olson AJ. <a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">AutoDock Vina: Improving the Speed and Accuracy of Docking with a New Scoring Function, Efficient Optimization, and Multithreading</a>. <em>Journal of Computational Chemistry</em>, 2010.</li>
+<li>Eberhardt J, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1021/acs.jcim.1c00203">AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings</a>. *Jo</li>
+<li>AutoDock Vina 官方文档：<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">常见问题</a>。</li>
+<li>Friesner RA, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm0306430">Glide: A New Approach for Rapid, Accurate Docking and Scoring. 1. Method and Assessment of Docking Accuracy</a>. <em>Journal of Medicinal Chemistry</em>, 2004.</li>
+<li>Jones G, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1006/jmbi.1996.0897">Development and Validation of a Genetic Algorithm for Flexible Docking</a>. <em>Journal of Molecular Biology</em>, 1997.</li>
+<li>Allen WJ, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.23905">DOCK 6: Impact of New Features and Current Docking Performance</a>. <em>Journal of Computational Chemistry</em>, 2015.</li>
+<li>McNutt AT, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1186/s13321-021-00522-2">GNINA 1.0: Molecular Docking with Deep Learning</a>. <em>Journal of Cheminformatics</em>, 2021.</li>
+<li>GNINA 官方代码库：<a target="_blank" rel="noopener" href="https://github.com/gnina/gnina">功能、运行模式与参数说明</a>。</li>
+<li>AutoDock Vina 官方文档：<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">基础对接与评分函数选择</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://www.schrodinger.com/platform/products/glide/">Glide 官方产品说明</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://www.ccdc.cam.ac.uk/solutions/software/gold/">GOLD 官方功能说明</a>。</li>
+<li>Warren GL, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm050362n">A Critical Assessment of Docking Programs and Scoring Functions</a>. <em>Journal of Medicinal Chemistry</em>, 2006.</li>
+<li>Mysinger MM, et al. <a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm300687b">Directory of Useful Decoys, Enhanced (DUD-E)</a>. <em>Journal of Medicinal Chemistry</em>, 2012.</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="category-chain-item">分子对接</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%9B%8B%E7%99%BD-%E9%85%8D%E4%BD%93%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5/" class="print-no-link">#蛋白-配体分子对接</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>蛋白—小分子对接入门：原理、算法与结果判断</div>
+      <div>https://aurorahiker.github.io/2026/09/23/蛋白—小分子对接入门：原理、算法与结果判断/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>AuroraHiker</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026-09-23</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/27/%E9%B8%A2%E5%B0%BE%E8%8A%B1%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8A%A0%E8%BD%BD%E6%8A%A5%E9%94%99%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%A3%E6%B3%95/" title="sns.load_dataset(“iris”) 报错？网络问题的两种解法">
+                        <span class="hidden-mobile">sns.load_dataset(“iris”) 报错？网络问题的两种解法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
