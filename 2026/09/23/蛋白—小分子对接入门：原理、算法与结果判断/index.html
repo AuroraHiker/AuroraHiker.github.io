@@ -32,8 +32,9 @@
 <meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E6%8B%89%E9%A9%AC%E5%85%8B%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/vina%E9%9A%8F%E6%9C%BA%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%B1%80%E9%83%A8%E4%BC%98%E5%8C%96%E7%9B%B8%E7%BB%93%E5%90%88.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/gold%E5%B2%9B%E5%B1%BF%E4%B8%8E%E5%B0%8F%E7%94%9F%E5%A2%83.png">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-22T18:41:56.515Z">
+<meta property="article:modified_time" content="2026-09-22T19:09:50.787Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="蛋白-配体分子对接">
 <meta name="twitter:card" content="summary_large_image">
@@ -473,8 +474,8 @@
 <blockquote>
 <p><strong>怎样理解“配体扭转自由度相关的熵代价”？</strong> AutoDock 4 按输入配体的可旋转键数加一个扭转惩罚项：可旋转键越多，该项越大、评分越不利，用来粗略近似结合后扭转自由度减少的代价；它是经验近似，不是严格熵计算，也不取决于生成姿态。</p>
 </blockquote>
-<p><strong>优势：</strong> 搜索与评分逻辑相对清晰，便于理解对接的基本流程；可通过多次独立运行并结合聚类分析，评估采样收敛性与构象稳定性；支持将指定的受体残基侧链设为柔性，从而部分考虑受体柔性。</p>
-<p><strong>局限性：</strong> 可调参数较多，结果对参数设置较敏感，需要合理调参和验证；高柔性配体通常需要更充分的构象采样，计算成本较高，且不保证一定收敛；常规流程中蛋白主链&#x2F;整体骨架仍多保持刚性，难以完全模拟诱导契合。此外，原子类型、部分电荷、质子化&#x2F;互变异构状态、网格与结合位点定义等前处理因素均会显著影响结果。</p>
+<p><strong>优势</strong>：搜索与评分逻辑相对清晰，便于理解对接的基本流程；可通过多次独立运行并结合聚类分析，评估采样收敛性与构象稳定性；支持将指定的受体残基侧链设为柔性，从而部分考虑受体柔性。</p>
+<p><strong>局限性</strong>：可调参数较多，结果对参数设置较敏感，需要合理调参和验证；高柔性配体通常需要更充分的构象采样，计算成本较高，且不保证一定收敛；常规流程中蛋白主链&#x2F;整体骨架仍多保持刚性，难以完全模拟诱导契合。此外，原子类型、部分电荷、质子化&#x2F;互变异构状态、网格与结合位点定义等前处理因素均会显著影响结果。</p>
 <p>本系列后续博客将讲解 AutoDock 套件的实操。其中，AutoDockTools (ADT) 是图形化辅助工具，主要负责受体&#x2F;配体准备、格式转换、网格参数设置和对接结果可视化；AutoGrid 根据受体与探针原子生成三维相互作用能量网格，如范德华、静电、氢键等项；AutoDock 4 读取这些网格，运行构象搜索并给出评分，输出候选结合构象。ADT 本身不执行对接搜索，AutoGrid 也不做构象采样；AutoDock 4 的对接通常依赖 AutoGrid 预计算得到的网格。理清三者的分工，有助于理解后续操作流程。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21256">4</a></p>
 <hr>
 <h3 id="4-2-AutoDock-Vina：随机全局搜索与快速局部优化"><a href="#4-2-AutoDock-Vina：随机全局搜索与快速局部优化" class="headerlink" title="4.2 AutoDock Vina：随机全局搜索与快速局部优化"></a>4.2 AutoDock Vina：随机全局搜索与快速局部优化</h3><p>AutoDock Vina 将分子对接看作一个<strong>寻找较低评分能量姿态的优化问题</strong>：通过调整配体的位置、朝向和可旋转键，寻找评分函数认为更有利的结合姿态。它采用基于<strong>迭代局部搜索的随机全局优化方法</strong>，基本思路是：<strong>从多个随机起点出发，反复尝试新姿态，并对每次尝试进行局部优化。</strong></p>
@@ -491,8 +492,8 @@
 <p>部分被接受的姿态还会再次进行局部优化，并作为候选结果保存。</p>
 <p>每个运行的搜索步数由程序根据配体及所设置柔性侧链的大小和柔性等因素，按经验规则确定。与 AutoDock 4 不同，Vina 的每个运行可以保留多个有潜力的中间结果。所有运行结束后，程序会汇总这些结果，进一步优化，将结构相近的姿态归为一类，并按评分排序，最终输出候选结合姿态。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">5</a></p>
 <p><code>exhaustiveness</code> 控制独立搜索运行的次数，可以理解为搜索的充分程度。 Vina 支持多线程，各个运行可以并行执行，因此实际并行程度同时受到独立运行数量、CPU 线程设置和可用计算资源的限制。提高 <code>exhaustiveness</code> 通常能增加找到较低能量姿态的机会，但也会增加计算量，继续提高时收益可能逐渐减小。需要注意，<strong>评分更低不一定意味着更接近真实结合姿态</strong>；增加搜索次数可以改善搜索不足，却不能消除评分函数本身的误差。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a> <a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">13</a></p>
-<p><strong>优势：</strong> 开源 (Apache 2.0 许可) ，常规参数较少；适合建立基础对接流程，也便于组织成批量虚拟筛选流程。对于可旋转键较多的柔性配体，Vina 的搜索效率通常高于 AutoDock 4，但具体表现仍取决于体系和参数。与 AutoDock 4 一样，Vina 允许将指定的受体侧链设为柔性。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">5</a></p>
-<p><strong>局限性：</strong> 常规 Vina 流程仍多以刚性受体为基础；虽可指定部分柔性侧链，但对大范围构象变化 (如主链运动、诱导契合) 的处理有限。提高 <code>exhaustiveness</code> 不能修复错误的输入结构，也不能保证评分模型适合当前靶点。Vina 给出的亲和力为近似相对评分，不宜直接等同于实验结合自由能；对共价结合、金属配位、显式水、变构等情形需谨慎并验证。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">13</a></p>
+<p><strong>优势</strong>： 开源 (Apache 2.0 许可) ，常规参数较少；适合建立基础对接流程，也便于组织成批量虚拟筛选流程。对于可旋转键较多的柔性配体，Vina 的搜索效率通常高于 AutoDock 4，但具体表现仍取决于体系和参数。与 AutoDock 4 一样，Vina 允许将指定的受体侧链设为柔性。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.21334">5</a></p>
+<p><strong>局限性</strong>： 常规 Vina 流程仍多以刚性受体为基础；虽可指定部分柔性侧链，但对大范围构象变化 (如主链运动、诱导契合) 的处理有限。提高 <code>exhaustiveness</code> 不能修复错误的输入结构，也不能保证评分模型适合当前靶点。Vina 给出的亲和力为近似相对评分，不宜直接等同于实验结合自由能；对共价结合、金属配位、显式水、变构等情形需谨慎并验证。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/docking_basic.html">13</a></p>
 <p>AutoDock Vina 官方明确指出，其<strong>预测准确性会因靶点不同而显著变化</strong>。因此，在预测未知互作结构之前，最好先针对同一蛋白及其结合口袋，用共晶配体或已知活性化合物进行一次“基准测试” (重对接) ，确认该流程能够复现已知结果后，再用于预测未知的相互作用结构。官方 FAQ 进一步指出，即使评分函数的最小值对应正确构象，搜索算法仍可能因运气问题无法找到该构象，此时可尝试更换随机种子或提高 <code>exhaustiveness</code>。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a></p>
 <p>还需要注意：<strong>Vina 和 AutoDock 4 使用不同的评分函数，两者的分数不能直接横向比较。</strong> 官方 FAQ 说明，二者评分函数不同且均属近似，因此在任何给定靶点上，任一程序都可能给出更好的结果。Vina 的分数只适合在其自身评分体系内进行排序和比较。<a target="_blank" rel="noopener" href="https://autodock-vina.readthedocs.io/en/latest/faq.html">7</a></p>
 <h3 id="4-3-Glide：分层过滤与精细评估"><a href="#4-3-Glide：分层过滤与精细评估" class="headerlink" title="4.3 Glide：分层过滤与精细评估"></a>4.3 Glide：分层过滤与精细评估</h3><p>Glide 是 Schrödinger 平台中的商业对接工具。其代表性思路是分层处理：先较快地排除明显不合适的候选，再对保留下来的姿态进行更细致的优化与评分，这一过程被称为“对接漏斗” (docking funnel) 。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jm0306430">8</a></p>
@@ -503,26 +504,27 @@
 <li>**XP (Extra Precision) **：采用更严格的判断和惩罚规则，适合对较少候选分子进行精筛。</li>
 </ul>
 <p>这三种模式可以组成分阶段筛选流程，也可以按任务单独使用；更精细的模式并不保证对所有体系都更准确。<a target="_blank" rel="noopener" href="https://www.schrodinger.com/platform/products/glide/">14</a></p>
-<p>**优势：**可以与平台中的蛋白准备、配体准备和结果分析工具衔接，便于组织较完整的筛选流程。</p>
+<p><strong>优势</strong>：可以与平台中的蛋白准备、配体准备和结果分析工具衔接，便于组织较完整的筛选流程。</p>
 <p><strong>局限性</strong>需要相应许可；参数和前处理流程较多；XP模式更严格，但不代表对所有靶点都更准确；过于严格的规则可能遗漏某些特殊结合方式。</p>
 <p>Glide更适合拥有完整商业软件环境、需要建立标准化药物筛选流程的研究团队。</p>
 <h3 id="4-4-GOLD：以遗传算法探索配体姿态"><a href="#4-4-GOLD：以遗传算法探索配体姿态" class="headerlink" title="4.4 GOLD：以遗传算法探索配体姿态"></a>4.4 GOLD：以遗传算法探索配体姿态</h3><p>GOLD 同样采用遗传算法，通过选择、交叉和变异等操作，不断生成和筛选候选配体姿态。</p>
 <p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="GOLD 采用的遗传算法"></p>
 <p>理解其搜索特点，可以重点关注两个机制：<strong>岛屿模型与小生境技术</strong>。</p>
+<p><img src="/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/gold%E5%B2%9B%E5%B1%BF%E4%B8%8E%E5%B0%8F%E7%94%9F%E5%A2%83.png" srcset="/img/loading.gif" lazyload alt="GOLD 的岛屿模型与小生境技术"></p>
 <p>岛屿模型将种群分成多个子群，各自在不同的“岛屿”上搜索，并允许个体在相邻岛屿之间迁移。小生境技术则用于维持种群多样性：当两个候选姿态的氢键供体和受体原子位置足够接近时，它们会被归入同一小生境；当其中的个体数量超过设定阈值时，新个体将替换该小生境中评分最差的成员，而非整个种群中评分最差的成员。通俗地说，这些机制让搜索能够保留多种可能的结合方式，避免候选姿态过早集中到少数相似结果上。<a target="_blank" rel="noopener" href="https://doi.org/10.1006/jmbi.1996.0897">9</a></p>
 <p>在柔性处理方面，GOLD 提供多种配体柔性搜索选项，也支持按设置考虑部分蛋白质侧链的柔性。</p>
 <p>GOLD 提供 ChemPLP、GoldScore、ChemScore 和 ASP 等评分函数，可用于对接搜索或对候选姿态重新评分。由于各评分函数对相互作用的描述和权重不同，同一组候选姿态可能得到不同的排序，因此应结合具体体系选择和验证。<a target="_blank" rel="noopener" href="https://www.ccdc.cam.ac.uk/solutions/software/gold/">15</a></p>
-<p>**优势：**可以结合已知结合位点信息设置约束，比较不同评分函数，并尝试不同的柔性处理方式。</p>
-<p>**局限性：**属于商业软件；遗传算法具有随机性，需要进行足够次数的独立运行；搜索越充分，计算时间通常越长；支持柔性搜索并不代表对高柔性配体必然更可靠，仍应结合具体体系验证。</p>
+<p><strong>优势</strong>：可以结合已知结合位点信息设置约束，比较不同评分函数，并尝试不同的柔性处理方式。</p>
+<p><strong>局限性</strong>：属于商业软件；遗传算法具有随机性，需要进行足够次数的独立运行；搜索越充分，计算时间通常越长；支持柔性搜索并不代表对高柔性配体必然更可靠，仍应结合具体体系验证。</p>
 <h3 id="4-5-DOCK-6：先放置锚定片段，再逐段生长"><a href="#4-5-DOCK-6：先放置锚定片段，再逐段生长" class="headerlink" title="4.5 DOCK 6：先放置锚定片段，再逐段生长"></a>4.5 DOCK 6：先放置锚定片段，再逐段生长</h3><p>DOCK 6 的代表性搜索策略之一是 **anchor-and-grow (锚定并生长) **。程序先从配体中选择较刚性的片段，尝试将其放入口袋，再沿可旋转键逐步构建和调整其余部分。<a target="_blank" rel="noopener" href="https://doi.org/10.1002/jcc.23905">10</a></p>
 <p><strong>选择锚定片段 → 尝试不同放置方式 → 逐段添加结构 → 调整与筛选 → 形成完整候选姿态。</strong></p>
 <p>这里的“生长”发生在计算中，并不是让小分子在蛋白口袋里发生化学合成。锚定片段也不一定只尝试一个位置。</p>
-<p>**优势：**提供网格评分、多种重新评分方法和虚拟筛选相关功能，因此具有较高的可配置性，便于搭建虚拟筛选流程或开展方法研究。</p>
-<p>**局限性：**命令行操作和参数设置相对复杂；锚点选择、构象保留数量和评分方式都会影响结果。</p>
+<p><strong>优势</strong>：提供网格评分、多种重新评分方法和虚拟筛选相关功能，因此具有较高的可配置性，便于搭建虚拟筛选流程或开展方法研究。</p>
+<p><strong>局限性</strong>：命令行操作和参数设置相对复杂；锚点选择、构象保留数量和评分方式都会影响结果。</p>
 <h3 id="4-6-GNINA：用神经网络辅助评价结合构象"><a href="#4-6-GNINA：用神经网络辅助评价结合构象" class="headerlink" title="4.6 GNINA：用神经网络辅助评价结合构象"></a>4.6 GNINA：用神经网络辅助评价结合构象</h3><p>GNINA建立在Vina&#x2F;smina一类对接框架之上，同时加入了三维卷积神经网络评分。引入三维卷积神经网络 (CNN) 。模型从蛋白—配体复合物等训练数据中学习三维原子排列与姿态质量、亲和力标签之间的关系，进而判别更接近真实的结合构象的三维原子排列。<a target="_blank" rel="noopener" href="https://doi.org/10.1186/s13321-021-00522-2">11</a></p>
 <p>在常见的默认流程中，程序先通过经验评分进行对接，再用 CNN 对生成的姿态重新排序。GNINA 也支持让 CNN 参与局部精修等模式，因此它既可以完成对接，也可以用于重新评分。<a target="_blank" rel="noopener" href="https://doi.org/10.1186/s13321-021-00522-2">11</a> <a target="_blank" rel="noopener" href="https://github.com/gnina/gnina">12</a></p>
-<p>**优势：**开源；可以使用神经网络对候选构象进行评分或重新排序；在部分基准测试中能够改善构象筛选。</p>
-<p>**局限性：**效果受训练数据和应用体系的差异影响；金属配位、特殊化学类型等体系需要单独检查适用性；使用兼容GPU时更适合开展较大规模计算。</p>
+<p><strong>优势</strong>：开源；可以使用神经网络对候选构象进行评分或重新排序；在部分基准测试中能够改善构象筛选。</p>
+<p><strong>局限性</strong>：效果受训练数据和应用体系的差异影响；金属配位、特殊化学类型等体系需要单独检查适用性；使用兼容GPU时更适合开展较大规模计算。</p>
 <p>读取结果时，还要区分不同输出：<code>CNNscore</code> 用于评价姿态，<code>CNNaffinity</code> 是模型给出的亲和力相关预测，两者含义和标度不同，不能当作同一个指标。它们都不能直接替代实验测量。<a target="_blank" rel="noopener" href="https://github.com/gnina/gnina">12</a></p>
 <h3 id="4-7-小结"><a href="#4-7-小结" class="headerlink" title="4.7 小结"></a>4.7 小结</h3><p>常用软件对比</p>
 <table>
