@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/vina%E9%9A%8F%E6%9C%BA%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%B1%80%E9%83%A8%E4%BC%98%E5%8C%96%E7%9B%B8%E7%BB%93%E5%90%88.png">
 <meta property="og:image" content="https://aurorahiker.github.io/%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5%E5%85%A5%E9%97%A8/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86.png">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-22T18:22:06.105Z">
+<meta property="article:modified_time" content="2026-09-22T18:41:56.515Z">
 <meta property="article:author" content="AuroraHiker">
 <meta property="article:tag" content="蛋白-配体分子对接">
 <meta name="twitter:card" content="summary_large_image">
@@ -395,7 +395,7 @@
                 
                 <p>当我们确定了一对相互作用的蛋白质与小分子后，往往想知道：该分子可能结合在何处？它会以何种姿态进入口袋，又可能与哪些残基发生相互作用？分子对接正是帮助我们探索这些问题的一类计算方法。</p>
 <p>在计算机中，程序会移动、旋转配体，并在允许的范围内调整其内部构象，生成一批候选结合姿态，再依据评分函数进行筛选和排序。最终得到的结构图和分数，能够帮助我们提出结合假设、确定验证优先级；其可信度则取决于输入结构、搜索是否充分，以及评分模型是否适用于当前体系。</p>
-<p>本文主要介绍分子对接的基本原理、常见软件在算法上的差异，以及判断结果是否可信的方法。<strong>全文以蛋白—小分子的常规非共价对接为主</strong>，共价结合、特殊金属配位等体系需要专门设置，不不宜直接套用常规流程。</p>
+<p>本文主要介绍分子对接的基本原理、常见软件在算法上的差异，以及判断结果是否可信的方法。<strong>全文以蛋白—小分子的常规非共价对接为主</strong>，共价结合、特殊金属配位等体系需要专门设置，不宜直接套用常规流程。</p>
 <p>作为本系列的第一篇，本文先帮助读者建立理解框架。后续三篇将围绕 AutoDock 4 展开，依次介绍环境安装、结构预处理与 AutoGrid 网格计算，以及正式对接与结果可视化。</p>
 <hr>
 <h2 id="1-蛋白—小分子对接能回答哪些问题？"><a href="#1-蛋白—小分子对接能回答哪些问题？" class="headerlink" title="1.蛋白—小分子对接能回答哪些问题？"></a>1.蛋白—小分子对接能回答哪些问题？</h2><p>在蛋白—小分子对接中，蛋白质通常称为<strong>受体</strong>，小分子通常称为<strong>配体</strong>。这里的“受体”是计算中的角色名称，并不专指生物学上的受体蛋白。</p>
